@@ -127,8 +127,8 @@ body {
 .logo-name {
   /* 청약 pass */
   z-index: 1;
-  left: -13%;
-  bottom: -10%;
+  left: -102px;
+  bottom: -8px;
   position: relative;
   font-family: Gothic A1;
   font-style: normal;
@@ -149,39 +149,97 @@ body {
   width: 80%;
   height: 50px;
   display: flex;
-  left: 10%;
+  justify-content: center;
   top: 230px;
 }
 
 .nav-container {
   width: 100%;
+  display: inline;
 }
 
 .nav-items {
   background-color: aqua;
-  position: absolute;
-  display: flex;
+  list-style-type: none;
   height: 50px;
   width: 80%;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-item {
-  list-style-type: none;
-  display: inline-block;
-  float: inline-end;
   color: #fff;
   height: 30px;
-  top: calc(50% - 60px / 2);
+  display: inline;
+  float: left;
+  position: relative;
+  background-color: #2a4476;
+}
+
+.nav-item a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  background-color: #2a4476;
 
   font-family: Gothic A1;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
-  display: flex;
-  align-items: center;
-  text-align: center;
   border: #c0c0c0;
+}
 
+.nav-item:hover > a {
+  padding: 10px;
+  color: #2a4476;
+  background-color: #fff;
+
+  font-family: Gothic A1;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-item:hover .nav-subItems {
+  opacity: 1;
+}
+
+.nav-item:hover .nav-subItems .nav-subItem {
+  height: 35px;
+  overflow: visible;
+  padding: 0;
+}
+
+.nav-subItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  width: 100%;
   background-color: #2a4476;
+  border-radius: 3px;
+  text-align: center;
+  opacity: 0;
+}
+
+.nav-subItem {
+  float: none;
+  margin: 0;
+  padding: 0;
+
+  font-family: Gothic A1;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 22px;
+  border: #c0c0c0;
+}
+
+.nav-subItem:hover a {
+  background-color: #f2f2f2;
+  color: #2a4476;
+  font-weight: bold;
 }

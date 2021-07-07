@@ -40,7 +40,20 @@ function Nav() {
         {/** 여러 개의 카테고리를 관리 */}
         <ul className="nav-items">
           {data.category.map((content, i) => {
-            return <li className="nav-item">{content.name}</li>;
+            return (
+              <li className="nav-item">
+                <a link={content.link}>{content.name}</a>
+                <ul className="nav-subItems">
+                  {content.subcategory.map((subcontent, j) => {
+                    return (
+                      <li className="nav-subItem">
+                        <a link={subcontent.link}>{subcontent.name}</a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            );
           })}
         </ul>
       </div>
