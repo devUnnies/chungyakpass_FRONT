@@ -1,7 +1,8 @@
 import { React } from "react";
 import "./header.css";
-import logo from "../../assets/logo.svg";
-import data from "../../category.json";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import data from "../category.json";
 
 function Login() {
   return (
@@ -9,8 +10,10 @@ function Login() {
       <div className="login-container">
         <div className="login-subcontainer">
           <div className="login-buttonArea">
-            <div className="login-loginButton">로그인</div>
-            <div className="login-signUpButton">회원가입</div>
+            <button className="login-loginButton">
+              <Link to="/login">로그인</Link>
+            </button>
+            <button className="login-signUpButton">회원가입</button>
           </div>
         </div>
       </div>
@@ -63,7 +66,7 @@ function Nav() {
 
 const header = () => {
   return (
-    <div>
+    <div className="header">
       <Login></Login>
       <Logo></Logo>
       <Nav></Nav>
