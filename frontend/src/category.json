@@ -1,0 +1,50 @@
+{
+  "category": [
+    {
+      "idx": 0,
+      "name": "청약자격확인",
+      "link": "",
+      "subcategory": [
+        {
+          "idx": 0,
+          "name": "한눈에보기",
+          "link": ""
+        },
+        {
+          "idx": 1,
+          "name": "공급별",
+          "link": ""
+        },
+        {
+          "idx": 2,
+          "name": "주택별",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "idx": 1,
+      "name": "계산기",
+      "link": "",
+      "subcategory": [
+        {
+          "idx": 0,
+          "name": "가점계산기",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "idx": 2,
+      "name": "부적격사례",
+      "link": "",
+      "subcategory": []
+    },
+    {
+      "idx": 3,
+      "name": "FAQ",
+      "link": "",
+      "subcategory": []
+    }
+  ]
+}
