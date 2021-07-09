@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import './components/CommonInput/PersonalInfo.css';
+import PersonalInfo from './components/CommonInput/PersonalInfo';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PersonalInfo />
   </React.StrictMode>,
   document.getElementById('root')
 );
