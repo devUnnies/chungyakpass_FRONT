@@ -45,12 +45,12 @@ function Nav() {
           {data.category.map((content, i) => {
             return (
               <li className="nav-item">
-                <a link={content.link}>{content.name}</a>
+                <Link to={content.link}>{content.name}</Link>
                 <ul className="nav-subItems">
                   {content.subcategory.map((subcontent, j) => {
                     return (
                       <li className="nav-subItem">
-                        <a link={subcontent.link}>{subcontent.name}</a>
+                        <Link to={subcontent.link}>{subcontent.name}</Link>
                       </li>
                     );
                   })}
