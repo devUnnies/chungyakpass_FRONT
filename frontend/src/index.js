@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Root from "./client/Root";
+import PersonalInfo from './components/CommonInput/PersonalInfo';
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     <Root />
+    <PersonalInfo />
   </React.StrictMode>,
   document.getElementById("root")
 );
