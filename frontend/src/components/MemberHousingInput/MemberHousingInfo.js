@@ -38,7 +38,7 @@ function MemberHousingInfo() {
           /> 소유하고 있다
           <input 
               type = "radio"
-              name = "owner" 
+              name = "housing" 
               onChange = { onChange } 
               value = "noneHousing"
               checked = { owner ===  "noneHousing" ? true: false}

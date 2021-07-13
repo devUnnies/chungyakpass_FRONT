@@ -1,12 +1,16 @@
+h3 {
+    top: 80%;
+}
 form {
     font-size: 15px;
+    margin-top: 20%; margin-left: 40%;
 }
 hr {
-    width: 50%; height: -5px; margin-left: 0; margin-top: 5px;
+    width: 30%; height: -5px; margin-left: 0; margin-top: 5px;
     border: 0.1px solid #E5E8ED;
 }
 input, select {
-    width: 50%;
+    width: 30%;
     margin-top: 6px; margin-bottom: 15px;
     font-size: 15px;
 }
