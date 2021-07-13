@@ -36,7 +36,7 @@ function PassbookInfo() {
         <select
             name = "passBook" 
             onChange = { onChange } 
-            value = { residence }>
+            value = { passBook }>
             <option value = "none"> ---선택--- </option>
             <option value = "Jonghab">주택청약종합저축</option>
             <option value = "Jeochug">청약저축</option>
