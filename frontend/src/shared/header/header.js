@@ -26,16 +26,16 @@ function Login() {
 function Logo() {
   return (
     <div className="logo">
-      <NavLink to="/">
         <div className="logo-container">
-          <div className="logo-image">
-            <img src={logo} alt="logo"></img>
-          </div>
-          <div className="logo-name">
-            청약<i>pass</i>
-          </div>
+          <NavLink to="/">
+            <div className="logo-image">
+              <img src={logo} alt="logo"></img>
+            </div>
+            <div className="logo-name">
+              청약<i>pass</i>
+            </div>
+          </NavLink>
         </div>
-      </NavLink>
     </div>
   );
 }
