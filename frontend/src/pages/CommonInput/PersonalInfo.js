@@ -1,22 +1,13 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./PersonalInfo.css"
 
-function logo () {
-    <h3> 신청자 정보 입력 </h3>
+function logo() {
+    <h3> 신청자 입력 정보 </h3>
 }
 function PersonalInfo() {
 
-  const [inputs, setInputs] = useState({
-    name: '',
-    birth: '',
-    owner: '',
-    seperation: '',
-    residence: '',
-    marriage: '',
-    marryDate: '',
-    nationality: '',
-    value: ''
-  }); 
+  const [inputs, setInputs] = useState(' '); 
 
   const { name, birth, owner, seperation, residence, marriage, marryDate, nationality } = inputs; 
 
@@ -63,7 +54,7 @@ function PersonalInfo() {
             onChange = { onChange } 
             value = "owner"
             checked = { owner ===  "owner" ? true: false}
-        /> 세대주 이다
+        /> 세대주 이다 <br />
         <input 
             type = "radio"
             name = "owner" 
@@ -80,7 +71,7 @@ function PersonalInfo() {
             onChange = { onChange } 
             value = "seperation"
             checked = { seperation ===  "seperation" ? true: false}
-        /> 분리세대 이다
+        /> 분리세대 이다 <br />
         <input 
             type = "radio"
             name = "seperation" 
@@ -109,7 +100,7 @@ function PersonalInfo() {
             onChange = { onChange } 
             value = "noneMarried"
             checked = { marriage ===  "noneMarried" ? true: false}
-        /> 미혼
+        /> 미혼 <br />
         <input 
             type = "radio"
             name = "marriage" 
@@ -135,7 +126,7 @@ function PersonalInfo() {
             onChange = { onChange } 
             value = "local"
             checked = { nationality ===  "local" ? true: false}
-        /> 내국인
+        /> 내국인 <br />
         <input 
             type = "radio"
             name = "nationality" 
@@ -143,8 +134,10 @@ function PersonalInfo() {
             value = "foreigner"
             checked = { nationality ===  "foreigner" ? true: false}
         /> 외국인 <br />
-        
-        <button id = "submit" type = "submit"> 제출 </button>
+
+        <Link to = '/passbook'>
+            <button id = "submit" type = "submit"> 다음 </button>
+        </Link>
 
         <div>
             <b> 회원 정보 </b> <br />
@@ -159,5 +152,5 @@ function PersonalInfo() {
         </div>
     </form>
   )
-  }
+  } 
 export default PersonalInfo;
