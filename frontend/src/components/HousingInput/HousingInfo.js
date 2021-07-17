@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./HousingInfo.css"
 
 function logo () {
@@ -6,21 +7,18 @@ function logo () {
 }
 function HousingInfo() {
 
-    const [inputs, setInputs] = useState({
-      housing: '',
-      area: '',
-      owned: '',
-      value: ''
-    }); 
+    const [inputs, setInputs] = useState(' '); 
   
-    const { housing, area, owned } = inputs; 
+    const { name, housing, area, owned, mujutaeg } = inputs; 
   
     const onChange = (e) => { 
-      const { housing, area, owned, value }  = e.target;
+      const { name, housing, area, owned, mujutaeg, value }  = e.target;
       setInputs({
         ...inputs,
+        [name]: value,
         [housing]: value,
         [area]: value,
+        [mujutaeg]: value,
         [owned]: value
       });
     };
@@ -34,14 +32,14 @@ function HousingInfo() {
               name = "housing" 
               onChange = { onChange } 
               value = "housing"
-              checked = { owner ===  "housing" ? true: false}
+              checked = { housing ===  "housing" ? true: false}
           /> 소유하고 있다
           <input 
               type = "radio"
               name = "housing" 
               onChange = { onChange } 
               value = "noneHousing"
-              checked = { owner ===  "noneHousing" ? true: false}
+              checked = { housing ===  "noneHousing" ? true: false}
           /> 소유하고 있지 않다 <br />
           
           소유 주택 면적
@@ -60,14 +58,14 @@ function HousingInfo() {
               name = "owned" 
               onChange = { onChange } 
               value = "owned"
-              checked = { owner ===  "owned" ? true: false}
+              checked = { owned ===  "owned" ? true: false}
           /> 소유한 적이 있다
           <input 
               type = "radio"
-              name = "owner" 
+              name = "owned" 
               onChange = { onChange } 
               value = "noneOwned"
-              checked = { owner ===  "noneOwned" ? true: false}
+              checked = { owned ===  "noneOwned" ? true: false}
           /> 소유한 적이 없다 <br />
           
           무주택 시작 일
@@ -78,13 +76,18 @@ function HousingInfo() {
               onChange = { onChange } 
               value = { mujutaeg }
           /> <br />
-          
-          <button id = "submit" type = "submit"> 제출 </button>
+
+          <Link to = '/passbook'>
+            <button id = "submit" type = "submit"> 이전 </button>
+          </Link>
+          <Link to = '/addMember'>
+            <button id = "submit" type = "submit"> 다음 </button>
+          </Link>
   
           <div>
               <b> 신청자 무주택 정보 </b> <br />
               주택 소유 여부: { housing } <br />
-              소유 주택 면적: { area } <br />
+              소유 주택 면적: { area } ㎡ <br />
               소유 이력 여부: { owned } <br />
               무주택 시작 일: { mujutaeg }
           </div>

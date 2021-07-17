@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./PersonalInfo.css"
 
 function logo() {
     <h3> 신청자 입력 정보 </h3>
 }
-
 function PersonalInfo() {
 
   const [inputs, setInputs] = useState(' '); 
 
   const { name, birth, owner, seperation, residence, marriage, marryDate, nationality } = inputs; 
+
   const onChange = (e) => { 
     const { name, birth, owner, seperation, residence, marriage, marryDate, nationality, value }  = e.target;
     setInputs({
@@ -133,8 +134,10 @@ function PersonalInfo() {
             value = "foreigner"
             checked = { nationality ===  "foreigner" ? true: false}
         /> 외국인 <br />
-        
-        <button id = "submit" type = "submit"> 제출 </button>
+
+        <Link to = '/passbook'>
+            <button id = "submit" type = "submit"> 다음 </button>
+        </Link>
 
         <div>
             <b> 회원 정보 </b> <br />

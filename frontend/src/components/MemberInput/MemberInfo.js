@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./MemberInfo.css"
 
 function logo () {
@@ -109,7 +110,9 @@ function MemberInfo() {
             checked = { nationality ===  "foreigner" ? true: false}
         /> 외국인 <br />
         
-        <button id = "submit" type = "submit"> 제출 </button>
+        <Link to = '/memberHousing'>
+            <button id = "submit" type = "submit"> 다음 </button>
+        </Link>
 
         <div>
             <b> 구성원 정보 </b> <br />
