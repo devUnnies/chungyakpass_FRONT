@@ -56,7 +56,7 @@ function Nav() {
                   {content.subcategory.map((subcontent, j) => {
                     return (
                       <li className="nav-subItem">
-                        <NavLink to={subcontent.link}>
+                        <NavLink to='/common'>
                           {subcontent.name}
                         </NavLink>
                       </li>
