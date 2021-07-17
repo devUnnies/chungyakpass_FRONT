@@ -11,10 +11,14 @@ function Login() {
         <div className="login-subcontainer">
           <div className="login-buttonArea">
             <button className="login-loginButton">
-              <NavLink to="/login">로그인</NavLink>
+              <NavLink to="/login" activeClassName="login-loginButton">
+                로그인
+              </NavLink>
             </button>
             <button className="login-signUpButton">
-              <NavLink to="/signup">회원가입</NavLink>
+              <NavLink to="/signup" activeClassName="login-signUpButton">
+                회원가입
+              </NavLink>
             </button>
           </div>
         </div>
@@ -26,16 +30,16 @@ function Login() {
 function Logo() {
   return (
     <div className="logo">
-      <NavLink to="/">
-        <div className="logo-container">
+      <div className="logo-container">
+        <NavLink to="/" activeClassName="logo-container">
           <div className="logo-image">
             <img src={logo} alt="logo"></img>
           </div>
           <div className="logo-name">
             청약<i>pass</i>
           </div>
-        </div>
-      </NavLink>
+        </NavLink>
+      </div>
     </div>
   );
 }
