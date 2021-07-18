@@ -36,16 +36,7 @@ function Maps() {
       {/** 이후에 link 삽입할 예정 */}
       <div className="personalRule">개인정보처리방침</div>
       <div className="noEmail">이메일무단수집거부</div>
-      <div className="sitemap">
-        <ul>사이트맵</ul>
-        {data.category.map((content, i) => {
-          return (
-            <li className="item">
-              <Link to={content.link}>{content.name}</Link>
-            </li>
-          );
-        })}
-      </div>
+      <div className="sitemap">사이트맵</div>
     </div>
   );
 }
