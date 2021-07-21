@@ -2,6 +2,9 @@ import {
   LOGIN_POST,
   LOGIN_POST_SUCCESS,
   LOGIN_POST_ERROR,
+  SIGNUP_POST,
+  SIGNUP_POST_SUCCESS,
+  SIGNUP_POST_ERROR,
 } from "../actions/authAction";
 import {
   reducerUtils,
@@ -10,6 +13,7 @@ import {
 
 const initialState = {
   login: reducerUtils.initial(),
+  signuptest: reducerUtils.initial(),
 };
 
 export default function auth(state = initialState, action) {
@@ -18,6 +22,12 @@ export default function auth(state = initialState, action) {
     case LOGIN_POST_SUCCESS:
     case LOGIN_POST_ERROR:
       return handleAsyncActions(LOGIN_POST, "login")(state, action);
+    case SIGNUP_POST:
+    case SIGNUP_POST_SUCCESS:
+    case SIGNUP_POST_ERROR:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
