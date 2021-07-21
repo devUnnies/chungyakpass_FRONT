@@ -27,6 +27,29 @@ function Login() {
   );
 }
 
+function Logout() {
+  return (
+    <div className="logout">
+      <div className="logout-container">
+        <div className="logout-subcontainer">
+          <div className="logout-buttonArea">
+            <button className="logout-loginButton">
+              <NavLink to="/" activeClassName="logout-logoutButton">
+                로그아웃
+              </NavLink>
+            </button>
+            <button className="logout-mypageButton">
+              <NavLink to="/mypage" activeClassName="logout-mypageButton">
+                마이페이지
+              </NavLink>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Logo() {
   return (
     <div className="logo">
@@ -60,9 +83,7 @@ function Nav() {
                   {content.subcategory.map((subcontent, j) => {
                     return (
                       <li className="nav-subItem">
-                        <NavLink to='/common'>
-                          {subcontent.name}
-                        </NavLink>
+                        <NavLink to="/common">{subcontent.name}</NavLink>
                       </li>
                     );
                   })}

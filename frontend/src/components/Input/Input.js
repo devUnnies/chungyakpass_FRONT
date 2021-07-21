@@ -1,36 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 
-function Input({
-  type,
-  placeholder,
-  value,
-  onChange,
-  accessory,
-  autoFocus = false,
-}) {
-  const renderCount = useRef(0);
-  const inputElement = useRef(null);
-
-  console.log("Render", placeholder, ++renderCount.current);
-  console.log(inputElement.current);
-
-  useEffect(() => {
-    if (autoFocus) {
-      inputElement.current.focus();
-    }
-  }, [autoFocus]);
-
+function Input({ type, placeholder, value, onChange }) {
   return (
-    <div style={{ display: "flex" }}>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        ref={inputElement}
-      />
-      {accessory}
-    </div>
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 
