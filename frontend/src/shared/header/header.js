@@ -11,12 +11,12 @@ function Login() {
         <div className="login-subcontainer">
           <div className="login-buttonArea">
             <button className="login-loginButton">
-              <NavLink to="/login" activeClassName="login-loginButton">
+              <NavLink to="/login" className="login-loginButton">
                 로그인
               </NavLink>
             </button>
             <button className="login-signUpButton">
-              <NavLink to="/signup" activeClassName="login-signUpButton">
+              <NavLink to="/signup" className="login-signUpButton">
                 회원가입
               </NavLink>
             </button>
@@ -34,12 +34,12 @@ function Logout() {
         <div className="logout-subcontainer">
           <div className="logout-buttonArea">
             <button className="logout-loginButton">
-              <NavLink to="/" activeClassName="logout-logoutButton">
+              <NavLink to="/" className="logout-logoutButton">
                 로그아웃
               </NavLink>
             </button>
             <button className="logout-mypageButton">
-              <NavLink to="/mypage" activeClassName="logout-mypageButton">
+              <NavLink to="/mypage" className="logout-mypageButton">
                 마이페이지
               </NavLink>
             </button>
@@ -54,7 +54,7 @@ function Logo() {
   return (
     <div className="logo">
       <div className="logo-container">
-        <NavLink to="/" activeClassName="logo-container">
+        <NavLink to="/" className="logo-container">
           <div className="logo-image">
             <img src={logo} alt="logo"></img>
           </div>
@@ -76,7 +76,7 @@ function Nav() {
           {data.category.map((content, i) => {
             return (
               <li className="nav-item">
-                <NavLink to={content.link} activeClassName="a">
+                <NavLink to={content.link} className="a">
                   {content.name}
                 </NavLink>
                 <ul className="nav-subItems">
