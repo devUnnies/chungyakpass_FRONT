@@ -4,6 +4,7 @@
 }
 
 .container {
+  display: flex;
   flex-direction: row;
 }
 
@@ -84,11 +85,13 @@
 
 /* 타일 영역 */
 .tiles {
+  margin-left: 25px;
 }
 
 .title {
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 
   font-family: Gothic A1;
   font-weight: bold;
@@ -108,4 +111,32 @@
 }
 
 .tile {
+}
+
+.firstRow {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.secondRow {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.box {
+  width: 300px;
+  height: 250px;
+
+  background-color: #2a4476;
+  margin: 0;
+}
+
+.box2 {
+  width: 300px;
+  height: 250px;
+
+  background-color: #d0d3d9;
+  margin: 0;
 }

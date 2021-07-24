@@ -93,7 +93,18 @@ const Tiles = () => {
         <div className="titleRect"></div>
         주요메뉴
       </div>
-      <div className="tile"></div>
+      <div className="tile">
+        <div className="firstRow">
+          <img></img>
+          <div className="box"></div>
+          <img></img>
+        </div>
+        <div className="secondRow">
+          <div className="box"></div>
+          <img></img>
+          <div className="box2"></div>
+        </div>
+      </div>
     </div>
   );
 };

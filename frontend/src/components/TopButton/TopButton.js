@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import img from "../../assets/top_button.png";
 
 export default function ScrollToTop() {
@@ -6,11 +7,11 @@ export default function ScrollToTop() {
 
   // Show button when page is scorlled upto given distance
   const toggleVisibility = () => {
-    // if (window.pageYOffset > 300) {
-    setIsVisible(true);
-    // } else {
-    //   setIsVisible(false);
-    // }
+    if (window.pageYOffset > 600) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
   };
 
   // Set the top cordinate to 0
@@ -27,12 +28,19 @@ export default function ScrollToTop() {
   }, []);
 
   return (
-    <div className="scroll-to-top">
+    <TopButton>
       {isVisible && (
         <div onClick={scrollToTop}>
           <img src={img} alt="Go to top" />
         </div>
       )}
-    </div>
+    </TopButton>
   );
 }
+
+const TopButton = styled.div`
+  position: fixed;
+  left: 90%;
+  top: 70%;
+  z-index: 100;
+`;
