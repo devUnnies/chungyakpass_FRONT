@@ -43,4 +43,5 @@ const TopButton = styled.div`
   left: 90%;
   top: 70%;
   z-index: 100;
+  cursor: pointer;
 `;

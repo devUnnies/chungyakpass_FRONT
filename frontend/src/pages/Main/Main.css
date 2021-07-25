@@ -60,7 +60,7 @@
   /* position: absolute; */
   width: 200px;
   height: 250px;
-  margin-left: 10%;
+  margin-left: 15%;
 
   border: 3px solid #d0d3d9;
   box-sizing: border-box;
@@ -85,7 +85,7 @@
 
 /* 타일 영역 */
 .tiles {
-  margin-left: 25px;
+  margin-left: 5%;
 }
 
 .title {
@@ -119,24 +119,76 @@
   margin: 0;
 }
 
+.tile1 {
+  position: relative;
+  width: 302px;
+  height: 250px;
+  background-image: url("../../assets/tile/check.png");
+  background-position: center center;
+  background-size: cover;
+}
+
+.tile1Button {
+  position: absolute;
+  top: 205px;
+  left: 205px;
+}
+
+.tile2 {
+  position: relative;
+  width: 302px;
+  height: 250px;
+  background-image: url("../../assets/tile/calculator.png");
+  background-position: center center;
+  background-size: cover;
+}
+
+.tile2Button {
+  position: absolute;
+  top: 15px;
+  left: 205px;
+}
+
 .secondRow {
   display: flex;
   flex-direction: row;
   margin: 0;
 }
 
+.tile3 {
+  position: relative;
+  width: 302px;
+  height: 250px;
+  background-image: url("../../assets/tile/example.png");
+  background-position: center center;
+  background-size: cover;
+}
+
+.tile3Button {
+  position: absolute;
+  top: 205px;
+  left: 20px;
+}
+
+.tile4 {
+  position: relative;
+  width: 302px;
+  height: 250px;
+  background-image: url("../../assets/tile/faq.png");
+  background-position: center center;
+  background-size: cover;
+}
+
+.tile4Button {
+  position: absolute;
+  top: 205px;
+  left: 205px;
+}
+
 .box {
-  width: 300px;
+  width: 302px;
   height: 250px;
 
   background-color: #2a4476;
-  margin: 0;
-}
-
-.box2 {
-  width: 300px;
-  height: 250px;
-
-  background-color: #d0d3d9;
   margin: 0;
 }

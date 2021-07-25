@@ -76,10 +76,22 @@ const LoginArea = () => {
           회원가입
         </MainButton>
       </NavLink>
-      <SubButton width="80" height="20" paddingLeft="8" paddingTop="0">
+      <SubButton
+        width="80"
+        height="20"
+        paddingLeft="8"
+        paddingTop="0"
+        fontSize="16"
+      >
         아이디찾기
       </SubButton>
-      <SubButton width="100" height="20" paddingLeft="12" paddingTop="0">
+      <SubButton
+        width="100"
+        height="20"
+        paddingLeft="12"
+        paddingTop="0"
+        fontSize="16"
+      >
         비밀번호찾기
       </SubButton>
     </div>
@@ -95,14 +107,38 @@ const Tiles = () => {
       </div>
       <div className="tile">
         <div className="firstRow">
-          <img></img>
+          <div className="tile1">
+            <NavLink to="/common" className="tile1Button">
+              <MainButton width="80" height="30" fontSize="13">
+                바로가기
+              </MainButton>
+            </NavLink>
+          </div>
           <div className="box"></div>
-          <img></img>
+          <div className="tile2">
+            <NavLink to="/common" className="tile2Button">
+              <MainButton width="80" height="30" fontSize="13">
+                바로가기
+              </MainButton>
+            </NavLink>
+          </div>
         </div>
         <div className="secondRow">
           <div className="box"></div>
-          <img></img>
-          <div className="box2"></div>
+          <div className="tile3">
+            <NavLink to="/common" className="tile3Button">
+              <MainButton width="80" height="30" fontSize="13">
+                바로가기
+              </MainButton>
+            </NavLink>
+          </div>
+          <div className="tile4">
+            <NavLink to="/common" className="tile4Button">
+              <MainButton width="80" height="30" fontSize="13">
+                바로가기
+              </MainButton>
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>
