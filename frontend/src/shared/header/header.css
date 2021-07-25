@@ -62,6 +62,7 @@ body {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
+  text-decoration: none;
   line-height: 19px;
   display: flex;
   align-items: center;
@@ -90,6 +91,7 @@ body {
   font-weight: 600;
   font-size: 14px;
   line-height: 19px;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,16 +110,124 @@ body {
 .login button {
   border: 0;
   background-color: rgba(255, 255, 255, 0);
+
+  text-decoration: none;
+}
+
+/* 로그아웃 영역 */
+.logout {
+  width: 100%;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(242, 242, 242, 0) 0%,
+    rgba(242, 242, 242, 0.475177) 0.01%,
+    rgba(242, 242, 242, 0.604037) 78.65%,
+    #f2f2f2 89.06%,
+    rgba(242, 242, 242, 0) 100%
+  );
+  border: 1px solid #c0c0c0;
+}
+
+.logout-container {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  top: 0px;
+}
+
+.logout-subcontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  position: absolute;
+  width: 100%;
+  height: 30px;
+
+  top: 10px;
+}
+
+.logout-buttonArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.logout-logOutButton {
+  position: static;
+  width: 75px;
+  height: 30px;
+
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+
+  color: #2a4476;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px;
+}
+
+.logout-mypageButton {
+  position: static;
+  width: 75px;
+  height: 30px;
+  left: 85px;
+  top: 0px;
+
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+
+  color: #2a4476;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 10px;
+}
+
+.logout button {
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
+
+  text-decoration: none;
 }
 
 /* 로고 영역 */
 
 .logo {
   position: absolute;
+  display: flex;
+  margin-top: 5%;
   width: 80%;
   height: 150px;
-  left: 10%;
-  top: 80px;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-container {
@@ -130,6 +240,7 @@ body {
   height: 150px;
   left: 10%;
   top: 80px;
+  text-decoration: none;
 }
 
 .logo-image {
@@ -159,7 +270,9 @@ body {
   position: absolute;
   width: 80%;
   height: 40px;
-  top: 35%;
+  margin-top: 15%;
+  /* top: 35%; */
+  z-index: 1000;
 }
 
 .nav-container {
@@ -205,6 +318,8 @@ body {
   font-size: 18px;
   line-height: 22px;
   border: #c0c0c0;
+
+  text-decoration: none;
 }
 
 .nav-item:hover > a {
@@ -216,6 +331,8 @@ body {
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
+
+  text-decoration: none;
 }
 
 .nav-item:hover .nav-subItems {
@@ -252,6 +369,7 @@ body {
   font-size: 15px;
   line-height: 22px;
   border: #c0c0c0;
+  text-decoration: none;
 }
 
 .nav-subItem:hover a {
