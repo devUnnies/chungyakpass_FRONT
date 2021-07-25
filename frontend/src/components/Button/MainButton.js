@@ -8,6 +8,7 @@ function MainButton({
   paddingLeft,
   paddingTop,
   fontSize,
+  onClick,
 }) {
   return (
     <StyledButton
@@ -16,6 +17,7 @@ function MainButton({
       paddingLeft={paddingLeft}
       paddingTop={paddingTop}
       fontSize={fontSize}
+      onClick={onClick}
     >
       {children}
     </StyledButton>

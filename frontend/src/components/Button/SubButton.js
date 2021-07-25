@@ -1,13 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-function SubButton({ width, height, children, paddingLeft, paddingTop }) {
+function SubButton({
+  width,
+  height,
+  children,
+  paddingLeft,
+  paddingTop,
+  onClick,
+}) {
   return (
     <StyledButton
       width={width}
       height={height}
       paddingLeft={paddingLeft}
       paddingTop={paddingTop}
+      onClick={onClick}
     >
       {children}
     </StyledButton>

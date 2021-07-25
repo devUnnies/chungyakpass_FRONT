@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   login: reducerUtils.initial(),
-  signuptest: reducerUtils.initial(),
+  signup: reducerUtils.initial(),
 };
 
 export default function auth(state = initialState, action) {
@@ -21,7 +21,10 @@ export default function auth(state = initialState, action) {
     case LOGIN_POST:
     case LOGIN_POST_SUCCESS:
     case LOGIN_POST_ERROR:
-      return handleAsyncActions(LOGIN_POST, "login")(state, action);
+      // return handleAsyncActions(LOGIN_POST, "login")(state, action);
+      return {
+        ...state,
+      };
     case SIGNUP_POST:
     case SIGNUP_POST_SUCCESS:
     case SIGNUP_POST_ERROR:
