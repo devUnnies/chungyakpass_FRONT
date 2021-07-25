@@ -22,6 +22,8 @@ function HousingInfo() {
         [owned]: value
       });
     };
+
+    console.log(inputs);
   
     return (
       <form>
@@ -80,7 +82,7 @@ function HousingInfo() {
           <Link to = '/passbook'>
             <button id = "submit" type = "submit"> 이전 </button>
           </Link>
-          <Link to = '/addMember'>
+          <Link to = '/board'>
             <button id = "submit" type = "submit"> 다음 </button>
           </Link>
   

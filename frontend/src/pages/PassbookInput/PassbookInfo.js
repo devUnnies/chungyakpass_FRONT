@@ -9,20 +9,23 @@ function PassbookInfo() {
 
   const [inputs, setInputs] = useState(' '); 
 
-  const { name, passbook, joinDate, number, price, usage } = inputs; 
+  const { name, passbook, joinDate, bank, number, price, usage } = inputs; 
 
   const onChange = (e) => { 
-    const { name, passbook, joinDate, number, price, usage, value }  = e.target;
+    const { name, passbook, joinDate, bank, number, price, usage, value }  = e.target;
     setInputs({
       ...inputs,
       [name]: value,
       [passbook]: value, 
       [joinDate]: value,
+      [bank]: value,
       [number]: value,
       [price]: value,
       [usage]: value
     });
   };
+
+  console.log(inputs);
 
   return (
     <form>
@@ -47,6 +50,21 @@ function PassbookInfo() {
             onChange = { onChange } 
             value = { joinDate }
         /> <br />
+
+        개설 은행
+        <hr />
+        <select
+            name = "bank" 
+            onChange = { onChange } 
+            value = { bank }>
+            <option value = "none"> ---선택--- </option>
+            <option value = "shinhan">신한</option>
+            <option value = "gugmin">국민</option>
+            <option value = "gieob">기업</option>
+            <option value = "nonghyeob">농협</option>
+            <option value = "woori">우리</option>
+            <option value = "hana">하나</option>
+        </select> <br />
 
         납입 횟수
         <hr />
@@ -94,6 +112,7 @@ function PassbookInfo() {
             <b> 회원 정보 </b> <br />
             청약 통장 종류: { passbook } <br />
             청약 통장 가입일: { joinDate } <br />
+            개설 은행: { bank } <br />
             납입 횟수: { number } <br />
             납입 금액: { price } <br />
             청약 통장 사용 이력: { usage }
