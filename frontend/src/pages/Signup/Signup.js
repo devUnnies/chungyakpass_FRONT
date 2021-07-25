@@ -1,10 +1,13 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { signupTest } from "../../store/actions/authAction";
+import { NavLink } from "react-router-dom";
 
 import Input from "../../components/Input/Input";
 import useInputState from "../../components/Input/useInputState";
 import useWindowWidth from "../../components/WindowSize/useWindowWidth";
+import MainButton from "../../components/Button/MainButton";
+import SubButton from "../../components/Button/SubButton";
 
 function Signup() {
   const dispatch = useDispatch();
@@ -48,19 +51,33 @@ function Signup() {
           value={email}
           onChange={handleChangeEmail}
         />
-        <button type="button" onClick={handleEmailCode}>
+        <MainButton
+          width="100"
+          height="30"
+          fontSize="16"
+          type="button"
+          onClick={handleEmailCode}
+        >
           인증하기
-        </button>
+        </MainButton>
         <Input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={handleChangePassword}
         />
-        <button type="submit">가입하기</button>
-        <button type="button" onClick={handleReset}>
+        <MainButton width="100" height="30" fontSize="16" type="submit">
+          가입하기
+        </MainButton>
+        <SubButton
+          width="100"
+          height="30"
+          fontSize="16"
+          type="button"
+          onClick={handleReset}
+        >
           초기화
-        </button>
+        </SubButton>
       </form>
       <div>{windowWidth}</div>
     </>
