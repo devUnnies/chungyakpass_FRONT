@@ -22,6 +22,8 @@ function MemberHousingInfo() {
         [mujutaeg]: value
       });
     };
+
+    console.log(inputs);
   
     return (
       <form>
@@ -80,7 +82,7 @@ function MemberHousingInfo() {
           <Link to = '/member'>
             <button id = "submit" type = "submit"> 이전 </button>
           </Link>
-          <Link to = '/addMember'>
+          <Link to = '/board'>
             <button id = "submit" type = "submit"> 제출 </button>
           </Link>
 
