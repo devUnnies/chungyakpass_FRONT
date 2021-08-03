@@ -110,9 +110,7 @@ function Logo() {
     <div className="logo">
       <div className="logo-container">
         <NavLink to="/" className="logo-container">
-          <div className="logo-image">
-            <img src={logo} alt="logo"></img>
-          </div>
+          <img src={logo} alt="logo" className="logo-image"></img>
           <div className="logo-name">
             청약<i>pass</i>
           </div>

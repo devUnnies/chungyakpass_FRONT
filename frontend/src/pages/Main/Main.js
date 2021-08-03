@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import useWindowWidth from "../../components/WindowSize/useWindowWidth";
 import "./Main.css";
 import MainButton from "../../components/Button/MainButton";
 import SubButton from "../../components/Button/SubButton";
@@ -13,6 +14,7 @@ const SliderImage = () => {
   const sources = [slider1img, slider2img, slider3img];
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
+  const windowWidth = useWindowWidth();
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -43,7 +45,7 @@ const SliderImage = () => {
       >
         {sources.map((content, index) => (
           <div className="slide" key={index}>
-            <img src={content} alt="sliderimage"></img>
+            <img src={content} alt="sliderimage" width={windowWidth}></img>
           </div>
         ))}
       </div>
