@@ -18,12 +18,12 @@ const data = {
         {
           idx: 1,
           name: "공급별",
-          link: "",
+          link: "/common",
         },
         {
           idx: 2,
           name: "주택별",
-          link: "",
+          link: "/common",
         },
       ],
     },
@@ -47,7 +47,7 @@ const data = {
     {
       idx: 2,
       name: "부적격사례",
-      link: "",
+      link: "/case",
       subcategory: [],
     },
     {
