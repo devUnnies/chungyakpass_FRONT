@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import Tr from './Tr';
 import Post from './Post';
@@ -92,25 +90,24 @@ const Board = () => {
 
     return (
         <div>
-            <div> 구성원 정보 입력 리스트 </div>
-            <Link to = '/Post'>
-                <button type = "submit"> 추가 </button>
-            </Link>
+            <div className = "text-x1 font-bold mt-5 mb-3 text-center"> 구성원 정보 입력 리스트 </div>
             <br />
-            <table border = "1">
-                <thead>
-                    <th> 번호 </th>
-                    <th> 이름 </th>
-                    <th> 생년월일 </th>
-                    <th> 내/외국인 </th>
-                    <th> 신청자와의 관계 </th>
-                    <th> 세대주 여부 </th>
-                    <th> 혼인 여부 </th>
-                    <th> 월 평균 소득 </th>
-                    <th> 자산 </th>
-                    <th> 청약 당첨 이력 </th>
-                    <th> 수정 </th>
-                    <th> 삭제 </th>
+            <table className = "min-w-full table-auto text-gray-800">
+                <thead className = "justify-between">
+                    <tr className = "bg-gray-800">
+                        <th className = "text-gray-300 px-4 py-3"> 번호 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 이름 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 생년월일 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 내/외국인 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 신청자와의 관계 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 세대주 여부 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 혼인 여부 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 월 평균 소득 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 자산 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 청약 당첨 이력 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 수정 </th>
+                        <th className = "text-gray-300 px-4 py-3"> 삭제 </th>
+                    </tr>
                 </thead>
                 <Tr info = {info} handleRemove = {handleRemove} handleEdit = {handleEdit} />
             </table>

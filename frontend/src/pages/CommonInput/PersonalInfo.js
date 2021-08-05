@@ -132,7 +132,7 @@ function PersonalInfo() {
                 checked = { seperation ===  "noneSeperation" ? true: false}
             /> 분리세대가 아니다 <br />
 
-            거주지역
+            주민등록상 거주지
             <hr />
             <select
                 name = "residence" 
@@ -200,7 +200,7 @@ function PersonalInfo() {
                 장기 복무 군인 여부 { soldier } <br />
                 세대주 여부: { owner } <br />
                 분리세대 여부: { seperation } <br />
-                거주지역: { residence } <br />
+                주민등록상 거주지: { residence } <br />
                 혼인 여부: { marriage } <br />
                 혼인(예정) 일: { marryDate } <br />
                 월 평균 소득: { income } <br />

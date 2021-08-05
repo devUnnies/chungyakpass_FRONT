@@ -41,8 +41,8 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
                         <div> 이름: <input type = "text" name = "name" value = {edited.name} onChange = {onEditChange} /></div>
                         <div> 생년월일: <input type = "date" name = "birth" value = {edited.birth} onChange = {onEditChange} /></div>
                         <div> 내/외국인:
-                            <input type = "radio" name = "nationality" value = {edited.nationality} onChange = {onEditChange} value = "local" checked = { edited.history ===  "local" ? true: false}/> 내국인 <br />
-                            <input type = "radio" name = "nationality" value = {edited.nationality} onChange = {onEditChange} value = "foreigner" checked = { edited.history ===  "foreigner" ? true: false}/> 외국인 <br />
+                            <input type = "radio" name = "nationality" value = {edited.nationality} onChange = {onEditChange} value = "local" checked = { edited.nationality ===  "local" ? true: false}/> 내국인
+                            <input type = "radio" name = "nationality" value = {edited.nationality} onChange = {onEditChange} value = "foreigner" checked = { edited.nationality ===  "foreigner" ? true: false}/> 외국인 <br />
                         </div>
                         <div> 신청자와의 관계: 
                         <select
