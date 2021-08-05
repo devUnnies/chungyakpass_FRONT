@@ -24,19 +24,3 @@ input[type = 'radio'] {
     border: 0px; border-radius: 20px; background-color: #2A4476;
     cursor: pointer;
 }
-
-table {
-    border-spacing: 0;
-    line-height: 1.5;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    margin : 20px 10px;
-}
-th {
-    padding: 8px;
-    font-weight: bold;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #fff;
-    background: #eee;
-}

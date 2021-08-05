@@ -9,6 +9,9 @@ import ReduxThunk from "redux-thunk";
 import rootReducer from "./store/reducers/index";
 import reportWebVitals from "./reportWebVitals";
 
+// redux devTool
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
 const logger = createLogger();
 const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk));
 
