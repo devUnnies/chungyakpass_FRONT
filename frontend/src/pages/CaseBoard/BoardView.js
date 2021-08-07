@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPostByNo } from '../../Data';
+import { getPostByNo } from './Data';
 import './Board.css'
  
 const BoardView = ({ history, location, match }) => {
@@ -32,8 +32,8 @@ const BoardView = ({ history, location, match }) => {
                 <label>{ data.createDate }</label>
               </div>
               <div className="post-view-row">
-                <label>조회수</label>
-                <label>{ data.readCount }</label>
+                <label>작성자</label>
+                <label>{ data.writer }</label>
               </div>
               <div className="post-view-row">
                 <label>내용</label>
