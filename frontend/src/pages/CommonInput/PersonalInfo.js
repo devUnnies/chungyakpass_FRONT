@@ -95,7 +95,7 @@ function PersonalInfo() {
                 name = "soldier" 
                 onChange = { onChange } 
                 value = "noneSoldier"
-                checked = { marriage ===  "noneSoldier" ? true: false}
+                checked = { soldier ===  "noneSoldier" ? true: false}
             /> 해당하지 않음 <br />
 
             세대주 여부

@@ -1,7 +1,22 @@
 .search_box {
     margin-top: 300px;
-    margin-left: 300px;
+    margin-left: 450px;
     width: 800px;
+}
+
+#searchCate {
+    width: 100px;
+    margin-right: 20px;
+}
+
+#search_btn {
+    margin-left: 20px;
+    border: 0;
+    padding: 4px;
+    background-color: #2a4476;
+    color: #FFFFFF;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 h2 {
