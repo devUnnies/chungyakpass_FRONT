@@ -118,7 +118,7 @@ const Tiles = () => {
           </div>
           <div className="box"></div>
           <div className="tile2">
-            <NavLink to="/common" className="tile2Button">
+            <NavLink to="" className="tile2Button">
               <MainButton width="80" height="30" fontSize="13">
                 바로가기
               </MainButton>
@@ -128,7 +128,7 @@ const Tiles = () => {
         <div className="secondRow">
           <div className="box"></div>
           <div className="tile3">
-            <NavLink to="/common" className="tile3Button">
+            <NavLink to="/case" className="tile3Button">
               <MainButton width="80" height="30" fontSize="13">
                 바로가기
               </MainButton>

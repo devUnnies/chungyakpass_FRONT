@@ -4,35 +4,35 @@ const boardList = [
       "title": "첫번째 게시글입니다.",
       "content": "첫번째 게시글 내용입니다.",
       "createDate": "2021-08-04",
-      "readCount": 6
+      "writer": "관리자"
     },
     {
       "no": 2,
       "title": "두번째 게시글입니다.",
       "content": "두번째 게시글 내용입니다.",
       "createDate": "2021-08-04",
-      "readCount": 5
+      "writer": "관리자"
     },
     {
       "no": 3,
       "title": "세번째 게시글입니다.",
       "content": "세번째 게시글 내용입니다.",
       "createDate": "2021-08-04",
-      "readCount": 1
+      "writer": "관리자"
     },
     {
       "no": 4,
       "title": "네번째 게시글입니다.",
       "content": "네번째 게시글 내용입니다.",
       "createDate": "2021-08-04",
-      "readCount": 2
+      "writer": "관리자"
     },
     {
       "no": 5,
       "title": "다섯번째 게시글입니다.",
       "content": "다섯번째 게시글 내용입니다.",
       "createDate": "2021-08-04",
-      "readCount": 4
+      "writer": "관리자"
     },
   ];
    
