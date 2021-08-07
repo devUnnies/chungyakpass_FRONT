@@ -13,7 +13,7 @@ const data = {
         {
           idx: 0,
           name: "한눈에보기",
-          link: "/common",
+          link: "/common/personal",
         },
         {
           idx: 1,
@@ -136,7 +136,7 @@ function Nav() {
                   {content.subcategory.map((subcontent, j) => {
                     return (
                       <li className="nav-subItem">
-                        <NavLink to="/common">{subcontent.name}</NavLink>
+                        <NavLink to={subcontent.link}>{subcontent.name}</NavLink>
                       </li>
                     );
                   })}

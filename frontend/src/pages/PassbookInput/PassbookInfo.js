@@ -101,10 +101,10 @@ function PassbookInfo() {
             checked = { usage ===  "noneUsed" ? true: false}
         /> 사용 이력 없음 <br />
 
-        <Link to = '/common'>
+        <Link to = '/common/personal'>
             <button id = "submit" type = "submit"> 이전 </button>
         </Link>
-        <Link to = '/housing'>
+        <Link to = '/common/housing'>
             <button id = "submit" type = "submit"> 다음 </button>
         </Link>
 

@@ -188,7 +188,7 @@ function PersonalInfo() {
                 value = { asset }
             /> ㎡ <br />
 
-            <Link to = '/passbook'>
+            <Link to = '/common/passbook'>
                 <button id = "submit" type = "submit"> 다음 </button>
             </Link>
 
