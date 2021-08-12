@@ -1,2 +1,49 @@
 .Login {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-bottom: 5%;
+  position: relative;
+  /* padding-left: 45%; */
+}
+
+.Login .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loginform {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  border: 3px solid #d0d3d9;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.loginemail {
+  display: flex;
+  margin-top: 10px;
+  border: 2px solid #2a4476;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.loginpassword {
+  display: flex;
+  margin-top: 10px;
+  border: 2px solid #2a4476;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
 }

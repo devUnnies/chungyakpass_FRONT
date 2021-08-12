@@ -38,7 +38,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   flex: none;
   flex-grow: 0;
-  margin-bottom: 10px;
+  margin: 10px;
 
   &:active,
   &:hover,

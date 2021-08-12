@@ -32,7 +32,7 @@ class App extends Component {
           <Route path="/personalRule" component={PersonalRules} />
           <Route path="/noEmail" component={NoEmail} />
           <Route path="/sitemap" component={Sitemap} />
-          <Route path="/common" component={PersonalInfo} />
+          <Route path="/common" component={Board} />
           <Route path="/passbook" component={PassbookInfo} />
           <Route path="/housing" component={HousingInfo} />
           <Route path="/member" component={MemberInfo} />

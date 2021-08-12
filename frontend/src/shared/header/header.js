@@ -17,8 +17,8 @@ const data = {
         },
         {
           idx: 1,
-          name: "공급별",
-          link: "/supply",
+          name: "유형별",
+          link: "",
           subcategory: [
             {
               idx: 0,
@@ -29,45 +29,40 @@ const data = {
               idx: 1,
               name: "특별공급",
               link: "/supply/special",
-              subcategory: [
-                {
-                  idx: 0,
-                  name: "신혼부부",
-                  link: "/supply/special/newlymarried",
-                },
-                {
-                  idx: 1,
-                  name: "다자녀가구",
-                  link: "/supply/special/multiplechildren",
-                },
-                {
-                  idx: 2,
-                  name: "노부모부양",
-                  link: "/supply/special/oldparentsupport",
-                },
-                {
-                  idx: 3,
-                  name: "생애최초 주택구입",
-                  link: "/supply/special/firsthomepurchase",
-                },
-                {
-                  idx: 4,
-                  name: "이전기관종사자 등",
-                  link: "/supply/special/formeragencyworker",
-                },
-                {
-                  idx: 5,
-                  name: "외국인",
-                  link: "/supply/special/foreigner",
-                },
-              ],
+              // subcategory: [
+              //   {
+              //     idx: 0,
+              //     name: "신혼부부",
+              //     link: "/supply/special/newlymarried",
+              //   },
+              //   {
+              //     idx: 1,
+              //     name: "다자녀가구",
+              //     link: "/supply/special/multiplechildren",
+              //   },
+              //   {
+              //     idx: 2,
+              //     name: "노부모부양",
+              //     link: "/supply/special/oldparentsupport",
+              //   },
+              //   {
+              //     idx: 3,
+              //     name: "생애최초 주택구입",
+              //     link: "/supply/special/firsthomepurchase",
+              //   },
+              //   {
+              //     idx: 4,
+              //     name: "이전기관종사자 등",
+              //     link: "/supply/special/formeragencyworker",
+              //   },
+              //   {
+              //     idx: 5,
+              //     name: "외국인",
+              //     link: "/supply/special/foreigner",
+              //   },
+              // ],
             },
           ],
-        },
-        {
-          idx: 2,
-          name: "주택별",
-          link: "/common",
         },
       ],
     },
@@ -191,7 +186,7 @@ function Nav() {
                                     <NavLink to={subcontent.link} className="a">
                                       {subcontent.name}
                                     </NavLink>
-                                    <ul className="nav-subsubsubItems">
+                                    {/* <ul className="nav-subsubsubItems">
                                       {subcontent.subcategory
                                         ? subcontent.subcategory.map(
                                             (subcontent, j) => {
@@ -208,7 +203,7 @@ function Nav() {
                                             }
                                           )
                                         : null}
-                                    </ul>
+                                    </ul> */}
                                   </li>
                                 );
                               })
