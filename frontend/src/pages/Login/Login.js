@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { loginTest } from "../../store/actions/authAction";
-
+import "./Login.css";
 import Input from "../../components/Input/Input";
 import useInputState from "../../components/Input/useInputState";
 import useWindowWidth from "../../components/WindowSize/useWindowWidth";
@@ -39,33 +39,41 @@ function Login() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          placeholder="이메일"
-          value={email}
-          onChange={handleChangeEmail}
-        />
-        <Input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={handleChangePassword}
-        />
-        <MainButton width="100" height="30" fontSize="16" type="submit">
-          로그인하기
-        </MainButton>
-        <SubButton
-          width="100"
-          height="30"
-          fontSize="16"
-          type="button"
-          onClick={handleReset}
-        >
-          초기화
-        </SubButton>
-      </form>
-      <div>{windowWidth}</div>
+      <div className="Login">
+        <div className="container">
+          <form onSubmit={handleSubmit} className="loginform">
+            <input
+              type="email"
+              placeholder="이메일"
+              value={email}
+              onChange={handleChangeEmail}
+              className="loginemail"
+            />
+            <br />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={handleChangePassword}
+              className="loginpassword"
+            />
+            <br />
+            <MainButton width="100" height="30" fontSize="16" type="submit">
+              로그인하기
+            </MainButton>
+            <SubButton
+              width="100"
+              height="30"
+              fontSize="16"
+              type="button"
+              onClick={handleReset}
+            >
+              초기화
+            </SubButton>
+          </form>
+        </div>
+        <div>{windowWidth}</div>
+      </div>
     </>
   );
 }
