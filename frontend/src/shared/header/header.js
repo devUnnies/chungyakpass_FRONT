@@ -53,7 +53,7 @@ const data = {
     {
       idx: 3,
       name: "FAQ",
-      link: "",
+      link: "/FAQ",
       subcategory: [],
     },
   ],
