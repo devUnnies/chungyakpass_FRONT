@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Main, Login, Signup, PersonalInfo, PassbookInfo, HousingInfo, MemberInfo, MemberHousingInfo, Board, Post, BoardMain, BoardView } from "../pages";
+import { Main, Login, Signup, PersonalInfo, PassbookInfo, HousingInfo, MemberInfo, MemberHousingInfo, Board, Post, BoardMain, BoardView, FAQ } from "../pages";
 import Header from "./header/header";
 import Footer from "./footer/footer";
 
@@ -22,6 +22,7 @@ class App extends Component {
           <Route path="/post" component={Post} />
           <Route exact path='/boardView/:no' component={BoardView} />
           <Route path="/case" component={BoardMain} />
+          <Route path="/FAQ" component={FAQ} />
         </Switch>
         <Footer></Footer>
       </div>

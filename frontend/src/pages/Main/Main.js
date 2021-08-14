@@ -135,7 +135,7 @@ const Tiles = () => {
             </NavLink>
           </div>
           <div className="tile4">
-            <NavLink to="/common" className="tile4Button">
+            <NavLink to="/FAQ" className="tile4Button">
               <MainButton width="80" height="30" fontSize="13">
                 바로가기
               </MainButton>
