@@ -168,7 +168,7 @@ function MemberInfo() {
             <button id = "submit" type = "reset"> 취소 </button>
         </Link>
 
-        <Link to = '/memberHousing'>
+        <Link to = '/common/memberHousing'>
             <button id = "submit" type = "submit"> 다음 </button>
         </Link>
 

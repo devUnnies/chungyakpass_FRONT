@@ -79,7 +79,7 @@ function MemberHousingInfo() {
               value = { mujutaeg }
           /> <br />
 
-          <Link to = '/member'>
+          <Link to = '/common/member'>
             <button id = "submit" type = "submit"> 이전 </button>
           </Link>
           <Link to = '/board'>
