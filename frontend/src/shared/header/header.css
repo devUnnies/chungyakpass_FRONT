@@ -289,7 +289,9 @@
       #f2f2f2 89.06%,
       rgba(242, 242, 242, 0) 100%
     );
-    border: 1px solid #c0c0c0;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #c0c0c0;
   }
 
   .login-container {
@@ -488,6 +490,7 @@
     position: absolute;
     display: flex;
     margin-top: 5%;
+    margin-bottom: 5%;
     width: 80%;
     height: 150px;
     justify-content: center;
@@ -515,7 +518,7 @@
   .logo-name {
     /* 청약 pass */
     left: -110px;
-    bottom: -10px;
+    /* bottom: -10px; */
     position: relative;
     font-family: Gothic A1;
     font-style: normal;
@@ -637,9 +640,42 @@
   }
 
   .nav-subItem:hover a {
-    background-color: #f2f2f2;
-    color: #2a4476;
+    display: block;
+    padding: 9px;
+    color: #fff;
+    background-color: #2a4476;
+
+    font-family: Gothic A1;
+    font-style: normal;
     font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    border: #c0c0c0;
+
+    text-decoration: none;
+  }
+
+  .nav-subItem:hover > a {
+    padding: 10px;
+    color: #2a4476;
+    background-color: #fff;
+
+    font-family: Gothic A1;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+
+    text-decoration: none;
+  }
+
+  .nav-subItem:hover .nav-subsubItems {
+    opacity: 1;
+  }
+
+  .nav-subItem:hover .nav-subsubItems .nav-subsubItem {
+    height: 35px;
+    overflow: visible;
+    padding: 0;
   }
 
   .nav-subsubItems {
@@ -647,8 +683,8 @@
     margin: 0;
     padding: 0;
     position: absolute;
-    left: 100px;
-    top: 40px;
+    left: 0;
+    top: 70px;
     width: 100%;
     background-color: #2a4476;
     border-radius: 3px;
@@ -949,7 +985,7 @@
     width: 80%;
     height: 40px;
     margin-top: 15%;
-    z-index: 1000;
+    z-index: 1;
   }
 
   .nav-container {
