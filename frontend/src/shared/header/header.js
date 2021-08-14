@@ -13,7 +13,7 @@ const data = {
         {
           idx: 0,
           name: "한눈에보기",
-          link: "/common",
+          link: "/common/personal",
         },
         {
           idx: 1,

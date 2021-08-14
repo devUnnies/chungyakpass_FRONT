@@ -32,11 +32,15 @@ class App extends Component {
           <Route path="/personalRule" component={PersonalRules} />
           <Route path="/noEmail" component={NoEmail} />
           <Route path="/sitemap" component={Sitemap} />
-          <Route path="/common" component={Board} />
-          <Route path="/passbook" component={PassbookInfo} />
-          <Route path="/housing" component={HousingInfo} />
-          <Route path="/member" component={MemberInfo} />
-          <Route path="/memberHousing" component={MemberHousingInfo} />
+          <Route exact path="/common/personal" component={PersonalInfo} />
+          <Route exact path="/common/passbook" component={PassbookInfo} />
+          <Route exact path="/common/housing" component={HousingInfo} />
+          <Route exact path="/common/member" component={MemberInfo} />
+          <Route
+            exact
+            path="/common/memberHousing"
+            component={MemberHousingInfo}
+          />
           <Route path="/board" component={Board} />
           <Route path="/post" component={Post} />
           <Route exact path="/boardView/:no" component={BoardView} />

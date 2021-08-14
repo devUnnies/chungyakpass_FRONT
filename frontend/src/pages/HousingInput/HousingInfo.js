@@ -79,7 +79,7 @@ function HousingInfo() {
               value = { mujutaeg }
           /> <br />
 
-          <Link to = '/passbook'>
+          <Link to = '/common/passbook'>
             <button id = "submit" type = "submit"> 이전 </button>
           </Link>
           <Link to = '/board'>

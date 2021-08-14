@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import CommonTable from '../../components/Table/CommonTable'
 import CommonTableColumn from '../../components/Table/CommonTableColumn';
 import CommonTableRow from '../../components/Table/CommonTableRow';
-import { boardList } from '../../Data';
+import { boardList } from './Data';
 import './Board.css'
+import { Users } from "../../components/User/Users";
  
 const BoardList = props => {
   const [ dataList, setDataList ] = useState([]);
@@ -12,6 +13,27 @@ const BoardList = props => {
   useEffect(() => {
     setDataList(boardList);
   }, [ ])
+
+  const [users, setUsers] = useState([]);
+  const [searchField, setSearchField] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => {
+        setUsers(users);
+      });
+  });
+
+  useEffect(() => {
+    setFilteredUsers(() =>
+      users.filter((user) => user.name.toLowerCase().includes(searchField.toLowerCase())),
+      users.filter((user) => user.email.toLowerCase().includes(searchField.toLowerCase()))
+    );
+  }, [searchField, users]);
+
+  
  
   return (
     <>
@@ -21,10 +43,17 @@ const BoardList = props => {
           <option value = "title">제목</option>
           <option value = "content">내용</option>
         </select>
-        <input name = "keyword" placeholder = "Search" />
+
+        <input
+          type="search"
+          placeholder="Search"
+          onChange={(e) => setSearchField(e.target.value)}
+        ></input>
         <button type = "button" id = "search_btn"> Search </button>
+
+        <Users users={filteredUsers} />
       </div>
-      <CommonTable headersName={['글번호', '제목', '등록일', '조회수']}>
+      <CommonTable headersName={['글번호', '제목', '등록일', '작성자']}>
         {
           dataList ? dataList.map((item, index) => {
             return (
@@ -34,7 +63,7 @@ const BoardList = props => {
                   <Link to={`/boardView/${item.no}`}>{ item.title }</Link>
                 </CommonTableColumn>
                 <CommonTableColumn>{ item.createDate }</CommonTableColumn>
-                <CommonTableColumn>{ item.readCount }</CommonTableColumn>
+                <CommonTableColumn>{ item.writer }</CommonTableColumn>
               </CommonTableRow>
             )
           }) : ''
