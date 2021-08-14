@@ -1,6 +1,6 @@
 import { React } from "react";
 import "./footer.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 
 function Logo() {
@@ -33,9 +33,21 @@ function Maps() {
   return (
     <div className="maps">
       {/** 이후에 link 삽입할 예정 */}
-      <div className="personalRule">개인정보처리방침</div>
-      <div className="noEmail">이메일무단수집거부</div>
-      <div className="sitemap">사이트맵</div>
+      <div className="personalRule">
+        <NavLink to="/personalRule" className="personalRule">
+          개인정보처리방침
+        </NavLink>
+      </div>
+      <div className="noEmail">
+        <NavLink to="/noEmail" className="noEmail">
+          이메일무단수집거부
+        </NavLink>
+      </div>
+      <div className="sitemap">
+        <NavLink to="/sitemap" className="sitemap">
+          사이트맵
+        </NavLink>
+      </div>
     </div>
   );
 }

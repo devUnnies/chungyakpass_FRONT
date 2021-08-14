@@ -13,17 +13,56 @@ const data = {
         {
           idx: 0,
           name: "한눈에보기",
-          link: "/common",
+          link: "/common/personal",
         },
         {
           idx: 1,
-          name: "공급별",
-          link: "/common",
-        },
-        {
-          idx: 2,
-          name: "주택별",
-          link: "/common",
+          name: "유형별",
+          link: "",
+          subcategory: [
+            {
+              idx: 0,
+              name: "일반공급",
+              link: "/supply/normal",
+            },
+            {
+              idx: 1,
+              name: "특별공급",
+              link: "/supply/special",
+              // subcategory: [
+              //   {
+              //     idx: 0,
+              //     name: "신혼부부",
+              //     link: "/supply/special/newlymarried",
+              //   },
+              //   {
+              //     idx: 1,
+              //     name: "다자녀가구",
+              //     link: "/supply/special/multiplechildren",
+              //   },
+              //   {
+              //     idx: 2,
+              //     name: "노부모부양",
+              //     link: "/supply/special/oldparentsupport",
+              //   },
+              //   {
+              //     idx: 3,
+              //     name: "생애최초 주택구입",
+              //     link: "/supply/special/firsthomepurchase",
+              //   },
+              //   {
+              //     idx: 4,
+              //     name: "이전기관종사자 등",
+              //     link: "/supply/special/formeragencyworker",
+              //   },
+              //   {
+              //     idx: 5,
+              //     name: "외국인",
+              //     link: "/supply/special/foreigner",
+              //   },
+              // ],
+            },
+          ],
         },
       ],
     },
@@ -136,7 +175,40 @@ function Nav() {
                   {content.subcategory.map((subcontent, j) => {
                     return (
                       <li className="nav-subItem">
-                        <NavLink to={subcontent.link}>{subcontent.name}</NavLink>
+                        <NavLink to={subcontent.link} className="a">
+                          {subcontent.name}
+                        </NavLink>
+                        <ul className="nav-subsubItems">
+                          {subcontent.subcategory
+                            ? subcontent.subcategory.map((subcontent, j) => {
+                                return (
+                                  <li className="nav-subsubItem">
+                                    <NavLink to={subcontent.link} className="a">
+                                      {subcontent.name}
+                                    </NavLink>
+                                    {/* <ul className="nav-subsubsubItems">
+                                      {subcontent.subcategory
+                                        ? subcontent.subcategory.map(
+                                            (subcontent, j) => {
+                                              return (
+                                                <li className="nav-subsubsubItem">
+                                                  <NavLink
+                                                    to={subcontent.link}
+                                                    className="a"
+                                                  >
+                                                    {subcontent.name}
+                                                  </NavLink>
+                                                </li>
+                                              );
+                                            }
+                                          )
+                                        : null}
+                                    </ul> */}
+                                  </li>
+                                );
+                              })
+                            : null}
+                        </ul>
                       </li>
                     );
                   })}
