@@ -71,7 +71,7 @@ function Login() {
               초기화
             </SubButton>
             <MainButton width="100" height="30" fontSize="16">
-              로그인하기
+              로그인
             </MainButton>
           </form>
         </div>
