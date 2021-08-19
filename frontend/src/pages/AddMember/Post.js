@@ -42,9 +42,9 @@ const Post = ({ onSaveData }) => {
 
   return (
     <>
-      <div id="addMember" className="text-x1 font-bold mt-5 mb-2 text-center">
+      {/* <div id="addMember" className="text-x1 font-bold mt-5 mb-2 text-center">
         <h3> 구성원 추가하기 </h3>
-      </div>
+      </div> */}
       <form onSubmit={handleSubmit} className="mt-3">
         <div className="flex flex-col md:flex-row mb-1">
           이름

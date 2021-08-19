@@ -1,24 +1,30 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import Tr from "./Tr";
 import Post from "./Post";
 import Modal from "./Modal";
 import "./Addmember.css";
+import MainButton from "../../components/Button/MainButton";
 
 const Board = () => {
   const [info, setInfo] = useState([]);
   const [selected, setSelected] = useState("");
-  const [modalOn, setModalOn] = useState(false);
+  const [add, setAdd] = useState(false);
+  const [modify, setModify] = useState(false);
 
   const nextId = useRef(1);
 
-  useEffect(() => {
-    axios
-      .get("http://jsonplaceholder.typeicode.com/users")
-      .then((res) => setInfo(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://jsonplaceholder.typeicode.com/users")
+  //     .then((res) => setInfo(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+  const handleAdd = () => {
+    setAdd(true);
+  }
 
   const handleSave = (data) => {
     // 데이터 수정하기
@@ -62,6 +68,8 @@ const Board = () => {
       );
       nextId.current += 1;
     }
+
+    setAdd(false);
   };
 
   const handleRemove = (id) => {
@@ -69,7 +77,7 @@ const Board = () => {
   };
 
   const handleEdit = (item) => {
-    setModalOn(true);
+    setModify(true);
     const selectedData = {
       id: item.id,
       name: item.name,
@@ -87,43 +95,49 @@ const Board = () => {
   };
 
   const handleCancel = () => {
-    setModalOn(false);
+    setModify(false);
   };
 
   const handleEditSubmit = (item) => {
     console.log(item);
     handleSave(item);
-    setModalOn(false);
+    setModify(false);
   };
 
   return (
-    <div>
-      <div className="text-x1 font-bold mt-5 mb-3 text-center">
-        구성원 정보 입력 리스트
+    <div className="allInfo">
+      <div className="listTitle">
+        구성원 정보 목록
       </div>
       <br />
-      <table className="min-w-full table-auto text-gray-800">
-        <thead className="justify-between">
-          <tr className="bg-gray-800">
-            <th className="text-gray-300 px-4 py-3"> 번호 </th>
-            <th className="text-gray-300 px-4 py-3"> 이름 </th>
-            <th className="text-gray-300 px-4 py-3"> 생년월일 </th>
-            <th className="text-gray-300 px-4 py-3"> 내/외국인 </th>
-            <th className="text-gray-300 px-4 py-3"> 신청자와의 관계 </th>
-            <th className="text-gray-300 px-4 py-3"> 세대주 여부 </th>
-            <th className="text-gray-300 px-4 py-3"> 혼인 여부 </th>
-            <th className="text-gray-300 px-4 py-3"> 월 평균 소득 </th>
-            <th className="text-gray-300 px-4 py-3"> 자산 </th>
-            <th className="text-gray-300 px-4 py-3"> 청약 당첨 이력 </th>
-            <th className="text-gray-300 px-4 py-3"> 수정 </th>
-            <th className="text-gray-300 px-4 py-3"> 삭제 </th>
+      <table className="tableContainer">
+        <thead className="allInfoThead">
+          <tr className="allInfoTheadTr">
+            <th className="allInfoTheadTrTh"> 번호 </th>
+            <th className="allInfoTheadTrTh"> 이름 </th>
+            <th className="allInfoTheadTrTh"> 생년월일 </th>
+            <th className="allInfoTheadTrTh"> 내/외국인 </th>
+            <th className="allInfoTheadTrTh"> 신청자와의 관계 </th>
+            <th className="allInfoTheadTrTh"> 세대주 여부 </th>
+            <th className="allInfoTheadTrTh"> 혼인 여부 </th>
+            <th className="allInfoTheadTrTh"> 월 평균 소득 </th>
+            <th className="allInfoTheadTrTh"> 자산 </th>
+            <th className="allInfoTheadTrTh"> 청약 당첨 이력 </th>
+            <th className="allInfoTheadTrTh"> 수정 </th>
+            <th className="allInfoTheadTrTh"> 삭제 </th>
           </tr>
         </thead>
         <Tr info={info} handleRemove={handleRemove} handleEdit={handleEdit} />
       </table>
 
-      <Post onSaveData={handleSave} />
-      {modalOn && (
+      {/* <NavLink to="/common/personal/addMember" className="loginArea-loginButton"> */}
+      <MainButton width="80" height="40" paddingLeft="10" paddingTop="10" type="add" onClick={handleAdd}>
+          추가하기
+        </MainButton>
+      {/* </NavLink> */}
+
+      {add && (<Post onSaveData={handleSave} />) }
+      {modify && (
         <Modal
           selectedData={selected}
           handleCancel={handleCancel}

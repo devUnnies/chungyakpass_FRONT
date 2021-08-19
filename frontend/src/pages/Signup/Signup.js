@@ -51,7 +51,7 @@ function Signup() {
           value={email}
           onChange={handleChangeEmail}
         />
-        <MainButton
+        {/* <MainButton
           width="100"
           height="30"
           fontSize="16"
@@ -59,7 +59,7 @@ function Signup() {
           onClick={handleEmailCode}
         >
           인증하기
-        </MainButton>
+        </MainButton> */}
         <Input
           type="password"
           placeholder="비밀번호"
@@ -79,7 +79,7 @@ function Signup() {
           초기화
         </SubButton>
       </form>
-      <div>{windowWidth}</div>
+      {/* <div>{windowWidth}</div> */}
     </>
   );
 }

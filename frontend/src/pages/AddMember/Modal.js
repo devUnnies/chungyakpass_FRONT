@@ -32,7 +32,7 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
       <div>
         <div>
           <h3 className="title"> 구성원 정보 수정하기 </h3>
-          <i class="fas fa-edit" onClick={onCancel}></i>
+          <i className="fas fa-edit" onClick={onCancel}></i>
         </div>
 
         <form onSubmit={onSubmitEdit} className="modifyform">
