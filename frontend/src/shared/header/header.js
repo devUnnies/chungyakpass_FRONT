@@ -24,6 +24,18 @@ const data = {
               idx: 0,
               name: "일반공급",
               link: "/supply/normal",
+              subcategory: [
+                {
+                  idx: 0,
+                  name: "국민주택",
+                  link: "/supply/normal/nation"
+                },
+                {
+                  idx: 1,
+                  name: "민영주택",
+                  link: "/supply/normal/private"
+                }
+              ]
             },
             {
               idx: 1,
@@ -186,7 +198,7 @@ function Nav() {
                                     <NavLink to={subcontent.link} className="a">
                                       {subcontent.name}
                                     </NavLink>
-                                    {/* <ul className="nav-subsubsubItems">
+                                    <ul className="nav-subsubsubItems">
                                       {subcontent.subcategory
                                         ? subcontent.subcategory.map(
                                             (subcontent, j) => {
@@ -203,7 +215,7 @@ function Nav() {
                                             }
                                           )
                                         : null}
-                                    </ul> */}
+                                    </ul>
                                   </li>
                                 );
                               })
