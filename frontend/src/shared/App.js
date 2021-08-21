@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="/personalRule" component={PersonalRules} />
           <Route path="/noEmail" component={NoEmail} />
           <Route path="/sitemap" component={Sitemap} />
-          <Route exact path="/common/personal" component={PersonalInfo} />
+          <Route exact path="/common/personal" component={Board} />
           <Route exact path="/common/passbook" component={PassbookInfo} />
           <Route exact path="/common/housing" component={HousingInfo} />
           <Route exact path="/common/member" component={MemberInfo} />
@@ -43,7 +43,7 @@ class App extends Component {
             component={MemberHousingInfo}
           />
           <Route path="/board" component={Board} />
-          <Route path="/post" component={Post} />
+          <Route path="/common/personal/addMember" component={Post} />
           <Route exact path="/boardView/:no" component={BoardView} />
           <Route path="/case" component={BoardMain} />
           <Route path="/FAQ" component={FAQ} />

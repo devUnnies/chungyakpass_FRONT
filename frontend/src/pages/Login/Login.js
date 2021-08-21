@@ -28,13 +28,15 @@ function Login() {
       console.log(userForm);
       // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
       dispatch(loginTest(userForm));
+      console.log("로그인하기!!!!!")
     },
     [email, password]
   );
 
   const handleReset = useCallback(() => {
-    setEmail("");
-    setPassword("");
+    setEmail();
+    setPassword();
+    console.log("지우기!!!!!!!")
   }, []);
 
   return (
@@ -58,21 +60,21 @@ function Login() {
               className="loginpassword"
             />
             <br />
-            <MainButton width="100" height="30" fontSize="16" type="submit">
-              로그인하기
-            </MainButton>
+            
             <SubButton
               width="100"
               height="30"
               fontSize="16"
-              type="button"
+              type="reset"
               onClick={handleReset}
             >
               초기화
             </SubButton>
+            <MainButton width="100" height="30" fontSize="16">
+              로그인
+            </MainButton>
           </form>
         </div>
-        <div>{windowWidth}</div>
       </div>
     </>
   );
