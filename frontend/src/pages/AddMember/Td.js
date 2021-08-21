@@ -1,4 +1,6 @@
 import React from "react";
+import './Addmember.css';
+import {EditFilled, DeleteFilled} from '@ant-design/icons';
 
 const Td = ({item, handleRemove, handleEdit}) => {
     const onRemove = () => {
@@ -15,21 +17,24 @@ const Td = ({item, handleRemove, handleEdit}) => {
     }
 
     return ( 
-        <tr>
-            <td className = "px-4 py-3"> { item.id } </td>
-            <td className = "px-4 py-3"> { item.name } </td>
-            <td className = "px-4 py-3"> { item.birth } </td>
-            <td className = "px-4 py-3"> { item.nationality } </td>
-            <td className = "px-4 py-3"> { item.relationship } </td>
-            <td className = "px-4 py-3"> { item.owner } </td>
-            <td className = "px-4 py-3"> { item.marriage } </td>
-            <td className = "px-4 py-3"> { item.income } </td>
-            <td className = "px-4 py-3"> { item.asset } </td>
-            <td className = "px-4 py-3"> { item.history } </td>
-            <td onClick = { onEdit } className = "text-center text-purple-400 cursor-pointer show-modal">
-                <i class = "far fa-edit">수정</i></td>
-            <td onClick = { onRemove } className = "text-center text-purple-400 cursor-pointer">
-                <i class = "far fa-trash-alt">삭제</i></td>
+        <tr className="allInfoTbodyTr">
+            <td className = "allInfoTbodyTd"> { item.id } </td>
+            <td className = "allInfoTbodyTd"> { item.name } </td>
+            <td className = "allInfoTbodyTd"> { item.birthDate.replace('-','년 ').replace('-','월 ').concat('일') } </td>
+            <td className = "allInfoTbodyTd"> { item.foreignerYn==="y"? "외국인":"내국인" } </td>
+            <td className = "allInfoTbodyTd"> { item.relationship } </td>
+            <td className = "allInfoTbodyTd"> { item.householderYn==="y"? "세대주":"세대구성원" } </td>
+            <td className = "allInfoTbodyTd"> { item.soldierYn==="y"? "장기복무중":"" } </td>
+            <td className = "allInfoTbodyTd"> { item.homelessStartDate.replace('-','년 ').replace('-','월 ').concat('일') } </td>
+            <td className = "allInfoTbodyTd"> { item.isMarried==="y"? "기혼":"미혼" } </td>
+            <td className = "allInfoTbodyTd"> { item.marriageDate } </td>
+            <td className = "allInfoTbodyTd"> { item.income.concat('원') } </td>
+            <td className = "allInfoTbodyTd"> { item.asset.concat('m2') } </td>
+            <td className = "allInfoTbodyTd"> { item.history==="y"? "있음": "없음"} </td>
+            <td onClick = { onEdit } className = "modifyContainer">
+                <EditFilled className="modifyColor" /></td>
+            <td onClick = { onRemove } className = "deleteContainer">
+                <DeleteFilled className="deleteColor" /></td>
         </tr>
     )
 };

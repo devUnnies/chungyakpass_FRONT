@@ -1,9 +1,10 @@
 import React from "react";
 import Td from './Td';
+import './Addmember.css';
 
 const Tr = ({info, handleRemove, handleEdit}) => {
     return (
-        <tbody>
+        <tbody className="allInfoTbody">
             {
                 info.map(item => {
                     return (
