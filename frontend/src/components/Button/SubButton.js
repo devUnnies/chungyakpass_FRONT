@@ -7,6 +7,7 @@ function SubButton({
   children,
   paddingLeft,
   paddingTop,
+  type,
   onClick,
 }) {
   return (
@@ -15,6 +16,7 @@ function SubButton({
       height={height}
       paddingLeft={paddingLeft}
       paddingTop={paddingTop}
+      type={type}
       onClick={onClick}
     >
       {children}

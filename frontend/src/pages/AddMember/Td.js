@@ -1,4 +1,5 @@
 import React from "react";
+import './Addmember.css';
 
 const Td = ({item, handleRemove, handleEdit}) => {
     const onRemove = () => {
@@ -15,17 +16,17 @@ const Td = ({item, handleRemove, handleEdit}) => {
     }
 
     return ( 
-        <tr>
-            <td className = "px-4 py-3"> { item.id } </td>
-            <td className = "px-4 py-3"> { item.name } </td>
-            <td className = "px-4 py-3"> { item.birth } </td>
-            <td className = "px-4 py-3"> { item.nationality } </td>
-            <td className = "px-4 py-3"> { item.relationship } </td>
-            <td className = "px-4 py-3"> { item.owner } </td>
-            <td className = "px-4 py-3"> { item.marriage } </td>
-            <td className = "px-4 py-3"> { item.income } </td>
-            <td className = "px-4 py-3"> { item.asset } </td>
-            <td className = "px-4 py-3"> { item.history } </td>
+        <tr className="allInfoTbodyTr">
+            <td className = "allInfoTbodyTd"> { item.id } </td>
+            <td className = "allInfoTbodyTd"> { item.name } </td>
+            <td className = "allInfoTbodyTd"> { item.birth } </td>
+            <td className = "allInfoTbodyTd"> { item.nationality } </td>
+            <td className = "allInfoTbodyTd"> { item.relationship } </td>
+            <td className = "allInfoTbodyTd"> { item.owner } </td>
+            <td className = "allInfoTbodyTd"> { item.marriage } </td>
+            <td className = "allInfoTbodyTd"> { item.income } </td>
+            <td className = "allInfoTbodyTd"> { item.asset } </td>
+            <td className = "allInfoTbodyTd"> { item.history } </td>
             <td onClick = { onEdit } className = "text-center text-purple-400 cursor-pointer show-modal">
                 <i class = "far fa-edit">수정</i></td>
             <td onClick = { onRemove } className = "text-center text-purple-400 cursor-pointer">

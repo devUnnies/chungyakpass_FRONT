@@ -1,6 +1,56 @@
-.title {
-  top: 80%;
+.allInfo .listTitle {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  color: #2a4476;
 }
+
+.allInfo .tableContainer {
+  border-width: 1px;
+  border-color: #000;
+  border-style: solid;
+  border-collapse: collapse;
+}
+
+.allInfoThead {
+  border-width: 1px;
+  border-color: #000;
+  border-style: solid;
+  border-collapse: collapse;
+  background-color: #e5e8ed;
+}
+
+.allInfoThead > .allInfoTheadTrTh {
+  width: 20px;
+}
+
+.allInfoTheadTrTh {
+  /* width: 80px; */
+  border-width: 1px;
+  border-color: #000;
+  border-style: solid;
+  border-collapse: collapse;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.allInfoTbody {
+  border-width: 1px;
+  border-color: #2a4476;
+  border-style: solid;
+  border-collapse: collapse;
+}
+
+.allInfoTbodyTr {
+  text-align: center;
+}
+
+.allInfoTbodyTd {
+
+}
+
+
 /* #form {
   font-size: 15px;
   margin-top: 20%;
