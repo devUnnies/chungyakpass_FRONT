@@ -5,13 +5,13 @@ const CommonTable = props => {
   const { headersName, children } = props;
  
   return (
-    <table className="common-table">
+    <table className="common_table">
       <thead>
         <tr>
           {
             headersName.map((item, index) => {
               return (
-                <td className="common-table-header-column" key={index}>{ item }</td>
+                <td className="commonTable_header_column" key={index}>{ item }</td>
               )
             })
           }
