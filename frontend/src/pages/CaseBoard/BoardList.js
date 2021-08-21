@@ -18,6 +18,7 @@ const BoardList = props => {
   const [searchField, setSearchField] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
+  /*
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
@@ -25,6 +26,7 @@ const BoardList = props => {
         setUsers(users);
       });
   });
+  ]*/
 
   useEffect(() => {
     setFilteredUsers(() =>
@@ -37,8 +39,9 @@ const BoardList = props => {
  
   return (
     <>
-      <div class = "search_box">
-        <select name = "searchCate" id = "searchCate">
+    <div className = "board_title"><h3 className = "board_mainTitle"> 부적격 사례 </h3></div>
+      <div className = "search_box">
+        <select name = "searchCate" className = "searchCate">
           <option value selected = "selected">제목+내용</option>
           <option value = "title">제목</option>
           <option value = "content">내용</option>
@@ -48,8 +51,9 @@ const BoardList = props => {
           type="search"
           placeholder="Search"
           onChange={(e) => setSearchField(e.target.value)}
+          className = "search_text"
         ></input>
-        <button type = "button" id = "search_btn"> Search </button>
+        <button type = "button" className = "search_btn"> Search </button>
 
         <Users users={filteredUsers} />
       </div>
