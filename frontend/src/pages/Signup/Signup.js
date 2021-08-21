@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { signupTest } from "../../store/actions/authAction";
 import { NavLink } from "react-router-dom";
-
+import "./Signup.css";
 import Input from "../../components/Input/Input";
 import useInputState from "../../components/Input/useInputState";
 import useWindowWidth from "../../components/WindowSize/useWindowWidth";
@@ -44,42 +44,51 @@ function Signup() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          placeholder="이메일"
-          value={email}
-          onChange={handleChangeEmail}
-        />
-        {/* <MainButton
-          width="100"
-          height="30"
-          fontSize="16"
-          type="button"
-          onClick={handleEmailCode}
-        >
-          인증하기
-        </MainButton> */}
-        <Input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={handleChangePassword}
-        />
-        <MainButton width="100" height="30" fontSize="16" type="submit">
-          가입하기
-        </MainButton>
-        <SubButton
-          width="100"
-          height="30"
-          fontSize="16"
-          type="button"
-          onClick={handleReset}
-        >
-          초기화
-        </SubButton>
-      </form>
-      {/* <div>{windowWidth}</div> */}
+      <div className="Signup">
+        <div className="SignupContainer">
+          <form onSubmit={handleSubmit} className="SignupForm">
+            <input
+              type="email"
+              placeholder="이메일"
+              value={email}
+              onChange={handleChangeEmail}
+              className="signupEmail"
+            />
+            {/* <MainButton
+              width="100"
+              height="30"
+              fontSize="16"
+              type="button"
+              onClick={handleEmailCode}
+            >
+              인증하기
+            </MainButton> */}
+            <br />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={handleChangePassword}
+              className="signupPassword"
+            />
+            <br />
+            <SubButton
+              width="100"
+              height="30"
+              fontSize="16"
+              type="reset"
+              onClick={handleReset}
+            >
+              초기화
+            </SubButton>
+            <MainButton width="100" height="30" fontSize="16">
+              가입하기
+            </MainButton>
+          </form>
+          {/* <div>{windowWidth}</div> */}
+        </div>
+      </div>
+      
     </>
   );
 }
