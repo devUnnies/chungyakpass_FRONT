@@ -36,27 +36,19 @@
 
 
   /* faq 박스 위치 배치*/
-  .faq_container .info {
-    margin-top: 250px;
-  }
-  
-  /* faq_container 자리 확보 */
-  .faq_main {
-    height: 800px;
-    align-items: center;
+  .faq_container .info{
+    margin-top: 280px;
   }
 
   /* faq_title */
-  .title {
-    margin-top: 280px;
-    margin-left: 290px;
+  .faq_title {
+    margin-left: 20%;
 
     border-left: 6px solid #2a4476;
     padding: 2px;
     font-weight: bold;
   }
-  .faq_title {
-    margin-top: 80px;
+  .faq_mainTitle {
     margin-left: 13px;
     font-size: 18pt;
     color: #000;
@@ -71,9 +63,8 @@
   }
 
   .faq_container {
-    width: 90vw;
     border-radius: var(--radius);
-    gap: 1rem 2rem;
+    height: 900px; /* faq 자리 확보 */
   }
 
   /* faq 박스 디자인 */
@@ -98,6 +89,7 @@
     cursor: pointer;
     margin-left: 1rem;
     align-self: center;
+
   }
   /* 버튼 가로 배치 */
   .question .faq_Q {
@@ -105,14 +97,14 @@
     justify-content: space-between;
     align-items: center;
   }
-  /* Q 디자인 적용 및 +, - 버튼 위치 배치*/
+  /* Q 글씨 디자인 적용 및 +, - 버튼 위치 배치*/
   .question_title {
-    font-size: 0.875rem;
+    font-size: 10pt;
+    font-weight: bold;
     letter-spacing: 0.5pt;
     text-transform: capitalize;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 
-    margin-bottom: 0;
     cursor: pointer;
   }
 
@@ -131,6 +123,7 @@
 
   /* faq_A */
   .faq_A {
-      font-size: 9pt;
+      font-size: 10pt;
       color: hsl(209, 34%, 30%);
+      margin-top: 1rem;
   }

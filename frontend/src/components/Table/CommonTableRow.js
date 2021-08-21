@@ -2,7 +2,7 @@ import React from 'react';
  
 const CommonTableRow = ({ children }) => {
   return (
-    <tr className="common-table-row">
+    <tr className="commonTable_row">
       {
         children
       }

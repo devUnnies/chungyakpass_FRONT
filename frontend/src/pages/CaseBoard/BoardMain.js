@@ -4,7 +4,7 @@ import BoardList from './BoardList';
 const BoardMain = props => {
   return (
     <>
-    <div id = "BoardList">
+    <div class = "BoardList">
       <BoardList />
     </div>
     </>
