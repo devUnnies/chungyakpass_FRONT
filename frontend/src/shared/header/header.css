@@ -538,7 +538,7 @@
         width: 80%;
         height: 40px;
         margin-top: 15%;
-        z-index: 1000;
+        z-index: 1;
     }
 
     .nav-container {

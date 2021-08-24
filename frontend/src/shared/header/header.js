@@ -16,12 +16,12 @@ const data = {
                 {
                     idx: 0,
                     name: '공통정보입력',
-                    link: '',
+                    link: '/addHouseHolder',
                 },
                 {
                     idx: 1,
                     name: '한눈에보기',
-                    link: '/addHouseHolder',
+                    link: '',
                 },
                 {
                     idx: 2,
