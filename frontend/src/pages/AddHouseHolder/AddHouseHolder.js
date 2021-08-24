@@ -1,15 +1,31 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import DaumPostcode from 'react-daum-postcode';
-import data from './data.json';
+import './AddHouseHolder.css';
+import { NavLink } from 'react-router-dom';
+import MainButton from '../../components/Button/MainButton';
+import PopupDom from './PopupDom';
+import PopupPostCode from './PopupPostCode';
+import NextButton from '../../components/Button/NextButton';
 
-const AddHouseHolder = () => {
+const AddHouseHolder = (props) => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const openPostCode = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePostCode = () => {
+        setIsPopupOpen(false);
+    };
+
+    const [fullAddress, setFullAddress] = useState();
+    const [postcode, setPostcode] = useState('');
+
     const [address, setAddress] = useState({
         sido: '',
         sigungu: '',
-        gu: '',
-        eupmyeondong: '',
+        detail: '',
+        postcode: '',
     });
 
     const onChange = (e) => {
@@ -20,85 +36,111 @@ const AddHouseHolder = () => {
         });
     };
 
-    const seoul = () => {
-        console.log('서울특별시일 때 !!!!!!!!!');
-        let result = [];
-        data[0].detail.map((content, j) => {
-            result.push(
-                <option value={content.name} key={j}>
-                    {content.name}
-                </option>
-            );
-        });
-        return result;
-    };
+    // 세대 등록하는 api 연결 예정
+    const onSubmit = () => {};
 
-    const incheon = () => {
-        console.log('인천광역시일 때 !!!!!!!!!');
-        let result = [];
-        data[1].detail.map((content, j) => {
-            result.push(
-                <option value={content.name} key={j}>
-                    {content.name}
-                </option>
-            );
+    useEffect(() => {
+        setAddress({
+            ...address,
+            detail: fullAddress,
         });
-        return result;
-    };
+    }, [fullAddress]);
 
-    const gyeonggi = () => {
-        console.log('경기도일 때 !!!!!!!!!');
-        let result = [];
-        data[2].detail.map((content, j) => {
-            result.push(
-                <option value={content.name} key={j}>
-                    {content.name}
-                </option>
-            );
+    useEffect(() => {
+        setAddress({
+            ...address,
+            postcode: postcode,
         });
-        return result;
-    };
+    }, [postcode]);
+
+    console.log('address !!!!!!!! ' + JSON.stringify(address));
 
     return (
-        <div>
-            {/* <DaumPostcode style={{ marginTop: 100 }} height={700} /> */}
-            <form>
-                <select name="sido" value={address.sido} onChange={onChange}>
-                    <option value="">시도</option>
-                    {data.map((content, i) => {
-                        return (
-                            <option value={content.name} key={i}>
-                                {content.name}
-                            </option>
-                        );
-                    })}
-                </select>
-                <br />
-                <select
-                    name="sigungu"
-                    value={address.sigungu}
-                    onChange={onChange}
-                >
-                    <option value="">시군구</option>
-                    {address.sido === '서울특별시' ? seoul() : null}
-                    {address.sido === '인천광역시' ? incheon() : null}
-                    {address.sido === '경기도' ? gyeonggi() : null}
-                </select>
-                <br />
-                <select name="gu" value={address.gu} onChange={onChange}>
-                    <option value="">구</option>
-                </select>
-                <br />
-                <select
-                    name="eupmyeondong"
-                    value={address.eupmyeondong}
-                    onChange={onChange}
-                >
-                    <option value="">읍면동</option>
-                </select>
-            </form>
+        <div className="addHouseHolderView">
+            <div className="addHouseHolderHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="addAddressTitle">세대등록</span>
+            </div>
 
-            {/* 구성원 목록으로 가는 버튼 추가 */}
+            <br />
+            <div className="findAddressButtonWrapper">
+                <MainButton
+                    width={80}
+                    height={30}
+                    paddingLeft={10}
+                    onClick={openPostCode}
+                >
+                    주소 찾기
+                </MainButton>
+            </div>
+            <div id="popupDom" className="popupDomContainer">
+                {isPopupOpen && (
+                    <PopupDom>
+                        <PopupPostCode
+                            address={fullAddress}
+                            setAddress={setFullAddress}
+                            postcode={postcode}
+                            setPostcode={setPostcode}
+                            onClose={closePostCode}
+                        />
+                    </PopupDom>
+                )}
+            </div>
+            <div className="addHouseHolderContainer">
+                <form className="addressFormContainer" onSubmit={onSubmit}>
+                    <table className="addressFormTable">
+                        <tbody>
+                            <tr>
+                                <td className="addressFormLabel">
+                                    <label className="addressFormLabel">
+                                        우편번호
+                                    </label>
+                                </td>
+                                <td className="addressFormInputPostcode">
+                                    <input
+                                        className="addressFormInputPostcode"
+                                        type="number"
+                                        name="postcode"
+                                        value={address.postcode}
+                                        onChange={onChange}
+                                        required
+                                        readOnly
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="addressFormLabel">
+                                    <label className="addressFormLabel">
+                                        주소
+                                    </label>
+                                </td>
+                                <td className="addressFormInputAddress">
+                                    <input
+                                        className="addressFormInputAddress"
+                                        type="text"
+                                        name="detail"
+                                        value={address.detail}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {/* 구성원 목록으로 가는 버튼 추가 */}
+                    <NavLink
+                        to="/addHouseHolder/see"
+                        className="submitButtonWrapper"
+                    >
+                        <NextButton
+                            width={50}
+                            height={50}
+                            type="submit"
+                            fontSize={150}
+                        />
+                    </NavLink>
+                </form>
+            </div>
         </div>
     );
 };
