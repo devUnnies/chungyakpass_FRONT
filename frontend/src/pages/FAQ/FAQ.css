@@ -35,7 +35,7 @@
 
 /* faq 박스 위치 배치*/
 .faq_container .info {
-    margin-top: 280px;
+    margin-top: 17%;
 }
 
 /* faq_title */
@@ -52,9 +52,9 @@
     font-size: 18pt;
     color: #000;
     letter-spacing: 1px;
-  }
-  .faq_subTitle {
-    color:hsl(209, 28%, 39%);
+}
+.faq_subTitle {
+    color: hsl(209, 28%, 39%);
     font-size: 10pt;
     line-height: 1.5em;
     letter-spacing: 2px;
