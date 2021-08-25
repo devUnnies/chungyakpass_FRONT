@@ -5,6 +5,8 @@ import {
   Login,
   Signup,
   PersonalInfo,
+  AptNum,
+  GeneralSupply,
   PassbookInfo,
   HousingInfo,
   MemberInfo,
@@ -42,6 +44,8 @@ class App extends Component {
             path="/common/memberHousing"
             component={MemberHousingInfo}
           />
+          <Route path="/supply/normal" component={GeneralSupply} />
+          <Route path="/supply/apartmentInfo" component={AptNum} />
           <Route path="/board" component={Board} />
           <Route path="/common/personal/addMember" component={Post} />
           <Route exact path="/boardView/:no" component={BoardView} />
