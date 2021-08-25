@@ -1,7 +1,7 @@
 .Sitemap_main {
     height: 650px;
 }
-    /* 소제목 디자인 적용 */
+/* 소제목 디자인 적용 */
 .Sitemap_Title {
     margin-left: 20%;
     margin-top: 1%;
@@ -11,7 +11,7 @@
     margin-top: 1%;
     margin-bottom: 5%;
     font-weight: bold;
-  }
+}
 .s_title {
     margin-left: 13px;
 }
@@ -30,8 +30,9 @@
     color: #2a4476;
     font-weight: bolder;
     font-size: 70pt;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-shadow: 5px 3px 3px #C3C3C3;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+        'Lucida Sans', Arial, sans-serif;
+    text-shadow: 5px 3px 3px #c3c3c3;
     opacity: 0.5;
 
     float: right;

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Data from './Data';
 import SingleQuestion from './Question';
-import './FAQ.css'
-
+import './FAQ.css';
 
 const FAQ = () => {
-  const [questions, setQuestions] = useState(Data)
+    const [questions, setQuestions] = useState(Data);
 
   return (
         <div className='faq_container'>
@@ -16,7 +15,7 @@ const FAQ = () => {
             ))}
             </div>
         </div>
-  )
-}
+    );
+};
 
 export default FAQ;
