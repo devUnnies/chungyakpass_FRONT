@@ -49,7 +49,7 @@ const Post = ({ onSaveData }) => {
   };
 
   useEffect(()=>{
-    console.log("결혼햇냐  "+form.isMarried)
+    console.log("결혼햇냐  "+form.isMarriesd)
   }, [form.isMarried])
 
   return (

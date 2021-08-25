@@ -23,7 +23,7 @@ const data = {
             {
               idx: 0,
               name: "일반공급",
-              link: "/supply/normal",
+              link: "/supply/apartmentInfo",
               subcategory: [
                 {
                   idx: 0,
@@ -81,7 +81,7 @@ const data = {
     {
       idx: 1,
       name: "계산기",
-      link: "",
+      link: "/signup/member",
       subcategory: [
         {
           idx: 0,

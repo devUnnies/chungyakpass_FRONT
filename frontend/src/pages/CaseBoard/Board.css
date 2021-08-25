@@ -26,6 +26,7 @@
 /* board_title */
 .board_title {
   margin-left: 20%;
+  margin-top: 1%;
 
   border-left: 6px solid #2a4476;
   padding: 2px;
@@ -73,15 +74,4 @@
     display: flex;
     border: 0px solid black;
     border-radius: 3px;
-  }
-  
-  .postView_row > label:first-child {
-    margin: 10px 0;
-    width: 30%;
-    font-weight: bold;
-  }
-  
-  .postView_row > *:nth-child(2) {
-    margin: 10px 0;
-    width: 70%;
   }
