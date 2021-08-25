@@ -28,7 +28,7 @@ export default function auth(state = initialState, action) {
         case SIGNUP_POST:
         case SIGNUP_POST_SUCCESS:
         case SIGNUP_POST_ERROR:
-            return handleAsyncActions(LOGIN_POST, 'signup')(state, action);
+            return handleAsyncActions(SIGNUP_POST, 'signup')(state, action);
         // return {
         //     ...state,
         // }

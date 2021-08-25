@@ -74,8 +74,6 @@ function Signup() {
         if (authStore.signup) {
             const data = authStore.signup.data;
             if (data !== null) {
-                dispatch(signinWithToken(data.token));
-                storage.set('user-token', data.token);
                 history.push('/');
                 alert(
                     '청약패스에 가입해주신 이용자님, 환영합니다 !\n상단의 로그인 버튼을 이용해 로그인 후 이용해주시기 바랍니다 ^____^ *'
