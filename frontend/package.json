@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.37.99.145:8080/api/",
+  "proxy": "http://3.37.99.145:8080/",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
