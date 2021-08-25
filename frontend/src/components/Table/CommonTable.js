@@ -3,6 +3,7 @@ import './CommonTable.css';
  
 const CommonTable = props => {
   const { headersName, children } = props;
+
  
   return (
     <table className="common_table">

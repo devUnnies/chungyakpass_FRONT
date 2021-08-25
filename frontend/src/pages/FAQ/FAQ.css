@@ -37,12 +37,13 @@
 
   /* faq 박스 위치 배치*/
   .faq_container .info{
-    margin-top: 280px;
+    margin-top: 17%;
   }
 
   /* faq_title */
   .faq_title {
     margin-left: 20%;
+    margin-top: 1%;
 
     border-left: 6px solid #2a4476;
     padding: 2px;
@@ -54,7 +55,7 @@
     color: #000;
     letter-spacing: 1px;
   }
-  .fag_subTitle {
+  .faq_subTitle {
     color:hsl(209, 28%, 39%);
     font-size: 10pt;
     line-height: 1.5em;

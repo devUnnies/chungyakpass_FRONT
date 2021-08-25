@@ -14,3 +14,5 @@ export { default as PersonalInfo } from "./CommonInput/PersonalInfo";
 export { default as BoardMain } from "./CaseBoard/BoardMain";
 export { default as BoardView } from "./CaseBoard/BoardView";
 export { default as FAQ } from "./FAQ/FAQ";
+export { default as AptNum } from "./GeneralSupply/AptNum";
+export { default as GeneralSupply } from "./GeneralSupply/GeneralSupply";

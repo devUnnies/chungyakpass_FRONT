@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { signupTest } from "../../store/actions/authAction";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./Signup.css";
 import Input from "../../components/Input/Input";
 import useInputState from "../../components/Input/useInputState";
@@ -81,9 +81,11 @@ function Signup() {
             >
               초기화
             </SubButton>
-            <MainButton width="100" height="30" fontSize="16">
-              가입하기
-            </MainButton>
+            <Link to = '/profile'>
+              <MainButton width="100" height="30" fontSize="16">
+                다음
+              </MainButton>
+            </Link>
           </form>
           {/* <div>{windowWidth}</div> */}
         </div>
