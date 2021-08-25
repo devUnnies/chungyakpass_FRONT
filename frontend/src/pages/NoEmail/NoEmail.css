@@ -1,11 +1,12 @@
 /* 소제목 디자인 적용 */
 .noEmail_Title {
     margin-left: 20%;
+    margin-top: 1%;
 
     border-left: 6px solid #2a4476;
     padding: 2px;
     font-weight: bold;
-  }
+}
 .e_title {
     margin-left: 13px;
 }
@@ -21,10 +22,10 @@
 .e_containerBox {
     width: 75%;
     padding: 40px;
-    margin-top: 5%;
+    margin-top: 4%;
     margin-bottom: 5%;
 
-    border : 2px solid #2a4476;
+    border: 2px solid #2a4476;
     border-radius: 5px;
     box-shadow: var(--light-shadow);
 }
@@ -41,7 +42,6 @@
 .e_legal {
     font-size: 10pt;
 }
-
 
 /* containerUl 디자인*/
 .e_containerUl {
@@ -64,6 +64,6 @@
     font-size: 9pt;
 }
 .alert_highlight {
-    color: #DB0000;
+    color: #db0000;
     font-weight: bold;
 }
