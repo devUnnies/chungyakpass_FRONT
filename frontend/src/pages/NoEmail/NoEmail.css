@@ -1,6 +1,7 @@
 /* 소제목 디자인 적용 */
 .noEmail_Title {
     margin-left: 20%;
+    margin-top: 1%;
 
     border-left: 6px solid #2a4476;
     padding: 2px;
@@ -21,7 +22,7 @@
 .e_containerBox {
     width: 75%;
     padding: 40px;
-    margin-top: 5%;
+    margin-top: 4%;
     margin-bottom: 5%;
 
     border: 2px solid #2a4476;
