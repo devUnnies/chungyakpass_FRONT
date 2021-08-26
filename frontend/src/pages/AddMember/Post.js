@@ -12,15 +12,6 @@ const Post = ({ onSaveData }) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isTableOpen, setIsTableOpen] = useState(false);
     const [failMsg, setFailMsg] = useState(null);
-
-    const openPostCode = () => {
-        setIsPopupOpen(true);
-    };
-
-    const closePostCode = () => {
-        setIsPopupOpen(false);
-    };
-
     const [fullAddress, setFullAddress] = useState();
     const [postcode, setPostcode] = useState('');
 
@@ -31,12 +22,46 @@ const Post = ({ onSaveData }) => {
         postcode: '',
     });
 
+    const [form, setForm] = useState({
+        name: '',
+        birthDate: '',
+        bank: '',
+        bankbook: '',
+        joinDate: '',
+        deposit: 0,
+        paymentsCount: 0,
+        validYn: '',
+        foreignerYn: '',
+        homelessStartDate: '',
+        relationship: '',
+        householderYn: '',
+        spouseYn: '',
+        spouseAddress: '',
+        spousePostcode: '',
+        soldierYn: '',
+        homelessStartDate: '',
+        isMarried: false,
+        marriedDate: '',
+        transferDate: '',
+        income: '',
+        assets: [],
+        history: '',
+    });
+
     const onAddressChange = (e) => {
         const { name, value } = e.target;
         setAddress({
             ...address,
             [name]: value,
         });
+    };
+
+    const openPostCode = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePostCode = () => {
+        setIsPopupOpen(false);
     };
 
     // 세대 등록하는 api 연결 예정
@@ -64,6 +89,15 @@ const Post = ({ onSaveData }) => {
         });
     }, [fullAddress, postcode]);
 
+    useEffect(() => {
+        if (form.validYn === 'n' || form.history === 'exist') {
+            setFailMsg('!!');
+        } else {
+            setFailMsg(null);
+        }
+        console.log(failMsg);
+    }, [form]);
+
     const [asset, setAsset] = useState({
         haveAssets: '',
         property: '',
@@ -77,40 +111,6 @@ const Post = ({ onSaveData }) => {
         amount: '',
         taxBaseDate: '',
     });
-
-    const [form, setForm] = useState({
-        name: '',
-        birthDate: '',
-        bank: '',
-        bankbook: '',
-        joinDate: '',
-        deposit: 0,
-        paymentsCount: 0,
-        validYn: '',
-        foreignerYn: '',
-        homelessStartDate: '',
-        relationship: '',
-        householderYn: '',
-        spouseYn: '',
-        spouseAddress: '',
-        spousePostcode: '',
-        soldierYn: '',
-        homelessStartDate: '',
-        isMarried: false,
-        marriedDate: '',
-        income: '',
-        assets: [],
-        history: '',
-    });
-
-    useEffect(() => {
-        if (form.validYn === 'n' || form.history === 'exist') {
-            setFailMsg('!!');
-        } else {
-            setFailMsg(null);
-        }
-        console.log(failMsg);
-    }, [form]);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -153,6 +153,7 @@ const Post = ({ onSaveData }) => {
                 homelessStartDate: '',
                 isMarried: false,
                 marriedDate: '',
+                transferDate: '',
                 income: '',
                 assets: [],
                 history: '',
@@ -507,6 +508,21 @@ const Post = ({ onSaveData }) => {
                                         type="date"
                                         name="homelessStartDate"
                                         value={form.homelessStartDate}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">전입신고일</span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="transferDateInput"
+                                        type="date"
+                                        name="transferDate"
+                                        value={form.transferDate}
                                         onChange={onChange}
                                         required
                                     />
@@ -1221,9 +1237,9 @@ const Post = ({ onSaveData }) => {
                             className="save"
                             width="80"
                             height="30"
-                            onClick={() => {
-                                history.push('/');
-                            }}
+                            // onClick={() => {
+                            //     history.push('/');
+                            // }}
                         >
                             저장
                         </MainButton>
