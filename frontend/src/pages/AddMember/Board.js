@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useParams } from 'react-router';
 import axios from 'axios';
 import Tr from './Tr';
 import Post from './Post';
@@ -8,20 +9,13 @@ import './Addmember.css';
 import MainButton from '../../components/Button/MainButton';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 
-const Board = () => {
+const Board = (props) => {
     const [info, setInfo] = useState([]);
     const [selected, setSelected] = useState('');
     const [add, setAdd] = useState(false);
     const [modify, setModify] = useState(false);
 
     const nextId = useRef(1);
-
-    // useEffect(() => {
-    //   axios
-    //     .get("http://jsonplaceholder.typeicode.com/users")
-    //     .then((res) => setInfo(res.data))
-    //     .catch((err) => console.log(err));
-    // }, []);
 
     const handleAdd = () => {
         setAdd(!add);
@@ -41,15 +35,22 @@ const Board = () => {
                               id: data.id,
                               name: data.name,
                               birthDate: data.birthDate,
+                              bank: data.bank,
+                              bankbook: data.bankbook,
+                              joinDate: data.joinDate,
+                              deposit: data.deposit,
+                              paymentsCount: data.paymentsCount,
+                              validYn: data.validYn,
                               foreignerYn: data.foreignerYn,
                               relationship: data.relationship,
                               householderYn: data.householderYn,
+                              spouseYn: data.spouseYn,
                               soldierYn: data.soldierYn,
                               homelessStartDate: data.homelessStartDate,
                               isMarried: data.isMarried,
-                              marriageDate: data.marriageDate,
+                              marriedDate: data.marriedDate,
                               income: data.income,
-                              asset: data.asset,
+                              assets: data.assets,
                               history: data.history,
                           }
                         : row
@@ -62,15 +63,22 @@ const Board = () => {
                     id: nextId.current,
                     name: data.name,
                     birthDate: data.birthDate,
+                    bank: data.bank,
+                    bankbook: data.bankbook,
+                    joinDate: data.joinDate,
+                    deposit: data.deposit,
+                    paymentsCount: data.paymentsCount,
+                    validYn: data.validYn,
                     foreignerYn: data.foreignerYn,
                     relationship: data.relationship,
                     householderYn: data.householderYn,
+                    spouseYn: data.spouseYn,
                     soldierYn: data.soldierYn,
                     homelessStartDate: data.homelessStartDate,
                     isMarried: data.isMarried,
-                    marriageDate: data.marriageDate,
+                    marriedDate: data.marriedDate,
                     income: data.income,
-                    asset: data.asset,
+                    assets: data.assets,
                     history: data.history,
                 })
             );
@@ -86,20 +94,27 @@ const Board = () => {
 
     const handleEdit = (item) => {
         setAdd(false);
-        setModify(true);
+        setModify(!modify);
         const selectedData = {
             id: item.id,
             name: item.name,
             birthDate: item.birthDate,
+            bank: item.bank,
+            bankbook: item.bankbook,
+            joinDate: item.joinDate,
+            deposit: item.deposit,
+            paymentsCount: item.paymentsCount,
+            validYn: item.validYn,
             foreignerYn: item.foreignerYn,
             relationship: item.relationship,
             householderYn: item.householderYn,
+            spouseYn: item.spouseYn,
             soldierYn: item.soldierYn,
             homelessStartDate: item.homelessStartDate,
             isMarried: item.isMarried,
-            marriageDate: item.marriageDate,
+            marriedDate: item.marriedDate,
             income: item.income,
-            asset: item.asset,
+            assets: item.assets,
             history: item.history,
         };
         console.log(selectedData);
@@ -117,7 +132,7 @@ const Board = () => {
     };
 
     const handleInfoSubmit = (info) => {
-        console.log('api 보내야 함 !!!!!!');
+        alert('입력이 모두 완료되었습니다 !');
     };
 
     return (
@@ -132,6 +147,7 @@ const Board = () => {
                     <tr className="allInfoTheadTr">
                         <th className="allInfoTheadTrTh"> 번호 </th>
                         <th className="allInfoTheadTrTh"> 이름 </th>
+                        <th className="allInfoTheadTrTh"> 청약통장정보</th>
                         <th className="allInfoTheadTrTh"> 생년월일 </th>
                         <th className="allInfoTheadTrTh"> 내/외국인 </th>
                         <th className="allInfoTheadTrTh"> 신청자와의 관계 </th>
@@ -170,14 +186,6 @@ const Board = () => {
                     <></>
                 )}
             </div>
-
-            {/* <div className="addButton"> */}
-            {/* <NavLink to="/common/personal/addMember" className="loginArea-loginButton"> */}
-            {/* <MainButton width="80" height="40" paddingLeft="10" paddingTop="10" type="add" onClick={handleAdd}>
-            추가하기
-          </MainButton> */}
-            {/* </NavLink> */}
-            {/* </div> */}
 
             {add && <Post onSaveData={handleSave} />}
             {modify && (

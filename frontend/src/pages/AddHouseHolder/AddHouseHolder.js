@@ -1,13 +1,20 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './AddHouseHolder.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import MainButton from '../../components/Button/MainButton';
 import PopupDom from './PopupDom';
 import PopupPostCode from './PopupPostCode';
 import NextButton from '../../components/Button/NextButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHouseHolder } from '../../store/actions/commonInfoAction';
 
 const AddHouseHolder = (props) => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const tokenStore = useSelector((state) => state.token);
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const openPostCode = () => {
@@ -36,13 +43,42 @@ const AddHouseHolder = (props) => {
         });
     };
 
+    // useEffect(() => {
+    //     // 세대 등록 성공시
+    //     if (commonInfoStore.addHouseHolder) {
+    //         const data = commonInfoStore.addHouseHolder?.data;
+    //         if (data !== null) {
+    //             history.push('/addHouseHolder/see');
+    //         }
+    //     }
+    // }, [commonInfoStore.addHouseHolder]);
+
     // 세대 등록하는 api 연결 예정
-    const onSubmit = () => {};
+    const handleSubmit = useCallback(
+        (event) => {
+            event.preventDafault();
+
+            const userForm = {
+                spouseHouseYn: 'n',
+                addressLevel1: address.sido,
+                addressLevel2: address.sigungu,
+                addressDetail: address.detail,
+                zipcode: address.postcode,
+            };
+            dispatch(addHouseHolder(userForm));
+        },
+        [address]
+    );
 
     useEffect(() => {
         setAddress({
             ...address,
-            detail: fullAddress,
+            sido: fullAddress?.split(' ')[0],
+            sigungu: fullAddress?.split(' ')[1],
+            detail:
+                fullAddress?.split(' ')[1].length === 3
+                    ? fullAddress?.substring(7)
+                    : fullAddress?.substring(8),
         });
     }, [fullAddress]);
 
@@ -52,8 +88,6 @@ const AddHouseHolder = (props) => {
             postcode: postcode,
         });
     }, [postcode]);
-
-    console.log('address !!!!!!!! ' + JSON.stringify(address));
 
     return (
         <div className="addHouseHolderView">
@@ -87,7 +121,7 @@ const AddHouseHolder = (props) => {
                 )}
             </div>
             <div className="addHouseHolderContainer">
-                <form className="addressFormContainer" onSubmit={onSubmit}>
+                <form className="addressFormContainer" onSubmit={handleSubmit}>
                     <table className="addressFormTable">
                         <tbody>
                             <tr>
@@ -119,7 +153,7 @@ const AddHouseHolder = (props) => {
                                         className="addressFormInputAddress"
                                         type="text"
                                         name="detail"
-                                        value={address.detail}
+                                        value={fullAddress}
                                         onChange={onChange}
                                         required
                                     />
@@ -128,17 +162,17 @@ const AddHouseHolder = (props) => {
                         </tbody>
                     </table>
                     {/* 구성원 목록으로 가는 버튼 추가 */}
-                    <NavLink
-                        to="/addHouseHolder/see"
-                        className="submitButtonWrapper"
-                    >
+                    <div className="submitButtonWrapper">
                         <NextButton
                             width={50}
                             height={50}
                             type="submit"
                             fontSize={150}
+                            onClick={() => {
+                                history.push('/addHouseHolder/see');
+                            }}
                         />
-                    </NavLink>
+                    </div>
                 </form>
             </div>
         </div>
