@@ -1,27 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RightOutlined } from '@ant-design/icons';
 
-function MainButton({
-    width,
-    height,
-    children,
-    paddingLeft,
-    paddingTop,
-    fontSize,
-    type,
-    onClick,
-}) {
+function NextButton({ width, height, type, fontSize, onClick, props }) {
     return (
         <StyledButton
             width={width}
             height={height}
-            paddingLeft={paddingLeft}
-            paddingTop={paddingTop}
-            fontSize={fontSize}
             type={type}
+            fontSize={fontSize}
             onClick={onClick}
+            props={props}
         >
-            {children}
+            <RightOutlined />
         </StyledButton>
     );
 }
@@ -32,11 +23,8 @@ const StyledButton = styled.button`
     margin: 0;
     border: none;
     padding: ${(props) => props.paddingTop}px ${(props) => props.paddingLeft}px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: var(--button-font-size, ${(props) => props.fontSize}px);
-    border-radius: var(--button-radius, 30px);
-    color: var(--button-color, #ffffff);
-    background: var(--button-bg-color, #2a4476);
+    font-size: var(--button-font-size, ${(props) => props.fontSize}%
+    color: var(--button-color, #2a4476);
     cursor: pointer;
     flex: none;
     flex-grow: 0;
@@ -49,4 +37,4 @@ const StyledButton = styled.button`
     }
 `;
 
-export default MainButton;
+export default NextButton;
