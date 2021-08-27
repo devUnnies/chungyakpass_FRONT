@@ -1,9 +1,18 @@
-import axios from "axios";
-
-const baseURL = "";
-// const baseURL = 'http://3.37.166.82:8080/api/';
+import axios from 'axios';
 
 //로그인 및 회원가입 API
-export const logIn = (info) => axios.post(baseURL + "authenticate", info);
-export const logOut = () => axios.post(baseURL + "logout", {});
-export const signUp = (info) => axios.post(baseURL + "signup", info);
+export const logIn = (info) =>
+    axios.post('account/authenticate', info, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        },
+    });
+export const logOut = () => axios.post('logout', {});
+export const signUp = (info) =>
+    axios.post('account/signup', info, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        },
+    });

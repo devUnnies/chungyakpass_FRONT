@@ -3,119 +3,119 @@
 }
 
 .allInfoHeaderContainer {
-  margin-left: 20%;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    margin-left: 20%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .heightBar {
-  width: 5px;
-  height: 35px;
+    width: 5px;
+    height: 35px;
 
-  background-color: #2a4476;
-  margin-right: 10px;
+    background-color: #2a4476;
+    margin-right: 10px;
 }
 
 .listTitle {
-  font-family: Gothic A1;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 22px;
-  letter-spacing: -0.1em;
-  color: #2a4476;
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
 }
 
 .allInfo .tableContainer {
-  border-width: 1px;
-  border-color: #000;
-  border-style: solid;
-  border-collapse: collapse;
-  margin: 0 auto;
-  margin-bottom: 10px;
+    border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 .allInfoThead {
-  border-width: 1px;
-  border-color: #000;
-  border-style: solid;
-  border-collapse: collapse;
-  background-color: #e5e8ed;
+    border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse;
+    background-color: #e5e8ed;
 }
 
 .allInfoThead > .allInfoTheadTrTh {
-  width: 20px;
+    width: 20px;
 }
 
 .allInfoTheadTrTh {
-  /* width: 80px; */
-  border-width: 0px;
-  border-color: #000;
-  border-style: solid;
-  border-collapse: collapse;
-  padding-left: 10px;
-  padding-right: 10px;
+    /* width: 80px; */
+    border-width: 0px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .allInfoTrTdAdd {
-  height: 50px;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+    height: 50px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }
 
 .buttonContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
 .addButtonContainer {
-  display: inline-block;
-  justify-content: center;
-  align-content: center;
-  margin-bottom: 5%;
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 5%;
 }
 
 .addButton {
-  display: block;
-  vertical-align: middle;
-  text-align: center;
-  font-size: 250%;
-  color: #2a4476;
-  cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 250%;
+    color: #2a4476;
+    cursor: pointer;
 }
 
 .buttonContainer .submitButtonContainer {
-  display: inline-block;
-  justify-content: center;
-  align-content: center;
-  margin-bottom: 5%;
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 5%;
 }
 
 .buttonContainer .submitButton {
-  display: block;
-  vertical-align: middle;
-  text-align: center;
-  font-size: 250%;
-  color: #2a4476;
-  cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 250%;
+    color: #2a4476;
+    cursor: pointer;
 }
 
 /* Tr.js */
 .allInfoTbody {
-  border-width: 1px;
-  border-color: #2a4476;
-  border-style: solid;
-  border-collapse: collapse;
+    border-width: 1px;
+    border-color: #2a4476;
+    border-style: solid;
+    border-collapse: collapse;
 }
 
 /* Td.js */
 .allInfoTbodyTr {
-  text-align: center;
+    text-align: center;
 }
 
 .allInfoTbodyTd {
@@ -125,221 +125,325 @@
 }
 
 .modifyColor {
-  font-size: 150%;
-  color: #2a4476;
-  margin: 10px;
+    font-size: 150%;
+    color: #2a4476;
+    margin: 10px;
 }
 
 .deleteContainer {
 }
 
 .deleteContainer {
-  font-size: 150%;
-  color: #2a4476;
-  margin: 10px;
+    font-size: 150%;
+    color: #2a4476;
+    margin: 10px;
 }
-
 
 /* Post.js */
-.Line {
-  width: 30%;
-  height: -5px;
-  margin-left: 0;
-  margin-top: 5px;
-  border: 0.1px solid #e5e8ed;
+.addMemberFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addMemberForm {
+}
+
+/* 표 */
+.addMemberFormTable {
+    width: 800px;
+}
+
+.addMemberFormTableTbody {
+}
+
+.addMemberFormTableTbodyTr {
+}
+
+.addMemberFormTableTbodyTrTd {
+}
+
+.addMemberFormTableTbodyTrTdError {
+    width: 50px;
+    text-align: left;
+}
+
+/* 제목 */
+.normalTitleContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.normalTitle {
+    border-left: 3px #2a4476 solid;
+    padding-left: 10px;
+    color: #2a4476;
+    font-family: Noto Sans;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+.addMemberFormTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
 }
 
 .subTitle {
-  font-family: Noto Sans;
-  /* font-size: 13pt; */
-  font-weight: bold;
-  margin-right: 15px;
+    font-family: Noto Sans;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.addMemberFormTableTbodyTrSpouse {
+}
+
+.addMemberFormTableTbodyTrSpouseButton {
+    text-align: right;
+}
+
+.addMemberFormTableTbodyTrTdSpouse {
+    width: 130px;
+}
+
+.addMemberFormTableTbodyTrTdIncome {
+}
+
+.addMemberFormTableTbodyTrSpace {
+    height: 20px;
 }
 
 /* 이름 */
-.nameContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .nameInput {
-  border-width: 1px;
 }
 
 /* 생년월일 */
-.birthDateContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .birthDateInput {
 }
 
-/* 외국인 */
-.foreignerContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
+/* 청약통장 */
+/* 개설은행 */
+.bankSelect {
 }
 
+/* 청약통장종류 */
+.bankbookSelect {
+}
+
+/* 가입일 */
+.joinDateInput {
+}
+
+/* 예치금액 */
+.depositInput {
+}
+
+/* 납입횟수 */
+.paymentsCountInput {
+}
+
+/* 유효여부 */
+.validYnCountInput {
+}
+
+.validYnInputText {
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+/* 외국인 */
 .foreignerInput {
 }
 
 .foreignerInputText {
-  margin-right: 15px;
-  margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 5px;
 }
 
 /* 신청자와의 관계 */
-.relationshipContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .relationshipSelect {
 }
 
 /* 신청자와의 관계가 본인일 때 */
 /* 장기복무 여부 */
-.isSoldierContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .isSoldierInput {
 }
 
 .isSoldierInputText {
-  margin-right: 15px;
-  margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+/* 신청자와의 관계가 배우자일 때 */
+/* 분리세대 여부 */
+.isSpouseInput {
+}
+
+.isSpouseInputText {
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+/* 분리세대를 선택했을 때 */
+.spouseAddContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.spouseFindAddressButtonWrapper {
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.spousePopupDomContainer {
+}
+
+.postcodeInput {
+    width: 80px;
+}
+
+.addressInput {
+    width: 300px;
 }
 
 /* 무주택시작일 */
-.homelessStartDateContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .homelessStartDateInput {
 }
 
 /* 세대주 여부 */
-.householderContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .householderInput {
 }
 
 .householderInputText {
-  margin-right: 15px;
-  margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 5px;
 }
 
 /* 혼인 여부 */
-.isMarriedContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .isMarriedInput {
 }
 
 .isMarriedInputText {
-  margin-right: 15px;
-  margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 5px;
 }
 
 /* 결혼한 상태일 때 */
 /* 혼인신고일 */
-.marriedDateContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .marriedDateInput {
 }
 
 /* 월 평균 소득 */
-.incomeContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .incomeInput {
 }
 
 .incomeUnitText {
-  margin-left: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.incomeUnitIcon {
+    margin-right: 10px;
 }
 
 /* 자산 */
 .assetContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
 }
 
-.assetInput {
+/* 자산 여부 */
+.assetHaveAssetsInput {
 }
 
-.assetUnitText {
-  margin-left: 5px;
+.assetHaveAssetsInputText {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+/* 자산 유형 */
+.assetPropertyInput {
+}
+
+/* 분양권 여부 */
+.assetSaleRightYnInput {
+}
+
+.assetSaleRightYnText {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+/* 주거용 여부 */
+.assetResidentialBuildingYnInput {
+}
+
+.assetResidentialBuildingYnText {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+/* 주거용 건물유형 */
+.assetResidentialBuildingSelect {
+}
+
+/* 비주거용 건물유형 */
+.assetNoResidentialBuildingSelect {
+}
+
+/* 취득일 */
+.assetAcquistionDateInput {
+}
+
+/* 처분일 */
+.assetDispositionDateInput {
+}
+
+/* 전용면적 */
+.assetExclusiveAreaInput {
+}
+
+/* 금액 */
+.assetAmountInput {
+}
+
+/* 과세기준일 */
+.assetTaxBaseDateInput {
 }
 
 /* 청약 당첨 이력 */
-.historyContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .historyInput {
 }
 
 .historyInputText {
-  margin-right: 15px;
-  margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 5px;
 }
 
+/* 에러메시지 */
 .failMsg {
-  color: #FA1C33;
-  font-weight: bold;
-  margin-left: 20px;
+    color: #fa1c33;
+    font-weight: bold;
+}
+
+/* 저장버튼 */
+.saveButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .save {
-  width: 80px;
-  padding: 10px;
-  margin-left: 200px;
-  color: #ffffff;
-  font-weight: bold;
-  border: 0px;
-  border-radius: 20px;
-  background-color: #2a4476;
-  cursor: pointer;
+    width: 80px;
+    padding: 10px;
+    margin-left: 200px;
+    color: #ffffff;
+    font-weight: bold;
+    border: 0px;
+    border-radius: 20px;
+    background-color: #2a4476;
+    cursor: pointer;
 }
 
 /* Modal.js */
@@ -347,24 +451,71 @@
 }
 
 .buttonWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5%;
 }
 
 .cancelButton {
 }
 
 .cancelIcon {
-  font-size: 150%;
-  color: #2a4476;
-  margin-right: 10px;
+    font-size: 150%;
+    color: #2a4476;
+    margin-right: 10px;
 }
 
 .submitButton {
 }
 
 .submitIcon {
-  font-size: 150%;
-  color: #2a4476;
+    font-size: 150%;
+    color: #2a4476;
+}
+
+/* 월 평균 소득 */
+.incomeTableContainer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.incomeTable {
+    width: 400px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #2a4476;
+}
+
+.incomeTableThead {
+    background-color: #e5e8ed;
+}
+
+.incomeTableTheadTr {
+}
+
+.incomeTableTheadTrTd {
+    font-weight: bold;
+    text-align: center;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.incomeTableTbody {
+}
+
+.incomeTableTbodyTr {
+}
+
+.incomeTableTbodyTrTdPercent {
+    width: 50px;
+    background-color: #e5e8ed;
+    font-weight: bold;
+    text-align: center;
+    padding: 10;
+}
+
+.incomeTableTbodyTrTd {
+    width: 80px;
+    text-align: center;
+    padding: 8px;
 }
