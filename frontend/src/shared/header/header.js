@@ -21,7 +21,7 @@ const data = {
                 {
                     idx: 1,
                     name: '한눈에보기',
-                    link: '',
+                    link: '/atAGlance',
                 },
                 {
                     idx: 2,

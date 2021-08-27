@@ -20,7 +20,7 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
             [e.target.householderYn]: e.target.value,
             [e.target.soldierYn]: e.target.value,
             [e.target.isMarried]: e.target.value,
-            [e.target.marriageDate]: e.target.value,
+            [e.target.marriedDate]: e.target.value,
             [e.target.income]: e.target.value,
             [e.target.asset]: e.target.value,
             [e.target.history]: e.target.value,

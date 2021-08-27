@@ -12,6 +12,7 @@ import {
     MemberInfo,
     MemberHousingInfo,
     AddHouseHolder,
+    AtAGlance,
     Board,
     Post,
     BoardMain,
@@ -42,7 +43,9 @@ class App extends Component {
                         component={AddHouseHolder}
                     />
 
-                    <Route exact path="/common/personal" component={Board} />
+                    <Route exact path="/addHouseHolder/see" component={Board} />
+
+                    <Route exact path="/atAGlance" component={AtAGlance} />
                     <Route
                         exact
                         path="/common/passbook"
