@@ -11,6 +11,7 @@ export { default as MemberHousingInfo } from './MemberHousingInput/MemberHousing
 export { default as AddHouseHolder } from './AddHouseHolder/AddHouseHolder';
 export { default as Board } from './AddMember/Board';
 export { default as Post } from './AddMember/Post';
+export { default as AtAGlance } from './AtAGlance/AtAGlance';
 export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
 export { default as BoardView } from './CaseBoard/BoardView';
