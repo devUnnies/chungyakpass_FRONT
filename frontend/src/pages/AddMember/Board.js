@@ -49,6 +49,7 @@ const Board = (props) => {
                               homelessStartDate: data.homelessStartDate,
                               isMarried: data.isMarried,
                               marriedDate: data.marriedDate,
+                              transferDate: data.transferDate,
                               income: data.income,
                               assets: data.assets,
                               history: data.history,
@@ -77,6 +78,7 @@ const Board = (props) => {
                     homelessStartDate: data.homelessStartDate,
                     isMarried: data.isMarried,
                     marriedDate: data.marriedDate,
+                    transferDate: data.transferDate,
                     income: data.income,
                     assets: data.assets,
                     history: data.history,
@@ -113,6 +115,7 @@ const Board = (props) => {
             homelessStartDate: item.homelessStartDate,
             isMarried: item.isMarried,
             marriedDate: item.marriedDate,
+            transferDate: item.transferDate,
             income: item.income,
             assets: item.assets,
             history: item.history,
@@ -154,6 +157,7 @@ const Board = (props) => {
                         <th className="allInfoTheadTrTh"> 세대주 여부 </th>
                         <th className="allInfoTheadTrTh"> 장기복무 여부 </th>
                         <th className="allInfoTheadTrTh"> 무주택 시작일 </th>
+                        <th className="allInfoTheadTrTh"> 전입 신고일 </th>
                         <th className="allInfoTheadTrTh"> 혼인 여부 </th>
                         <th className="allInfoTheadTrTh"> 혼인 신고일 </th>
                         <th className="allInfoTheadTrTh"> 월 평균 소득 </th>

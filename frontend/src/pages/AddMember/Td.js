@@ -103,6 +103,13 @@ const Td = ({ item, handleRemove, handleEdit }) => {
             </td>
             <td className="allInfoTbodyTd">
                 {' '}
+                {item.transferDate
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
+                    .concat('일')}{' '}
+            </td>
+            <td className="allInfoTbodyTd">
+                {' '}
                 {item.isMarried === 'y' ? '기혼' : '미혼'}{' '}
             </td>
             <td className="allInfoTbodyTd">
