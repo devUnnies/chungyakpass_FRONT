@@ -14,6 +14,10 @@ const Post = ({ onSaveData }) => {
     const [failMsg, setFailMsg] = useState(null);
     const [fullAddress, setFullAddress] = useState();
     const [postcode, setPostcode] = useState('');
+    const [haveAssets, setHaveAssets] = useState();
+    const [assetsCount, setAssetsCount] = useState();
+    const [haveHistory, setHaveHistory] = useState();
+    const [haveLimit, setHaveLimit] = useState();
 
     const [address, setAddress] = useState({
         sido: '',
@@ -25,12 +29,7 @@ const Post = ({ onSaveData }) => {
     const [form, setForm] = useState({
         name: '',
         birthDate: '',
-        bank: '',
-        bankbook: '',
-        joinDate: '',
-        deposit: 0,
-        paymentsCount: 0,
-        validYn: '',
+        account: [],
         foreignerYn: '',
         homelessStartDate: '',
         relationship: '',
@@ -38,6 +37,7 @@ const Post = ({ onSaveData }) => {
         spouseYn: '',
         spouseAddress: '',
         spousePostcode: '',
+        childrenLive: '',
         soldierYn: '',
         homelessStartDate: '',
         isMarried: false,
@@ -45,7 +45,51 @@ const Post = ({ onSaveData }) => {
         transferDate: '',
         income: '',
         assets: [],
-        history: '',
+        histories: [],
+        limits: [],
+    });
+
+    const [account, setAccount] = useState({
+        bank: '',
+        bankbook: '',
+        joinDate: '',
+        deposit: 0,
+        paymentsCount: 0,
+        validYn: '',
+    });
+
+    const [asset, setAsset] = useState({
+        property: '',
+        saleRightYn: '',
+        residentialBuildingYn: '',
+        residentialBuilding: '',
+        nonResidentialBuilding: '',
+        acquistionDate: '',
+        dispositionDate: '',
+        exclusiveArea: '',
+        amount: '',
+        taxBaseDate: '',
+    });
+
+    const [historyArr, setHistoryArr] = useState({
+        houseName: '',
+        supply: '',
+        specialSupply: '',
+        housingType: '',
+        ranking: '',
+        result: '',
+        preliminaryNumber: '',
+        winningDate: '',
+        raffle: '',
+        cancelYn: '',
+    });
+
+    const [limitArr, setLimitArr] = useState({
+        reWinningRestrictedDate: '',
+        specialSupplyRestrictedYn: '',
+        unqualifiedSubscriberRestrictedDate: '',
+        requlatedAreaFirstPriorityRestrictedDate: '',
+        additionalPointSystemRestrictedDate: '',
     });
 
     const onAddressChange = (e) => {
@@ -64,8 +108,12 @@ const Post = ({ onSaveData }) => {
         setIsPopupOpen(false);
     };
 
-    // 세대 등록하는 api 연결 예정
-    const onSubmit = () => {};
+    // 세대 구성원 등록하는 api 연결 예정
+    const onSubmit = () => {
+        // 본인이면 put
+        // 배우자 분리세대의 배우자면 put
+        // 그 외는 post
+    };
 
     useEffect(() => {
         setAddress({
@@ -90,32 +138,76 @@ const Post = ({ onSaveData }) => {
     }, [fullAddress, postcode]);
 
     useEffect(() => {
-        if (form.validYn === 'n' || form.history === 'exist') {
+        if (
+            account.validYn === 'n' ||
+            haveHistory === 'exist' ||
+            limitArr.specialSupplyRestrictedYn === '청약불가' ||
+            Number(new Date(form.birthDate)) >
+                Number(new Date(form.homelessStartDate))
+        ) {
             setFailMsg('!!');
         } else {
             setFailMsg(null);
         }
-        console.log(failMsg);
     }, [form]);
 
-    const [asset, setAsset] = useState({
-        haveAssets: '',
-        property: '',
-        saleRightYn: '',
-        residentialBuildingYn: '',
-        residentialBuilding: '',
-        nonResidentialBuilding: '',
-        acquistionDate: '',
-        dispositionDate: '',
-        exclusiveArea: '',
-        amount: '',
-        taxBaseDate: '',
-    });
+    useEffect(() => {
+        if (form.relationship !== '본인') {
+            setAccount({
+                ...account,
+                bank: '',
+                bankbook: '',
+                joinDate: '',
+                deposit: 0,
+                paymentsCount: 0,
+                validYn: '',
+            });
+        }
+    }, [form.relationship]);
+
+    useEffect(() => {
+        if (haveLimit === 'n') {
+            setLimitArr({
+                ...limitArr,
+                reWinningRestrictedDate: '',
+                specialSupplyRestrictedYn: '',
+                unqualifiedSubscriberRestrictedDate: '',
+                requlatedAreaFirstPriorityRestrictedDate: '',
+                additionalPointSystemRestrictedDate: '',
+            });
+        }
+    }, [haveLimit]);
+
+    useEffect(() => {
+        if (haveHistory === 'n') {
+            setHistoryArr({
+                ...historyArr,
+                houseName: '',
+                supply: '',
+                specialSupply: '',
+                housingType: '',
+                ranking: '',
+                result: '',
+                preliminaryNumber: '',
+                winningDate: '',
+                raffle: '',
+                cancelYn: '',
+            });
+        }
+    }, [haveHistory]);
 
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
             ...form,
+            [name]: value,
+        });
+    };
+
+    const onAccountChange = (e) => {
+        const { name, value } = e.target;
+        setAccount({
+            ...account,
             [name]: value,
         });
     };
@@ -128,20 +220,35 @@ const Post = ({ onSaveData }) => {
         });
     };
 
+    const onHistoryArrChange = (e) => {
+        const { name, value } = e.target;
+        setHistoryArr({
+            ...historyArr,
+            [name]: value,
+        });
+    };
+
+    const onLimitArrChange = (e) => {
+        const { name, value } = e.target;
+        setLimitArr({
+            ...limitArr,
+            [name]: value,
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (failMsg === null) {
+            if (form.relationship === '본인') form.account.push(account);
+
+            if (haveAssets === 'y') form.assets.push(asset);
+            if (haveHistory === 'y') form.histories.push(historyArr);
+            if (haveLimit === 'y') form.limits.push(limitArr);
             onSaveData(form);
-            form.assets.push(asset);
             setForm({
                 name: '',
                 birthDate: '',
-                bank: '',
-                bankbook: '',
-                joinDate: '',
-                deposit: 0,
-                paymentsCount: 0,
-                validYn: '',
+                account: [],
                 foreignerYn: '',
                 homelessStartDate: '',
                 relationship: '',
@@ -156,7 +263,8 @@ const Post = ({ onSaveData }) => {
                 transferDate: '',
                 income: '',
                 assets: [],
-                history: '',
+                histories: [],
+                limits: [],
             });
         } else {
             alert('부적격 받은 사례가 있는 항목을 선택하셨습니다.');
@@ -395,7 +503,8 @@ const Post = ({ onSaveData }) => {
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
                                 </tr>
                             ) : null}
-                            {form.spouseYn === 'y' ? (
+                            {form.relationship === '배우자' &&
+                            form.spouseYn === 'y' ? (
                                 <tr
                                     className="addMemberFormTableTbodyTr"
                                     rowSpan="1"
@@ -496,6 +605,55 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
+                            {form.relationship === '자녀' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            분리세대인 경우
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="isSoldierInput"
+                                            type="radio"
+                                            name="childrenLive"
+                                            onChange={onChange}
+                                            value="base"
+                                            checked={
+                                                form.childrenLive === 'base'
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                        <span className="isSoldierInputText">
+                                            세대주와 산다
+                                        </span>
+                                        <input
+                                            className="isSoldierInput"
+                                            type="radio"
+                                            name="childrenLive"
+                                            onChange={onChange}
+                                            value="spouse"
+                                            checked={
+                                                form.childrenLive === 'spouse'
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                        <span className="isSoldierInputText">
+                                            세대주의 배우자와 산다
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTdError">
+                                        {/* {form.soldierYn === 'n' ? (
+                                            <span className="failMsg">
+                                                {failMsg}
+                                            </span>
+                                        ) : null} */}
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTdError"></td>
+                                </tr>
+                            ) : null}
                             <tr className="addMemberFormTableTbodyTr">
                                 <td className="addMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
@@ -511,6 +669,14 @@ const Post = ({ onSaveData }) => {
                                         onChange={onChange}
                                         required
                                     />
+                                </td>
+                                <td>
+                                    {Number(new Date(form.birthDate)) >
+                                    Number(new Date(form.homelessStartDate)) ? (
+                                        <span className="failMsg">
+                                            {failMsg}
+                                        </span>
+                                    ) : null}
                                 </td>
                             </tr>
                             <tr className="addMemberFormTableTbodyTr">
@@ -648,8 +814,8 @@ const Post = ({ onSaveData }) => {
                                         <select
                                             className="bankSelect"
                                             name="bank"
-                                            value={form.bank}
-                                            onChange={onChange}
+                                            value={account.bank}
+                                            onChange={onAccountChange}
                                         >
                                             <option value="">
                                                 {' '}
@@ -677,8 +843,8 @@ const Post = ({ onSaveData }) => {
                                         <select
                                             className="bankbookSelect"
                                             name="bankbook"
-                                            value={form.bankbook}
-                                            onChange={onChange}
+                                            value={account.bankbook}
+                                            onChange={onAccountChange}
                                             required
                                         >
                                             <option value="">
@@ -712,8 +878,8 @@ const Post = ({ onSaveData }) => {
                                             className="joinDateInput"
                                             type="date"
                                             name="joinDate"
-                                            value={form.joinDate}
-                                            onChange={onChange}
+                                            value={account.joinDate}
+                                            onChange={onAccountChange}
                                         />
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
@@ -731,8 +897,8 @@ const Post = ({ onSaveData }) => {
                                             className="depositInput"
                                             type="number"
                                             name="deposit"
-                                            value={form.deposit}
-                                            onChange={onChange}
+                                            value={account.deposit}
+                                            onChange={onAccountChange}
                                         />
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
@@ -750,8 +916,8 @@ const Post = ({ onSaveData }) => {
                                             className="paymentsCountInput"
                                             type="number"
                                             name="paymentsCount"
-                                            value={form.paymentsCount}
-                                            onChange={onChange}
+                                            value={account.paymentsCount}
+                                            onChange={onAccountChange}
                                         />
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
@@ -769,10 +935,10 @@ const Post = ({ onSaveData }) => {
                                             className="validYnInput"
                                             type="radio"
                                             name="validYn"
-                                            onChange={onChange}
+                                            onChange={onAccountChange}
                                             value="y"
                                             checked={
-                                                form.validYn === 'y'
+                                                account.validYn === 'y'
                                                     ? true
                                                     : false
                                             }
@@ -785,10 +951,10 @@ const Post = ({ onSaveData }) => {
                                             className="validYnInput"
                                             type="radio"
                                             name="validYn"
-                                            onChange={onChange}
+                                            onChange={onAccountChange}
                                             value="n"
                                             checked={
-                                                form.validYn === 'n'
+                                                account.validYn === 'n'
                                                     ? true
                                                     : false
                                             }
@@ -799,7 +965,7 @@ const Post = ({ onSaveData }) => {
                                         </span>
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError">
-                                        {form.validYn === 'n' ? (
+                                        {account.validYn === 'n' ? (
                                             <div>
                                                 <span className="failMsg">
                                                     {failMsg}
@@ -859,12 +1025,12 @@ const Post = ({ onSaveData }) => {
                                         className="assetHaveAssetsInput"
                                         type="radio"
                                         name="haveAssets"
-                                        onChange={onAssetChange}
+                                        onChange={(e) => {
+                                            setHaveAssets(e.target.value);
+                                        }}
                                         value="y"
                                         checked={
-                                            asset.haveAssets === 'y'
-                                                ? true
-                                                : false
+                                            haveAssets === 'y' ? true : false
                                         }
                                         required
                                     />
@@ -875,12 +1041,12 @@ const Post = ({ onSaveData }) => {
                                         className="assetHaveAssetsInput"
                                         type="radio"
                                         name="haveAssets"
-                                        onChange={onAssetChange}
+                                        onChange={(e) => {
+                                            setHaveAssets(e.target.value);
+                                        }}
                                         value="n"
                                         checked={
-                                            asset.haveAssets === 'n'
-                                                ? true
-                                                : false
+                                            haveAssets === 'n' ? true : false
                                         }
                                         required
                                     />
@@ -889,7 +1055,7 @@ const Post = ({ onSaveData }) => {
                                     </span>
                                 </td>
                             </tr>
-                            {asset.haveAssets === 'y' ? (
+                            {haveAssets === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1072,7 +1238,7 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {asset.haveAssets === 'y' ? (
+                            {haveAssets === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">취득일</span>
@@ -1089,7 +1255,7 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {asset.haveAssets === 'y' ? (
+                            {haveAssets === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">처분일</span>
@@ -1126,7 +1292,7 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {asset.haveAssets === 'y' ? (
+                            {haveAssets === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">금액</span>
@@ -1143,7 +1309,7 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {asset.haveAssets === 'y' ? (
+                            {haveAssets === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1182,13 +1348,13 @@ const Post = ({ onSaveData }) => {
                                     <input
                                         className="historyInput"
                                         type="radio"
-                                        name="history"
-                                        onChange={onChange}
-                                        value="exist"
+                                        name="haveHistory"
+                                        onChange={(e) => {
+                                            setHaveHistory(e.target.value);
+                                        }}
+                                        value="y"
                                         checked={
-                                            form.history === 'exist'
-                                                ? true
-                                                : false
+                                            haveHistory === 'y' ? true : false
                                         }
                                         required
                                     />{' '}
@@ -1198,13 +1364,13 @@ const Post = ({ onSaveData }) => {
                                     <input
                                         className="historyInput"
                                         type="radio"
-                                        name="history"
-                                        onChange={onChange}
-                                        value="none"
+                                        name="haveHistory"
+                                        onChange={(e) => {
+                                            setHaveHistory(e.target.value);
+                                        }}
+                                        value="n"
                                         checked={
-                                            form.history === 'none'
-                                                ? true
-                                                : false
+                                            haveHistory === 'n' ? true : false
                                         }
                                         required
                                     />
@@ -1213,13 +1379,459 @@ const Post = ({ onSaveData }) => {
                                     </span>
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
-                                    {form.history === 'exist' ? (
+                                    {haveHistory === 'y' ? (
                                         <span className="failMsg">
                                             {failMsg}
                                         </span>
                                     ) : null}
                                 </td>
                             </tr>
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">주택명</span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="houseNameInput"
+                                            type="text"
+                                            name="houseName"
+                                            value={historyArr.houseName}
+                                            onChange={onHistoryArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            공급유형
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <select
+                                            className="supplySelect"
+                                            name="supply"
+                                            value={historyArr.supply}
+                                            onChange={onHistoryArrChange}
+                                        >
+                                            <option value="">
+                                                {' '}
+                                                ---선택---{' '}
+                                            </option>
+                                            <option value="일반공급">
+                                                일반공급
+                                            </option>
+                                            <option value="특별공급">
+                                                특별공급
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' &&
+                            historyArr.supply === '특별공급' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            세부유형
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <select
+                                            className="specialSupplySelect"
+                                            name="spercialSupply"
+                                            value={historyArr.specialSupply}
+                                            onChange={onHistoryArrChange}
+                                        >
+                                            <option value="">
+                                                {' '}
+                                                ---선택---{' '}
+                                            </option>
+                                            <option value="다자녀가구">
+                                                다자녀가구
+                                            </option>
+                                            <option value="신혼부부">
+                                                신혼부부
+                                            </option>
+                                            <option value="생애최초">
+                                                생애최초
+                                            </option>
+                                            <option value="노부모부양">
+                                                노부모부양
+                                            </option>
+                                            <option value="기관추천">
+                                                기관추천
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">주택형</span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="houseTypeInput"
+                                            type="text"
+                                            name="housingType"
+                                            value={historyArr.housingType}
+                                            onChange={onHistoryArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">순위</span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <select
+                                            className="rankingSelect"
+                                            name="ranking"
+                                            value={historyArr.ranking}
+                                            onChange={onHistoryArrChange}
+                                        >
+                                            <option value="">
+                                                {' '}
+                                                ---선택---{' '}
+                                            </option>
+                                            <option value="일순위">
+                                                일순위
+                                            </option>
+                                            <option value="이순위">
+                                                이순위
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            당첨결과
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <select
+                                            className="resultSelect"
+                                            name="result"
+                                            value={historyArr.result}
+                                            onChange={onHistoryArrChange}
+                                        >
+                                            <option value="">
+                                                {' '}
+                                                ---선택---{' '}
+                                            </option>
+                                            <option value="당첨">당첨</option>
+                                            <option value="미당첨">
+                                                미당첨
+                                            </option>
+                                            <option value="예비당첨">
+                                                예비당첨
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' &&
+                            historyArr.result === '예비당첨' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            예비번호
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="houseTypeInput"
+                                            type="text"
+                                            name="preliminaryNumber"
+                                            value={historyArr.preliminaryNumber}
+                                            onChange={onHistoryArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' &&
+                            historyArr.result === '당첨' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">당첨일</span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="houseTypeInput"
+                                            type="date"
+                                            name="winningDate"
+                                            value={historyArr.winningDate}
+                                            onChange={onHistoryArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            추첨방식
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <select
+                                            className="resultSelect"
+                                            name="raffle"
+                                            value={historyArr.raffle}
+                                            onChange={onHistoryArrChange}
+                                        >
+                                            <option value="">
+                                                {' '}
+                                                ---선택---{' '}
+                                            </option>
+                                            <option value="가점제">
+                                                가점제
+                                            </option>
+                                            <option value="추첨제">
+                                                추첨제
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' &&
+                            (historyArr.result === '당첨' ||
+                                historyArr.result === '예비당첨') ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            당첨취소
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="cancelYnInput"
+                                            type="radio"
+                                            name="cancelYn"
+                                            onChange={onHistoryArrChange}
+                                            value="y"
+                                            checked={
+                                                historyArr.cancelYn === 'y'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="historyInputText">
+                                            취소
+                                        </span>
+                                        <input
+                                            className="cancelYnInput"
+                                            type="radio"
+                                            name="cancelYn"
+                                            onChange={onHistoryArrChange}
+                                            value="n"
+                                            checked={
+                                                historyArr.cancelYn === 'n'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />
+                                        <span className="historyInputText">
+                                            유지
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            <tr className="addMemberFormTableTbodyTrSpace"></tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td colSpan="3">
+                                    <div className="normalTitleContainer">
+                                        <span className="normalTitle">
+                                            청약 제한 사항
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        청약 제한 사항
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="limitInput"
+                                        type="radio"
+                                        name="haveLimit"
+                                        onChange={(e) => {
+                                            setHaveLimit(e.target.value);
+                                        }}
+                                        value="y"
+                                        checked={
+                                            haveLimit === 'y' ? true : false
+                                        }
+                                        required
+                                    />{' '}
+                                    <span className="limitInputText">있음</span>
+                                    <input
+                                        className="limitInput"
+                                        type="radio"
+                                        name="haveLimit"
+                                        onChange={(e) => {
+                                            setHaveLimit(e.target.value);
+                                        }}
+                                        value="n"
+                                        checked={
+                                            haveLimit === 'n' ? true : false
+                                        }
+                                        required
+                                    />{' '}
+                                    <span className="limitInputText">없음</span>
+                                </td>
+                            </tr>
+                            {haveLimit === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            재당첨제한
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="reWinDateInput"
+                                            type="date"
+                                            name="reWinningRestrictedDate"
+                                            value={
+                                                limitArr.reWinningRestrictedDate
+                                            }
+                                            onChange={onLimitArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveLimit === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            특별공급제한
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="specialSupplyRestrictedYn"
+                                            onChange={onLimitArrChange}
+                                            value="청약불가"
+                                            checked={
+                                                limitArr.specialSupplyRestrictedYn ===
+                                                '청약불가'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="limitInputText">
+                                            청약불가
+                                        </span>
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="specialSupplyRestrictedYn"
+                                            onChange={onLimitArrChange}
+                                            value="none"
+                                            checked={
+                                                limitArr.specialSupplyRestrictedYn ===
+                                                'none'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />
+                                        <span className="limitInputText">
+                                            청약가능
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTdError">
+                                        {limitArr.specialSupplyRestrictedYn ===
+                                        '청약불가' ? (
+                                            <span className="failMsg">
+                                                {failMsg}
+                                            </span>
+                                        ) : null}
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveLimit === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            부적격당첨자제한
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="unSubResDateInput"
+                                            type="date"
+                                            name="unqualifiedSubscriberRestrictedDate"
+                                            value={
+                                                limitArr.unqualifiedSubscriberRestrictedDate
+                                            }
+                                            onChange={onLimitArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveLimit === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            투기과열지구
+                                            <br />
+                                            청약과열지구
+                                            <br />
+                                            1순위제한
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="reAreaFirPriRestDateInput"
+                                            type="date"
+                                            name="requlatedAreaFirstPriorityRestrictedDate"
+                                            value={
+                                                limitArr.requlatedAreaFirstPriorityRestrictedDate
+                                            }
+                                            onChange={onLimitArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveLimit === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            가점제당첨제한
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="addPointSysRestDateInput"
+                                            type="date"
+                                            name="additionalPointSystemRestrictedDate"
+                                            value={
+                                                limitArr.additionalPointSystemRestrictedDate
+                                            }
+                                            onChange={onLimitArrChange}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
                             {/* <tr className="addMemberFormTableTbodyTr">
                                 <td className="addMemberFormTableTbodyTrTd"></td>
                                 <td className="addMemberFormTableTbodyTrTd"></td>

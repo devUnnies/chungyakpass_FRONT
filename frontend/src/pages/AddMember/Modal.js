@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Addmember.css';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
     const [edited, setEdited] = useState(selectedData);
+    const [account, setAccount] = useState(selectedData.account[0]);
+    const [address, setAddress] = useState(selectedData.spouseAddress);
+    const [assets, setAssets] = useState(selectedData.assets);
+    const [history, setHistory] = useState(selectedData.histories[0]);
+    const [limit, setLimit] = useState(selectedData.limits[0]);
 
     const onCancel = () => {
         handleCancel();
@@ -20,10 +25,10 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
             [e.target.householderYn]: e.target.value,
             [e.target.soldierYn]: e.target.value,
             [e.target.isMarried]: e.target.value,
-            [e.target.marriedDate]: e.target.value,
+            [e.target.marriedDate]:
+                [e.target.isMarried] === '미혼' ? null : e.target.value,
+            [e.target.transferDate]: e.target.value,
             [e.target.income]: e.target.value,
-            [e.target.asset]: e.target.value,
-            [e.target.history]: e.target.value,
         });
     };
 
@@ -34,14 +39,6 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
 
     return (
         <div className="modifyWarraper">
-            {/* <div className=""> */}
-            {/* <div className="modifyHeaderContainer">
-          <h3 className="title"> 구성원 정보 수정하기 </h3>
-          <i className="cancel" onClick={onCancel}>
-            <CloseCircleOutlined className="cancelIcon" />
-          </i>
-        </div> */}
-
             <form onSubmit={onSubmitEdit} className="modifyForm">
                 <div>
                     <div> ID: {edited.id} </div>
@@ -171,6 +168,20 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
                             type="date"
                             name="homelessStartDate"
                             value={edited.homelessStartDate}
+                            onChange={onEditChange}
+                            required
+                        />
+                    </div>
+
+                    {/* 전입신고일 */}
+                    <div className="transferDateContainer">
+                        <span className="subTitle">전입신고일</span>
+                        {/* <hr className="Line" /> */}
+                        <input
+                            className="transferDateInput"
+                            type="date"
+                            name="transferDate"
+                            value={edited.transferDate}
                             onChange={onEditChange}
                             required
                         />
