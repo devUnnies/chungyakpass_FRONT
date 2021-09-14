@@ -420,6 +420,15 @@
     margin-left: 5px;
 }
 
+/* 청약 제한 사항 */
+.limitInput {
+}
+
+.limitInputText {
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
 /* 에러메시지 */
 .failMsg {
     color: #fa1c33;
@@ -452,7 +461,9 @@
 
 .buttonWrapper {
     display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
+    margin-top: 10px;
     margin-bottom: 5%;
 }
 
@@ -518,4 +529,57 @@
     width: 80px;
     text-align: center;
     padding: 8px;
+}
+
+/* Modal.js */
+.modifyMemberFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modifyMemberForm {
+    width: 800px;
+}
+
+.modifyMemberFormTable {
+}
+
+.modifyMemberFormTableTbody {
+}
+
+.modifyMemberFormTableTbodyTr {
+}
+
+.modifyMemberFormTableTbodyTrTd {
+}
+
+.modifyMemberFormTableTbodyTrTdError {
+    width: 50px;
+    text-align: left;
+}
+
+.modifyMemberFormTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
+}
+
+.modifyMemberFormTableTbodyTrSpouse {
+}
+
+.modifyMemberFormTableTbodyTrSpouseButton {
+    text-align: right;
+}
+
+.modifyMemberFormTableTbodyTrTdSpouse {
+    width: 130px;
+}
+
+.modifyMemberFormTableTbodyTrTdIncome {
+}
+
+.modifyMemberFormTableTbodyTrSpace {
+    height: 20px;
 }
