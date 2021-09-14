@@ -1,9 +1,9 @@
 /* 소제목 디자인 적용 */
 .noEmail_Title {
     margin-left: 20%;
-    margin-top: 1%;
+    margin-top: 5%;
 
-    border-left: 6px solid #2a4476;
+    border-left: 5px solid #2a4476;
     padding: 2px;
     font-weight: bold;
 }

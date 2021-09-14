@@ -26,9 +26,9 @@
 /* board_title */
 .board_title {
     margin-left: 20%;
-    margin-top: 1%;
+    margin-top: 5%;
 
-    border-left: 6px solid #2a4476;
+    border-left: 5px solid #2a4476;
     padding: 2px;
     font-weight: bold;
 }
@@ -46,11 +46,29 @@
     margin-left: 5px;
 }
 .postView_wrapper {
-    width: 81%;
+    width: 80%;
     margin-top: 3%;
     margin-left: 20%;
     margin-bottom: 10%;
 }
+/*게시글 상세보기 목록*/
+.postView_row {
+    width: 80%;
+    padding: 20px;
+
+    display: flex;
+    border: 0px solid black;
+    border-radius: 3px;
+}
+.postName {
+    width: 5%;
+    text-align: center;
+}
+.inner {
+    float: left;
+    margin-left: 10%;
+}
+
 /*목록 버튼 위치 조정*/
 .goList_btn {
     width: 80px;
@@ -65,13 +83,4 @@
     float: right;
     margin-top: 5%;
     margin-right: 25%;
-}
-/*게시글 상세보기 목록*/
-.postView_row {
-    margin: 3px 0;
-    padding: 5px;
-
-    display: flex;
-    border: 0px solid black;
-    border-radius: 3px;
 }
