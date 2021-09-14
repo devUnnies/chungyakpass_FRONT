@@ -35,12 +35,7 @@ const Board = (props) => {
                               id: data.id,
                               name: data.name,
                               birthDate: data.birthDate,
-                              bank: data.bank,
-                              bankbook: data.bankbook,
-                              joinDate: data.joinDate,
-                              deposit: data.deposit,
-                              paymentsCount: data.paymentsCount,
-                              validYn: data.validYn,
+                              account: data.account,
                               foreignerYn: data.foreignerYn,
                               relationship: data.relationship,
                               householderYn: data.householderYn,
@@ -52,7 +47,8 @@ const Board = (props) => {
                               transferDate: data.transferDate,
                               income: data.income,
                               assets: data.assets,
-                              history: data.history,
+                              histories: data.histories,
+                              limits: data.limits,
                           }
                         : row
                 )
@@ -64,12 +60,7 @@ const Board = (props) => {
                     id: nextId.current,
                     name: data.name,
                     birthDate: data.birthDate,
-                    bank: data.bank,
-                    bankbook: data.bankbook,
-                    joinDate: data.joinDate,
-                    deposit: data.deposit,
-                    paymentsCount: data.paymentsCount,
-                    validYn: data.validYn,
+                    account: data.account,
                     foreignerYn: data.foreignerYn,
                     relationship: data.relationship,
                     householderYn: data.householderYn,
@@ -81,7 +72,8 @@ const Board = (props) => {
                     transferDate: data.transferDate,
                     income: data.income,
                     assets: data.assets,
-                    history: data.history,
+                    histories: data.histories,
+                    limits: data.limits,
                 })
             );
             nextId.current += 1;
@@ -101,12 +93,7 @@ const Board = (props) => {
             id: item.id,
             name: item.name,
             birthDate: item.birthDate,
-            bank: item.bank,
-            bankbook: item.bankbook,
-            joinDate: item.joinDate,
-            deposit: item.deposit,
-            paymentsCount: item.paymentsCount,
-            validYn: item.validYn,
+            account: item.account,
             foreignerYn: item.foreignerYn,
             relationship: item.relationship,
             householderYn: item.householderYn,
@@ -118,7 +105,8 @@ const Board = (props) => {
             transferDate: item.transferDate,
             income: item.income,
             assets: item.assets,
-            history: item.history,
+            histories: item.histories,
+            limits: item.limits,
         };
         console.log(selectedData);
         setSelected(selectedData);
@@ -163,6 +151,7 @@ const Board = (props) => {
                         <th className="allInfoTheadTrTh"> 월 평균 소득 </th>
                         <th className="allInfoTheadTrTh"> 자산 </th>
                         <th className="allInfoTheadTrTh"> 청약 당첨 이력 </th>
+                        <th className="allInfoTheadTrTh"> 청약 제한 사항 </th>
                         <th className="allInfoTheadTrTh"> 수정 </th>
                         <th className="allInfoTheadTrTh"> 삭제 </th>
                     </tr>
