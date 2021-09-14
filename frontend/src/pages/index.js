@@ -18,3 +18,7 @@ export { default as BoardView } from './CaseBoard/BoardView';
 export { default as FAQ } from './FAQ/FAQ';
 export { default as AptNum } from './GeneralSupply/AptNum';
 export { default as GeneralSupply } from './GeneralSupply/GeneralSupply';
+export { default as GeneralPrivateApi } from './GeneralSupply/GeneralPrivateApi';
+export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
+export { default as FirstRank } from '../components/GeneralRank/FirstRank';
+export { default as SecondRank } from '../components/GeneralRank/SecondRank';

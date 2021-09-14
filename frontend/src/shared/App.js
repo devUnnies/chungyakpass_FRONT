@@ -7,6 +7,8 @@ import {
     PersonalInfo,
     AptNum,
     GeneralSupply,
+    GeneralPrivateApi,
+    GeneralNationApi,
     PassbookInfo,
     HousingInfo,
     MemberInfo,
@@ -21,6 +23,8 @@ import {
     NoEmail,
     Sitemap,
     FAQ,
+    FirstRank,
+    SecondRank,
 } from '../pages';
 import Header from './header/header';
 import Footer from './footer/footer';
@@ -63,6 +67,13 @@ class App extends Component {
                         component={MemberHousingInfo}
                     />
                     <Route path="/supply/normal" component={GeneralSupply} />
+                    <Route
+                        path="/normal/private"
+                        component={GeneralPrivateApi}
+                    />
+                    <Route path="/normal/nation" component={GeneralNationApi} />
+                    <Route path="/rank/first" component={FirstRank} />
+                    <Route path="/rank/second" component={SecondRank} />
                     <Route path="/supply/apartmentInfo" component={AptNum} />
                     <Route path="/board" component={Board} />
                     <Route path="/common/personal/addMember" component={Post} />
