@@ -25,26 +25,20 @@ const BoardView = ({ history, location, match }) => {
                 {data ? (
                     <>
                         <div className="postView_row">
-                            <label>게시글 번호</label>
-                            <label>{data.no}</label>
+                            <label className="postName">제목</label>
+                            <span className="inner">{data.title}</span>
                         </div>
                         <div className="postView_row">
-                            <label>제목</label>
-                            <label>{data.title}</label>
+                            <label className="postName">작성일</label>
+                            <span className="inner">{data.createDate}</span>
                         </div>
                         <div className="postView_row">
-                            <label>작성일</label>
-                            <label>{data.createDate}</label>
+                            <label className="postName">작성자</label>
+                            <span className="inner">{data.writer}</span>
                         </div>
                         <div className="postView_row">
-                            <label>작성자</label>
-                            <label>{data.writer}</label>
-                        </div>
-                        <div className="postView_row">
-                            <label>내용</label>
-                            <Link to="content">
-                                <div>{data.content}</div>
-                            </Link>
+                            <label className="postName">내용</label>
+                            <span className="inner">{data.content}</span>
                         </div>
                     </>
                 ) : (
