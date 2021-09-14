@@ -31,17 +31,17 @@ const data = {
                         {
                             idx: 0,
                             name: '일반공급',
-                            link: '/supply/apartmentInfo',
+                            link: '',
                             subcategory: [
                                 {
                                     idx: 0,
                                     name: '국민주택',
-                                    link: '/supply/normal/nation',
+                                    link: '/normal/nation',
                                 },
                                 {
                                     idx: 1,
                                     name: '민영주택',
-                                    link: '/supply/normal/private',
+                                    link: '/normal/private',
                                 },
                             ],
                         },
