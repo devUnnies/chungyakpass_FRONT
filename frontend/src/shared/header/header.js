@@ -164,7 +164,9 @@ function Logo() {
     );
 }
 
-function Nav() {
+function Nav(props) {
+    const tok = props === null ? null : props.token;
+    console.log(tok);
     return (
         <div className="nav">
             <div className="nav-container">
@@ -173,7 +175,10 @@ function Nav() {
                     {data.category.map((content, i) => {
                         return (
                             <li className="nav-item" key={i}>
-                                <NavLink to={content.link} className="a">
+                                <NavLink
+                                    to={tok ? content.link : '/needLogin'}
+                                    className="a"
+                                >
                                     {content.name}
                                 </NavLink>
                                 <ul className="nav-subItems">
@@ -185,7 +190,11 @@ function Nav() {
                                                     key={j}
                                                 >
                                                     <NavLink
-                                                        to={subcontent.link}
+                                                        to={
+                                                            tok
+                                                                ? subcontent.link
+                                                                : '/needLogin'
+                                                        }
                                                         className="a"
                                                     >
                                                         {subcontent.name}
@@ -206,7 +215,9 @@ function Nav() {
                                                                           >
                                                                               <NavLink
                                                                                   to={
-                                                                                      subcontent.link
+                                                                                      tok
+                                                                                          ? subcontent.link
+                                                                                          : '/needLogin'
                                                                                   }
                                                                                   className="a"
                                                                               >
@@ -230,7 +241,9 @@ function Nav() {
                                                                                                     >
                                                                                                         <NavLink
                                                                                                             to={
-                                                                                                                subcontent.link
+                                                                                                                tok
+                                                                                                                    ? subcontent.link
+                                                                                                                    : '/needLogin'
                                                                                                             }
                                                                                                             className="a"
                                                                                                         >
@@ -271,7 +284,7 @@ const Header = (props) => {
         <div className="header">
             {tokenStore.token ? <Logout /> : <Login />}
             <Logo></Logo>
-            <Nav></Nav>
+            <Nav token={tokenStore.token}></Nav>
         </div>
     );
 };

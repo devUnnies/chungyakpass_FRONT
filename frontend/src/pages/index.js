@@ -1,6 +1,7 @@
 export { default as Main } from './Main/Main';
 export { default as Login } from './Login/Login';
 export { default as Signup } from './Signup/Signup';
+export { default as AllowLogin } from './AllowLogin/AllowLogin';
 export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
 export { default as Sitemap } from './Sitemap/Sitemap';

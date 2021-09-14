@@ -4,6 +4,7 @@ import {
     Main,
     Login,
     Signup,
+    AllowLogin,
     PersonalInfo,
     AptNum,
     GeneralSupply,
@@ -38,6 +39,7 @@ class App extends Component {
                     <Route exact path="/" component={Main} />
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
+                    <Route exact path="/needLogin" component={AllowLogin} />
                     <Route path="/personalRule" component={PersonalRules} />
                     <Route path="/noEmail" component={NoEmail} />
                     <Route path="/sitemap" component={Sitemap} />
