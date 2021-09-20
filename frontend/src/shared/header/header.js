@@ -118,6 +118,7 @@ function Logout() {
 
     const handleLogout = () => {
         dispatch(signoutWithToken());
+        storage.remove('user-token');
         history.push('/');
     };
 
@@ -279,12 +280,12 @@ function Nav(props) {
 
 const Header = (props) => {
     const tokenStore = useSelector((state) => state.token);
-
+    const tok = storage.get('user-token');
     return (
         <div className="header">
-            {tokenStore.token ? <Logout /> : <Login />}
+            {tok || tokenStore.token ? <Logout /> : <Login />}
             <Logo></Logo>
-            <Nav token={tokenStore.token}></Nav>
+            <Nav token={tok}></Nav>
         </div>
     );
 };
