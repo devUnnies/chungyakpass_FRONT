@@ -11,7 +11,7 @@ const data = {
         {
             idx: 0,
             name: '청약자격확인',
-            link: '',
+            link: '/addHouseHolder',
             subcategory: [
                 {
                     idx: 0,
@@ -57,12 +57,13 @@ const data = {
         {
             idx: 1,
             name: '계산기',
-            link: '/signup/member',
+            link: '',
             subcategory: [
                 {
                     idx: 0,
                     name: '가점계산기',
                     link: '',
+                    subcategory: [],
                 },
                 {
                     idx: 1,
@@ -118,6 +119,7 @@ function Logout() {
 
     const handleLogout = () => {
         dispatch(signoutWithToken());
+        storage.remove('user-token');
         history.push('/');
     };
 
@@ -279,12 +281,12 @@ function Nav(props) {
 
 const Header = (props) => {
     const tokenStore = useSelector((state) => state.token);
-
+    const tok = storage.get('user-token');
     return (
         <div className="header">
-            {tokenStore.token ? <Logout /> : <Login />}
+            {tok || tokenStore.token ? <Logout /> : <Login />}
             <Logo></Logo>
-            <Nav token={tokenStore.token}></Nav>
+            <Nav token={tok}></Nav>
         </div>
     );
 };
