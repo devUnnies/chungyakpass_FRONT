@@ -42,7 +42,7 @@ const GeneralPrivateApi = ({ onSaveData }) => {
     const onClick = async () => {
         try {
             const res = await axios.get(
-                'http://3.37.99.145:8080/verification/general/minyeoung'
+                'https://jsonplaceholder.typicode.com/todos/1'
             );
             setData1(res.data.userId); // userId 하나만 가져오기.
             setData2(res.data.completed); // completed 하나만 가져오기
@@ -327,6 +327,40 @@ const GeneralPrivateApi = ({ onSaveData }) => {
                     {/* 이후 조건 충족 시 다음 인풋 보이도록. */}
 
                     {/* 순위 판별 시작 */}
+                    {/* 주거전용 85㎡ 기준 충족*/}
+                    <tr className="general_phase">
+                        <td className="qulificaiton">
+                            <span className="qulificaitonBox">
+                                주거전용 85㎡ 초과공공건설임대주택, 수도권에
+                                지정된 공공주택지구에서 공급하는 민영주택에
+                                청약하는가?
+                            </span>
+                        </td>
+                        <td className="general_result">
+                            {data && (
+                                <input
+                                    className="aptInfoSelect"
+                                    value={JSON.stringify(data)}
+                                    readOnly={true}
+                                />
+                            )}
+                            <span>
+                                {data && data !== '' ? (
+                                    <span className="progress" readOnly={true}>
+                                        <CheckCircleOutlined />
+                                    </span>
+                                ) : null}
+                                {data && data === '' ? (
+                                    <span className="secondRankTootip">
+                                        <PauseCircleOutlined />
+                                        {(form.generalPrivateRes = '2순위')}
+                                    </span>
+                                ) : null}
+                            </span>
+                        </td>
+                    </tr>
+
+                    {/* 위 조건이 만족하면서 2주택이 만족해야함. */}
                     {/* 2주택 이상 소유 시 2순위 */}
                     {form.supportYn === 'y' || form.lifeYn === 'y' ? (
                         <>
@@ -541,42 +575,6 @@ const GeneralPrivateApi = ({ onSaveData }) => {
                                     {data && (
                                         <input
                                             className="aptInfoSelect"
-                                            value={JSON.stringify(data)}
-                                            readOnly={true}
-                                        />
-                                    )}
-                                    <span>
-                                        {data && data !== '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                        {data && data === '' ? (
-                                            <span className="secondRankTootip">
-                                                <PauseCircleOutlined />
-                                                {
-                                                    (form.generalPrivateRes =
-                                                        '2순위')
-                                                }
-                                            </span>
-                                        ) : null}
-                                    </span>
-                                </td>
-                            </tr>
-
-                            {/* 공급 주택 조건 충족 여부 */}
-                            <tr className="general_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        주거전용 85㎡ 초과공공건설임대주택,
-                                        수도권에 지정된 공공주택지구에서
-                                        공급하는 민영주택에 청약하는가?
-                                    </span>
-                                </td>
-                                <td className="general_result">
-                                    {data && (
-                                        <input
-                                            className="aptInfoSelect"
                                             value={JSON.stringify(data2)}
                                             readOnly={true}
                                         />
@@ -613,29 +611,33 @@ const GeneralPrivateApi = ({ onSaveData }) => {
                 {data && (form.supportYn !== '' || form.lifeYn !== '') ? (
                     <>
                         {form.generalPrivateRes === '1순위' ? (
-                            <Link to="/rank/first">
-                                <MainButton
-                                    type="submit"
-                                    width="100"
-                                    height="30"
-                                    fontWeight="bold"
-                                    marginLeft="20%"
-                                >
-                                    순위 확인하기
-                                </MainButton>
-                            </Link>
+                            <div className="rankButton">
+                                <Link to="/rank/first">
+                                    <MainButton
+                                        type="submit"
+                                        width="100"
+                                        height="30"
+                                        fontWeight="bold"
+                                        marginLeft="20%"
+                                    >
+                                        순위 확인하기
+                                    </MainButton>
+                                </Link>
+                            </div>
                         ) : (
-                            <Link to="/rank/second">
-                                <MainButton
-                                    type="submit"
-                                    width="100"
-                                    height="30"
-                                    fontWeight="bold"
-                                    marginLeft="20%"
-                                >
-                                    순위 확인하기
-                                </MainButton>
-                            </Link>
+                            <div className="rankButton">
+                                <Link to="/rank/second">
+                                    <MainButton
+                                        type="submit"
+                                        width="100"
+                                        height="30"
+                                        fontWeight="bold"
+                                        marginLeft="20%"
+                                    >
+                                        순위 확인하기
+                                    </MainButton>
+                                </Link>
+                            </div>
                         )}
                     </>
                 ) : (
