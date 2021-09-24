@@ -1,5 +1,5 @@
 /* general_title */
-.general_title {
+.special_title {
     margin-left: 20%;
     margin-top: 5%;
 
@@ -7,13 +7,13 @@
     padding: 2px;
     font-weight: bold;
 }
-.general_mainTitle {
+.special_mainTitle {
     margin-left: 13px;
     font-size: 18pt;
     color: #000;
     letter-spacing: 1px;
 }
-.general_subTitle {
+.special_subTitle {
     color: hsl(209, 28%, 39%);
     font-size: 10pt;
     line-height: 1.5em;
@@ -21,7 +21,7 @@
     margin-left: 5px;
 }
 /*container 공간 확보*/
-.generalSupply_form {
+.specialSupply_form {
     margin-bottom: 80px;
 }
 /*불러오기 버튼 위치 조정*/
@@ -33,19 +33,19 @@
 }
 
 /*일반공급 자격확인 테이블*/
-.general_phase {
+.special_phase {
     position: relative;
     margin-top: 10%;
 }
 /* 일반공급 민영 */
-.generalPrivate_table {
+.specialMultie_table {
     margin-top: 5%;
     margin-left: 20%;
 
     width: 60%;
 }
 /* 일반공급 국민 */
-.generalPublic_table {
+.specialPublic_table {
     margin-top: 5%;
     margin-left: 20%;
 
@@ -54,7 +54,7 @@
 
 /* 조건간 간격 조정 */
 .qulificaiton,
-.general_result {
+.special_result {
     padding-bottom: 5%;
     margin-right: 10px;
 }
