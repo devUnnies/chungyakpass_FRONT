@@ -11,7 +11,7 @@ const data = {
         {
             idx: 0,
             name: '청약자격확인',
-            link: '',
+            link: '/addHouseHolder',
             subcategory: [
                 {
                     idx: 0,
@@ -57,12 +57,13 @@ const data = {
         {
             idx: 1,
             name: '계산기',
-            link: '/signup/member',
+            link: '',
             subcategory: [
                 {
                     idx: 0,
                     name: '가점계산기',
                     link: '',
+                    subcategory: [],
                 },
                 {
                     idx: 1,
