@@ -38,7 +38,7 @@ const BoardView = ({ history, location, match }) => {
                         </div>
                         <div className="postView_row">
                             <label className="postName">내용</label>
-                            <span className="inner">{data.content}</span>
+                            <span className="inner">{data.Link}</span>
                         </div>
                     </>
                 ) : (
