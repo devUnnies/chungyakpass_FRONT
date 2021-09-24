@@ -10,6 +10,7 @@ import {
     GeneralSupply,
     GeneralPrivateApi,
     GeneralNationApi,
+    MultieChildrenMinyeongApi,
     PassbookInfo,
     HousingInfo,
     MemberInfo,
@@ -72,6 +73,10 @@ class App extends Component {
                     <Route
                         path="/normal/private"
                         component={GeneralPrivateApi}
+                    />
+                    <Route
+                        path="/special/multieChild/minyeong"
+                        component={MultieChildrenMinyeongApi}
                     />
                     <Route path="/normal/nation" component={GeneralNationApi} />
                     <Route path="/rank/first" component={FirstRank} />
