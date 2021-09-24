@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import './FAQ.css';
 
-const Question = ({ title, info }) => {
+const Question = ({ name, info }) => {
     const [expanded, setExpanded] = useState(false);
 
     return (
         <article className="question">
             <div className="faq_Q">
-                <p
+                <a
+                    href="
+                    #faq_A"
                     onClick={() => setExpanded(!expanded)}
-                    className="question_title"
+                    className="question_name"
                 >
-                    Q. {title}
-                </p>
+                    Q. {name}
+                </a>
                 <button className="btn" onClick={() => setExpanded(!expanded)}>
                     {expanded ? <AiOutlineMinus /> : <AiOutlinePlus />}
                 </button>
