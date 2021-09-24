@@ -7,11 +7,44 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
     const [account, setAccount] = useState(selectedData.account[0]);
     const [address, setAddress] = useState(selectedData.spouseAddress);
     const [assets, setAssets] = useState(selectedData.assets);
-    const [history, setHistory] = useState(selectedData.histories[0]);
-    const [limit, setLimit] = useState(selectedData.limits[0]);
+    const [asset, setAsset] = useState(selectedData.assets[0]);
+    const [historyArr, setHistoryArr] = useState(selectedData.histories[0]);
+    const [limitArr, setLimitArr] = useState(selectedData.limits[0]);
 
     const onCancel = () => {
         handleCancel();
+    };
+
+    const onAccountChange = (e) => {
+        const { name, value } = e.target;
+        setAccount({
+            ...account,
+            [name]: value,
+        });
+    };
+
+    const onAssetChange = (e) => {
+        const { name, value } = e.target;
+        setAsset({
+            ...asset,
+            [name]: value,
+        });
+    };
+
+    const onHistoryArrChange = (e) => {
+        const { name, value } = e.target;
+        setHistoryArr({
+            ...historyArr,
+            [name]: value,
+        });
+    };
+
+    const onLimitArrChange = (e) => {
+        const { name, value } = e.target;
+        setLimitArr({
+            ...limitArr,
+            [name]: value,
+        });
     };
 
     const onEditChange = (e) => {
