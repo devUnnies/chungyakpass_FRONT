@@ -1,0 +1,67 @@
+/* rank css 적용 */
+.FirstRankMain,
+.SecondRankMain {
+    margin-top: 10%;
+}
+.greetingMessage {
+    margin: 20px;
+
+    font-size: 20pt;
+    text-align: center;
+}
+.addExplanation {
+    margin: 20px;
+
+    font-size: 15pt;
+    text-align: center;
+}
+
+/*버튼 위치 조정*/
+.goButton {
+    margin-left: 75%;
+    margin-bottom: 3%;
+    margin-top: 2%;
+}
+
+/* document css 적용 */
+/* documentTable_title */
+.documentMain {
+    margin-top: 10%;
+    margin-left: 10%;
+}
+.documentTable {
+    width: 90%;
+}
+.documentTable_title {
+    margin-top: 3%;
+    margin-bottom: 1%;
+
+    border-left: 5px solid #2a4476;
+    padding: 2px;
+    font-weight: bold;
+}
+.documentTable_mainTitle {
+    margin-left: 10px;
+    font-size: 18pt;
+    color: #000;
+    letter-spacing: 1px;
+}
+.documentTable {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.table-row1,
+.table-text-align {
+    text-align: center;
+    padding: 5px;
+}
+.table-header {
+    background-color: silver;
+    font-weight: bold;
+
+    padding: 5px;
+}
+.table-row1 {
+    word-spacing: 10px;
+    width: 5%;
+}
