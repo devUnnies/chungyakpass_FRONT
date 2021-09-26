@@ -8,6 +8,7 @@ import TopButton from '../../components/TopButton/TopButton';
 import slider1img from '../../assets/slider/slider1.png';
 import slider2img from '../../assets/slider/slider2.png';
 import slider3img from '../../assets/slider/slider3.png';
+import storage from '../../services/store';
 
 const SliderImage = () => {
     const delay = 2500;
@@ -71,29 +72,36 @@ const SliderImage = () => {
     );
 };
 
-const LoginArea = () => {
+const LoginArea = (props) => {
+    const tok = props === null ? null : props.token;
+
     return (
         <div className="loginArea">
-            <NavLink to="/login" className="loginArea-loginButton">
+            <NavLink
+                to={tok ? '/mypage' : '/login'}
+                className="loginArea-loginButton"
+            >
                 <MainButton
                     width="100"
                     height="45"
                     paddingLeft="27"
                     paddingTop="10"
                 >
-                    로그인
+                    {tok ? '마이페이지' : '로그인'}
                 </MainButton>
             </NavLink>
-            <NavLink to="/signup" className="loginArea-signupButton">
-                <MainButton
-                    width="100"
-                    height="45"
-                    paddingLeft="20"
-                    paddingTop="10"
-                >
-                    회원가입
-                </MainButton>
-            </NavLink>
+            {tok ? null : (
+                <NavLink to="/signup" className="loginArea-signupButton">
+                    <MainButton
+                        width="100"
+                        height="45"
+                        paddingLeft="20"
+                        paddingTop="10"
+                    >
+                        회원가입
+                    </MainButton>
+                </NavLink>
+            )}
             <SubButton
                 width="80"
                 height="20"
@@ -116,7 +124,9 @@ const LoginArea = () => {
     );
 };
 
-const Tiles = () => {
+const Tiles = (props) => {
+    const tok = props === null ? null : props.token;
+
     return (
         <div className="tiles">
             <div className="title">
@@ -125,16 +135,24 @@ const Tiles = () => {
             </div>
             <div className="tile">
                 <div className="firstRow">
+                    {/* 청약자격확인 */}
                     <div className="tile1">
-                        <NavLink to="/common" className="tile1Button">
+                        <NavLink
+                            to={tok ? '/common' : '/needLogin'}
+                            className="tile1Button"
+                        >
                             <MainButton width="80" height="30" fontSize="13">
                                 바로가기
                             </MainButton>
                         </NavLink>
                     </div>
                     <div className="box"></div>
+                    {/* 가배점 계산기 */}
                     <div className="tile2">
-                        <NavLink to="" className="tile2Button">
+                        <NavLink
+                            to={tok ? '' : '/needLogin'}
+                            className="tile2Button"
+                        >
                             <MainButton width="80" height="30" fontSize="13">
                                 바로가기
                             </MainButton>
@@ -143,15 +161,23 @@ const Tiles = () => {
                 </div>
                 <div className="secondRow">
                     <div className="box"></div>
+                    {/* 부적격사례 */}
                     <div className="tile3">
-                        <NavLink to="/case" className="tile3Button">
+                        <NavLink
+                            to={tok ? '/case' : '/needLogin'}
+                            className="tile3Button"
+                        >
                             <MainButton width="80" height="30" fontSize="13">
                                 바로가기
                             </MainButton>
                         </NavLink>
                     </div>
+                    {/* FAQ */}
                     <div className="tile4">
-                        <NavLink to="/FAQ" className="tile4Button">
+                        <NavLink
+                            to={tok ? '/FAQ' : '/needLogin'}
+                            className="tile4Button"
+                        >
                             <MainButton width="80" height="30" fontSize="13">
                                 바로가기
                             </MainButton>
@@ -163,13 +189,15 @@ const Tiles = () => {
     );
 };
 
-const Main = () => {
+const Main = (props) => {
+    const tok = storage.get('user-token');
+
     return (
         <div className="main">
             <SliderImage />
             <div className="container">
-                <LoginArea />
-                <Tiles />
+                <LoginArea token={tok} />
+                <Tiles token={tok} />
             </div>
             <TopButton />
         </div>
