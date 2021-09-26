@@ -564,17 +564,18 @@
         color: #fff;
         width: 200px;
         height: 100%;
-        display: inline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         float: left;
-        position: relative;
         text-align: center;
         background-color: #2a4476;
 
-        border-radius: 10px;
+        /* border-radius: 10px; */
     }
 
     .nav-item a {
-        display: block;
+        display: flex;
         padding: 9px;
         color: #fff;
         background-color: #2a4476;
@@ -590,6 +591,9 @@
     }
 
     .nav-item:hover > a {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
         padding: 10px;
         color: #2a4476;
         background-color: #fff;
@@ -603,12 +607,13 @@
     }
 
     .nav-item:hover .nav-subItems {
-        opacity: 1;
+        visibility: visible;
+        top: 40px;
+        transition: 350ms;
     }
 
     .nav-item:hover .nav-subItems .nav-subItem {
-        height: 35px;
-        overflow: visible;
+        height: 40px;
         padding: 0;
     }
 
@@ -617,13 +622,11 @@
         margin: 0;
         padding: 0;
         position: absolute;
-        left: 0;
-        top: 40px;
-        width: 100%;
+        width: 200px;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subItem {
@@ -669,13 +672,16 @@
     }
 
     .nav-subItem:hover .nav-subsubItems {
-        opacity: 1;
+        visibility: visible;
+        top: 120px;
+        transition: 350ms;
     }
 
-    .nav-subItem:hover .nav-subsubItems .nav-subsubItem {
-        height: 35px;
-        overflow: visible;
-        padding: 0;
+    .nav-subItem:hover .nav-subsubItemsSecond {
+        visibility: visible;
+        top: 0;
+        left: 200px;
+        transition: 350ms;
     }
 
     .nav-subsubItems {
@@ -684,12 +690,12 @@
         padding: 0;
         position: absolute;
         left: 0;
-        top: 105px;
+        top: 120px;
         width: 100%;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subsubItem {
@@ -703,6 +709,12 @@
         line-height: 22px;
         border: #c0c0c0;
         text-decoration: none;
+    }
+
+    .nav-subsubItem:hover a {
+        background-color: #f2f2f2;
+        color: #2a4476;
+        font-weight: bold;
     }
 
     .nav-subsubItem:hover a {
@@ -734,14 +746,84 @@
         text-decoration: none;
     }
 
+    .nav-subsubItemsSecond {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 200px;
+        width: 100%;
+        background-color: #2a4476;
+        border-radius: 3px;
+        text-align: center;
+        visibility: hidden;
+    }
+
+    .nav-subsubItemSecond {
+        float: none;
+        margin: 0;
+        padding: 0;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-size: 15px;
+        line-height: 22px;
+        border: #c0c0c0;
+        text-decoration: none;
+    }
+
+    .nav-subsubItemSecond:hover a {
+        background-color: #f2f2f2;
+        color: #2a4476;
+        font-weight: bold;
+    }
+
+    .nav-subsubItemSecond:hover a {
+        display: block;
+        padding: 9px;
+        color: #fff;
+        background-color: #2a4476;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        border: #c0c0c0;
+
+        text-decoration: none;
+    }
+
+    .nav-subsubItemSecond:hover > a {
+        padding: 10px;
+        color: #2a4476;
+        background-color: #fff;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+
+        text-decoration: none;
+    }
+
     .nav-subsubItem:hover .nav-subsubsubItems {
-        opacity: 1;
+        left: -200px;
+        visibility: visible;
     }
 
     .nav-subsubItem:hover .nav-subsubsubItems .nav-subsubsubItem {
-        height: 35px;
-        overflow: visible;
-        padding: 0;
+        height: 40px;
+    }
+
+    .nav-subsubItemSecond:hover .nav-subsubsubItems {
+        left: -200px;
+        visibility: visible;
+    }
+
+    .nav-subsubItemSecond:hover .nav-subsubsubItems .nav-subsubsubItem {
+        height: 40px;
     }
 
     .nav-subsubsubItems {
@@ -750,12 +832,12 @@
         padding: 0;
         position: absolute;
         left: -200px;
-        top: 0px;
+        top: 0;
         width: 100%;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subsubsubItem {
@@ -1099,17 +1181,18 @@
         color: #fff;
         width: 200px;
         height: 100%;
-        display: inline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         float: left;
-        position: relative;
         text-align: center;
         background-color: #2a4476;
 
-        border-radius: 10px;
+        /* border-radius: 10px; */
     }
 
     .nav-item a {
-        display: block;
+        display: flex;
         padding: 9px;
         color: #fff;
         background-color: #2a4476;
@@ -1125,6 +1208,9 @@
     }
 
     .nav-item:hover > a {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
         padding: 10px;
         color: #2a4476;
         background-color: #fff;
@@ -1138,12 +1224,13 @@
     }
 
     .nav-item:hover .nav-subItems {
-        opacity: 1;
+        visibility: visible;
+        top: 40px;
+        transition: 350ms;
     }
 
     .nav-item:hover .nav-subItems .nav-subItem {
-        height: 35px;
-        overflow: visible;
+        height: 40px;
         padding: 0;
     }
 
@@ -1152,13 +1239,11 @@
         margin: 0;
         padding: 0;
         position: absolute;
-        left: 0;
-        top: 40px;
-        width: 100%;
+        width: 200px;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subItem {
@@ -1204,13 +1289,16 @@
     }
 
     .nav-subItem:hover .nav-subsubItems {
-        opacity: 1;
+        visibility: visible;
+        top: 120px;
+        transition: 350ms;
     }
 
-    .nav-subItem:hover .nav-subsubItems .nav-subsubItem {
-        height: 35px;
-        overflow: visible;
-        padding: 0;
+    .nav-subItem:hover .nav-subsubItemsSecond {
+        visibility: visible;
+        top: 0;
+        left: 200px;
+        transition: 350ms;
     }
 
     .nav-subsubItems {
@@ -1219,12 +1307,12 @@
         padding: 0;
         position: absolute;
         left: 0;
-        top: 105px;
+        top: 120px;
         width: 100%;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subsubItem {
@@ -1275,14 +1363,84 @@
         text-decoration: none;
     }
 
+    .nav-subsubItemsSecond {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 200px;
+        width: 100%;
+        background-color: #2a4476;
+        border-radius: 3px;
+        text-align: center;
+        visibility: hidden;
+    }
+
+    .nav-subsubItemSecond {
+        float: none;
+        margin: 0;
+        padding: 0;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-size: 15px;
+        line-height: 22px;
+        border: #c0c0c0;
+        text-decoration: none;
+    }
+
+    .nav-subsubItemSecond:hover a {
+        background-color: #f2f2f2;
+        color: #2a4476;
+        font-weight: bold;
+    }
+
+    .nav-subsubItemSecond:hover a {
+        display: block;
+        padding: 9px;
+        color: #fff;
+        background-color: #2a4476;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        border: #c0c0c0;
+
+        text-decoration: none;
+    }
+
+    .nav-subsubItemSecond:hover > a {
+        padding: 10px;
+        color: #2a4476;
+        background-color: #fff;
+
+        font-family: Gothic A1;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+
+        text-decoration: none;
+    }
+
     .nav-subsubItem:hover .nav-subsubsubItems {
-        opacity: 1;
+        left: -200px;
+        visibility: visible;
     }
 
     .nav-subsubItem:hover .nav-subsubsubItems .nav-subsubsubItem {
-        height: 35px;
-        overflow: visible;
-        padding: 0;
+        height: 40px;
+    }
+
+    .nav-subsubItemSecond:hover .nav-subsubsubItems {
+        left: -200px;
+        visibility: visible;
+    }
+
+    .nav-subsubItemSecond:hover .nav-subsubsubItems .nav-subsubsubItem {
+        height: 40px;
     }
 
     .nav-subsubsubItems {
@@ -1291,12 +1449,12 @@
         padding: 0;
         position: absolute;
         left: -200px;
-        top: 0px;
+        top: 0;
         width: 100%;
         background-color: #2a4476;
         border-radius: 3px;
         text-align: center;
-        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-subsubsubItem {
