@@ -24,5 +24,6 @@ export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
 export { default as MultieChildrenMinyeongApi } from './SpecialSupply/MultieChildrenAPI/MultieChildrenMinyeongApi';
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
+export { default as MyPage } from './MyPage/MyPage';
 // export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
 // export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
