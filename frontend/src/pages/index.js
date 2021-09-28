@@ -1,6 +1,7 @@
 export { default as Main } from './Main/Main';
 export { default as Login } from './Login/Login';
 export { default as Signup } from './Signup/Signup';
+export { default as MyPage } from './MyPage/MyPage';
 export { default as AllowLogin } from './AllowLogin/AllowLogin';
 export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
@@ -17,13 +18,16 @@ export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
 export { default as BoardView } from './CaseBoard/BoardView';
 export { default as FAQ } from './FAQ/FAQ';
-export { default as AptNum } from './GeneralSupply/AptNum';
 export { default as GeneralSupply } from './GeneralSupply/GeneralSupply';
-export { default as GeneralPrivateApi } from './GeneralSupply/GeneralPrivateApi';
-export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
-export { default as MultieChildrenMinyeongApi } from './SpecialSupply/MultieChildrenAPI/MultieChildrenMinyeongApi';
+// 청약 공급 페이지
+export { default as GeneralMinyeongApi } from './GeneralSupply/GeneralMinyeongApi';
+export { default as GeneralMinyeongAptNum } from './GeneralSupply/GeneralMinyeongAptNum';
+export { default as GeneralKookminApi } from './GeneralSupply/GeneralKookminApi';
+export { default as GeneralKookminAptNum } from './GeneralSupply/GeneralKookminAptNum';
+export { default as MultiChildMinyeongApi } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongApi';
+export { default as MultiChildMinyeongAptNum } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongAptNum';
+export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/OldParentMinyeongApi';
+export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
+// 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
-export { default as MyPage } from './MyPage/MyPage';
-// export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
-// export { default as GeneralNationApi } from './GeneralSupply/GeneralNationApi';
