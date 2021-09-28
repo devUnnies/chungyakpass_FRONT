@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-// 일반 민영 api
-//  - 일반 민영 로직 결과값 API
-export const getNormalPrivate = (info) => {
-    axios.get('general/minyeoung', info, {
+//아파트 공고번호, 주택형 보내기
+export const postGeneralMinyeongAptNum = (info) =>
+    axios.post('verification/general/minyeong', info, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
         },
     });
-};

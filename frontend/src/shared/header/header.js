@@ -36,12 +36,12 @@ const data = {
                                 {
                                     idx: 0,
                                     name: '국민주택',
-                                    link: '/normal/nation',
+                                    link: '/general/kookmin',
                                 },
                                 {
                                     idx: 1,
                                     name: '민영주택',
-                                    link: '/normal/private',
+                                    link: '/general/minyeongAptNum',
                                 },
                             ],
                         },
@@ -58,7 +58,7 @@ const data = {
                                 {
                                     idx: 1,
                                     name: '다자녀',
-                                    link: '',
+                                    link: '/special/multiChildMinyeongAptNum',
                                 },
                                 {
                                     idx: 2,
