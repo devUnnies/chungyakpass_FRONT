@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ReactDOM } from 'react';
+import NewWindow from 'react-new-window';
+import List from './AssetsWindow/List';
 import PopupDom from '../AddHouseHolder/PopupDom';
 import PopupPostCode from '../AddHouseHolder/PopupPostCode';
 import MainButton from '../../components/Button/MainButton';
@@ -19,6 +21,9 @@ const Post = ({ onSaveData }) => {
     const [assetsCount, setAssetsCount] = useState(0);
     const [haveHistory, setHaveHistory] = useState();
     const [haveLimit, setHaveLimit] = useState();
+
+    const [close, setClose] = useState(false);
+    const [assets, setAssets] = useState([]);
 
     const [address, setAddress] = useState({
         sido: '',
@@ -109,257 +114,35 @@ const Post = ({ onSaveData }) => {
         setIsPopupOpen(false);
     };
 
-    // 반복해서 자산 여러개 등록할 수 있게
-    const addAssets = (_length) => {
-        let result = ``;
+    const getCloseValue = (close) => {
+        setClose(close);
+    };
 
-        for (let i = 0; i < _length; i++) {
-            result = result.concat(`
-            <tr className="addMemberFormTableTbodyTr">
-                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                    <span className="subTitle">자산유형</span>
-                </td>
-                <td className="addMemberFormTableTbodyTrTd">
-                    <select
-                        className="assetPropertyInput"
-                        type="number"
-                        name="property"
-                        onChange={onAssetChange}
-                        value={asset.property}
-                        required
-                    >
-                        <option value=""> ---선택--- </option>
-                        <option value="건물">건물</option>
-                        <option value="토지">토지</option>
-                        <option value="자동차">자동차</option>
-                    </select>
-                </td>
-            </tr>
-            ${
-                asset.property === '건물' || asset.property === '토지' ? (
-                    <tr className="addMemberFormTableTbodyTr">
-                        <td className="addMemberFormTableTbodyTrTdSubTitle">
-                            <span className="subTitle">분양권 여부</span>
-                        </td>
-                        <td className="addMemberFormTableTbodyTrTd">
-                            {/* <hr className="Line" /> */}
-                            <input
-                                className="assetSaleRightYnInput"
-                                type="radio"
-                                name="saleRightYn"
-                                onChange={onAssetChange}
-                                value="n"
-                                checked={
-                                    asset.saleRightYn === 'n' ? true : false
-                                }
-                                required
-                            />
-                            <span className="assetSaleRightYnText">
-                                없습니다
-                            </span>
-                            <input
-                                className="assetSaleRightYnInput"
-                                type="radio"
-                                name="saleRightYn"
-                                onChange={onAssetChange}
-                                value="y"
-                                checked={
-                                    asset.saleRightYn === 'y' ? true : false
-                                }
-                                required
-                            />
-                            <span className="assetSaleRightYnText">
-                                있습니다
-                            </span>
-                        </td>
-                    </tr>
-                ) : (
-                    ``
-                )
-            }
-            ${
-                asset.property === '건물' || asset.property === '토지' ? (
-                    <tr className="addMemberFormTableTbodyTr">
-                        <td className="addMemberFormTableTbodyTrTdSubTitle">
-                            <span className="subTitle">주거용 여부</span>
-                        </td>
-                        <td className="addMemberFormTableTbodyTrTd">
-                            <input
-                                className="assetResidentialBuildingYnInput"
-                                type="radio"
-                                name="residentialBuildingYn"
-                                onChange={onAssetChange}
-                                value="y"
-                                checked={
-                                    asset.residentialBuildingYn === 'y'
-                                        ? true
-                                        : false
-                                }
-                                required
-                            />
-                            <span className="assetResidentialBuildingYnText">
-                                주거용
-                            </span>
-                            <input
-                                className="assetResidentialBuildingYnInput"
-                                type="radio"
-                                name="residentialBuildingYn"
-                                onChange={onAssetChange}
-                                value="n"
-                                checked={
-                                    asset.residentialBuildingYn === 'n'
-                                        ? true
-                                        : false
-                                }
-                                required
-                            />
-                            <span className="assetResidentialBuildingYnText">
-                                비 주거용
-                            </span>
-                        </td>
-                    </tr>
-                ) : (
-                    ``
-                )
-            }
-            ${
-                asset.property === '건물' &&
-                asset.residentialBuildingYn === 'y' ? (
-                    <tr className="addMemberFormTableTbodyTr">
-                        <td className="addMemberFormTableTbodyTrTdSubTitle">
-                            <span className="subTitle">주거용건물유형</span>
-                        </td>
-                        <td className="addMemberFormTableTbodyTrTd">
-                            <select
-                                className="assetResidentialBuildingSelect"
-                                type="number"
-                                name="residentialBuilding"
-                                onChange={onAssetChange}
-                                value={asset.residentialBuilding}
-                                required
-                            >
-                                <option value=""> ---선택--- </option>
-                                <option value="단독주택">단독주택</option>
-                                <option value="공동주택">공동주택</option>
-                                <option value="오피스텔">오피스텔</option>
-                            </select>
-                        </td>
-                    </tr>
-                ) : asset.property === '건물' &&
-                  asset.residentialBuildingYn === 'n' ? (
-                    <tr className="addMemberFormTableTbodyTr">
-                        <td className="addMemberFormTableTbodyTrTdSubTitle">
-                            <span className="subTitle">비주거용건물유형</span>
-                        </td>
-                        <td className="addMemberFormTableTbodyTrTd">
-                            <select
-                                className="assetNoResidentialBuildingSelect"
-                                type="number"
-                                name="nonResidentialBuilding"
-                                onChange={onAssetChange}
-                                value={asset.nonResidentialBuilding}
-                                required
-                            >
-                                <option value=""> ---선택--- </option>
-                                <option value="건물">건물</option>
-                                <option value="부속토지">부속토지</option>
-                            </select>
-                        </td>
-                    </tr>
-                ) : (
-                    ``
-                )
-            }
-            <tr className="addMemberFormTableTbodyTr">
-                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                    <span className="subTitle">취득일</span>
-                </td>
-                <td className="addMemberFormTableTbodyTrTd">
-                    <input
-                        className="assetAcquistionDateInput"
-                        type="date"
-                        name="acquistionDate"
-                        value={asset.acquistionDate}
-                        onChange={onAssetChange}
-                        required
-                    />
-                </td>
-            </tr>
-            <tr className="addMemberFormTableTbodyTr">
-                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                    <span className="subTitle">처분일</span>
-                </td>
-                <td className="addMemberFormTableTbodyTrTd">
-                    <input
-                        className="assetDispositionDateInput"
-                        type="date"
-                        name="dispositionDate"
-                        value={asset.dispositionDate}
-                        onChange={onAssetChange}
-                        required
-                    />
-                </td>
-            </tr>
-            ${
-                asset.property === '건물' || asset.property === '토지' ? (
-                    <tr className="addMemberFormTableTbodyTr">
-                        <td className="addMemberFormTableTbodyTrTdSubTitle">
-                            <span className="subTitle">전용면적</span>
-                        </td>
-                        <td className="addMemberFormTableTbodyTrTd">
-                            <input
-                                className="assetExclusiveAreaInput"
-                                type="number"
-                                name="exclusiveArea"
-                                value={asset.exclusiveArea}
-                                onChange={onAssetChange}
-                                required
-                            />
-                        </td>
-                    </tr>
-                ) : (
-                    ``
-                )
-            }
-            <tr className="addMemberFormTableTbodyTr">
-                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                    <span className="subTitle">금액</span>
-                </td>
-                <td className="addMemberFormTableTbodyTrTd">
-                    <input
-                        className="assetAmountInput"
-                        type="number"
-                        name="amount"
-                        value={asset.amount}
-                        onChange={onAssetChange}
-                        required
-                    />
-                </td>
-            </tr>
-            <tr className="addMemberFormTableTbodyTr">
-                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                    <span className="subTitle">과세기준일</span>
-                </td>
-                <td className="addMemberFormTableTbodyTrTd">
-                    <input
-                        className="assetTaxBaseDateInput"
-                        type="date"
-                        name="taxBaseDate"
-                        value={asset.taxBaseDate}
-                        onChange={onAssetChange}
-                        required
-                    />
-                </td>
-            </tr>
-        `);
-        }
+    const getAssetsValue = (assets) => {
+        setAssets(assets);
+    };
 
-        console.log(typeof result);
+    const isAssetsWindow = () => {
+        if (haveAssets === 'y') setClose(false);
+    };
 
+    useEffect(() => isAssetsWindow, [haveAssets]);
+
+    // 자산 창 열기 !!
+    const AssetsWindow = () => {
+        if (close) return;
         return (
-            <React.Fragment>
-                <div dangerouslySetInnerHTML={{ __html: result }}></div>
-            </React.Fragment>
+            <NewWindow
+                name="assetsList"
+                title="자산 정보 목록 - 청약패스(chungyakpass.co.kr)"
+                center="parent"
+            >
+                <List
+                    getCloseValue={(close) => {
+                        setClose(close);
+                    }}
+                />
+            </NewWindow>
         );
     };
 
@@ -645,7 +428,8 @@ const Post = ({ onSaveData }) => {
                                         <option value=""> ---선택--- </option>
                                         <option value="본인">본인</option>
                                         <option value="배우자">배우자</option>
-                                        <option value="부모">부모</option>
+                                        <option value="부">부</option>
+                                        <option value="모">모</option>
                                         <option value="자녀">자녀</option>
                                         <option value="배우자의 부모">
                                             배우자의 부모
@@ -1310,321 +1094,7 @@ const Post = ({ onSaveData }) => {
                                     </span>
                                 </td>
                             </tr>
-                            {haveAssets === 'y' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            등록할 자산의 개수
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <select
-                                            className="assetsCountInput"
-                                            name="assetsCount"
-                                            value={assetsCount}
-                                            onChange={(e) => {
-                                                setAssetsCount(e.target.value);
-                                            }}
-                                        >
-                                            <option value={0}>
-                                                {' '}
-                                                ---선택---{' '}
-                                            </option>
-                                            <option value={1}>1</option>
-                                            <option value={2}>2</option>
-                                            <option value={3}>3</option>
-                                            <option value={4}>4</option>
-                                            <option value={5}>5</option>
-                                            <option value={6}>6</option>
-                                            <option value={7}>7</option>
-                                            <option value={8}>8</option>
-                                            <option value={9}>9</option>
-                                            <option value={10}>10</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {Number(assetsCount) >= 2
-                                ? alert(
-                                      '현재 개발 중에 있습니다. 빠른 시일 내에 도입하도록 하겠습니다.'
-                                  )
-                                : null}
-                            {Number(assetsCount) >= 2
-                                ? setAssetsCount(0)
-                                : null}
-                            {haveAssets === 'y' && Number(assetsCount) === 1 ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            자산유형
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <select
-                                            className="assetPropertyInput"
-                                            type="number"
-                                            name="property"
-                                            onChange={onAssetChange}
-                                            value={asset.property}
-                                            required
-                                        >
-                                            <option value="">
-                                                {' '}
-                                                ---선택---{' '}
-                                            </option>
-                                            <option value="건물">건물</option>
-                                            <option value="토지">토지</option>
-                                            <option value="자동차">
-                                                자동차
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {asset.property === '건물' ||
-                            asset.property === '토지' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            분양권 여부
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        {/* <hr className="Line" /> */}
-                                        <input
-                                            className="assetSaleRightYnInput"
-                                            type="radio"
-                                            name="saleRightYn"
-                                            onChange={onAssetChange}
-                                            value="n"
-                                            checked={
-                                                asset.saleRightYn === 'n'
-                                                    ? true
-                                                    : false
-                                            }
-                                            required
-                                        />
-                                        <span className="assetSaleRightYnText">
-                                            없습니다
-                                        </span>
-                                        <input
-                                            className="assetSaleRightYnInput"
-                                            type="radio"
-                                            name="saleRightYn"
-                                            onChange={onAssetChange}
-                                            value="y"
-                                            checked={
-                                                asset.saleRightYn === 'y'
-                                                    ? true
-                                                    : false
-                                            }
-                                            required
-                                        />
-                                        <span className="assetSaleRightYnText">
-                                            있습니다
-                                        </span>
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {asset.property === '건물' ||
-                            asset.property === '토지' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            주거용 여부
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetResidentialBuildingYnInput"
-                                            type="radio"
-                                            name="residentialBuildingYn"
-                                            onChange={onAssetChange}
-                                            value="y"
-                                            checked={
-                                                asset.residentialBuildingYn ===
-                                                'y'
-                                                    ? true
-                                                    : false
-                                            }
-                                            required
-                                        />
-                                        <span className="assetResidentialBuildingYnText">
-                                            주거용
-                                        </span>
-                                        <input
-                                            className="assetResidentialBuildingYnInput"
-                                            type="radio"
-                                            name="residentialBuildingYn"
-                                            onChange={onAssetChange}
-                                            value="n"
-                                            checked={
-                                                asset.residentialBuildingYn ===
-                                                'n'
-                                                    ? true
-                                                    : false
-                                            }
-                                            required
-                                        />
-                                        <span className="assetResidentialBuildingYnText">
-                                            비 주거용
-                                        </span>
-                                    </td>
-                                </tr>
-                            ) : null}
-
-                            {asset.property === '건물' &&
-                            asset.residentialBuildingYn === 'y' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            주거용건물유형
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <select
-                                            className="assetResidentialBuildingSelect"
-                                            type="number"
-                                            name="residentialBuilding"
-                                            onChange={onAssetChange}
-                                            value={asset.residentialBuilding}
-                                            required
-                                        >
-                                            <option value="">
-                                                {' '}
-                                                ---선택---{' '}
-                                            </option>
-                                            <option value="단독주택">
-                                                단독주택
-                                            </option>
-                                            <option value="공동주택">
-                                                공동주택
-                                            </option>
-                                            <option value="오피스텔">
-                                                오피스텔
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            ) : asset.property === '건물' &&
-                              asset.residentialBuildingYn === 'n' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            비주거용건물유형
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <select
-                                            className="assetNoResidentialBuildingSelect"
-                                            type="number"
-                                            name="nonResidentialBuilding"
-                                            onChange={onAssetChange}
-                                            value={asset.nonResidentialBuilding}
-                                            required
-                                        >
-                                            <option value="">
-                                                {' '}
-                                                ---선택---{' '}
-                                            </option>
-                                            <option value="건물">건물</option>
-                                            <option value="부속토지">
-                                                부속토지
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {haveAssets === 'y' && Number(assetsCount) === 1 ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">취득일</span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetAcquistionDateInput"
-                                            type="date"
-                                            name="acquistionDate"
-                                            value={asset.acquistionDate}
-                                            onChange={onAssetChange}
-                                            required
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {haveAssets === 'y' && Number(assetsCount) === 1 ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">처분일</span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetDispositionDateInput"
-                                            type="date"
-                                            name="dispositionDate"
-                                            value={asset.dispositionDate}
-                                            onChange={onAssetChange}
-                                            required
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {asset.property === '건물' ||
-                            asset.property === '토지' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            전용면적
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetExclusiveAreaInput"
-                                            type="number"
-                                            name="exclusiveArea"
-                                            value={asset.exclusiveArea}
-                                            onChange={onAssetChange}
-                                            required
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {haveAssets === 'y' && Number(assetsCount) === 1 ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">금액</span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetAmountInput"
-                                            type="number"
-                                            name="amount"
-                                            value={asset.amount}
-                                            onChange={onAssetChange}
-                                            required
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null}
-                            {haveAssets === 'y' && Number(assetsCount) === 1 ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            과세기준일
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="assetTaxBaseDateInput"
-                                            type="date"
-                                            name="taxBaseDate"
-                                            value={asset.taxBaseDate}
-                                            onChange={onAssetChange}
-                                            required
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null}
+                            {haveAssets === 'y' ? AssetsWindow() : null}
                             {/* {Number(assetsCount) >= 2
                                 ? addAssets(assetsCount)
                                 : null} */}

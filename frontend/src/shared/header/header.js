@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import './header.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
@@ -48,7 +48,29 @@ const data = {
                         {
                             idx: 1,
                             name: '특별공급',
-                            link: '/supply/special',
+                            link: '',
+                            subcategory: [
+                                {
+                                    idx: 0,
+                                    name: '신혼부부',
+                                    link: '',
+                                },
+                                {
+                                    idx: 1,
+                                    name: '다자녀',
+                                    link: '',
+                                },
+                                {
+                                    idx: 2,
+                                    name: '생애최초',
+                                    link: '',
+                                },
+                                {
+                                    idx: 3,
+                                    name: '노부모',
+                                    link: '',
+                                },
+                            ],
                         },
                     ],
                 },
@@ -56,19 +78,42 @@ const data = {
         },
         {
             idx: 1,
-            name: '계산기',
+            name: '가배점계산기',
             link: '',
             subcategory: [
                 {
                     idx: 0,
-                    name: '가점계산기',
+                    name: '일반공급',
                     link: '',
-                    subcategory: [],
+                    subcategory: [
+                        {
+                            idx: 0,
+                            name: '민영주택',
+                            link: '',
+                        },
+                    ],
                 },
                 {
                     idx: 1,
-                    name: '배점계산기',
+                    name: '특별공급',
                     link: '',
+                    subcategory: [
+                        {
+                            idx: 0,
+                            name: '신혼부부',
+                            link: '',
+                        },
+                        {
+                            idx: 1,
+                            name: '다자녀',
+                            link: '',
+                        },
+                        {
+                            idx: 2,
+                            name: '노부모',
+                            link: '',
+                        },
+                    ],
                 },
             ],
         },
@@ -168,7 +213,7 @@ function Logo() {
 
 function Nav(props) {
     const tok = props === null ? null : props.token;
-    console.log(tok);
+
     return (
         <div className="nav">
             <div className="nav-container">
@@ -183,12 +228,12 @@ function Nav(props) {
                                 >
                                     {content.name}
                                 </NavLink>
-                                <ul className="nav-subItems">
+                                <ul className={'nav-subItems'}>
                                     {content.subcategory.map(
                                         (subcontent, j) => {
                                             return (
                                                 <li
-                                                    className="nav-subItem"
+                                                    className={'nav-subItem'}
                                                     key={j}
                                                 >
                                                     <NavLink
@@ -201,7 +246,13 @@ function Nav(props) {
                                                     >
                                                         {subcontent.name}
                                                     </NavLink>
-                                                    <ul className="nav-subsubItems">
+                                                    <ul
+                                                        className={
+                                                            i === 0
+                                                                ? 'nav-subsubItems'
+                                                                : 'nav-subsubItemsSecond'
+                                                        }
+                                                    >
                                                         {subcontent.subcategory
                                                             ? subcontent.subcategory.map(
                                                                   (
@@ -210,7 +261,12 @@ function Nav(props) {
                                                                   ) => {
                                                                       return (
                                                                           <li
-                                                                              className="nav-subsubItem"
+                                                                              className={
+                                                                                  i ===
+                                                                                  0
+                                                                                      ? 'nav-subsubItem'
+                                                                                      : 'nav-subsubItemSecond'
+                                                                              }
                                                                               key={
                                                                                   k
                                                                               }
