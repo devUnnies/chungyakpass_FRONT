@@ -424,7 +424,7 @@
         flex-direction: row;
     }
 
-    .logout-logOutButton {
+    .logout-logoutButton {
         position: static;
         width: 75px;
         height: 30px;
@@ -440,7 +440,7 @@
         justify-content: center;
         letter-spacing: 0.05em;
 
-        color: #2a4476;
+        color: #bf9075;
 
         /* Inside Auto Layout */
 
@@ -1040,7 +1040,7 @@
         flex-direction: row;
     }
 
-    .logout-logOutButton {
+    .logout-logoutButton {
         position: static;
         width: 75px;
         height: 30px;
@@ -1056,7 +1056,7 @@
         justify-content: center;
         letter-spacing: 0.05em;
 
-        color: #2a4476;
+        color: #bf9075;
 
         /* Inside Auto Layout */
 
