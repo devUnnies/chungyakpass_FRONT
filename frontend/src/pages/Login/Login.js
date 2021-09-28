@@ -10,6 +10,7 @@ import useWindowWidth from '../../components/WindowSize/useWindowWidth';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
 import { useHistory } from 'react-router-dom';
+import Loading from '../../components/Loading/loading';
 
 function Login(props) {
     const history = useHistory();
@@ -45,49 +46,56 @@ function Login(props) {
         // 로그인 성공시
         if (authStore.login.data) {
             const data = authStore.login.data.data;
-            dispatch(signinWithToken(data.token));
-            storage.set('user-token', data.token);
-            history.push('/');
+            if (authStore.login.data.status === 200) {
+                dispatch(signinWithToken(data.token));
+                storage.set('user-token', data.token);
+                history.push('/');
+            } else {
+            }
         }
     }, [authStore.login]);
 
     return (
         <>
-            <div className="Login">
-                <div className="container">
-                    <form onSubmit={handleSubmit} className="loginform">
-                        <input
-                            type="email"
-                            placeholder="이메일"
-                            value={email}
-                            onChange={handleChangeEmail}
-                            className="loginemail"
-                        />
-                        <br />
-                        <input
-                            type="password"
-                            placeholder="비밀번호"
-                            value={password}
-                            onChange={handleChangePassword}
-                            className="loginpassword"
-                        />
-                        <br />
+            {authStore.login.loading ? (
+                <Loading />
+            ) : (
+                <div className="Login">
+                    <div className="container">
+                        <form onSubmit={handleSubmit} className="loginform">
+                            <input
+                                type="email"
+                                placeholder="이메일"
+                                value={email}
+                                onChange={handleChangeEmail}
+                                className="loginemail"
+                            />
+                            <br />
+                            <input
+                                type="password"
+                                placeholder="비밀번호"
+                                value={password}
+                                onChange={handleChangePassword}
+                                className="loginpassword"
+                            />
+                            <br />
 
-                        <SubButton
-                            width="100"
-                            height="30"
-                            fontSize="16"
-                            type="reset"
-                            onClick={handleReset}
-                        >
-                            초기화
-                        </SubButton>
-                        <MainButton width="100" height="30" fontSize="16">
-                            로그인
-                        </MainButton>
-                    </form>
+                            <SubButton
+                                width="100"
+                                height="30"
+                                fontSize="16"
+                                type="reset"
+                                onClick={handleReset}
+                            >
+                                초기화
+                            </SubButton>
+                            <MainButton width="100" height="30" fontSize="16">
+                                로그인
+                            </MainButton>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 }
