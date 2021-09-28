@@ -27,6 +27,7 @@ import {
     FAQ,
     FirstRank,
     SecondRank,
+    MyPage,
 } from '../pages';
 import Header from './header/header';
 import Footer from './footer/footer';
@@ -41,6 +42,7 @@ class App extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                     <Route exact path="/needLogin" component={AllowLogin} />
+                    <Route exact path="/mypage" component={MyPage} />
                     <Route path="/personalRule" component={PersonalRules} />
                     <Route path="/noEmail" component={NoEmail} />
                     <Route path="/sitemap" component={Sitemap} />
