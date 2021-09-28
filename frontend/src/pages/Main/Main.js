@@ -84,8 +84,8 @@ const LoginArea = (props) => {
                 <MainButton
                     width="100"
                     height="45"
-                    paddingLeft="27"
-                    paddingTop="10"
+                    paddingLeft={tok ? '17' : '27'}
+                    paddingTop={tok ? '15' : '10'}
                 >
                     {tok ? '마이페이지' : '로그인'}
                 </MainButton>
@@ -102,24 +102,28 @@ const LoginArea = (props) => {
                     </MainButton>
                 </NavLink>
             )}
-            <SubButton
-                width="80"
-                height="20"
-                paddingLeft="8"
-                paddingTop="0"
-                fontSize="16"
-            >
-                아이디찾기
-            </SubButton>
-            <SubButton
-                width="100"
-                height="20"
-                paddingLeft="12"
-                paddingTop="0"
-                fontSize="16"
-            >
-                비밀번호찾기
-            </SubButton>
+            {tok ? null : (
+                <SubButton
+                    width="80"
+                    height="20"
+                    paddingLeft="8"
+                    paddingTop="0"
+                    fontSize="16"
+                >
+                    아이디찾기
+                </SubButton>
+            )}
+            {tok ? null : (
+                <SubButton
+                    width="100"
+                    height="20"
+                    paddingLeft="12"
+                    paddingTop="0"
+                    fontSize="16"
+                >
+                    비밀번호찾기
+                </SubButton>
+            )}
         </div>
     );
 };
