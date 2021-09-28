@@ -6,11 +6,17 @@ import {
     Signup,
     AllowLogin,
     PersonalInfo,
-    AptNum,
     GeneralSupply,
-    GeneralPrivateApi,
-    GeneralNationApi,
-    MultieChildrenMinyeongApi,
+    GeneralMinyeongApi,
+    GeneralMinyeongAptNum,
+    GeneralKookminApi,
+    GeneralKookminAptNum,
+    MultiChildMinyeongApi,
+    OldParentKookminApi,
+    OldParentMinyeongApi,
+    MultiChildMinyeongAptNum,
+    FirstRank,
+    SecondRank,
     PassbookInfo,
     HousingInfo,
     MemberInfo,
@@ -25,8 +31,6 @@ import {
     NoEmail,
     Sitemap,
     FAQ,
-    FirstRank,
-    SecondRank,
     MyPage,
 } from '../pages';
 import Header from './header/header';
@@ -73,17 +77,41 @@ class App extends Component {
                     />
                     <Route path="/supply/normal" component={GeneralSupply} />
                     <Route
-                        path="/normal/private"
-                        component={GeneralPrivateApi}
+                        path="/general/minyeong"
+                        component={GeneralMinyeongApi}
                     />
                     <Route
-                        path="/special/multieChild/minyeong"
-                        component={MultieChildrenMinyeongApi}
+                        path="/general/minyeongAptNum"
+                        component={GeneralMinyeongAptNum}
                     />
-                    <Route path="/normal/nation" component={GeneralNationApi} />
+                    <Route
+                        path="/general/kookmin"
+                        component={GeneralKookminApi}
+                    />
+                    <Route
+                        path="/general/koominAptNum"
+                        component={GeneralKookminAptNum}
+                    />
+                    <Route
+                        path="/special/multiChild/minyeong"
+                        component={MultiChildMinyeongApi}
+                    />
+                    <Route
+                        path="/special/multiChildMinyeongAptNum"
+                        component={MultiChildMinyeongAptNum}
+                    />
+                    <Route
+                        path="/special/oldParent/minyeong"
+                        component={OldParentMinyeongApi}
+                    />
+                    <Route
+                        path="/special/oldParent/kookmin"
+                        component={OldParentKookminApi}
+                    />
+
+                    {/* 순위 확인 페이지 */}
                     <Route path="/rank/first" component={FirstRank} />
                     <Route path="/rank/second" component={SecondRank} />
-                    <Route path="/supply/apartmentInfo" component={AptNum} />
                     <Route path="/board" component={Board} />
                     <Route path="/common/personal/addMember" component={Post} />
                     <Route exact path="/boardView/:no" component={BoardView} />
