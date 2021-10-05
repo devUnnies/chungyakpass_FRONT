@@ -83,7 +83,10 @@ const Board = (props) => {
     };
 
     const handleRemove = (id) => {
-        setInfo((info) => info.filter((item) => item.id !== id));
+        setInfo((info) => {
+            info.filter((item) => item.id !== id);
+        });
+        nextId.current -= 1;
     };
 
     const handleEdit = (item) => {
@@ -136,7 +139,6 @@ const Board = (props) => {
             <table className="tableContainer">
                 <thead className="allInfoThead">
                     <tr className="allInfoTheadTr">
-                        <th className="allInfoTheadTrTh"> 번호 </th>
                         <th className="allInfoTheadTrTh"> 이름 </th>
                         <th className="allInfoTheadTrTh"> 청약통장정보</th>
                         <th className="allInfoTheadTrTh"> 생년월일 </th>
