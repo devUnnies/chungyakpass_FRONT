@@ -1,32 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import PopupDom from '../AddHouseHolder/PopupDom';
+import PopupPostCode from '../AddHouseHolder/PopupPostCode';
+import MainButton from '../../components/Button/MainButton';
 import './Addmember.css';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
     const [edited, setEdited] = useState(selectedData);
-    const [account, setAccount] = useState(selectedData.account[0]);
+    const [account, setAccount] = useState(selectedData.account);
     const [address, setAddress] = useState(selectedData.spouseAddress);
     const [assets, setAssets] = useState(selectedData.assets);
-    const [asset, setAsset] = useState(selectedData.assets[0]);
-    const [historyArr, setHistoryArr] = useState(selectedData.histories[0]);
-    const [limitArr, setLimitArr] = useState(selectedData.limits[0]);
+    const [historyArr, setHistoryArr] = useState(selectedData.histories);
+    const [limitArr, setLimitArr] = useState(selectedData.limits);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isTableOpen, setIsTableOpen] = useState(false);
+    const [fullAddress, setFullAddress] = useState();
+    const [postcode, setPostcode] = useState('');
 
     const onCancel = () => {
         handleCancel();
+    };
+
+    const openPostCode = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePostCode = () => {
+        setIsPopupOpen(false);
     };
 
     const onAccountChange = (e) => {
         const { name, value } = e.target;
         setAccount({
             ...account,
-            [name]: value,
-        });
-    };
-
-    const onAssetChange = (e) => {
-        const { name, value } = e.target;
-        setAsset({
-            ...asset,
             [name]: value,
         });
     };
@@ -48,21 +54,28 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
     };
 
     const onEditChange = (e) => {
+        const { name, value } = e.target;
         setEdited({
             ...edited,
-            [e.target.name]: e.target.value,
-            [e.target.birthDate]: e.target.value,
-            [e.target.foreignerYn]: e.target.value,
-            [e.target.homelessStartDate]: e.target.value,
-            [e.target.relationship]: e.target.value,
-            [e.target.householderYn]: e.target.value,
-            [e.target.soldierYn]: e.target.value,
-            [e.target.isMarried]: e.target.value,
-            [e.target.marriedDate]:
-                [e.target.isMarried] === '미혼' ? null : e.target.value,
-            [e.target.transferDate]: e.target.value,
-            [e.target.income]: e.target.value,
+            [name]: value,
         });
+
+        // setEdited({
+        //     ...edited,
+        //     [e.target.name]: e.target.value,
+        //     [e.target.birthDate]: e.target.value,
+        //     [e.target.foreignerYn]: e.target.value,
+        //     [e.target.homelessStartDate]: e.target.value,
+        //     [e.target.relationship]: e.target.value,
+        //     [e.target.householderYn]: e.target.value,
+        //     [e.target.soldierYn]: e.target.value,
+        //     [e.target.assets]: assets,
+        //     [e.target.isMarried]: e.target.value,
+        //     [e.target.marriedDate]:
+        //         [e.target.isMarried] === '미혼' ? null : e.target.value,
+        //     [e.target.transferDate]: e.target.value,
+        //     [e.target.income]: e.target.value,
+        // });
     };
 
     const onSubmitEdit = (e) => {
@@ -73,125 +86,385 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
     return (
         <div className="modifyWarraper">
             <form onSubmit={onSubmitEdit} className="modifyForm">
+                {/* 현버전 수정 화면 !!! */}
+                <table className="addMemberFormTable">
+                    <tbody className="addMemberFormTableTbody">
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td colSpan="2">
+                                <div className="normalTitleContainer">
+                                    <span className="normalTitle">
+                                        기본정보입력
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">이름</span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="nameInput"
+                                    name="name"
+                                    value={edited.name}
+                                    onChange={onEditChange}
+                                    required
+                                />
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTd"></td>
+                            <td className="addMemberFormTableTbodyTrTd"></td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">생년월일</span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="birthdateInput"
+                                    type="date"
+                                    name="birthDate"
+                                    value={edited.birthDate}
+                                    onChange={onEditChange}
+                                    required
+                                />
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">외국인 여부</span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="foreignerInput"
+                                    type="radio"
+                                    name="foreignerYn"
+                                    onChange={onEditChange}
+                                    value="y"
+                                    checked={
+                                        edited.foreignerYn === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="foreignerInputText">
+                                    외국인
+                                </span>
+                                <input
+                                    className="foreignerInput"
+                                    type="radio"
+                                    name="foreignerYn"
+                                    onChange={onEditChange}
+                                    value="n"
+                                    checked={
+                                        edited.foreignerYn === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="foreignerInputText">
+                                    내국인
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTrSpace"></tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td colSpan="3">
+                                <div className="normalTitleContainer">
+                                    <span className="normalTitle">
+                                        구성원 관계 정보 입력
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">
+                                    신청자와의 관계
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <select
+                                    className="relationshipSelect"
+                                    name="relationship"
+                                    value={edited.relationship}
+                                    onChange={onEditChange}
+                                    required
+                                >
+                                    <option value=""> ---선택--- </option>
+                                    <option value="본인">본인</option>
+                                    <option value="배우자">배우자</option>
+                                    <option value="모">모</option>
+                                    <option value="부">부</option>
+                                    <option value="자녀_일반">자녀_일반</option>
+                                    <option value="자녀_태아">자녀_태아</option>
+                                    <option value="배우자의 모">
+                                        배우자의 모
+                                    </option>
+                                    <option value="배우자의 부">
+                                        배우자의 부
+                                    </option>
+                                    <option value="자녀의 배우자">
+                                        자녀의 배우자
+                                    </option>
+                                    <option value="조모">조모</option>
+                                    <option value="조부">조부</option>
+                                    <option value="손자녀">손자녀</option>
+                                    <option value="손자녀의 배우자">
+                                        손자녀의 배우자
+                                    </option>
+                                    <option value="배우자의 조모">
+                                        배우자의 조모
+                                    </option>
+                                    <option value="배우자의 조부">
+                                        배우자의 조부
+                                    </option>
+                                </select>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">세대주 여부</span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="householderInput"
+                                    type="radio"
+                                    name="householderYn"
+                                    onChange={onEditChange}
+                                    value="y"
+                                    checked={
+                                        edited.householderYn === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="householderInputText">
+                                    세대주이다
+                                </span>
+                                <input
+                                    className="householderInput"
+                                    type="radio"
+                                    name="householderYn"
+                                    onChange={onEditChange}
+                                    value="n"
+                                    checked={
+                                        edited.householderYn === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="householderInputText">
+                                    세대주가 아니다
+                                </span>
+                            </td>
+                        </tr>
+                        {edited.relationship === '본인' ? (
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        장기복무 여부
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="isSoldierInput"
+                                        type="radio"
+                                        name="soldierYn"
+                                        onChange={onEditChange}
+                                        value="y"
+                                        checked={
+                                            edited.soldierYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="isSoldierInputText">
+                                        예
+                                    </span>
+                                    <input
+                                        className="isSoldierInput"
+                                        type="radio"
+                                        name="soldierYn"
+                                        onChange={onEditChange}
+                                        value="n"
+                                        checked={
+                                            edited.soldierYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="isSoldierInputText">
+                                        아니오
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError">
+                                    {/* {form.soldierYn === 'n' ? (
+                                            <span className="failMsg">
+                                                {failMsg}
+                                            </span>
+                                        ) : null} */}
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError"></td>
+                            </tr>
+                        ) : null}
+                        {edited.relationship === '배우자' ? (
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        배우자 분리세대 여부
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="isSpouseInput"
+                                        type="radio"
+                                        name="spouseYn"
+                                        onChange={onEditChange}
+                                        value="y"
+                                        checked={
+                                            edited.spouseYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="isSpouseInputText">
+                                        예
+                                    </span>
+                                    <input
+                                        className="isSpouseInput"
+                                        type="radio"
+                                        name="spouseYn"
+                                        onChange={onEditChange}
+                                        value="n"
+                                        checked={
+                                            edited.spouseYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="isSpouseInputText">
+                                        아니오
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError"></td>
+                            </tr>
+                        ) : null}
+                        {edited.relationship === '배우자' &&
+                        edited.spouseYn === 'y' ? (
+                            <tr
+                                className="addMemberFormTableTbodyTr"
+                                rowSpan="1"
+                            >
+                                <td
+                                    className="addMemberFormTableTbodyTrTd"
+                                    colSpan="3"
+                                >
+                                    <tr className="addMemberFormTableTbodyTrSpouse">
+                                        <td colSpan="3">
+                                            <div className="normalTitleContainer">
+                                                <span className="normalTitle">
+                                                    배우자 분리세대 등록
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="addMemberFormTableTbodyTrSpouseButton">
+                                        <td colSpan="3">
+                                            <MainButton
+                                                width={80}
+                                                height={30}
+                                                paddingLeft={10}
+                                                onClick={openPostCode}
+                                            >
+                                                주소 찾기
+                                            </MainButton>
+                                        </td>
+                                    </tr>
+                                    <tr className="addMemberFormTableTbodyTrSpouse">
+                                        <td
+                                            className="addMemberFormTableTbodyTrTdSpouse"
+                                            colSpan="3"
+                                        >
+                                            <div
+                                                id="popupDom"
+                                                className="spousePopupDomContainer"
+                                            >
+                                                {isPopupOpen && (
+                                                    <PopupDom>
+                                                        <PopupPostCode
+                                                            address={
+                                                                fullAddress
+                                                            }
+                                                            setAddress={
+                                                                setFullAddress
+                                                            }
+                                                            postcode={postcode}
+                                                            setPostcode={
+                                                                setPostcode
+                                                            }
+                                                            onClose={
+                                                                closePostCode
+                                                            }
+                                                        />
+                                                    </PopupDom>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr className="addMemberFormTableTbodyTr">
+                                        <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                            <span className="subTitle">
+                                                우편번호
+                                            </span>
+                                        </td>
+                                        <td className="addMemberFormTableTbodyTrTd">
+                                            <input
+                                                className="postcodeInput"
+                                                type="number"
+                                                name="postcode"
+                                                value={edited.spousePostcode}
+                                                onChange={onEditChange}
+                                                readOnly
+                                            />
+                                        </td>
+                                        <td className="addMemberFormTableTbodyTrTdError"></td>
+                                    </tr>
+                                    <tr className="addMemberFormTableTbodyTr">
+                                        <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                            <span className="subTitle">
+                                                주소
+                                            </span>
+                                        </td>
+                                        <td className="addMemberFormTableTbodyTrTd">
+                                            <input
+                                                className="addressInput"
+                                                type="text"
+                                                name="address"
+                                                value={edited.spouseAddress}
+                                                onChange={onEditChange}
+                                            />
+                                        </td>
+                                        <td className="addMemberFormTableTbodyTrTdError"></td>
+                                    </tr>
+                                </td>
+                            </tr>
+                        ) : null}
+                    </tbody>
+                </table>
+                {/* 구버전 수정 화면 !!! */}
                 <div>
-                    <div> ID: {edited.id} </div>
-                    {/* 이름 */}
-                    <div className="nameContainer">
-                        <span className="subTitle">이름</span>
-                        {/* <hr className="Line" /> */}
-                        <input
-                            className="nameInput"
-                            type="text"
-                            name="name"
-                            value={edited.name}
-                            onChange={onEditChange}
-                            required
-                        />{' '}
-                        <br />
-                    </div>
-
-                    {/* 생년월일 */}
-                    <div className="birthDateContainer">
-                        <span className="subTitle">생년월일</span>
-                        {/* <hr className="Line" /> */}
-                        <input
-                            className="birthdateInput"
-                            type="date"
-                            name="birthDate"
-                            value={edited.birthDate}
-                            onChange={onEditChange}
-                            required
-                        />
-                    </div>
-
-                    {/* 외국인인지 */}
-                    <div className="foreignerContainer">
-                        <span className="subTitle">외국인 여부</span>
-                        {/* <hr className="Line" /> */}
-                        <input
-                            className="foreignerInput"
-                            type="radio"
-                            name="foreignerYn"
-                            onChange={onEditChange}
-                            value="y"
-                            checked={edited.foreignerYn === 'y' ? true : false}
-                            required
-                        />
-                        <span className="foreignerInputText">외국인</span>
-                        <input
-                            className="foreignerInput"
-                            type="radio"
-                            name="foreignerYn"
-                            onChange={onEditChange}
-                            value="n"
-                            checked={edited.foreignerYn === 'n' ? true : false}
-                            required
-                        />
-                        <span className="foreignerInputText">내국인</span>
-                        <br />
-                    </div>
-
-                    {/* 신청자와의 관계 */}
-                    <div className="relationshipContainer">
-                        <span className="subTitle">신청자와의 관계</span>
-                        {/* <hr className="Line" /> */}
-                        <select
-                            className="relationshipSelect"
-                            name="relationship"
-                            value={edited.relationship}
-                            onChange={onEditChange}
-                            required
-                        >
-                            <option value=""> ---선택--- </option>
-                            <option value="본인">본인</option>
-                            <option value="배우자">배우자</option>
-                            <option value="부모">부모</option>
-                            <option value="자녀">자녀</option>
-                            <option value="배우자의 부모">배우자의 부모</option>
-                            <option value="자녀의 배우자">자녀의 배우자</option>
-                            <option value="조부모">조부모</option>
-                            <option value="손자녀">손자녀</option>
-                            <option value="배우자의 조부모">
-                                배우자의 조부모
-                            </option>
-                            <option value="손자녀의 배우자">
-                                손자녀의 배우자
-                            </option>
-                        </select>
-                    </div>
-
-                    {/* 본인을 선택했을 때 나오는 속성 */}
-                    {edited.relationship === '본인' ? (
-                        <div className="isSoldierContainer">
-                            <span className="subTitle">장기복무 여부</span>
-                            {/* <hr className="Line" /> */}
-                            <input
-                                className="isSoldierInput"
-                                type="radio"
-                                name="soldierYn"
-                                onChange={onEditChange}
-                                value="y"
-                                checked={
-                                    edited.soldierYn === 'y' ? true : false
-                                }
-                            />
-                            <span className="isSoldierInputText">예</span>
-                            <input
-                                className="isSoldierInput"
-                                type="radio"
-                                name="soldierYn"
-                                onChange={onEditChange}
-                                value="n"
-                                checked={
-                                    edited.soldierYn === 'n' ? true : false
-                                }
-                            />
-                            <span className="isSoldierInputText">아니오</span>
-                        </div>
-                    ) : (
-                        <></>
-                    )}
-
                     {/* 무주택 시작일 */}
                     <div className="homelessStartDateContainer">
                         <span className="subTitle">무주택시작일</span>
@@ -218,38 +491,6 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit }) => {
                             onChange={onEditChange}
                             required
                         />
-                    </div>
-
-                    {/* 세대주 여부 */}
-                    <div className="householderContainer">
-                        <span className="subTitle">세대주 여부</span>
-                        {/* <hr className="Line" /> */}
-                        <input
-                            className="householderInput"
-                            type="radio"
-                            name="householderYn"
-                            onChange={onEditChange}
-                            value="y"
-                            checked={
-                                edited.householderYn === 'y' ? true : false
-                            }
-                            required
-                        />
-                        <span className="householderInputText">세대주이다</span>
-                        <input
-                            className="householderInput"
-                            type="radio"
-                            name="householderYn"
-                            onChange={onEditChange}
-                            value="n"
-                            checked={
-                                edited.householderYn === 'n' ? true : false
-                            }
-                            required
-                        />
-                        <span className="householderInputText">
-                            세대주가 아니다
-                        </span>
                     </div>
 
                     {/* 혼인 여부 */}
