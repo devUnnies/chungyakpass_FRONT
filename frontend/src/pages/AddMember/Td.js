@@ -26,7 +26,6 @@ const Td = ({ item, handleRemove, handleEdit }) => {
 
     return (
         <tr className="allInfoTbodyTr">
-            <td className="allInfoTbodyTd"> {item.id} </td>
             <td className="allInfoTbodyTd"> {item.name} </td>
             <td className="allInfoTbodyTd">
                 {isAccountShow ? (

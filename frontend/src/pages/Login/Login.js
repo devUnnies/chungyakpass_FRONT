@@ -46,12 +46,9 @@ function Login(props) {
         // 로그인 성공시
         if (authStore.login.data) {
             const data = authStore.login.data.data;
-            if (authStore.login.data.status === 200) {
-                dispatch(signinWithToken(data.token));
-                storage.set('user-token', data.token);
-                history.push('/');
-            } else {
-            }
+            dispatch(signinWithToken(data.token));
+            storage.set('user-token', data.token);
+            history.push('/');
         }
     }, [authStore.login]);
 
