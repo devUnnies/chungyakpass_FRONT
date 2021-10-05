@@ -41,7 +41,7 @@ const data = {
                                 {
                                     idx: 1,
                                     name: '민영주택',
-                                    link: '/general/minyeongAptNum',
+                                    link: '/generalMinyeongAptNum',
                                 },
                             ],
                         },

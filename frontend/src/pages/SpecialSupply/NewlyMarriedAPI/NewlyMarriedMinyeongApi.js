@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { getGeneralMinyeong } from '../../store/actions/generalMinyeongAction';
+import { getNewlyMarriedMinyeong } from '../../../store/actions/newlyMarriedMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
     CheckCircleOutlined,
@@ -9,25 +9,23 @@ import {
     InfoCircleOutlined,
     PauseCircleOutlined,
 } from '@ant-design/icons';
-import MainButton from '../../components/Button/MainButton';
-import './GeneralSupply.css';
-import { useLocation } from 'react-router';
+import MainButton from '../../../components/Button/MainButton';
+import '../SpecialSupply.css';
 
-const GeneralMinyeongApi = ({ onSaveData, location }) => {
+const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     // const [data, setData1] = useState(null);
     // const [data2, setData2] = useState(null);
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-    const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    const newlyMarriedMinyeongStore = useSelector(
+        (state) => state.NewlyMarriedMinyeong
+    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const [loading, setLoading] = useState(false);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
 
     const [form, setForm] = useState({
         name: '',
         supportYn: '',
-        lifeYn: '',
-        generalMinyeongRes: '',
+        newlyMarriedMinyeongRes: '',
     });
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -41,7 +39,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
         onSaveData(form);
         console.log(form);
         setForm({
-            generalMinyeongRes: '',
+            newlyMarriedMinyeongRes: '',
         });
     };
 
@@ -55,40 +53,30 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
         // } catch (e) {
         //     console.log(e);
         // }
-        dispatch(getGeneralMinyeong()); // api 연결 요청.
-        const data = generalMinyeongStore?.getGeneralMinyeong?.data?.data;
+        dispatch(getNewlyMarriedMinyeong()); // api 연결 요청.
+        const data =
+            newlyMarriedMinyeongStore?.getNewlyMarriedMinyeong?.data?.data;
         console.log(JSON.stringify(data));
     };
 
     // useEffect(() => {
     //     // 불러오기 성공 시
-    //     if (generalMinyeongStore.getGeneralMinyeong.data) {
-    //         const data = generalMinyeongStore.getGeneralMinyeong.data.data;
+    //     if (newlyMarriedMinyeongStore.getNewlyMarriedMinyeong.data) {
+    //         const data = newlyMarriedMinyeongStore.getNewlyMarriedMinyeong.data.data;
     //         console.log(JSON.stringify(data));
     //     }
-    // }, [generalMinyeongStore.getGeneralMinyeong]);
-
-    // 아파트 공고번호, 주택형 받아오기.
-    useEffect(() => {
-        console.log(
-            'location.props.notificationNumber: ' +
-                location.props?.notificationNumber
-        );
-        console.log(
-            'location.props.housingType: ' + location.props?.housingType
-        );
-
-        setNotificationNumber(location.props.notificationNumber);
-        setHousingType(location.props.housingType);
-    });
+    // }, [newlyMarriedMinyeongStore.getNewlyMarriedMinyeong]);
 
     return (
         <>
-            <div className="general_title">
-                <h3 className="general_mainTitle">
+            <div className="special_title">
+                <h3 className="special_mainTitle">
                     {' '}
-                    일반공급{' '}
-                    <span className="general_subTitle"> | 민영주택 </span>
+                    특별공급{' '}
+                    <span className="special_subTitle">
+                        {' '}
+                        | 신혼부부 민영주택{' '}
+                    </span>
                 </h3>
             </div>
             <div className="loadButton">
@@ -102,11 +90,11 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                     불러오기
                 </MainButton>
             </div>
-            <form className="generalSupply_form" onSubmit={handleSubmit}>
+            <form className="specialSupply_form" onSubmit={handleSubmit}>
                 {/* 버튼 클릭시 데이터 불러오기 */}
-                <table className="generalPrivate_table">
+                <table className="specialMinyeong_table">
                     {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
-                    <tr className="general_phase">
+                    <tr className="special_phase">
                         <td className="qulificaiton">
                             <span className="qulificaitonBox">
                                 선택한 아파트가 투기과열지구 또는
@@ -124,13 +112,14 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 </span>
                             </span>
                         </td>
-                        <td className="general_result">
-                            {generalMinyeongStore.getGeneralMinyeong.data && (
+                        <td className="special_result">
+                            {newlyMarriedMinyeongStore.getNewlyMarriedMinyeong
+                                .data && (
                                 <input
                                     className="aptInfoSelect"
                                     value={JSON.stringify(
-                                        generalMinyeongStore.getGeneralMinyeong
-                                            .data
+                                        newlyMarriedMinyeongStore
+                                            .getNewlyMarriedMinyeong.data
                                     )}
                                     readOnly={true}
                                 />
@@ -139,13 +128,22 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                     </tr>
 
                     {/* 청약통장 조건 충족 여부 */}
-                    <tr className="general_phase">
+                    <tr className="special_phase">
                         <td className="qulificaiton">
                             <span className="qulificaitonBox">
                                 청약통장 조건 충족 여부
                             </span>
+                            <span className="info_tooltip">
+                                <InfoCircleOutlined />
+                                <span class="tooltip-text">
+                                    <p>※ 민영주택의 경우</p>
+                                    주택청약종합저축 혹은 청약예금,
+                                    청약부금(85제곱미터이하)인 경우에만 청약통장
+                                    조건 만족.
+                                </span>
+                            </span>
                         </td>
-                        <td className="general_result">
+                        <td className="special_result">
                             {/* {data && (
                                 <input
                                     className="aptInfoSelect"
@@ -176,12 +174,80 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                         </td>
                     </tr>
 
-                    {/* 만 나이 로직 결과 출력*/}
-                    <tr className="general_phase">
+                    {/* 세대구성원 무주택 판별 */}
+                    <tr className="special_phase">
                         <td className="qulificaiton">
-                            <span className="qulificaitonBox">나이</span>
+                            <span className="qulificaitonBox">
+                                전세대구성원의 무주택 여부
+                            </span>
+                            <span className="info_tooltip">
+                                <InfoCircleOutlined />
+                                <span class="tooltip-text">
+                                    <p>
+                                        <div>※ 무주택 조건</div>
+                                        <div className="tooltip-text-info">
+                                            : 무주택 기간 산정은 본인 기준 만
+                                            30세부터 하되, 그 전에 혼인한 경우
+                                            혼인신고일을 기준으로 산정함.
+                                        </div>
+                                        <div className="tooltip-text-info">
+                                            : 무주택 기간 산정은 본인 기준 만
+                                            30세부터 하되, 그 전에 혼인한 경우
+                                            혼인신고일을 기준으로 산정함.
+                                        </div>
+                                    </p>
+                                    <p>
+                                        <li>
+                                            60세 이상 직계존속이 소유한 주택
+                                            혹은 분양권
+                                        </li>
+                                        <li>3개월 이내 처분한 상속주택</li>
+                                        <li>비도시 지역 단독주택</li>
+                                        <li>소형, 저가 주택</li>
+                                        <li>폐가 소유</li>
+                                        <li>무허가 건물 소유</li>
+                                        <li>문화재 지정 주택</li>
+                                        <li>미분양 주택 분양권</li>
+                                        <li>사업 목적</li>
+                                    </p>
+                                </span>
+                            </span>
                         </td>
-                        <td className="general_result">
+                        {/* <td className="special_phase">
+                            {data && (
+                                <input
+                                    className="aptInfoSelect"
+                                    value={JSON.stringify(data)}
+                                    readOnly={true}
+                                />
+                            )}
+                            <span>
+                                {data && data !== '' ? (
+                                    <span className="progress">
+                                        <CheckCircleOutlined />
+                                    </span>
+                                ) : null}
+                                {data && data === '' ? (
+                                    <span className="pause_tooltip">
+                                        <CloseCircleOutlined />
+                                        <span class="pause-tooltip-text">
+                                            전 세대 구성원이 무주택이 아닐 시
+                                            청약 자격 미달.
+                                        </span>
+                                    </span>
+                                ) : null}
+                            </span>
+                        </td> */}
+                    </tr>
+
+                    {/* 3명 이상의 미성년 자녀수 충족 여부*/}
+                    <tr className="special_phase">
+                        <td className="qulificaiton">
+                            <span className="qulificaitonBox">
+                                7년 이내의 혼인 기간 여부
+                            </span>
+                        </td>
+                        <td className="special_result">
                             {/* {data && (
                                 <input
                                     className="aptInfoSelect"
@@ -199,7 +265,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     <span className="pause_tooltip">
                                         <CloseCircleOutlined />
                                         <span class="pause-tooltip-text">
-                                            나이 입력 필요.
+                                            혼인 기간이 7년 이내인 경우에만 해당 청약 진행 가능.
                                         </span>
                                     </span>
                                 ) : null}
@@ -207,12 +273,12 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                         </td>
                     </tr>
 
-                    {/* 미성년자인 경우 세대주 판별 */}
-                    <tr className="general_phase">
+                    {/* 만 나이 로직 결과 출력*/}
+                    <tr className="special_phase">
                         <td className="qulificaiton">
-                            <span className="qulificaitonBox">세대주 여부</span>
+                            <span className="qulificaitonBox">나이</span>
                         </td>
-                        <td className="general_result">
+                        <td className="special_result">
                             {/* {data && (
                                 <input
                                     className="aptInfoSelect"
@@ -221,17 +287,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 />
                             )}
                             <span>
-                                {data && data === 2 ? (
+                                {data && data !== '' ? (
                                     <span className="progress">
                                         <CheckCircleOutlined />
                                     </span>
                                 ) : null}
-                                {data && data !== 2 ? (
+                                {data && data === '' ? (
                                     <span className="pause_tooltip">
                                         <CloseCircleOutlined />
                                         <span class="pause-tooltip-text">
-                                            만 19세 미만 미성년자는 세대주일
-                                            경우에만 해당 청약이 신청 진행 가능.
+                                            미성년 자녀 수 조건 미충족
                                         </span>
                                     </span>
                                 ) : null}
@@ -247,8 +312,8 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                             </span>
                         </td>
                         {/* {data && (
-                            <td className="general_result">
-                                <span className="general_result_input">
+                            <td className="special_result">
+                                <span className="special_result_input">
                                     <input
                                         className="isSupportInput"
                                         type="radio"
@@ -298,113 +363,21 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                         )} */}
                     </tr>
 
-                    {/* 20대 단독 세대주 여부 */}
-                    <tr className="general_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                소득이 있으면서 독립적으로 생계 유지가 가능한가?
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>미혼 20대 단독세대주 ?</p>
-                                    20대이며, 최저 생계비 (기준중위소득 40%, 약
-                                    월 70만원) 이상의 소득이 존재해야 함.
-                                </span>
-                            </span>
-                        </td>
-                        {/* {data && (
-                            <td className="general_result">
-                                <span className="general_result_input">
-                                    <input
-                                        className="isLifeYnInput"
-                                        type="radio"
-                                        name="lifeYn"
-                                        onChange={onChange}
-                                        value="y"
-                                        checked={
-                                            form.lifeYn === 'y' ? true : false
-                                        }
-                                    />
-                                    <span className="InputText">예</span>
-                                    <input
-                                        className="isLifeYnInput"
-                                        type="radio"
-                                        name="lifeYn"
-                                        onChange={onChange}
-                                        value="n"
-                                        checked={
-                                            form.lifeYn === 'n' ? true : false
-                                        }
-                                    />
-                                    <span className="InputText">아니오</span>
-                                </span>
-                                <span>
-                                    {data && form.lifeYn === 'y' ? (
-                                        <span className="progress">
-                                            <CheckCircleOutlined />
-                                        </span>
-                                    ) : null}
-                                    {data && form.lifeYn === 'n' ? (
-                                        <span className="pause_tooltip">
-                                            <CloseCircleOutlined />
-                                            <span class="tooltip-text">
-                                                생계 유지 기준 소득 확인 필요.
-                                            </span>
-                                        </span>
-                                    ) : null}
-                                </span>
-                            </td>
-                        )} */}
-                    </tr>
-
                     {/* 이후 조건 충족 시 다음 인풋 보이도록. */}
 
                     {/* 순위 판별 시작 */}
-                    {/* 주거전용 85㎡ 기준 충족*/}
-                    <tr className="general_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                주거전용 85㎡ 초과공공건설임대주택, 수도권에
-                                지정된 공공주택지구에서 공급하는 민영주택에
-                                청약하는가?
-                            </span>
-                        </td>
-                        {/* <td className="general_result">
-                            {data && (
-                                <input
-                                    className="aptInfoSelect"
-                                    value={JSON.stringify(data)}
-                                    readOnly={true}
-                                />
-                            )}
-                            <span>
-                                {data && data !== '' ? (
-                                    <span className="progress" readOnly={true}>
-                                        <CheckCircleOutlined />
-                                    </span>
-                                ) : null}
-                                {data && data === '' ? (
-                                    <span className="secondRankTootip">
-                                        <PauseCircleOutlined />
-                                        {(form.generalMinyeongRes = '2순위')}
-                                    </span>
-                                ) : null}
-                            </span>
-                        </td> */}
-                    </tr>
 
                     {/* 위 조건이 만족하면서 2주택이 만족해야함. */}
                     {/* 2주택 이상 소유 시 2순위 */}
-                    {form.supportYn === 'y' || form.lifeYn === 'y' ? (
+                    {form.supportYn === 'y' ? (
                         <>
-                            <tr className="general_phase">
+                            <tr className="special_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
                                         2주택 이상 소유 여부
                                     </span>
                                 </td>
-                                {/* <td className="general_result">
+                                {/* <td className="special_result">
                                     {data && (
                                         <input
                                             className="aptInfoSelect"
@@ -425,7 +398,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <span className="secondRankTootip">
                                                 <PauseCircleOutlined />
                                                 {
-                                                    (form.generalMinyeongRes =
+                                                    (form.newlyMarriedMinyeongRes =
                                                         '2순위')
                                                 }
                                             </span>
@@ -436,44 +409,13 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
                             {/* 규제 지역인 경우에만 보이도록 */}
                             {/* 세대주 여부 (미성년자 제외) */}
-                            <tr className="general_phase">
+                            <tr className="special_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
                                         세대주 여부
                                     </span>
                                 </td>
-                                {/* <td className="general_result">
-                                    {data && (
-                                        <input
-                                            className="aptInfoSelect"
-                                            value={JSON.stringify(data)}
-                                            readOnly={true}
-                                        />
-                                    )}
-                                    <span>
-                                        {data && data !== '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                        {data && data === '' ? (
-                                            <span className="secondRankTootip">
-                                                <PauseCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                    </span>
-                                </td> */}
-                            </tr>
-
-                            {/* 세대원 청약 당첨 이력 */}
-                            <tr className="general_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        전 세대원이 5년 이내 청약 당첨 이력이
-                                        존재하는가?
-                                    </span>
-                                </td>
-                                {/* <td className="general_result">
+                                {/* <td className="special_result">
                                     {data && (
                                         <input
                                             className="aptInfoSelect"
@@ -491,7 +433,42 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <span className="secondRankTootip">
                                                 <PauseCircleOutlined />
                                                 {
-                                                    (form.generalMinyeongRes =
+                                                    (form.newlyMarriedMinyeongRes =
+                                                        '2순위')
+                                                }
+                                            </span>
+                                        ) : null}
+                                    </span>
+                                </td> */}
+                            </tr>
+
+                            {/* 세대원 청약 당첨 이력 */}
+                            <tr className="special_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        전 세대원이 5년 이내 청약 당첨 이력이
+                                        존재하는가?
+                                    </span>
+                                </td>
+                                {/* <td className="special_result">
+                                    {data && (
+                                        <input
+                                            className="aptInfoSelect"
+                                            value={JSON.stringify(data)}
+                                            readOnly={true}
+                                        />
+                                    )}
+                                    <span>
+                                        {data && data !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : null}
+                                        {data && data === '' ? (
+                                            <span className="secondRankTootip">
+                                                <PauseCircleOutlined />
+                                                {
+                                                    (form.newlyMarriedMinyeongRes =
                                                         '2순위')
                                                 }
                                             </span>
@@ -501,7 +478,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                             </tr>
 
                             {/* 청약통장 가입기간 충족 여부 */}
-                            <tr className="general_phase">
+                            <tr className="special_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
                                         청약통장 가입기간 충족 여부
@@ -531,7 +508,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                         </span>
                                     </span>
                                 </td>
-                                {/* <td className="general_result">
+                                {/* <td className="special_result">
                                     {data && (
                                         <input
                                             className="aptInfoSelect"
@@ -549,7 +526,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <span className="secondRankTootip">
                                                 <PauseCircleOutlined />
                                                 {
-                                                    (form.generalMinyeongRes =
+                                                    (form.newlyMarriedMinyeongRes =
                                                         '2순위')
                                                 }
                                             </span>
@@ -559,10 +536,10 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                             </tr>
 
                             {/* 예치 금액 충족 여부 */}
-                            <tr className="general_phase">
+                            <tr className="special_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
-                                        예치 금액 충족 여부
+                                        지역별 예치 금액 충족 여부
                                     </span>
                                     <span className="info_tooltip">
                                         <InfoCircleOutlined />
@@ -605,7 +582,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                         </span>
                                     </span>
                                 </td>
-                                {/* <td className="general_result">
+                                {/* <td className="special_result">
                                     {data && (
                                         <input
                                             className="aptInfoSelect"
@@ -618,7 +595,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <span className="progress">
                                                 <CheckCircleOutlined />
                                                 {
-                                                    (form.generalMinyeongRes =
+                                                    (form.newlyMarriedMinyeongRes =
                                                         '1순위')
                                                 }
                                             </span>
@@ -627,7 +604,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <span className="secondRankTootip">
                                                 <PauseCircleOutlined />
                                                 {
-                                                    (form.generalMinyeongRes =
+                                                    (form.newlyMarriedMinyeongRes =
                                                         '2순위')
                                                 }
                                             </span>
@@ -642,9 +619,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                 </table>
 
                 {/* 순위에 따른 페이지 이동 */}
-                {/* {data && (form.supportYn !== '' || form.lifeYn !== '') ? (
+                {/* {data && form.supportYn !== '' ? (
                     <>
-                        {form.generalMinyeongRes === '1순위' ? (
+                        {form.newlyMarriedMinyeongRes === '1순위' ? (
                             <div className="rankButton">
                                 <Link to="/rank/first">
                                     <MainButton
@@ -682,4 +659,4 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
     );
 };
 
-export default GeneralMinyeongApi;
+export default NewlyMarriedMinyeongApi;

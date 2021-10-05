@@ -7,6 +7,7 @@ import {
     AllowLogin,
     PersonalInfo,
     GeneralSupply,
+    GeneralMinyeong,
     GeneralMinyeongApi,
     GeneralMinyeongAptNum,
     GeneralKookminApi,
@@ -76,12 +77,16 @@ class App extends Component {
                         component={MemberHousingInfo}
                     />
                     <Route path="/supply/normal" component={GeneralSupply} />
-                    <Route
+                    {/* <Route
                         path="/general/minyeong"
+                        component={GeneralMinyeong}
+                    /> */}
+                    <Route
+                        path="/generalMinyeong"
                         component={GeneralMinyeongApi}
                     />
                     <Route
-                        path="/general/minyeongAptNum"
+                        path="/generalMinyeongAptNum"
                         component={GeneralMinyeongAptNum}
                     />
                     <Route

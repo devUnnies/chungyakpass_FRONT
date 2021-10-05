@@ -28,6 +28,8 @@ export { default as MultiChildMinyeongApi } from './SpecialSupply/MultiChildAPI/
 export { default as MultiChildMinyeongAptNum } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongAptNum';
 export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/OldParentMinyeongApi';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
+// 청약 공급 데이터 전달 전체 화면
+export { default as GeneralMinyeong } from './GeneralSupply/GeneralMinyeong';
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';

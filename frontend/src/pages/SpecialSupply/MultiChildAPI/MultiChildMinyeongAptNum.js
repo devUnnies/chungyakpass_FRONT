@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAptNumAction';
+import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ function MultiChildMinyeongAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const multiChildMinyeongAptNumStore = useSelector(
-        (state) => state.multiChildMinyeongAptNum
+        (state) => state.multiChildMinyeong
     );
 
     const [
@@ -38,14 +38,29 @@ function MultiChildMinyeongAptNum(props) {
         [notificationNumber, housingType]
     );
 
+    const onClick = async () => {
+        if (notificationNumber == '' || housingType == '') {
+            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
+        } else {
+            dispatch(postMultiChildMinyeongAptNum()); // api 연결 요청.
+            const data =
+                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/special/multiChild/minyeong',
+                props: {
+                    notificationNumber,
+                    housingType,
+                },
+            });
+        }
+    };
+
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 일반 민영 자격확인 페이지로 이동.
+        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
         if (multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum) {
             const data =
                 multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
-            if (data !== null) {
-                history.push('/special/multiChild/minyeong');
-            }
         }
     }, [multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum]);
 
@@ -71,9 +86,17 @@ function MultiChildMinyeongAptNum(props) {
                         />
                         <br />
 
-                        <MainButton width="100" height="30" fontSize="16">
-                            다음
-                        </MainButton>
+                        <span className="aptNumButton">
+                            <MainButton
+                                onClick={onClick}
+                                width="100"
+                                height="35"
+                                fontSize="13"
+                                margin="5"
+                            >
+                                다음
+                            </MainButton>
+                        </span>
                     </form>
                 </div>
             </div>

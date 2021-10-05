@@ -1,3 +1,23 @@
+/* 일반민영 아파트 공고번호 페이지 */
+.minyeongAptNumForm {
+    margin-left: 40%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+.aptNumInput {
+    width: 180%;
+    height: 25%;
+    margin: 5%;
+    padding: 5%;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 10pt;
+}
+.aptNumButton {
+    float: left;
+}
+
 /* general_title */
 .general_title {
     margin-left: 20%;
