@@ -17,40 +17,44 @@ const Td = ({ item, handleRemove, handleEdit }) => {
         handleEdit(item);
     };
 
-    console.log(JSON.stringify(item));
-
     return (
         <tr className="allInfoTbodyTr">
-            <td className="allInfoTbodyTd"> {item.id} </td>
-            <td className="allInfoTbodyTd"> {item.property} </td>
-            <td className="allInfoTbodyTd"> {item.saleRightYn} </td>
+            <td className="allInfoTbodyTd"> {item?.property} </td>
             <td className="allInfoTbodyTd">
                 {' '}
-                {item.residentialBuildingYn === 'y'
+                {item?.saleRightYn === 'y'
+                    ? '있음'
+                    : item?.property === '건물' || item?.property === '토지'
+                    ? '없음'
+                    : null}{' '}
+            </td>
+            <td className="allInfoTbodyTd">
+                {' '}
+                {item?.residentialBuildingYn === 'y'
                     ? item.residentialBuilding
                     : item.nonResidentialBuilding}{' '}
             </td>
 
             <td className="allInfoTbodyTd">
-                {item.acquistionDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                {item?.acquistionDate
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}
             </td>
 
             <td className="allInfoTbodyTd">
-                {item.dispositionDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                {item?.dispositionDate
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}
             </td>
-            <td className="allInfoTbodyTd"> {item.exclusiveArea} </td>
-            <td className="allInfoTbodyTd"> {item.amount} </td>
+            <td className="allInfoTbodyTd"> {item?.exclusiveArea} </td>
+            <td className="allInfoTbodyTd"> {item?.amount} </td>
             <td className="allInfoTbodyTd">
                 {' '}
-                {item.taxBaseDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                {item?.taxBaseDate
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}{' '}
             </td>
 
