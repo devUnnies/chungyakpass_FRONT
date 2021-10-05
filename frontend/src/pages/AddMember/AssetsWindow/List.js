@@ -5,32 +5,38 @@ import Add from './Add';
 import Modify from './Modify';
 
 const List = (props) => {
-    const [asset, setAsset] = useState({
-        property: '',
-        saleRightYn: '',
-        residentialBuildingYn: '',
-        residentialBuilding: '',
-        nonResidentialBuilding: '',
-        acquistionDate: '',
-        dispositionDate: '',
-        exclusiveArea: '',
-        amount: '',
-        taxBaseDate: '',
-    });
+    const [asset, setAsset] = useState({});
     const [assets, setAssets] = useState([]);
+    const [startDate, setStartDate] = useState(props.birthDate);
     const [selected, setSelected] = useState('');
     const [add, setAdd] = useState(false);
     const [modify, setModify] = useState(false);
 
     const nextId = useRef(1);
 
+    const calStartDate = () => {
+        // 자산 각각의 무주택 시작일을 계산해서 가장 나중의 무주택 시작일을 넘겨줘야 함
+        const dates = assets.map((content, i) => {
+            console.log(content.startDate);
+            return { ...content.startDate };
+        });
+
+        dates.sort(function (a, b) {
+            return b - a;
+        });
+
+        setStartDate(dates[0]);
+
+        props.getStartDate(startDate);
+    };
+
     const sendCloseValue = (value) => {
         props.getCloseValue(value);
     };
 
-    // const sendAssetsValue = () => {
-    //     props.getAssetsValue(assets);
-    // };
+    const sendAssetsValue = () => {
+        props.getAssetsValue(assets);
+    };
 
     const handleAdd = () => {
         setAdd(!add);
@@ -65,23 +71,12 @@ const List = (props) => {
                 )
             );
         } else {
+            // console.log(JSON.stringify(data));
             // 기존의 데이터 추가하기
-            setAsset((info) =>
-                info.concat({
-                    id: nextId.current,
-                    property: data.property,
-                    saleRightYn: data.saleRightYn,
-                    residentialBuildingYn: data.residentialBuildingYn,
-                    residentialBuilding: data.residentialBuilding,
-                    nonResidentialBuilding: data.nonResidentialBuilding,
-                    acquistionDate: data.acquistionDate,
-                    dispositionDate: data.dispositionDate,
-                    exclusiveArea: data.exclusiveArea,
-                    amount: data.amount,
-                    taxBaseDate: data.taxBaseDate,
-                })
-            );
-            setAssets([...assets, asset]);
+            setAsset({ ...data, id: nextId.current });
+            asset !== {} && assets === []
+                ? setAssets([{ ...data, id: nextId.current }])
+                : setAssets([...assets, { ...data, id: nextId.current }]);
             nextId.current += 1;
         }
 
@@ -126,7 +121,9 @@ const List = (props) => {
         // alert('입력이 모두 완료되었습니다 !', () => {
         //     console.log('얜 뭐죠 ?? ');
         // });
+        calStartDate();
         sendCloseValue(true);
+        sendAssetsValue();
     };
 
     return (
@@ -141,12 +138,11 @@ const List = (props) => {
                     <tr className="allInfoTheadTr">
                         <th className="allInfoTheadTrTh"> 자산유형 </th>
                         <th className="allInfoTheadTrTh"> 분양권 여부 </th>
-                        <th className="allInfoTheadTrTh"> 주거용 여부 </th>
-                        <th className="allInfoTheadTrTh"> 주거용건물유형 </th>
-                        <th className="allInfoTheadTrTh"> 비주거용건물유형 </th>
+                        <th className="allInfoTheadTrTh"> 건물유형 </th>
                         <th className="allInfoTheadTrTh"> 취득일 </th>
                         <th className="allInfoTheadTrTh"> 처분일 </th>
                         <th className="allInfoTheadTrTh"> 전용면적 </th>
+                        <th className="allInfoTheadTrTh"> 금액 </th>
                         <th className="allInfoTheadTrTh"> 과세 기준일 </th>
                         <th className="allInfoTheadTrTh"> 수정 </th>
                         <th className="allInfoTheadTrTh"> 삭제 </th>
@@ -176,7 +172,13 @@ const List = (props) => {
                 )}
             </div>
 
-            {add && <Add onSaveData={handleSave} />}
+            {add && (
+                <Add
+                    onSaveData={handleSave}
+                    birthDate={props.birthDate}
+                    ineligibleDate={props.ineligibleDate}
+                />
+            )}
             {modify && (
                 <Modify
                     selectedData={selected}

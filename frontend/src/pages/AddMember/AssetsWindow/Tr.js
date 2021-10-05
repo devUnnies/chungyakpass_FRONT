@@ -5,7 +5,7 @@ import './AssetsWindow.css';
 const Tr = ({ data, handleRemove, handleEdit }) => {
     return (
         <tbody className="allInfoTbody">
-            {data.map((item) => {
+            {data?.map((item) => {
                 return (
                     <Td
                         key={item.id}
