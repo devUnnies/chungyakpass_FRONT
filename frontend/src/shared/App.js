@@ -34,6 +34,7 @@ import {
     FAQ,
     MyPage,
 } from '../pages';
+import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
 import Footer from './footer/footer';
 
@@ -58,7 +59,11 @@ class App extends Component {
                     />
 
                     <Route exact path="/addHouseHolder/see" component={Board} />
-
+                    <Route
+                        exact
+                        path="/addHouseHolder/assetList"
+                        component={List}
+                    />
                     <Route exact path="/atAGlance" component={AtAGlance} />
                     <Route
                         exact

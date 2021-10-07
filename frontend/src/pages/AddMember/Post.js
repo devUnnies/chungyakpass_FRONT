@@ -18,7 +18,6 @@ const Post = ({ onSaveData }) => {
     const [fullAddress, setFullAddress] = useState();
     const [postcode, setPostcode] = useState('');
     const [haveAssets, setHaveAssets] = useState();
-    const [assetsCount, setAssetsCount] = useState(0);
     const [haveHistory, setHaveHistory] = useState();
     const [haveLimit, setHaveLimit] = useState();
 
@@ -64,19 +63,6 @@ const Post = ({ onSaveData }) => {
         validYn: '',
     });
 
-    const [asset, setAsset] = useState({
-        property: '',
-        saleRightYn: '',
-        residentialBuildingYn: '',
-        residentialBuilding: '',
-        nonResidentialBuilding: '',
-        acquistionDate: '',
-        dispositionDate: '',
-        exclusiveArea: '',
-        amount: '',
-        taxBaseDate: '',
-    });
-
     const [historyArr, setHistoryArr] = useState({
         houseName: '',
         supply: '',
@@ -88,6 +74,8 @@ const Post = ({ onSaveData }) => {
         winningDate: '',
         raffle: '',
         cancelYn: '',
+        ineligibleYn: '',
+        ineligibleDate: '',
     });
 
     const [limitArr, setLimitArr] = useState({
@@ -114,6 +102,10 @@ const Post = ({ onSaveData }) => {
         setIsPopupOpen(false);
     };
 
+    const getStartDate = (date) => {
+        setForm({ ...form, homelessStartDate: date });
+    };
+
     const getCloseValue = (close) => {
         setClose(close);
     };
@@ -135,12 +127,15 @@ const Post = ({ onSaveData }) => {
             <NewWindow
                 name="assetsList"
                 title="자산 정보 목록 - 청약패스(chungyakpass.co.kr)"
-                center="parent"
+                center="screen"
+                onBlock={() => {}}
             >
                 <List
-                    getCloseValue={(close) => {
-                        setClose(close);
-                    }}
+                    getCloseValue={getCloseValue}
+                    getAssetsValue={getAssetsValue}
+                    getStartDate={getStartDate}
+                    birthDate={form.birthDate}
+                    ineligibleDate={historyArr.ineligibleDate}
                 />
             </NewWindow>
         );
@@ -250,14 +245,6 @@ const Post = ({ onSaveData }) => {
         });
     };
 
-    const onAssetChange = (e) => {
-        const { name, value } = e.target;
-        setAsset({
-            ...asset,
-            [name]: value,
-        });
-    };
-
     const onHistoryArrChange = (e) => {
         const { name, value } = e.target;
         setHistoryArr({
@@ -279,7 +266,6 @@ const Post = ({ onSaveData }) => {
         if (failMsg === null) {
             if (form.relationship === '본인') form.account.push(account);
 
-            if (haveAssets === 'y') form.assets.push(asset);
             if (haveHistory === 'y') form.histories.push(historyArr);
             if (haveLimit === 'y') form.limits.push(limitArr);
             onSaveData(form);
@@ -312,7 +298,11 @@ const Post = ({ onSaveData }) => {
     return (
         <>
             <div id="addMember" className="addMemberFormContainer">
-                <form onSubmit={handleSubmit} className="addMemberForm">
+                <form
+                    onSubmit={handleSubmit}
+                    className="addMemberForm"
+                    name="allInfo"
+                >
                     <table className="addMemberFormTable">
                         <tbody className="addMemberFormTableTbody">
                             <tr className="addMemberFormTableTbodyTr">
@@ -428,26 +418,79 @@ const Post = ({ onSaveData }) => {
                                         <option value=""> ---선택--- </option>
                                         <option value="본인">본인</option>
                                         <option value="배우자">배우자</option>
-                                        <option value="부">부</option>
                                         <option value="모">모</option>
-                                        <option value="자녀">자녀</option>
-                                        <option value="배우자의 부모">
-                                            배우자의 부모
+                                        <option value="부">부</option>
+                                        <option value="자녀_일반">
+                                            자녀_일반
+                                        </option>
+                                        <option value="자녀_태아">
+                                            자녀_태아
+                                        </option>
+                                        <option value="배우자의 모">
+                                            배우자의 모
+                                        </option>
+                                        <option value="배우자의 부">
+                                            배우자의 부
                                         </option>
                                         <option value="자녀의 배우자">
                                             자녀의 배우자
                                         </option>
-                                        <option value="조부모">조부모</option>
+                                        <option value="조모">조모</option>
+                                        <option value="조부">조부</option>
                                         <option value="손자녀">손자녀</option>
-                                        <option value="배우자의 조부모">
-                                            배우자의 조부모
-                                        </option>
                                         <option value="손자녀의 배우자">
                                             손자녀의 배우자
+                                        </option>
+                                        <option value="배우자의 조모">
+                                            배우자의 조모
+                                        </option>
+                                        <option value="배우자의 조부">
+                                            배우자의 조부
                                         </option>
                                     </select>
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError"></td>
+                            </tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        세대주 여부
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="householderInput"
+                                        type="radio"
+                                        name="householderYn"
+                                        onChange={onChange}
+                                        value="y"
+                                        checked={
+                                            form.householderYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="householderInputText">
+                                        세대주이다
+                                    </span>
+                                    <input
+                                        className="householderInput"
+                                        type="radio"
+                                        name="householderYn"
+                                        onChange={onChange}
+                                        value="n"
+                                        checked={
+                                            form.householderYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="householderInputText">
+                                        세대주가 아니다
+                                    </span>
+                                </td>
                             </tr>
                             {form.relationship === '본인' ? (
                                 <tr className="addMemberFormTableTbodyTr">
@@ -644,55 +687,54 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {form.relationship === '자녀' ? (
-                                <tr className="addMemberFormTableTbodyTr">
-                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                        <span className="subTitle">
-                                            분리세대인 경우
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTd">
-                                        <input
-                                            className="isSoldierInput"
-                                            type="radio"
-                                            name="childrenLive"
-                                            onChange={onChange}
-                                            value="base"
-                                            checked={
-                                                form.childrenLive === 'base'
-                                                    ? true
-                                                    : false
-                                            }
-                                        />
-                                        <span className="isSoldierInputText">
-                                            세대주와 산다
-                                        </span>
-                                        <input
-                                            className="isSoldierInput"
-                                            type="radio"
-                                            name="childrenLive"
-                                            onChange={onChange}
-                                            value="spouse"
-                                            checked={
-                                                form.childrenLive === 'spouse'
-                                                    ? true
-                                                    : false
-                                            }
-                                        />
-                                        <span className="isSoldierInputText">
-                                            세대주의 배우자와 산다
-                                        </span>
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTdError">
-                                        {/* {form.soldierYn === 'n' ? (
+                            {/* 고쳐야 함 ,,, !!! 배우자 분리세대 여부임 */}
+
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">세대 거주</span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="isSoldierInput"
+                                        type="radio"
+                                        name="childrenLive"
+                                        onChange={onChange}
+                                        value="base"
+                                        checked={
+                                            form.childrenLive === 'base'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="isSoldierInputText">
+                                        신청자 본인 세대에 거주
+                                    </span>
+                                    <input
+                                        className="isSoldierInput"
+                                        type="radio"
+                                        name="childrenLive"
+                                        onChange={onChange}
+                                        value="spouse"
+                                        checked={
+                                            form.childrenLive === 'spouse'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="isSoldierInputText">
+                                        신청자의 배우자 분리세대에 거주
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError">
+                                    {/* {form.soldierYn === 'n' ? (
                                             <span className="failMsg">
                                                 {failMsg}
                                             </span>
                                         ) : null} */}
-                                    </td>
-                                    <td className="addMemberFormTableTbodyTrTdError"></td>
-                                </tr>
-                            ) : null}
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError"></td>
+                            </tr>
+
                             <tr className="addMemberFormTableTbodyTr">
                                 <td className="addMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
@@ -733,47 +775,7 @@ const Post = ({ onSaveData }) => {
                                     />
                                 </td>
                             </tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">
-                                        세대주 여부
-                                    </span>
-                                </td>
-                                <td className="addMemberFormTableTbodyTrTd">
-                                    <input
-                                        className="householderInput"
-                                        type="radio"
-                                        name="householderYn"
-                                        onChange={onChange}
-                                        value="y"
-                                        checked={
-                                            form.householderYn === 'y'
-                                                ? true
-                                                : false
-                                        }
-                                        required
-                                    />
-                                    <span className="householderInputText">
-                                        세대주이다
-                                    </span>
-                                    <input
-                                        className="householderInput"
-                                        type="radio"
-                                        name="householderYn"
-                                        onChange={onChange}
-                                        value="n"
-                                        checked={
-                                            form.householderYn === 'n'
-                                                ? true
-                                                : false
-                                        }
-                                        required
-                                    />
-                                    <span className="householderInputText">
-                                        세대주가 아니다
-                                    </span>
-                                </td>
-                            </tr>
+
                             <tr className="addMemberFormTableTbodyTr">
                                 <td className="addMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">혼인 여부</span>
@@ -939,6 +941,7 @@ const Post = ({ onSaveData }) => {
                                             value={account.deposit}
                                             onChange={onAccountChange}
                                         />
+                                        <span> 원</span>
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
                                 </tr>
@@ -958,6 +961,7 @@ const Post = ({ onSaveData }) => {
                                             value={account.paymentsCount}
                                             onChange={onAccountChange}
                                         />
+                                        <span> 회</span>
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError"></td>
                                 </tr>
@@ -1014,91 +1018,15 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {form.relationship === '본인' ? (
-                                <tr className="addMemberFormTableTbodyTrSpace"></tr>
-                            ) : null}
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td colSpan="3">
-                                    <div className="normalTitleContainer">
-                                        <span className="normalTitle">
-                                            자산 등록
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">
-                                        월 평균 소득
-                                    </span>
-                                </td>
-                                <td className="addMemberFormTableTbodyTrTd">
-                                    <input
-                                        className="incomeInput"
-                                        type="number"
-                                        name="income"
-                                        onChange={onChange}
-                                        value={form.income}
-                                        required
-                                    />
-                                    <span className="incomeUnitText">원</span>
-                                    <QuestionCircleOutlined
-                                        className="incomeUnitIcon"
-                                        onClick={() => {
-                                            setIsTableOpen(!isTableOpen);
-                                        }}
-                                    />
-                                    {isTableOpen && (
-                                        <div className="incomeTableContainer">
-                                            <MonthAverageIncomeTable />
-                                        </div>
-                                    )}
-                                </td>
-                            </tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">자산여부</span>
-                                </td>
-                                <td className="addMemberFormTableTbodyTrTd">
-                                    <input
-                                        className="assetHaveAssetsInput"
-                                        type="radio"
-                                        name="haveAssets"
-                                        onChange={(e) => {
-                                            setHaveAssets(e.target.value);
-                                        }}
-                                        value="y"
-                                        checked={
-                                            haveAssets === 'y' ? true : false
-                                        }
-                                        required
-                                    />
-                                    <span className="assetHaveAssetsInputText">
-                                        있습니다
-                                    </span>
-                                    <input
-                                        className="assetHaveAssetsInput"
-                                        type="radio"
-                                        name="haveAssets"
-                                        onChange={(e) => {
-                                            setHaveAssets(e.target.value);
-                                        }}
-                                        value="n"
-                                        checked={
-                                            haveAssets === 'n' ? true : false
-                                        }
-                                        required
-                                    />
-                                    <span className="assetHaveAssetsInputText">
-                                        없습니다
-                                    </span>
-                                </td>
-                            </tr>
+
                             {haveAssets === 'y' ? AssetsWindow() : null}
                             {/* {Number(assetsCount) >= 2
                                 ? addAssets(assetsCount)
                                 : null} */}
-                            <tr className="addMemberFormTableTbodyTrSpace"></tr>
+                            {form.relationship === '본인' ? (
+                                <tr className="addMemberFormTableTbodyTrSpace"></tr>
+                            ) : null}
+
                             <tr className="addMemberFormTableTbodyTr">
                                 <td colSpan="3">
                                     <div className="normalTitleContainer">
@@ -1373,6 +1301,68 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
+                            {historyArr.result === '당첨' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            부적격여부
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="cancelYnInput"
+                                            type="radio"
+                                            name="ineligibleYn"
+                                            onChange={onHistoryArrChange}
+                                            value="y"
+                                            checked={
+                                                historyArr.ineligibleYn === 'y'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="historyInputText">
+                                            부적격
+                                        </span>
+                                        <input
+                                            className="cancelYnInput"
+                                            type="radio"
+                                            name="ineligibleYn"
+                                            onChange={onHistoryArrChange}
+                                            value="n"
+                                            checked={
+                                                historyArr.ineligibleYn === 'n'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />
+                                        <span className="historyInputText">
+                                            부적격 아님
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {historyArr.ineligibleYn === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            부적격통보날짜
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="cancelYnInput"
+                                            type="date"
+                                            name="ineligibleDate"
+                                            onChange={onHistoryArrChange}
+                                            value={historyArr.ineligibleDate}
+                                            required
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null}
                             {haveHistory === 'y' &&
                             (historyArr.result === '당첨' ||
                                 historyArr.result === '예비당첨') ? (
@@ -1418,6 +1408,86 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
+
+                            <tr className="addMemberFormTableTbodyTrSpace"></tr>
+
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td colSpan="3">
+                                    <div className="normalTitleContainer">
+                                        <span className="normalTitle">
+                                            자산 등록
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        월 평균 소득
+                                    </span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="incomeInput"
+                                        type="number"
+                                        name="income"
+                                        onChange={onChange}
+                                        value={form.income}
+                                        required
+                                    />
+                                    <span className="incomeUnitText">원</span>
+                                    <QuestionCircleOutlined
+                                        className="incomeUnitIcon"
+                                        onClick={() => {
+                                            setIsTableOpen(!isTableOpen);
+                                        }}
+                                    />
+                                    {isTableOpen && (
+                                        <div className="incomeTableContainer">
+                                            <MonthAverageIncomeTable />
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">자산여부</span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="assetHaveAssetsInput"
+                                        type="radio"
+                                        name="haveAssets"
+                                        onChange={(e) => {
+                                            setHaveAssets(e.target.value);
+                                        }}
+                                        value="y"
+                                        checked={
+                                            haveAssets === 'y' ? true : false
+                                        }
+                                        required
+                                    />
+                                    <span className="assetHaveAssetsInputText">
+                                        있습니다
+                                    </span>
+                                    <input
+                                        className="assetHaveAssetsInput"
+                                        type="radio"
+                                        name="haveAssets"
+                                        onChange={(e) => {
+                                            setHaveAssets(e.target.value);
+                                        }}
+                                        value="n"
+                                        checked={
+                                            haveAssets === 'n' ? true : false
+                                        }
+                                        required
+                                    />
+                                    <span className="assetHaveAssetsInputText">
+                                        없습니다
+                                    </span>
+                                </td>
+                            </tr>
                             <tr className="addMemberFormTableTbodyTrSpace"></tr>
                             <tr className="addMemberFormTableTbodyTr">
                                 <td colSpan="3">
@@ -1619,9 +1689,6 @@ const Post = ({ onSaveData }) => {
                             className="save"
                             width="80"
                             height="30"
-                            // onClick={() => {
-                            //     history.push('/');
-                            // }}
                         >
                             저장
                         </MainButton>
