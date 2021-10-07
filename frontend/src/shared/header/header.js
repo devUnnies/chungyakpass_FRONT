@@ -4,6 +4,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import storage from '../../services/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../../store/actions/authAction';
 import { signoutWithToken } from '../../store/actions/tokenAction';
 
 const data = {
@@ -163,6 +164,7 @@ function Logout() {
     const history = useHistory();
 
     const handleLogout = () => {
+        dispatch(logOut());
         dispatch(signoutWithToken());
         storage.remove('user-token');
         history.push('/');

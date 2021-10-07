@@ -13,7 +13,9 @@ export const SIGNUP_POST_SUCCESS = 'SIGNUP_POST_SUCCESS';
 export const SIGNUP_POST_ERROR = 'SIGNUP_POST_ERROR';
 
 // 로그아웃
+export const LOGOUT = 'LOGOUT';
 
 /* Action Creator */
 export const logIn = createPromiseThunk(LOGIN_POST, loginApi.logIn);
+export const logOut = () => ({ type: LOGOUT });
 export const signUp = createPromiseThunk(SIGNUP_POST, loginApi.signUp);
