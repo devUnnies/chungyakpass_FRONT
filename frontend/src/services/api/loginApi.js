@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { post } from './instance';
 
 //로그인 및 회원가입 API
