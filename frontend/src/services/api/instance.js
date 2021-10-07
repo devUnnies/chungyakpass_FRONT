@@ -1,8 +1,11 @@
 import axios from 'axios';
+import storage from '../store';
 
 const instance = axios.create({
     baseURL: 'http:///3.37.99.145:8080/',
 });
+
+const token = storage.get('user-token');
 
 const interceptorsRequestFulfilled = (config) => {
     return {
@@ -10,6 +13,7 @@ const interceptorsRequestFulfilled = (config) => {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token ? token : null}`,
         },
     };
 };
