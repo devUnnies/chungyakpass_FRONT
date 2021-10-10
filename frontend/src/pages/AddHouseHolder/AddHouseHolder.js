@@ -49,9 +49,6 @@ const AddHouseHolder = (props) => {
             if (data) {
                 history.push({
                     pathname: '/addHouseHolder/see',
-                    state: {
-                        myAddress: address,
-                    },
                     search: '',
                 });
             }
