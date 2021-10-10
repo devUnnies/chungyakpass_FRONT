@@ -7,7 +7,7 @@ import generalMinyeongAptNum from './generalMinyeongAptNumReducer';
 import multiChildMinyeong from './multiChildMinyeongAptNumReducer';
 import multiChildMinyeongAptNum from './multiChildMinyeongAptNumReducer';
 
-const appReducer = combineReducers({
+const rootReducer = combineReducers({
     auth,
     token,
     commonInfo,
@@ -17,12 +17,12 @@ const appReducer = combineReducers({
     multiChildMinyeongAptNum,
 });
 
-const rootReducer = (state, action) => {
-    if (action.type === 'LOGOUT') {
-        return appReducer(undefined, action);
-    }
+// const rootReducer = (state, action) => {
+//     if (action.type === 'LOGOUT') {
+//         return appReducer(undefined, action);
+//     }
 
-    return appReducer(state, action);
-};
+//     return appReducer(state, action);
+// };
 
 export default rootReducer;
