@@ -12,42 +12,45 @@ const interceptorsRequestFulfilled = (config) => {
         ...config,
         headers: {
             'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token ? token : null}`,
+            'Content-Type': 'application/json; charset=UTF-8',
+            // prettier-ignore
+            'Authorization': `Bearer ${token ? token : null}`,
         },
     };
 };
 
 instance.interceptors.request.use(interceptorsRequestFulfilled);
 
-// const interceptorsResponseFulfilled = (res) => {
-//     if (res.status >= 200 && res.status < 300) {
-//         return res.data;
-//     }
+const interceptorsResponseFulfilled = (res) => {
+    if (res.status >= 200 && res.status < 300) {
+        return res.data;
+    }
 
-//     return Promise.reject(res.data);
-// };
+    return Promise.reject(res.data);
+};
 
-// const interceptorsResponseRejected = (error) => {
-//     if (error.response?.data?.message != null) {
-//         return {
-//             ...error.response.data,
-//             message: error.response?.data?.message,
-//         };
-//     }
+const interceptorsResponseRejected = (error) => {
+    if (error.response?.data?.message != null) {
+        return {
+            ...error.response.data,
+            message: error.response?.data?.message,
+        };
+    }
 
-//     return Promise.reject(new Error(error.response?.data?.message ?? error));
-// };
+    return Promise.reject(new Error(error.response?.data?.message ?? error));
+};
 
-// instance.interceptors.response.use(
-//     interceptorsResponseFulfilled,
-//     interceptorsResponseRejected
-// );
+instance.interceptors.response.use(
+    interceptorsResponseFulfilled,
+    interceptorsResponseRejected
+);
 
 export const get = (...args) => instance.get(...args);
 
 export const post = (...args) => instance.post(...args);
 
 export const put = (...args) => instance.put(...args);
+
+export const patch = (...args) => instance.patch(...args);
 
 export const del = (...args) => instance.delete(...args);
