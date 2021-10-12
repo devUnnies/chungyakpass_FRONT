@@ -90,7 +90,7 @@ const data = {
                         {
                             idx: 0,
                             name: '민영주택',
-                            link: '',
+                            link: '/point/generalMinyeoung',
                         },
                     ],
                 },
@@ -102,17 +102,22 @@ const data = {
                         {
                             idx: 0,
                             name: '신혼부부',
-                            link: '',
+                            link: '/point/newMarriage',
                         },
                         {
                             idx: 1,
                             name: '다자녀',
-                            link: '',
+                            link: '/point/multiChild',
                         },
                         {
                             idx: 2,
                             name: '노부모',
-                            link: '',
+                            link: '/point/oldParent',
+                        },
+                        {
+                            idx: 3,
+                            name: '한부모',
+                            link: '/point/oneParent',
                         },
                     ],
                 },
