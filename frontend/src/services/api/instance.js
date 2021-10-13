@@ -10,6 +10,7 @@ const interceptorsRequestFulfilled = (config) => {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('user-token')}`,
         },
     };
 };
