@@ -1,4 +1,4 @@
-import * as multiChildKookminApi from '../../services/api/multiChildKookminApi'; // normalPrivateApi 안의 함수 모두 불러오기
+import * as multiChildKookminApi from '../../services/api/multiChildKookminApi';
 import { createPromiseThunk } from '../../services/api/asyncUtils';
 
 /* 액션 타입 */

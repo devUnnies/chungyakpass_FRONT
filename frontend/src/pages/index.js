@@ -30,6 +30,9 @@ export { default as MultiChildKookminAptNum } from './SpecialSupply/MultiChildAP
 export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/OldParentMinyeongApi';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
 
+// 가배점 페이지
+export { default as MultiChildPointAptNum } from './SpecialSupply/MultiChildAPI/MultiChildPointAptNum';
+
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
