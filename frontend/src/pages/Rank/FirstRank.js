@@ -5,7 +5,8 @@ import './Rank.css';
 import MainButton from '../../components/Button/MainButton';
 import NormalRequiredDocuments from './NormalRequiredDocuments';
 
-const GreetingMessage = '모든 자격 조건을 충족하셨습니다. 1순위 축하드립니다!';
+const GreetingMessage =
+    '모든 자격 조건을 충족하셨습니다. \n1순위 축하드립니다!';
 
 function FirstRank({ history }) {
     const goBack = () => {

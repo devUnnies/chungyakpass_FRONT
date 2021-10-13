@@ -18,7 +18,6 @@ export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
 export { default as BoardView } from './CaseBoard/BoardView';
 export { default as FAQ } from './FAQ/FAQ';
-export { default as GeneralSupply } from './GeneralSupply/GeneralSupply';
 // 청약 공급 페이지
 export { default as GeneralMinyeongApi } from './GeneralSupply/GeneralMinyeongApi';
 export { default as GeneralMinyeongAptNum } from './GeneralSupply/GeneralMinyeongAptNum';
@@ -26,8 +25,14 @@ export { default as GeneralKookminApi } from './GeneralSupply/GeneralKookminApi'
 export { default as GeneralKookminAptNum } from './GeneralSupply/GeneralKookminAptNum';
 export { default as MultiChildMinyeongApi } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongApi';
 export { default as MultiChildMinyeongAptNum } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongAptNum';
+export { default as MultiChildKookminApi } from './SpecialSupply/MultiChildAPI/MultiChildKookminApi';
+export { default as MultiChildKookminAptNum } from './SpecialSupply/MultiChildAPI/MultiChildKookminAptNum';
 export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/OldParentMinyeongApi';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
+
+// 가배점 페이지
+export { default as MultiChildPointAptNum } from './SpecialSupply/MultiChildAPI/MultiChildPointAptNum';
+
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
