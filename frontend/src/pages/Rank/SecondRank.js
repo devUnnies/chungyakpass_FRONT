@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import Confetti from 'react-confetti';
 import './Rank.css';
 import MainButton from '../../components/Button/MainButton';
-import NormalRequiredDocuments from './NormalRequiredDocuments';
+import NormalRequiredDocuments from './NormalRequiredDocuments'; // 일반 민영 제출서류
+// import NormalRequiredDocuments from './NormalRequiredDocuments'; // 다자녀 민영 제출서류
 
 const GreetingMessage = '2순위 축하드립니다!';
 

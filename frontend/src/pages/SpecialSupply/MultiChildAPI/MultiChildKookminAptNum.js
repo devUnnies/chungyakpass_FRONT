@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../../components/Input/Input';
-import useInputState from '../../components/Input/useInputState';
-import { postGeneralKookminAptNum } from '../../store/actions/generalKookminAction';
-import MainButton from '../../components/Button/MainButton';
+import Input from '../../../components/Input/Input';
+import useInputState from '../../../components/Input/useInputState';
+import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
+import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
-import './GeneralSupply.css';
 
-function GeneralKookminAptNum(props) {
+function MultiChildKookminAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const generalKookminAptNumStore = useSelector(
-        (state) => state.generalKookmin
+    const multiChildKookminAptNumStore = useSelector(
+        (state) => state.multiChildKookmin
     );
 
     const [
@@ -21,6 +20,12 @@ function GeneralKookminAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
+    //
+    const [
+        multiChildKookminType,
+        setMultiChildKookminType,
+        handleChangeMultiChildKookminType,
+    ] = useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -28,44 +33,51 @@ function GeneralKookminAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postGeneralKookminAptNum({
+            postMultiChildKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
+                multiChildKookminType: multiChildKookminType,
             })
         );
     };
 
     const onClick = async () => {
-        if (notificationNumber == '' || housingType == '') {
+        if (
+            notificationNumber == '' ||
+            housingType == '' ||
+            multiChildKookminType == ''
+        ) {
             alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
         } else {
             dispatch(
-                postGeneralKookminAptNum({
+                postMultiChildKookminAptNum({
                     notificationNumber: notificationNumber,
                     housingType: housingType,
+                    multiChildKookminType: multiChildKookminType,
                 })
             ); // api 연결 요청.
 
             const data =
-                generalKookminAptNumStore.postGeneralKookminAptNum.data;
+                multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data;
             console.log(JSON.stringify(data));
             history.push({
-                pathname: '/generalKookmin',
-                props: {
+                pathname: '/specialMultiChildKookmin',
+                state: {
                     notificationNumber,
                     housingType,
+                    multiChildKookminType,
                 },
             });
         }
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 일반 민영 자격확인 페이지로 이동.
-        if (generalKookminAptNumStore.postGeneralKookminAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
+        if (multiChildKookminAptNumStore?.postMultiChildKookminAptNum) {
             const data =
-                generalKookminAptNumStore.postGeneralKookminAptNum.data;
+                multiChildKookminAptNumStore.postMultiChildKookminAptNum.data;
         }
-    }, [generalKookminAptNumStore.postGeneralKookminAptNum]);
+    }, [multiChildKookminAptNumStore?.postMultiChildKookminAptNum]);
 
     return (
         <>
@@ -88,6 +100,23 @@ function GeneralKookminAptNum(props) {
                             className="aptNumInput"
                         />
                         <br />
+                        <select
+                            className="aptNumInput"
+                            name="multiChildKookminType"
+                            value={multiChildKookminType}
+                            onChange={handleChangeMultiChildKookminType}
+                        >
+                            <option value="">---선택---</option>
+                            <option value="공공주택특별법 적용">
+                                공공주택 특별법 적용
+                            </option>
+                            <option value="공공주택특별법 미적용">
+                                공공주택 특별법 미적용
+                            </option>
+                            <option value="그외 국민주택">
+                                그 외 국민주택
+                            </option>
+                        </select>
 
                         <span className="aptNumButton">
                             <MainButton
@@ -107,4 +136,4 @@ function GeneralKookminAptNum(props) {
     );
 }
 
-export default GeneralKookminAptNum;
+export default MultiChildKookminAptNum;
