@@ -19,6 +19,7 @@ const Td = ({ item, handleRemove, handleEdit }) => {
     };
 
     const onEdit = () => {
+        console.log(JSON.stringify(item));
         handleEdit(item);
     };
 
@@ -28,26 +29,36 @@ const Td = ({ item, handleRemove, handleEdit }) => {
         <tr className="allInfoTbodyTr">
             <td className="allInfoTbodyTd"> {item.name} </td>
             <td className="allInfoTbodyTd">
-                {isAccountShow ? (
+                {isAccountShow && item.account !== [] ? (
                     <div>
-                        <span>{item.account[0].bank.concat('은행')}</span>
-                        <br />
-                        <span>{item.account[0].bankbook}</span>
-                        <br />
-                        <span>
-                            {item.account[0].joinDate
-                                .replace('-0', '년 ')
-                                .replace('-0', '월 ')
-                                .concat('일')}
-                        </span>
-                        <br />
-                        <span>{item.account[0].deposit + '원'}</span>
-                        <br />
-                        <span>{item.account[0].paymentsCount + '회'}</span>
-                        <br />
-                        <span>
-                            {item.account[0].validYn === 'y' ? '유효함' : null}
-                        </span>
+                        {item.account[0] ? (
+                            <span>
+                                {item.account[0].bank.concat('은행') + '\n'}
+                            </span>
+                        ) : null}
+                        {item.account[0] ? (
+                            <span>{item.account[0].bankbook + '\n'}</span>
+                        ) : null}
+                        {item.account[0] ? (
+                            <span>
+                                {item.account[0].joinDate
+                                    .replace('-', '년 ')
+                                    .replace('-', '월 ')
+                                    .concat('일') + '\n'}
+                            </span>
+                        ) : null}
+                        {item.account[0] ? (
+                            <span>{item.account[0].deposit + '원' + '\n'}</span>
+                        ) : null}
+                        {item.account[0] ? (
+                            <span>
+                                {item.account[0].paymentsCount + '회' + '\n'}
+                            </span>
+                        ) : null}
+
+                        {item.account[0] && item.account[0].validYn === 'y' ? (
+                            <span>유효함</span>
+                        ) : null}
                     </div>
                 ) : null}{' '}
                 <SubButton onClick={() => setIsAccountShow(!isAccountShow)}>
@@ -57,8 +68,8 @@ const Td = ({ item, handleRemove, handleEdit }) => {
             <td className="allInfoTbodyTd">
                 {' '}
                 {item.birthDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}{' '}
             </td>
             <td className="allInfoTbodyTd">
@@ -81,15 +92,15 @@ const Td = ({ item, handleRemove, handleEdit }) => {
             <td className="allInfoTbodyTd">
                 {' '}
                 {item.homelessStartDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}{' '}
             </td>
             <td className="allInfoTbodyTd">
                 {' '}
                 {item.transferDate
-                    .replace('-0', '년 ')
-                    .replace('-0', '월 ')
+                    .replace('-', '년 ')
+                    .replace('-', '월 ')
                     .concat('일')}{' '}
             </td>
             <td className="allInfoTbodyTd">
@@ -101,8 +112,8 @@ const Td = ({ item, handleRemove, handleEdit }) => {
                 {console.log(item.marriedDate)}
                 {item.isMarried === 'y' && item.marriedDate !== ''
                     ? item.marriedDate
-                          .replace('-0', '년 ')
-                          .replace('-0', '월 ')
+                          .replace('-', '년 ')
+                          .replace('-', '월 ')
                           .concat('일')
                     : null}{' '}
             </td>
