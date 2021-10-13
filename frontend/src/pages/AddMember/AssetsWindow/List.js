@@ -6,8 +6,9 @@ import Modify from './Modify';
 
 const List = (props) => {
     const [asset, setAsset] = useState({});
-    const [assets, setAssets] = useState([]);
+    const [assets, setAssets] = useState(props.assets);
     const [startDate, setStartDate] = useState(props.birthDate);
+    const [startDates, setStartDates] = useState([{ startDate: startDate }]);
     const [selected, setSelected] = useState('');
     const [add, setAdd] = useState(false);
     const [modify, setModify] = useState(false);
@@ -16,18 +17,28 @@ const List = (props) => {
 
     const calStartDate = () => {
         // 자산 각각의 무주택 시작일을 계산해서 가장 나중의 무주택 시작일을 넘겨줘야 함
-        const dates = assets.map((content, i) => {
-            console.log(content.startDate);
-            return { ...content.startDate };
-        });
+        setStartDates(
+            startDates.sort((a, b) => {
+                return (
+                    new Date(Date.parse(b.startDate)) -
+                    new Date(Date.parse(a.startDate))
+                );
+            })
+        );
 
-        dates.sort(function (a, b) {
-            return b - a;
-        });
-
-        setStartDate(dates[0]);
+        if (startDates[0].startDate !== props.birthDate) {
+            setStartDate(startDates[0].startDate);
+        } else {
+            setStartDate(null);
+        }
 
         props.getStartDate(startDate);
+
+        console.log('리스트에서의 스타트 !!!! ' + startDate);
+    };
+
+    const sendStartDate = (value) => {
+        props.getStartDate(value);
     };
 
     const sendCloseValue = (value) => {
@@ -61,6 +72,9 @@ const List = (props) => {
                               residentialBuilding: data.residentialBuilding,
                               nonResidentialBuilding:
                                   data.nonResidentialBuilding,
+                              metropolitanBuildingYn:
+                                  data.metropolitanBuildingYn,
+                              exceptionHouseYn: data.exceptionHouseYn,
                               acquistionDate: data.acquistionDate,
                               dispositionDate: data.dispositionDate,
                               exclusiveArea: data.exclusiveArea,
@@ -85,6 +99,8 @@ const List = (props) => {
 
     const handleRemove = (id) => {
         setAssets((info) => info.filter((item) => item.id !== id));
+        setStartDates((info) => info.filter((item) => item.id !== id));
+        nextId.current -= 1;
     };
 
     const handleEdit = (item) => {
@@ -97,6 +113,8 @@ const List = (props) => {
             residentialBuildingYn: item.residentialBuildingYn,
             residentialBuilding: item.residentialBuilding,
             nonResidentialBuilding: item.nonResidentialBuilding,
+            metropolitanBuildingYn: item.metropolitanBuildingYn,
+            exceptionHouseYn: item.exceptionHouseYn,
             acquistionDate: item.acquistionDate,
             dispositionDate: item.dispositionDate,
             exclusiveArea: item.exclusiveArea,
@@ -121,10 +139,14 @@ const List = (props) => {
         // alert('입력이 모두 완료되었습니다 !', () => {
         //     console.log('얜 뭐죠 ?? ');
         // });
-        calStartDate();
+        sendStartDate(startDate);
         sendCloseValue(true);
         sendAssetsValue();
     };
+
+    useEffect(() => {
+        calStartDate();
+    }, [startDates]);
 
     return (
         <div className="allInfo">
@@ -175,6 +197,8 @@ const List = (props) => {
             {add && (
                 <Add
                     onSaveData={handleSave}
+                    startDates={startDates}
+                    setStartDates={setStartDates}
                     birthDate={props.birthDate}
                     ineligibleDate={props.ineligibleDate}
                 />
@@ -182,8 +206,12 @@ const List = (props) => {
             {modify && (
                 <Modify
                     selectedData={selected}
+                    startDates={startDates}
+                    setStartDates={setStartDates}
                     handleCancel={handleCancel}
                     handleEditSubmit={handleEditSubmit}
+                    birthDate={props.birthDate}
+                    ineligibleDate={props.ineligibleDate}
                 />
             )}
         </div>

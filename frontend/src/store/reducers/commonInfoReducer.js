@@ -53,7 +53,7 @@ export default function commonInfo(state = initialState, action) {
         case ADD_HOUSE_POST:
         case ADD_HOUSE_POST_SUCCESS:
         case ADD_HOUSE_POST_ERROR:
-            return handleAsyncActions(ADD_HOUSE_HOLDER_POST, 'addHouse')(
+            return handleAsyncActions(ADD_HOUSE_POST, 'addHouse')(
                 state,
                 action
             );

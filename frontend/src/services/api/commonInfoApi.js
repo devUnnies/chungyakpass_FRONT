@@ -60,7 +60,8 @@ export const patchHolder = (info) =>
 // ----------------------------------------------------------------------------
 
 //  - 세대구성원자산등록 API
-export const addAssets = (info) => post(`user/house/member/property`, info);
+export const addAssets = (info) =>
+    post(`user/house/member/property`, { houseMemberPropertyDtoList: info });
 
 //  - 세대구성원자산수정 API
 

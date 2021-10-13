@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainButton from '../../../components/Button/MainButton';
 
-const Add = ({ onSaveData, birthDate, ineligibleDate }) => {
+const Add = ({
+    onSaveData,
+    startDates,
+    setStartDates,
+    birthDate,
+    ineligibleDate,
+}) => {
     const [asset, setAsset] = useState({
         property: '',
         saleRightYn: '',
         residentialBuildingYn: '',
         residentialBuilding: '',
         nonResidentialBuilding: '',
+        metropolitanBuildingYn: '',
+        exceptionHouseYn: 'n',
         acquistionDate: '',
         dispositionDate: '',
         exclusiveArea: '',
         amount: '',
         taxBaseDate: '',
-        startDate: birthDate,
     });
     const [logicData, setLogicData] = useState({
         isInheritance: '',
         conditionType: '',
     });
-    const [isNoStruct, setIsNoStruct] = useState(true);
+    const [isNoStruct, setIsNoStruct] = useState(false);
+    const [startDate, setStartDate] = useState(birthDate);
 
     const [ineliDate, setIneliDate] = useState(
         new Date(ineligibleDate).getMonth() + 3
@@ -29,35 +37,50 @@ const Add = ({ onSaveData, birthDate, ineligibleDate }) => {
 
     const logic = () => {
         if (asset.property === '건물') {
+            setIsNoStruct(false);
             // 3개월 이내 처분한 상속주택인지?
             if (
                 logicData.isInheritance === 'y' &&
                 new Date(asset.dispositionDate) <= ineliDate
             ) {
                 setIsNoStruct(true);
+                setAsset({ ...asset, exceptionHouseYn: 'y' });
             }
             // 폐가, 무허가 건물, 문화재로 지정된 주택, 미분양된 주택, 사업 목적인지?
-            else if (logicData.conditionType !== '') {
+            if (logicData.conditionType !== '') {
                 setIsNoStruct(true);
+                setAsset({ ...asset, exceptionHouseYn: 'y' });
             }
             // 소형 주택인지?
-            else if (
+            if (
                 (asset.residentialBuilding === '단독주택' ||
                     asset.residentialBuilding === '공동주택') &&
                 Number(asset.exclusiveArea) <= 60
             ) {
                 setIsNoStruct(true);
+                setAsset({ ...asset, exceptionHouseYn: 'y' });
             }
 
-            if (asset.dispositionDate === '') {
+            if (asset.dispositionDate) {
                 setIsNoStruct(false);
-                setAsset({ ...asset, startDate: '' });
+                // setStartDate(asset.dispositionDate);
+                setStartDates([
+                    ...startDates,
+                    { startDate: asset.dispositionDate },
+                ]);
             } else {
                 setIsNoStruct(false);
-                setAsset({ ...asset, startDate: asset.dispositionDate });
+                setStartDate(null);
+                setStartDates([...startDates, { startDate: null }]);
             }
+        } else {
+            setIsNoStruct(true);
         }
     };
+
+    useEffect(() => {
+        setStartDate(asset.dispositionDate);
+    }, [asset.dispositionDate]);
 
     const onAssetChange = (e) => {
         const { name, value } = e.target;
@@ -79,6 +102,7 @@ const Add = ({ onSaveData, birthDate, ineligibleDate }) => {
         e.preventDefault();
 
         if (failMsg === null) {
+            logic();
             onSaveData(asset);
 
             setAsset({
@@ -130,9 +154,7 @@ const Add = ({ onSaveData, birthDate, ineligibleDate }) => {
                                     </select>
                                 </td>
                             </tr>
-                            {asset.property === '건물'
-                                ? setIsNoStruct(false)
-                                : null}
+
                             <tr className="addAssetFormTableTbodyTr">
                                 <td className="addAssetFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">상속 여부</span>
@@ -347,7 +369,7 @@ const Add = ({ onSaveData, birthDate, ineligibleDate }) => {
                                         >
                                             <option value="">
                                                 {' '}
-                                                ---선택---{' '}
+                                                해당 없음{' '}
                                             </option>
                                             <option value="폐가">폐가</option>
                                             <option value="무허가건물">
