@@ -1,11 +1,14 @@
+// 사용자 인증
 export { default as Main } from './Main/Main';
 export { default as Login } from './Login/Login';
 export { default as Signup } from './Signup/Signup';
 export { default as MyPage } from './MyPage/MyPage';
 export { default as AllowLogin } from './AllowLogin/AllowLogin';
+// 부가적인 메뉴
 export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
 export { default as Sitemap } from './Sitemap/Sitemap';
+// 공통입력정보
 export { default as PassbookInfo } from './PassbookInput/PassbookInfo';
 export { default as HousingInfo } from './HousingInput/HousingInfo';
 export { default as MemberInfo } from './MemberInput/MemberInfo';
@@ -36,3 +39,9 @@ export { default as MultiChildPointAptNum } from './SpecialSupply/MultiChildAPI/
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
+// 가배점 페이지
+export { default as MultiChildPoint } from './ExtraPoint/MultiChild/MultiChildPoint';
+export { default as NewMarriagePoint } from './ExtraPoint/NewMarriage/NewMarriagePoint';
+export { default as OldParentPoint } from './ExtraPoint/OldParent/OldParentPoint';
+export { default as GeneralMinyeoungPoint } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
+export { default as OneParentPoint } from './ExtraPoint/OneParent/OneParentPoint';
