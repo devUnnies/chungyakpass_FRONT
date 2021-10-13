@@ -3,12 +3,96 @@ import { createPromiseThunk } from '../../services/api/asyncUtils';
 
 /* 액션 타입 */
 //세대 저장
-export const ADD_HOUSE_HOLDER_POST = 'ADD_HOUSE_HOLDER_POST';
-export const ADD_HOUSE_HOLDER_POST_SUCCESS = 'ADD_HOUSE_HOLDER_POST_SUCCESS';
-export const ADD_HOUSE_HOLDER_POST_ERROR = 'ADD_HOUSE_HOLDER_POST_ERROR';
+export const ADD_HOUSE_POST = 'ADD_HOUSE_POST';
+export const ADD_HOUSE_POST_SUCCESS = 'ADD_HOUSE_POST_SUCCESS';
+export const ADD_HOUSE_POST_ERROR = 'ADD_HOUSE_POST_ERROR';
+//세대 수정
+export const MOD_HOUSE_PUT = 'MOD_HOUSE_PUT';
+export const MOD_HOUSE_PUT_SUCCESS = 'MOD_HOUSE_PUT_SUCCESS';
+export const MOD_HOUSE_PUT_ERROR = 'MOD_HOUSE_PUT_ERROR';
+//세대 삭제
+export const DEL_HOUSE_DELETE = 'DEL_HOUSE_DELETE';
+export const DEL_HOUSE_DELETE_SUCCESS = 'DEL_HOUSE_DELETE_SUCCESS';
+export const DEL_HOUSE_DELETE_ERROR = 'DEL_HOUSE_DELETE_ERROR';
+
+//청약통장 저장
+export const ADD_BANKBOOK_POST = 'ADD_BANKBOOK_POST';
+export const ADD_BANKBOOK_POST_SUCCESS = 'ADD_BANKBOOK_POST_SUCCESS';
+export const ADD_BANKBOOK_POST_ERROR = 'ADD_BANKBOOK_POST_ERROR';
+//청약통장 수정
+export const MOD_BANKBOOK_PUT = 'MOD_BANKBOOK_PUT';
+export const MOD_BANKBOOK_PUT_SUCCESS = 'MOD_BANKBOOK_PUT_SUCCESS';
+export const MOD_BANKBOOK_PUT_ERROR = 'MOD_BANKBOOK_PUT_ERROR';
+//청약통장 삭제
+export const DEL_BANKBOOK_DELETE = 'DEL_BANKBOOK_DELETE';
+export const DEL_BANKBOOK_DELETE_SUCCESS = 'DEL_BANKBOOK_DELETE_SUCCESS';
+export const DEL_BANKBOOK_DELETE_ERROR = 'DEL_BANKBOOK_DELETE_ERROR';
+
+//세대구성원 저장
+export const ADD_MEMBER_POST = 'ADD_MEMBER_POST';
+export const ADD_MEMBER_POST_SUCCESS = 'ADD_MEMBER_POST_SUCCESS';
+export const ADD_MEMBER_POST_ERROR = 'ADD_MEMBER_POST_ERROR';
+//세대구성원 수정
+export const MOD_MEMBER_PUT = 'MOD_MEMBER_PUT';
+export const MOD_MEMBER_PUT_SUCCESS = 'MOD_MEMBER_PUT_SUCCESS';
+export const MOD_MEMBER_PUT_ERROR = 'MOD_MEMBER_PUT_ERROR';
+//세대구성원 삭제
+export const DEL_MEMBER_DELETE = 'DEL_MEMBER_DELETE';
+export const DEL_MEMBER_DELETE_SUCCESS = 'DEL_MEMBER_DELETE_SUCCESS';
+export const DEL_MEMBER_DELETE_ERROR = 'DEL_MEMBER_DELETE_ERROR';
+
+//세대주 지정
+export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
+export const HOUSE_HOLDER_PATCH_SUCCESS = 'HOUSE_HOLDER_PATCH_SUCCESS';
+export const HOUSE_HOLDER_PATCH_ERROR = 'HOUSE_HOLDER_PATCH_ERROR';
 
 /* Action Creator */
-export const addHouseHolder = createPromiseThunk(
-    ADD_HOUSE_HOLDER_POST,
-    commonInfoApi.addHouseHolder
+export const addHouse = createPromiseThunk(
+    ADD_HOUSE_POST,
+    commonInfoApi.addHouse
+);
+
+export const modHouse = createPromiseThunk(
+    MOD_HOUSE_PUT,
+    commonInfoApi.modHouse
+);
+
+export const delHouse = createPromiseThunk(
+    DEL_HOUSE_DELETE,
+    commonInfoApi.delHouse
+);
+
+export const addBank = createPromiseThunk(
+    ADD_BANKBOOK_POST,
+    commonInfoApi.addBankBook
+);
+
+export const modBank = createPromiseThunk(
+    MOD_BANKBOOK_PUT,
+    commonInfoApi.modBankBook
+);
+
+export const delBank = createPromiseThunk(
+    DEL_BANKBOOK_DELETE,
+    commonInfoApi.delBankBook
+);
+
+export const addMem = createPromiseThunk(
+    ADD_MEMBER_POST,
+    commonInfoApi.addMember
+);
+
+export const modMem = createPromiseThunk(
+    MOD_MEMBER_PUT,
+    commonInfoApi.modMember
+);
+
+export const delMem = createPromiseThunk(
+    DEL_MEMBER_DELETE,
+    commonInfoApi.delMember
+);
+
+export const patHolder = createPromiseThunk(
+    HOUSE_HOLDER_PATCH,
+    commonInfoApi.patchHolder
 );

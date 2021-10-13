@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import './AddHouseHolder.css';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -7,12 +6,12 @@ import PopupDom from './PopupDom';
 import PopupPostCode from './PopupPostCode';
 import NextButton from '../../components/Button/NextButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addHouseHolder } from '../../store/actions/commonInfoAction';
+import { addHouse } from '../../store/actions/commonInfoAction';
+import storage from '../../services/store';
 
 const AddHouseHolder = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const tokenStore = useSelector((state) => state.token);
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -35,50 +34,74 @@ const AddHouseHolder = (props) => {
         postcode: '',
     });
 
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setAddress({
-            ...address,
-            [name]: value,
-        });
+    const onPostChange = (e) => {
+        setPostcode(e.target.value);
     };
 
-    // useEffect(() => {
-    //     // 세대 등록 성공시
-    //     if (commonInfoStore.addHouseHolder) {
-    //         const data = commonInfoStore.addHouseHolder?.data;
-    //         if (data !== null) {
-    //             history.push('/addHouseHolder/see');
-    //         }
-    //     }
-    // }, [commonInfoStore.addHouseHolder]);
+    const onFullChange = (e) => {
+        setFullAddress(e.target.value);
+    };
+
+    useEffect(() => {
+        // 세대 등록 성공시
+        if (commonInfoStore.addHouse) {
+            const data = commonInfoStore.addHouse.data;
+            if (data) {
+                history.push({
+                    pathname: '/addHouseHolder/see',
+                    search: '',
+                });
+            }
+        }
+    }, [commonInfoStore.addHouse]);
 
     // 세대 등록하는 api 연결 예정
-    const handleSubmit = useCallback(
-        (event) => {
-            event.preventDafault();
+    const handleSubmit = (event) => {
+        // console.log('누르기 !!');
+        // event.preventDafault();
 
-            const userForm = {
-                spouseHouseYn: 'n',
-                addressLevel1: address.sido,
-                addressLevel2: address.sigungu,
-                addressDetail: address.detail,
-                zipcode: address.postcode,
-            };
-            dispatch(addHouseHolder(userForm));
-        },
-        [address]
-    );
+        const userForm = {
+            spouseHouseYn: 'n',
+            addressLevel1: address?.sido.slice(0, 2),
+            addressLevel2: address?.sigungu,
+            addressDetail: address?.detail,
+            zipcode: address?.postcode,
+        };
+
+        // console.log(JSON.stringify(userForm));
+        dispatch(addHouse(userForm));
+
+        return false;
+    };
 
     useEffect(() => {
         setAddress({
             ...address,
             sido: fullAddress?.split(' ')[0],
-            sigungu: fullAddress?.split(' ')[1],
+            sigungu:
+                fullAddress?.split(' ')[0] === '세종특별자치시'
+                    ? fullAddress?.split(' ')[0]
+                    : fullAddress?.split(' ')[1],
             detail:
-                fullAddress?.split(' ')[1].length === 3
+                // 제주도 일 경우
+                fullAddress?.split(' ')[0] === '제주특별자치도'
+                    ? // 제주도인데 서귀포시 일 경우
+                      fullAddress?.split(' ')[1].length === 4
+                        ? fullAddress?.substring(13)
+                        : // 제주도인데 제주시 일 경우
+                        fullAddress?.split(' ')[1].length === 3
+                        ? fullAddress?.substring(12)
+                        : null
+                    : // 세종특별자치시 일 경우
+                    fullAddress?.split(' ')[0] === '세종특별자치시'
+                    ? fullAddress?.substring(8)
+                    : fullAddress?.split(' ')[1].length === 2
+                    ? fullAddress?.substring(6)
+                    : fullAddress?.split(' ')[1].length === 3
                     ? fullAddress?.substring(7)
-                    : fullAddress?.substring(8),
+                    : fullAddress?.split(' ')[1].length === 4
+                    ? fullAddress?.substring(8)
+                    : null,
         });
     }, [fullAddress]);
 
@@ -120,8 +143,17 @@ const AddHouseHolder = (props) => {
                     </PopupDom>
                 )}
             </div>
-            <div className="addHouseHolderContainer">
-                <form className="addressFormContainer" onSubmit={handleSubmit}>
+            <div
+                name="addHouseHolderAddress"
+                className="addHouseHolderContainer"
+            >
+                {/* <form
+                    name="addHouseHolderAddress"
+                    target="addHouseHolderAddress"
+                    className="addressFormContainer"
+                    onSubmit={handleSubmit}
+                > */}
+                <div className="addressFormContainer">
                     <table className="addressFormTable">
                         <tbody>
                             <tr>
@@ -134,9 +166,8 @@ const AddHouseHolder = (props) => {
                                     <input
                                         className="addressFormInputPostcode"
                                         type="number"
-                                        name="postcode"
-                                        value={address.postcode}
-                                        onChange={onChange}
+                                        value={postcode}
+                                        onChange={onPostChange}
                                         required
                                         readOnly
                                     />
@@ -152,9 +183,8 @@ const AddHouseHolder = (props) => {
                                     <input
                                         className="addressFormInputAddress"
                                         type="text"
-                                        name="detail"
                                         value={fullAddress}
-                                        onChange={onChange}
+                                        onChange={onFullChange}
                                         required
                                     />
                                 </td>
@@ -166,14 +196,13 @@ const AddHouseHolder = (props) => {
                         <NextButton
                             width={50}
                             height={50}
-                            type="submit"
+                            type="addAddress"
                             fontSize={150}
-                            onClick={() => {
-                                history.push('/addHouseHolder/see');
-                            }}
+                            onClick={() => handleSubmit()}
                         />
                     </div>
-                </form>
+                </div>
+                {/* </form> */}
             </div>
         </div>
     );

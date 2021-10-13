@@ -8,7 +8,8 @@ export const createPromiseThunk = (type, promiseCreator) => {
         dispatch({ type, param });
         try {
             const payload = await promiseCreator(param);
-            dispatch({ type: SUCCESS, payload }); // 성공
+            // console.log('했음 !!!! ' + JSON.stringify(payload));
+            dispatch({ type: SUCCESS, payload: payload }); // 성공
         } catch (e) {
             dispatch({ type: FAILURE, payload: e, error: true }); // 실패
         }

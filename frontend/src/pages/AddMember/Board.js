@@ -8,6 +8,8 @@ import Modal from './Modal';
 import './Addmember.css';
 import MainButton from '../../components/Button/MainButton';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { delBank, delMem } from '../../store/actions/commonInfoAction';
 
 const Board = (props) => {
     const [info, setInfo] = useState([]);
@@ -15,7 +17,40 @@ const Board = (props) => {
     const [add, setAdd] = useState(false);
     const [modify, setModify] = useState(false);
 
+    const [houseId, setHouseId] = useState({
+        my: 0,
+        spouse: 0,
+    });
+
+    const [members, setMembers] = useState([]);
+
+    const [memberId, setMemberId] = useState();
+
+    // console.log('멤버 !! ' + JSON.stringify(members));
+
+    const [address, setAddress] = useState({
+        sido: '',
+        sigungu: '',
+        detail: '',
+        postcode: '',
+    });
+
+    const [bankBookId, setBankBookId] = useState();
+
     const nextId = useRef(1);
+
+    const dispatch = useDispatch();
+
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+
+    useEffect(() => {
+        setMembers([commonInfoStore.addMem?.data]);
+        setBankBookId([commonInfoStore.addBank?.data]);
+    }, []);
+
+    useEffect(() => {
+        setMembers([...members, commonInfoStore.addMem?.data]);
+    }, [commonInfoStore.addMem?.data]);
 
     const handleAdd = () => {
         setAdd(!add);
@@ -40,6 +75,8 @@ const Board = (props) => {
                               relationship: data.relationship,
                               householderYn: data.householderYn,
                               spouseYn: data.spouseYn,
+                              spouseAddress: data.spouseAddress,
+                              spousePostcode: data.spousePostcode,
                               soldierYn: data.soldierYn,
                               homelessStartDate: data.homelessStartDate,
                               isMarried: data.isMarried,
@@ -65,6 +102,8 @@ const Board = (props) => {
                     relationship: data.relationship,
                     householderYn: data.householderYn,
                     spouseYn: data.spouseYn,
+                    spouseAddress: data.spouseAddress,
+                    spousePostcode: data.spousePostcode,
                     soldierYn: data.soldierYn,
                     homelessStartDate: data.homelessStartDate,
                     isMarried: data.isMarried,
@@ -87,6 +126,9 @@ const Board = (props) => {
             info.filter((item) => item.id !== id);
         });
         nextId.current -= 1;
+
+        dispatch(delBank(bankBookId));
+        dispatch(delMem(members.id));
     };
 
     const handleEdit = (item) => {
@@ -101,6 +143,8 @@ const Board = (props) => {
             relationship: item.relationship,
             householderYn: item.householderYn,
             spouseYn: item.spouseYn,
+            spouseAddress: item.spouseAddress,
+            spousePostcode: item.spousePostcode,
             soldierYn: item.soldierYn,
             homelessStartDate: item.homelessStartDate,
             isMarried: item.isMarried,
@@ -111,7 +155,10 @@ const Board = (props) => {
             histories: item.histories,
             limits: item.limits,
         };
-        console.log(selectedData);
+        // console.log(selectedData);
+        members.map((content, i) => {
+            if (content.name === selectedData.name) setMemberId(content.id);
+        });
         setSelected(selectedData);
     };
 
@@ -120,13 +167,27 @@ const Board = (props) => {
     };
 
     const handleEditSubmit = (item) => {
-        console.log(item);
+        // console.log(item);
         handleSave(item);
         setModify(false);
     };
 
+    useEffect(() => {
+        setHouseId({
+            ...houseId,
+            my: commonInfoStore?.addHouse.data?.houseId,
+        });
+    }, []);
+
+    useEffect(() => {
+        setHouseId({
+            ...houseId,
+            spouse: commonInfoStore?.addHouse.data?.houseId,
+        });
+    }, [commonInfoStore.addHouse?.data]);
+
     const handleInfoSubmit = (info) => {
-        alert('입력이 모두 완료되었습니다 !');
+        // alert('입력이 모두 완료되었습니다 !');
     };
 
     return (
@@ -173,7 +234,7 @@ const Board = (props) => {
                 {info !== [] ? (
                     <div
                         className="submitButtonContainer"
-                        onClick={handleInfoSubmit}
+                        onClick={() => handleInfoSubmit(info)}
                     >
                         <CaretRightOutlined className="submitButton" />
                     </div>
@@ -182,12 +243,20 @@ const Board = (props) => {
                 )}
             </div>
 
-            {add && <Post onSaveData={handleSave} />}
+            {add && (
+                <Post
+                    onSaveData={handleSave}
+                    houseId={houseId}
+                    setHouseId={setHouseId}
+                    members={members}
+                />
+            )}
             {modify && (
                 <Modal
                     selectedData={selected}
                     handleCancel={handleCancel}
                     handleEditSubmit={handleEditSubmit}
+                    memberId={memberId}
                 />
             )}
         </div>

@@ -34,6 +34,11 @@ import {
     Sitemap,
     FAQ,
     MyPage,
+    GeneralMinyeoungPoint,
+    MultiChildPoint,
+    OldParentPoint,
+    OneParentPoint,
+    NewMarriagePoint,
 } from '../pages';
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
@@ -132,6 +137,33 @@ class App extends Component {
                     <Route exact path="/boardView/:no" component={BoardView} />
                     <Route path="/case" component={BoardMain} />
                     <Route path="/FAQ" component={FAQ} />
+
+                    {/* 가배점 계산기 */}
+                    <Route
+                        exact
+                        path="/point/generalMinyeoung"
+                        component={GeneralMinyeoungPoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/multiChild"
+                        component={MultiChildPoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/oneParent"
+                        component={OneParentPoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/newMarriage"
+                        component={NewMarriagePoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/oldParent"
+                        component={OldParentPoint}
+                    />
                 </Switch>
                 <Footer></Footer>
             </div>

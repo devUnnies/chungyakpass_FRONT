@@ -5,6 +5,7 @@ import {
     SIGNUP_POST,
     SIGNUP_POST_SUCCESS,
     SIGNUP_POST_ERROR,
+    LOGOUT,
 } from '../actions/authAction';
 import {
     reducerUtils,
@@ -26,6 +27,8 @@ export default function auth(state = initialState, action) {
         case SIGNUP_POST_SUCCESS:
         case SIGNUP_POST_ERROR:
             return handleAsyncActions(SIGNUP_POST, 'signup')(state, action);
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }
