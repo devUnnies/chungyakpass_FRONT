@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { logIn } from '../../store/actions/authAction';
+import { logIn, logOut } from '../../store/actions/authAction';
 import { signinWithToken } from '../../store/actions/tokenAction';
 import storage from '../../services/store';
 import './Login.css';
@@ -45,11 +45,17 @@ function Login(props) {
     useEffect(() => {
         // 로그인 성공시
         if (authStore.login.data) {
-            const data = authStore.login.data.data;
+            const data = authStore.login.data;
             dispatch(signinWithToken(data.token));
             storage.set('user-token', data.token);
             history.push('/');
         }
+        // 로그인 실패시
+        // else if (authStore.login.loading) {
+        //     dispatch(logOut());
+        //     alert('회원가입 후 진행해주세요 !');
+        //     history.push('/signup');
+        // }
     }, [authStore.login]);
 
     return (
