@@ -36,7 +36,7 @@ const data = {
                                 {
                                     idx: 0,
                                     name: '국민주택',
-                                    link: '/general/kookmin',
+                                    link: '/generalKookminAptNum',
                                 },
                                 {
                                     idx: 1,
@@ -58,7 +58,7 @@ const data = {
                                 {
                                     idx: 1,
                                     name: '다자녀',
-                                    link: '/special/multiChildMinyeongAptNum',
+                                    link: '/specialMultiChildMinyeongAptNum',
                                 },
                                 {
                                     idx: 2,

@@ -16,15 +16,15 @@ export const postMultiChildMinyeongAptNum = createPromiseThunk(
     multiChildMinyeongApi.postMultiChildMinyeongAptNum
 );
 
-// 다자녀 민영 로직 받아오기
-export const RES_MULTICHILD_MINYEONG_GET = 'RES_MULTICHILD_MINYEONG_GET';
-export const RES_MULTICHILD_MINYEONG_GET_SUCCESS =
-    'RES_MULTICHILD_MINYEONG_GET_SUCCESS';
-export const RES_MULTICHILD_MINYEONG_GET_ERROR =
-    'RES_MULTICHILD_MINYEONG_GET_ERROR';
+// // 다자녀 민영 로직 get
+// export const RES_MULTICHILD_MINYEONG_GET = 'RES_MULTICHILD_MINYEONG_GET';
+// export const RES_MULTICHILD_MINYEONG_GET_SUCCESS =
+//     'RES_MULTICHILD_MINYEONG_GET_SUCCESS';
+// export const RES_MULTICHILD_MINYEONG_GET_ERROR =
+//     'RES_MULTICHILD_MINYEONG_GET_ERROR';
 
-/* Action Creator */
-export const getMultiChildMinyeong = createPromiseThunk(
-    RES_MULTICHILD_MINYEONG_GET,
-    multiChildMinyeongApi.getMultiChildMinyeong
-);
+// /* Action Creator */
+// export const getMultiChildMinyeong = createPromiseThunk(
+//     RES_MULTICHILD_MINYEONG_GET,
+//     multiChildMinyeongApi.getMultiChildMinyeong
+// );

@@ -5,7 +5,7 @@ import useInputState from '../../components/Input/useInputState';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
 import MainButton from '../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
-// import storage from '../../services/store';
+import './GeneralSupply.css';
 
 function GeneralMinyeongAptNum(props) {
     const history = useHistory();
@@ -22,7 +22,6 @@ function GeneralMinyeongAptNum(props) {
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
 
-    // 가입하기 버튼을 누르면 실행하는 함수
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
         event.preventDefault();
@@ -70,7 +69,7 @@ function GeneralMinyeongAptNum(props) {
 
     return (
         <>
-            <div className="minyeongAptNumForm">
+            <div className="AptNumForm">
                 <div className="container">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
@@ -93,25 +92,6 @@ function GeneralMinyeongAptNum(props) {
                         <span className="aptNumButton">
                             <MainButton
                                 onClick={onClick}
-                                // onClick 시에 일반민영 자격확인 페이지로 이동 및 데이터 전달.
-                                // onClick={() => {
-                                //     if (
-                                //         notificationNumber == '' ||
-                                //         housingType == ''
-                                //     ) {
-                                //         alert(
-                                //             '아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.'
-                                //         );
-                                //     } else {
-                                //         history.push({
-                                //             pathname: '/general/minyeong',
-                                //             props: {
-                                //                 notificationNumber,
-                                //                 housingType,
-                                //             },
-                                //         });
-                                //     }
-                                // }}
                                 width="100"
                                 height="35"
                                 fontSize="13"
