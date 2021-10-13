@@ -540,10 +540,10 @@
 }
 
 .modifyMemberForm {
-    width: 800px;
 }
 
 .modifyMemberFormTable {
+    width: 800px;
 }
 
 .modifyMemberFormTableTbody {
@@ -582,4 +582,13 @@
 
 .modifyMemberFormTableTbodyTrSpace {
     height: 20px;
+}
+
+.modifyButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-right: 10%;
+    margin-bottom: 5%;
 }

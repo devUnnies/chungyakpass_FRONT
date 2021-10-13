@@ -9,8 +9,14 @@ import './Addmember.css';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import MonthAverageIncomeTable from './MonthAverageIncomeTable';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    addHouse,
+    addBank,
+    addMem,
+} from '../../store/actions/commonInfoAction';
 
-const Post = ({ onSaveData }) => {
+const Post = ({ onSaveData, houseId, setHouseId, members }) => {
     const history = useHistory();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isTableOpen, setIsTableOpen] = useState(false);
@@ -23,6 +29,10 @@ const Post = ({ onSaveData }) => {
 
     const [close, setClose] = useState(false);
     const [assets, setAssets] = useState([]);
+
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+
+    const [memberId, setMemberId] = useState();
 
     const [address, setAddress] = useState({
         sido: '',
@@ -39,16 +49,15 @@ const Post = ({ onSaveData }) => {
         homelessStartDate: '',
         relationship: '',
         householderYn: '',
-        spouseYn: '',
+        spouseYn: 'n',
         spouseAddress: '',
         spousePostcode: '',
-        childrenLive: '',
+        spouseLive: 'base',
         soldierYn: '',
-        homelessStartDate: '',
         isMarried: false,
         marriedDate: '',
         transferDate: '',
-        income: '',
+        income: '0',
         assets: [],
         histories: [],
         limits: [],
@@ -85,6 +94,39 @@ const Post = ({ onSaveData }) => {
         requlatedAreaFirstPriorityRestrictedDate: '',
         additionalPointSystemRestrictedDate: '',
     });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setAddress({
+            ...address,
+            sido: form.spouseAddress?.split(' ')[0],
+            sigungu:
+                form.spouseAddress?.split(' ')[0] === '세종특별자치시'
+                    ? form.spouseAddress?.split(' ')[0]
+                    : form.spouseAddress?.split(' ')[1],
+            detail:
+                // 제주도 일 경우
+                form.spouseAddress?.split(' ')[0] === '제주특별자치도'
+                    ? // 제주도인데 서귀포시 일 경우
+                      form.spouseAddress?.split(' ')[1]?.length === 4
+                        ? form.spouseAddress?.substring(13)
+                        : // 제주도인데 제주시 일 경우
+                        form.spouseAddress?.split(' ')[1]?.length === 3
+                        ? form.spouseAddress?.substring(12)
+                        : null
+                    : // 세종특별자치시 일 경우
+                    form.spouseAddress?.split(' ')[0] === '세종특별자치시'
+                    ? form.spouseAddress?.substring(8)
+                    : form.spouseAddress?.split(' ')[1]?.length === 2
+                    ? form.spouseAddress?.substring(6)
+                    : form.spouseAddress?.split(' ')[1]?.length === 3
+                    ? form.spouseAddress?.substring(7)
+                    : form.spouseAddress?.split(' ')[1]?.length === 4
+                    ? form.spouseAddress?.substring(8)
+                    : null,
+        });
+    }, [form.spouseAddress]);
 
     const onAddressChange = (e) => {
         const { name, value } = e.target;
@@ -134,6 +176,7 @@ const Post = ({ onSaveData }) => {
                     getCloseValue={getCloseValue}
                     getAssetsValue={getAssetsValue}
                     getStartDate={getStartDate}
+                    assets={form.assets}
                     birthDate={form.birthDate}
                     ineligibleDate={historyArr.ineligibleDate}
                 />
@@ -141,11 +184,148 @@ const Post = ({ onSaveData }) => {
         );
     };
 
+    useEffect(() => {
+        setHouseId({
+            ...houseId,
+            my: commonInfoStore?.addHouse.data?.houseId,
+        });
+    }, []);
+
+    useEffect(() => {
+        setHouseId({
+            ...houseId,
+            spouse: commonInfoStore?.addHouse.data?.houseId,
+        });
+    }, [commonInfoStore.addHouse?.data]);
+
+    useEffect(() => {
+        setMemberId(commonInfoStore?.addMem.data?.memberId);
+
+        // 세대주 등록
+        if (form.householderYn === 'y') {
+            let userForm = {
+                memberId: memberId,
+                houseId: null,
+            };
+            if (form.spouseYn === 'n' && form.spouseLive === 'base') {
+                userForm = {
+                    ...userForm,
+                    houseId: houseId.my,
+                };
+
+                console.log(
+                    '본인 세대 세대주 등록 !!! ' + JSON.stringify(userForm)
+                );
+            } else if (form.spouseYn === 'y' && form.spouseLive === 'spouse') {
+                userForm = {
+                    ...userForm,
+                    houseId: houseId.spouse,
+                };
+
+                console.log(
+                    '배우자 분리 세대 세대주 등록 !!! ' +
+                        JSON.stringify(userForm)
+                );
+            }
+        }
+
+        // 2명 이상 등록 할 수 없는 경우 !
+    }, [commonInfoStore?.addMem.data]);
+
     // 세대 구성원 등록하는 api 연결 예정
-    const onSubmit = () => {
-        // 본인이면 put
-        // 배우자 분리세대의 배우자면 put
-        // 그 외는 post
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        if (failMsg === null) {
+            if (form.relationship === '본인') form.account.push(account);
+            if (haveHistory === 'y') form.histories.push(historyArr);
+            if (haveLimit === 'y') form.limits.push(limitArr);
+
+            if (form.spouseYn === 'y') {
+                // 세대 등록 !!!
+                const userAddress = {
+                    spouseHouseYn: 'y',
+                    addressLevel1: address?.sido.slice(0, 2),
+                    addressLevel2: address?.sigungu,
+                    addressDetail: address?.detail,
+                    zipcode: address?.postcode,
+                };
+                console.log('분리세대 등록 !!!' + userAddress);
+                // dispatch(addHouse(userAddress));
+            }
+
+            // 세대구성원 등록
+            if (form.relationship === '본인') {
+                // 본인일 경우 청약통장 등록
+                // dispatch(addBank(form.account[0]));
+                const userForm = {
+                    houseId: houseId.my,
+                    relation: form.relationship,
+                    name: form.name,
+                    birthDay: form.birthDate,
+                    foreignerYn: form.foreignerYn,
+                    soldierYn: form.soldierYn,
+                    marriageDate:
+                        form.isMarried === 'y' ? form.marriedDate : null,
+                    homelessStartDate: form.homelessStartDate,
+                    transferDate: form.transferDate,
+                    income: form.income,
+                };
+
+                console.log('본인 !!!!!! ' + JSON.stringify(userForm));
+                // dispatch(addMem(userForm));
+            } else {
+                const userForm = {
+                    houseId: houseId.spouse,
+                    relation: form.relationship,
+                    name: form.name,
+                    birthDay: form.birthDate,
+                    foreignerYn: form.foreignerYn,
+                    soldierYn: form.soldierYn,
+                    marriageDate:
+                        form.isMarried === 'y' ? form.marriedDate : null,
+                    homelessStartDate: form.homelessStartDate,
+                    transferDate: form.transferDate,
+                    income: form.income,
+                };
+
+                console.log(
+                    '본인 이외의 구성원 !!!! ' + JSON.stringify(userForm)
+                );
+                // dispatch(addMem(userForm));
+            }
+
+            // 세대구성원 자산 등록
+            const assetsForm = assets.map((content, i) => {
+                return { ...content, houseMemberId: memberId };
+            });
+
+            console.log('자산 !!! ' + JSON.stringify(assetsForm));
+
+            onSaveData(form);
+            setForm({
+                name: '',
+                birthDate: '',
+                account: [],
+                foreignerYn: '',
+                homelessStartDate: '',
+                relationship: '',
+                householderYn: '',
+                spouseYn: '',
+                spousePostcode: '',
+                spouseAddress: '',
+                soldierYn: '',
+                isMarried: false,
+                marriedDate: '',
+                transferDate: '',
+                income: '',
+                assets: [],
+                histories: [],
+                limits: [],
+            });
+        } else {
+            alert('부적격 받은 사례가 있는 항목을 선택하셨습니다.');
+        }
     };
 
     useEffect(() => {
@@ -171,12 +351,14 @@ const Post = ({ onSaveData }) => {
     }, [fullAddress, postcode]);
 
     useEffect(() => {
+        console.log(form.homelessStartDate);
         if (
             account.validYn === 'n' ||
             haveHistory === 'exist' ||
             limitArr.specialSupplyRestrictedYn === '청약불가' ||
-            Number(new Date(form.birthDate)) >
-                Number(new Date(form.homelessStartDate))
+            (form.homelessStartDate &&
+                Number(new Date(form.birthDate)) >
+                    Number(new Date(form.homelessStartDate)))
         ) {
             setFailMsg('!!');
         } else {
@@ -195,6 +377,15 @@ const Post = ({ onSaveData }) => {
                 paymentsCount: 0,
                 validYn: '',
             });
+
+            setForm({
+                ...form,
+                soldierYn: 'n',
+            });
+        } else {
+            return form.spouseYn === 'y'
+                ? alert('회원은 배우자 분리세대에 속할 수 없습니다 !')
+                : null;
         }
     }, [form.relationship]);
 
@@ -281,7 +472,6 @@ const Post = ({ onSaveData }) => {
                 spousePostcode: '',
                 spouseAddress: '',
                 soldierYn: '',
-                homelessStartDate: '',
                 isMarried: false,
                 marriedDate: '',
                 transferDate: '',
@@ -687,7 +877,6 @@ const Post = ({ onSaveData }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {/* 고쳐야 함 ,,, !!! 배우자 분리세대 여부임 */}
 
                             <tr className="addMemberFormTableTbodyTr">
                                 <td className="addMemberFormTableTbodyTrTdSubTitle">
@@ -697,11 +886,11 @@ const Post = ({ onSaveData }) => {
                                     <input
                                         className="isSoldierInput"
                                         type="radio"
-                                        name="childrenLive"
+                                        name="spouseLive"
                                         onChange={onChange}
                                         value="base"
                                         checked={
-                                            form.childrenLive === 'base'
+                                            form.spouseLive === 'base'
                                                 ? true
                                                 : false
                                         }
@@ -712,11 +901,11 @@ const Post = ({ onSaveData }) => {
                                     <input
                                         className="isSoldierInput"
                                         type="radio"
-                                        name="childrenLive"
+                                        name="spouseLive"
                                         onChange={onChange}
                                         value="spouse"
                                         checked={
-                                            form.childrenLive === 'spouse'
+                                            form.spouseLive === 'spouse'
                                                 ? true
                                                 : false
                                         }
@@ -744,11 +933,15 @@ const Post = ({ onSaveData }) => {
                                 <td className="addMemberFormTableTbodyTrTd">
                                     <input
                                         className="homelessStartDateInput"
-                                        type="date"
+                                        type="input"
                                         name="homelessStartDate"
-                                        value={form.homelessStartDate}
+                                        value={
+                                            form.homelessStartDate
+                                                ? form.homelessStartDate
+                                                : '0000-00-00'
+                                        }
                                         onChange={onChange}
-                                        required
+                                        disabled
                                     />
                                 </td>
                                 <td>
@@ -1019,7 +1212,6 @@ const Post = ({ onSaveData }) => {
                                 </tr>
                             ) : null}
 
-                            {haveAssets === 'y' ? AssetsWindow() : null}
                             {/* {Number(assetsCount) >= 2
                                 ? addAssets(assetsCount)
                                 : null} */}
@@ -1488,6 +1680,7 @@ const Post = ({ onSaveData }) => {
                                     </span>
                                 </td>
                             </tr>
+                            {haveAssets === 'y' ? AssetsWindow() : null}
                             <tr className="addMemberFormTableTbodyTrSpace"></tr>
                             <tr className="addMemberFormTableTbodyTr">
                                 <td colSpan="3">
