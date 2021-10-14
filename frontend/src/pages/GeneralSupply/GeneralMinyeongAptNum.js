@@ -91,6 +91,7 @@ function GeneralMinyeongAptNum(props) {
 
                         <span className="aptNumButton">
                             <MainButton
+                                type="button"
                                 onClick={onClick}
                                 width="100"
                                 height="35"

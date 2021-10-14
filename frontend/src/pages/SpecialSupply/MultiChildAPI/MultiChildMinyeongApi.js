@@ -22,8 +22,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
 
-    const data =
-        multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data?.data; // 다자녀 민영 로직 접근 변수
+    const data = multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
@@ -56,14 +55,10 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
     useEffect(() => {
         if (multiChildMinyeongStore.postMultiChildMinyeongAptNum.data) {
             const data =
-                multiChildMinyeongStore.postMultiChildMinyeongAptNum.data.data;
+                multiChildMinyeongStore.postMultiChildMinyeongAptNum.data;
             console.log(JSON.stringify(data));
         }
     }, [multiChildMinyeongStore.postMultiChildMinyeongAptNum]);
-
-    console.log(
-        multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data?.data
-    );
 
     return (
         <>
@@ -304,9 +299,11 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                 <td className="special_result">
                                                     <input
                                                         className="aptInfoSelect"
-                                                        value={JSON.stringify(
-                                                            data?.americanAge
-                                                        )}
+                                                        value={
+                                                            data?.americanAge +
+                                                            ' ' +
+                                                            '세'
+                                                        }
                                                         readOnly={true}
                                                     />
                                                     세
@@ -978,7 +975,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                     <div className="rankButton">
                         <Link to="/firstRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"
@@ -993,7 +990,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                     <div className="rankButton">
                         <Link to="/secondRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"

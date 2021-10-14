@@ -69,7 +69,7 @@ const data = {
                                 {
                                     idx: 3,
                                     name: '노부모',
-                                    link: '',
+                                    link: 'specialOldParentKookminAptNum',
                                 },
                             ],
                         },
@@ -107,7 +107,7 @@ const data = {
                         {
                             idx: 1,
                             name: '다자녀',
-                            link: '/point/multiChild',
+                            link: '/point/multiChildAptNum',
                         },
                         {
                             idx: 2,

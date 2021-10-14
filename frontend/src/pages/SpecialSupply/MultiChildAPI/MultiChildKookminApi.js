@@ -27,8 +27,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     const getParams = location.state.multiChildKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
 
-    const data =
-        multiChildKookminStore?.postMultiChildKookminAptNum?.data?.data; // 다자녀 국민 로직 접근 변수
+    const data = multiChildKookminStore?.postMultiChildKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
@@ -54,7 +53,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     useEffect(() => {
         if (multiChildKookminStore?.postMultiChildKookminAptNum?.data) {
             const data =
-                multiChildKookminStore.postMultiChildKookminAptNum.data.data;
+                multiChildKookminStore.postMultiChildKookminAptNum.data;
             console.log(JSON.stringify(data));
         }
     }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
@@ -445,9 +444,11 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                 <td className="special_result">
                                                                     <input
                                                                         className="aptInfoSelect"
-                                                                        value={JSON.stringify(
-                                                                            data?.americanAge
-                                                                        )}
+                                                                        value={
+                                                                            data?.americanAge +
+                                                                            ' ' +
+                                                                            '세'
+                                                                        }
                                                                         readOnly={
                                                                             true
                                                                         }
@@ -966,7 +967,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                     <div className="rankButton">
                         <Link to="/firstRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"
@@ -981,7 +982,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                     <div className="rankButton">
                         <Link to="/secondRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"

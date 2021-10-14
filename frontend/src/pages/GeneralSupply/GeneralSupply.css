@@ -126,6 +126,7 @@
     position: absolute;
     display: inline-block;
     color: #fa1c33;
+    margin-left: 1%;
 }
 /*2순위 툴팁*/
 .secondRankTootip {

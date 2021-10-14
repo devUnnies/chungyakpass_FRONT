@@ -18,7 +18,7 @@
     float: left;
 }
 
-/* general_title */
+/* special_title */
 .special_title {
     margin-left: 20%;
     margin-top: 5%;
@@ -76,10 +76,10 @@
 .qulificaiton,
 .special_result {
     padding-bottom: 5%;
-    margin-right: 10px;
 }
-.qulificaitonBox {
-    font-size: 12pt;
+.special_result_input {
+    padding-bottom: 5%;
+    margin-left: 20%;
 }
 
 /* input text box 테두리 보이지 않도록. */
@@ -120,6 +120,7 @@
     position: absolute;
     display: inline-block;
     color: #fa1c33;
+    margin-left: 1%;
 }
 /*2순위 툴팁*/
 .secondRankTootip {
@@ -132,7 +133,6 @@
     position: absolute;
     border: 0px solid;
     border-radius: 10px;
-    padding: 10px;
 
     font-size: 0.8em;
     color: black;

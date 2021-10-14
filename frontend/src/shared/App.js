@@ -14,7 +14,9 @@ import {
     MultiChildMinyeongApi,
     MultiChildKookminApi,
     OldParentKookminApi,
+    OldParentKookminAptNum,
     OldParentMinyeongApi,
+    OldParentMinyeongAptNum,
     MultiChildMinyeongAptNum,
     MultiChildKookminAptNum,
     FirstRank,
@@ -35,6 +37,7 @@ import {
     FAQ,
     MyPage,
     GeneralMinyeoungPoint,
+    MultiChildPointAptNum,
     MultiChildPoint,
     OldParentPoint,
     OneParentPoint,
@@ -125,8 +128,16 @@ class App extends Component {
                         component={OldParentMinyeongApi}
                     />
                     <Route
+                        path="/specialOldParentMinyeongAptNum"
+                        component={OldParentMinyeongAptNum}
+                    />
+                    <Route
                         path="/specialOldParentKookmin"
                         component={OldParentKookminApi}
+                    />
+                    <Route
+                        path="/specialOldParentKookminAptNum"
+                        component={OldParentKookminAptNum}
                     />
 
                     {/* 순위 확인 페이지 */}
@@ -143,6 +154,11 @@ class App extends Component {
                         exact
                         path="/point/generalMinyeoung"
                         component={GeneralMinyeoungPoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/multiChildAptNum"
+                        component={MultiChildPointAptNum}
                     />
                     <Route
                         exact

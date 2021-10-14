@@ -6,4 +6,5 @@ import { post } from './instance';
 export const postMultiChildPointAptNum = (info) =>
     post('point/special/multiChild', {
         notificationNumber: info.notificationNumber,
+        multiChildHouseholdType: info.multiChildHouseholdType,
     });

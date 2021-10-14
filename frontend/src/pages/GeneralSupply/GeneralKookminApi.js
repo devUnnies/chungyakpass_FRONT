@@ -21,7 +21,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
 
-    const data = generalKookminStore?.postGeneralKookminAptNum?.data?.data; // 일반 민영 로직 접근 변수
+    const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 민영 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
@@ -47,13 +47,10 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
     useEffect(() => {
         if (generalKookminStore?.postGeneralKookminAptNum?.data) {
-            const data =
-                generalKookminStore?.postGeneralKookminAptNum?.data?.data;
+            const data = generalKookminStore?.postGeneralKookminAptNum?.data;
             console.log(JSON.stringify(data));
         }
     }, [generalKookminStore?.postGeneralKookminAptNum]);
-
-    console.log(generalKookminStore?.postGeneralKookminAptNum);
 
     return (
         <>
@@ -814,7 +811,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                     <div className="rankButton">
                         <Link to="/firstRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"
@@ -830,7 +827,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                     <div className="rankButton">
                         <Link to="/secondRank">
                             <MainButton
-                                type="submit"
+                                type="button"
                                 width="100"
                                 height="30"
                                 fontWeight="bold"

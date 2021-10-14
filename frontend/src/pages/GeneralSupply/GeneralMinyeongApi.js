@@ -21,7 +21,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
 
-    const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data?.data; // 일반 민영 로직 접근 변수
+    const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data; // 일반 민영 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
@@ -54,13 +54,12 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
     useEffect(() => {
         if (generalMinyeongStore.postGeneralMinyeongAptNum.data) {
-            const data =
-                generalMinyeongStore.postGeneralMinyeongAptNum.data.data;
+            const data = generalMinyeongStore.postGeneralMinyeongAptNum?.data;
             console.log(JSON.stringify(data));
         }
     }, [generalMinyeongStore.postGeneralMinyeongAptNum]);
 
-    console.log(generalMinyeongStore?.postGeneralMinyeongAptNum?.data?.data);
+    console.log(generalMinyeongStore?.postGeneralMinyeongAptNum?.data);
 
     return (
         <>
