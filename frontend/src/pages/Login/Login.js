@@ -51,11 +51,17 @@ function Login(props) {
             history.push('/');
         }
         // 로그인 실패시
-        // else if (authStore.login.loading) {
-        //     dispatch(logOut());
-        //     alert('회원가입 후 진행해주세요 !');
-        //     history.push('/signup');
-        // }
+        else if (authStore.login.loading) {
+            // console.log('@@@@@@' + storage.get('user-token'));
+            // if (storage.get('user-token') === null) {
+            //     dispatch(logOut());
+            //     alert('회원가입 후 진행해주세요 !');
+            //     history.push('/signup');
+            // } else {
+            //     dispatch(signinWithToken(storage.get('user-token')));
+            //     history.push('/');
+            // }
+        }
     }, [authStore.login]);
 
     return (
