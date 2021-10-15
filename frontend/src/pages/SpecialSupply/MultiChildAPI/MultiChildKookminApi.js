@@ -58,6 +58,12 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         }
     }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
 
+    const fail = async () => {
+        if (form?.multiChildKookminRes === '탈락') {
+            alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+        }
+    };
+
     return (
         <>
             <div className="special_title">
@@ -68,7 +74,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             </div>
 
             <form className="specialSupply_form" onSubmit={handleSubmit}>
-                <table className="specialKookmin_table">
+                <table className="specialMultiChildKookmin_table">
                     <p className="foreignWarning" style={{ color: 'red' }}>
                         * 외국인을 세대주 혹은 세대원으로 포함시킬 경우 부적격
                         판정이 날 수 있음을 알려드립니다.
@@ -962,9 +968,77 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                     ) : null}
                 </table>
 
+                <div className="rankRes">
+                    {/* 순위 매기기 */}
+                    {/* 1순위 */}
+                    {data?.accountTf === true &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    data?.calcMinorChildren >= 3 &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    ((data?.restrictedAreaTf === true &&
+                        ((data?.americanAge >= 20 &&
+                            data?.householderTf === true) ||
+                            data?.americanAge < 20) &&
+                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                            true) ||
+                        data?.restrictedAreaTf === false) &&
+                    data?.meetBankbookJoinPeriodTf === true &&
+                    data?.meetNumberOfPaymentsTf === true
+                        ? (form.multiChildKookminRes = '1순위')
+                        : null}
+
+                    {/* 2순위 */}
+                    {data?.accountTf === true &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    data?.calcMinorChildren >= 3 &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    ((data?.restrictedAreaTf === true && // 규제지역
+                        ((data?.americanAge >= 20 &&
+                            (data?.householderTf === false ||
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false)) ||
+                            (data?.americanAge < 20 &&
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false))) ||
+                        data?.meetBankbookJoinPeriodTf === false ||
+                        data?.meetNumberOfPaymentsTf === false ||
+                        // 비규제지역
+                        (data?.restrictedAreaTf === false &&
+                            (data?.meetBankbookJoinPeriodTf === false ||
+                                data?.meetNumberOfPaymentsTf === false)))
+                        ? (form.multiChildKookminRes = '2순위')
+                        : null}
+
+                    {/* 탈락 */}
+                    {data?.accountTf === false ||
+                    data?.meetHomelessHouseholdMembersTf === false ||
+                    data?.calcMinorChildren < 3 ||
+                    (data?.americanAge < 20 &&
+                        (form.supportYn === 'n' ||
+                            data?.householderTf === false)) ||
+                    (data?.americanAge >= 20 &&
+                        data?.americanAge < 30 &&
+                        form.lifeYn === 'n')
+                        ? (form.multiChildKookminRes = '탈락')
+                        : null}
+                </div>
+
                 {/* 순위에 따른 페이지 이동 */}
+                {/* 1순위 */}
                 {form.multiChildKookminRes === '1순위' ? (
-                    <div className="rankButton">
+                    <div className="multiChildRankButton">
                         <Link to="/firstRank">
                             <MainButton
                                 type="button"
@@ -978,8 +1052,10 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                         </Link>
                     </div>
                 ) : null}
+
+                {/* 2순위 */}
                 {form.multiChildKookminRes === '2순위' ? (
-                    <div className="rankButton">
+                    <div className="multiChildRankButton">
                         <Link to="/secondRank">
                             <MainButton
                                 type="button"
@@ -991,6 +1067,22 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 순위 확인하기
                             </MainButton>
                         </Link>
+                    </div>
+                ) : null}
+
+                {/*탈락 */}
+                {form.multiChildKookminRes === '탈락' ? (
+                    <div className="multiChildRankButton">
+                        <MainButton
+                            onClick={fail}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
             </form>

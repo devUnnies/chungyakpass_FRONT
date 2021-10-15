@@ -11,8 +11,10 @@ import {
     GeneralMinyeongAptNum,
     GeneralKookminApi,
     GeneralKookminAptNum,
+    MultiChildTypeSelect,
     MultiChildMinyeongApi,
     MultiChildKookminApi,
+    OldParentTypeSelect,
     OldParentKookminApi,
     OldParentKookminAptNum,
     OldParentMinyeongApi,
@@ -108,6 +110,10 @@ class App extends Component {
                         component={GeneralKookminAptNum}
                     />
                     <Route
+                        path="/specialMultiChildTypeSelect"
+                        component={MultiChildTypeSelect}
+                    />
+                    <Route
                         path="/specialMultiChildMinyeong"
                         component={MultiChildMinyeongApi}
                     />
@@ -130,6 +136,10 @@ class App extends Component {
                     <Route
                         path="/specialOldParentMinyeongAptNum"
                         component={OldParentMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialOldParentTypeSelect"
+                        component={OldParentTypeSelect}
                     />
                     <Route
                         path="/specialOldParentKookmin"

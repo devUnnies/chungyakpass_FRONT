@@ -26,10 +26,12 @@ export { default as GeneralMinyeongApi } from './GeneralSupply/GeneralMinyeongAp
 export { default as GeneralMinyeongAptNum } from './GeneralSupply/GeneralMinyeongAptNum';
 export { default as GeneralKookminApi } from './GeneralSupply/GeneralKookminApi';
 export { default as GeneralKookminAptNum } from './GeneralSupply/GeneralKookminAptNum';
+export { default as MultiChildTypeSelect } from './SpecialSupply/MultiChildAPI/MultiChildTypeSelect';
 export { default as MultiChildMinyeongApi } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongApi';
 export { default as MultiChildMinyeongAptNum } from './SpecialSupply/MultiChildAPI/MultiChildMinyeongAptNum';
 export { default as MultiChildKookminApi } from './SpecialSupply/MultiChildAPI/MultiChildKookminApi';
 export { default as MultiChildKookminAptNum } from './SpecialSupply/MultiChildAPI/MultiChildKookminAptNum';
+export { default as OldParentTypeSelect } from './SpecialSupply/OldParentAPI/OldParentTypeSelect';
 export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/OldParentMinyeongApi';
 export { default as OldParentMinyeongAptNum } from './SpecialSupply/OldParentAPI/OldParentMinyeongAptNum';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';

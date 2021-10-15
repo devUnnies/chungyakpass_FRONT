@@ -57,6 +57,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
         }
     }, [oldParentKookminStore.postOldParentKookminAptNum]);
 
+    const fail = async () => {
+        if (form?.oldParentKookmines !== '1순위') {
+            alert(
+                '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
+            );
+        }
+    };
+
     return (
         <>
             <div className="special_title">
@@ -69,7 +77,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
             </div>
 
             <form className="specialSupply_form" onSubmit={handleSubmit}>
-                <table className="specialKookmin_table">
+                <table className="specialOldParentKookmin_table">
                     {/* 국민주택 유형 */}
                     <tr className="special_phase">
                         <td className="qulificaiton">
@@ -840,31 +848,34 @@ const OldParentKookminApi = ({ onSaveData }) => {
                     ) : null}
                 </table>
 
-                {/* 순위 매기기 */}
-                {getParams !== '' &&
-                data?.accountTf === true &&
-                data?.householderTf === true &&
-                ((data?.americanAge < 20 && form.supportYn === true) ||
-                    data?.americanAge >= 20) &&
-                data?.meetHomelessHouseholdMembersTf === true &&
-                data?.meetOldParentSupportMore3yearsTf === true &&
-                ((getParams !== '그외 국민주택' &&
-                    data?.meetMonthlyAverageIncomeTf === true) ||
-                    getParams === '그외 국민주택') &&
-                ((getParams === '공공주택특별법 적용' &&
-                    data?.meetPropertyTf === true) ||
-                    getParams !== '공공주택특별법 적용') &&
-                ((data?.restrictedAreaTf === true &&
-                    data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
-                    data?.restrictedAreaTf === false) &&
-                data?.meetBankJoinPeriodTf === true &&
-                data?.meetNumberOfPaymentsTf === true
-                    ? (form.oldParentKookminRes = '1순위')
-                    : (form.oldParentKookminRes = '탈락')}
+                <div className="rankRes">
+                    {/* 순위 매기기 */}
+                    {getParams !== '' &&
+                    data?.accountTf === true &&
+                    data?.householderTf === true &&
+                    ((data?.americanAge < 20 && form.supportYn === 'y') ||
+                        data?.americanAge >= 20) &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    data?.meetOldParentSupportMore3yearsTf === true &&
+                    ((getParams !== '그외 국민주택' &&
+                        data?.meetMonthlyAverageIncomeTf === true) ||
+                        getParams === '그외 국민주택') &&
+                    ((getParams === '공공주택특별법 적용' &&
+                        data?.meetPropertyTf === true) ||
+                        getParams !== '공공주택특별법 적용') &&
+                    ((data?.restrictedAreaTf === true &&
+                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                            true) ||
+                        data?.restrictedAreaTf === false) &&
+                    data?.meetBankJoinPeriodTf === true &&
+                    data?.meetNumberOfPaymentsTf === true
+                        ? (form.oldParentKookminRes = '1순위')
+                        : (form.oldParentKookminRes = '탈락')}
+                </div>
 
                 {/* 순위에 따른 페이지 이동 */}
                 {form.oldParentKookminRes === '1순위' ? (
-                    <div className="rankButton">
+                    <div className="oldParentRankButton">
                         <Link to="/firstRank">
                             <MainButton
                                 type="button"
@@ -877,7 +888,20 @@ const OldParentKookminApi = ({ onSaveData }) => {
                             </MainButton>
                         </Link>
                     </div>
-                ) : null}
+                ) : (
+                    <div className="oldParentRankButton">
+                        <MainButton
+                            onClick={fail}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
+                    </div>
+                )}
             </form>
         </>
     );

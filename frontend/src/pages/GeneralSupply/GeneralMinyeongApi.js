@@ -45,13 +45,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
         });
     };
 
-    // const onClick = async () => {
-    //     dispatch(postGeneralMinyeongAptNum()); // api 연결 요청.
-    //     const data =
-    //         generalMinyeongStore?.postGeneralMinyeongAptNum?.data?.data;
-    //     console.log(JSON.stringify(data));
-    // };
-
     useEffect(() => {
         if (generalMinyeongStore.postGeneralMinyeongAptNum.data) {
             const data = generalMinyeongStore.postGeneralMinyeongAptNum?.data;
@@ -59,7 +52,12 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
         }
     }, [generalMinyeongStore.postGeneralMinyeongAptNum]);
 
-    console.log(generalMinyeongStore?.postGeneralMinyeongAptNum?.data);
+    // 부적격 발생 시 alert 창
+    const fail = async () => {
+        if (form?.generalMinyeongRes === '탈락') {
+            alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+        }
+    };
 
     return (
         <>
@@ -72,7 +70,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
             {/* 자격확인 테이블 */}
             <form className="generalSupply_form" onSubmit={handleSubmit}>
-                <table className="generalPrivate_table">
+                <table className="general_table">
                     {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
                     <tr className="general_phase">
                         <td className="qulificaiton">
@@ -94,7 +92,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                         </td>
                         <td className="general_result">
                             <input
-                                className="aptInfoSelect"
+                                className="generalAptInfoSelect"
                                 value={
                                     data?.restrictedAreaTf
                                         ? '규제지역'
@@ -126,7 +124,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                         </td>
                         <td className="general_result">
                             <input
-                                className="aptInfoSelect"
+                                className="generalAptInfoSelect"
                                 value={data?.accountTf ? '충족' : '미충족'}
                                 readOnly={true}
                             />
@@ -164,11 +162,8 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 </td>
                                 <td className="general_result">
                                     <input
-                                        className="aptInfoSelect"
-                                        value={JSON.stringify(
-                                            data?.americanAge
-                                        )}
-                                        세
+                                        className="generalAptInfoSelect"
+                                        value={data?.americanAge + ' ' + '세'}
                                         readOnly={true}
                                     />
                                     <span>
@@ -201,7 +196,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                         </td>
                                         <td className="general_result">
                                             <input
-                                                className="aptInfoSelect"
+                                                className="generalAptInfoSelect"
                                                 value={
                                                     data?.householderTf
                                                         ? '세대주'
@@ -411,7 +406,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                         </td>
                                         <td className="general_result">
                                             <input
-                                                className="aptInfoSelect"
+                                                className="generalAptInfoSelect"
                                                 value={
                                                     data?.priorityApt
                                                         ? '예'
@@ -431,10 +426,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                 {data?.priorityApt === false ? (
                                                     <span className="secondRankTootip">
                                                         <PauseCircleOutlined />
-                                                        {
-                                                            (form.generalMinyeongRes =
-                                                                '2순위')
-                                                        }
                                                     </span>
                                                 ) : null}
                                             </span>
@@ -453,7 +444,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                 </td>
                                                 <td className="general_result">
                                                     <input
-                                                        className="aptInfoSelect"
+                                                        className="generalAptInfoSelect"
                                                         value={
                                                             data?.meetHouseHavingLessThan2Apt
                                                                 ? '충족'
@@ -475,10 +466,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                         false ? (
                                                             <span className="secondRankTootip">
                                                                 <PauseCircleOutlined />
-                                                                {
-                                                                    (form.generalMinyeongRes =
-                                                                        '2순위')
-                                                                }
                                                             </span>
                                                         ) : null}
                                                     </span>
@@ -505,7 +492,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                         </td>
                                                                         <td className="general_result">
                                                                             <input
-                                                                                className="aptInfoSelect"
+                                                                                className="generalAptInfoSelect"
                                                                                 value={
                                                                                     data?.householderTf
                                                                                         ? '세대주'
@@ -553,7 +540,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                         </td>
                                                                         <td className="general_result">
                                                                             <input
-                                                                                className="aptInfoSelect"
+                                                                                className="generalAptInfoSelect"
                                                                                 value={
                                                                                     data?.meetAllHouseMemberNotWinningIn5yearsTf
                                                                                         ? '충족'
@@ -574,10 +561,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 false ? (
                                                                                     <span className="secondRankTootip">
                                                                                         <PauseCircleOutlined />
-                                                                                        {
-                                                                                            (form.generalMinyeongRes =
-                                                                                                '2순위')
-                                                                                        }
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -656,9 +639,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                     </td>
                                                                     <td className="general_result">
                                                                         <input
-                                                                            className="aptInfoSelect"
+                                                                            className="generalAptInfoSelect"
                                                                             value={
-                                                                                data?.meetBankJoinPeriodTf
+                                                                                data?.meetBankbookJoinPeriodTf
                                                                                     ? '충족'
                                                                                     : '미충족'
                                                                             }
@@ -667,20 +650,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                             }
                                                                         />
                                                                         <span>
-                                                                            {data?.meetBankJoinPeriodTf ===
+                                                                            {data?.meetBankbookJoinPeriodTf ===
                                                                             true ? (
                                                                                 <span className="progress">
                                                                                     <CheckCircleOutlined />
                                                                                 </span>
                                                                             ) : null}
-                                                                            {data?.meetBankJoinPeriodTf ===
+                                                                            {data?.meetBankbookJoinPeriodTf ===
                                                                             false ? (
                                                                                 <span className="secondRankTootip">
                                                                                     <PauseCircleOutlined />
-                                                                                    {
-                                                                                        (form.generalMinyeongRes =
-                                                                                            '2순위')
-                                                                                    }
                                                                                 </span>
                                                                             ) : null}
                                                                         </span>
@@ -697,11 +676,11 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             true &&
                                                         data?.meetAllHouseMemberNotWinningIn5yearsTf ===
                                                             true &&
-                                                        data?.meetBankJoinPeriodTf ===
+                                                        data?.meetBankbookJoinPeriodTf ===
                                                             true) ||
                                                     (data?.restrictedAreaTf ===
                                                         false &&
-                                                        data?.meetBankJoinPeriodTf ===
+                                                        data?.meetBankbookJoinPeriodTf ===
                                                             true) ? (
                                                         <>
                                                             <tr className="general_phase">
@@ -798,7 +777,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                 </td>
                                                                 <td className="general_result">
                                                                     <input
-                                                                        className="aptInfoSelect"
+                                                                        className="generalAptInfoSelect"
                                                                         value={
                                                                             data?.meetDepositTf
                                                                                 ? '충족'
@@ -829,26 +808,18 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 true &&
                                                                             data?.meetHouseHavingLessThan2Apt ===
                                                                                 true &&
-                                                                            data?.meetBankJoinPeriodTf ===
+                                                                            data?.meetBankbookJoinPeriodTf ===
                                                                                 true &&
                                                                             data?.meetDepositTf ===
                                                                                 true) ? (
                                                                             <span className="progress">
                                                                                 <CheckCircleOutlined />
-                                                                                {
-                                                                                    (form.generalMinyeongRes =
-                                                                                        '1순위')
-                                                                                }
                                                                             </span>
                                                                         ) : null}
                                                                         {data?.meetDepositTf ===
                                                                         false ? (
                                                                             <span className="secondRankTootip">
                                                                                 <PauseCircleOutlined />
-                                                                                {
-                                                                                    (form.generalMinyeongRes =
-                                                                                        '2순위')
-                                                                                }
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -866,9 +837,77 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                     ) : null}
                 </table>
 
+                <div className="rankRes">
+                    {/* 순위 매기기 */}
+                    {/* 1순위 */}
+                    {data?.accountTf === true &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    data?.priorityApt === true &&
+                    data?.meetHouseHavingLessThan2Apt === true &&
+                    ((data?.restrictedAreaTf === true &&
+                        ((data?.americanAge >= 20 &&
+                            data?.householderTf === true) ||
+                            data?.americanAge < 20) &&
+                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                            true) ||
+                        data?.restrictedAreaTf === false) &&
+                    data?.meetBankbookJoinPeriodTf === true &&
+                    data?.meetDepositTf === true
+                        ? (form.generalMinyeongRes = '1순위')
+                        : null}
+
+                    {/* 2순위 */}
+                    {data?.accountTf === true &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    ((data?.restrictedAreaTf === true && // 규제지역
+                        ((data?.americanAge >= 20 &&
+                            (data?.householderTf === false ||
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false)) ||
+                            (data?.americanAge < 20 &&
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false) ||
+                            data?.priorityApt === false ||
+                            data?.meetHouseHavingLessThan2Apt === false ||
+                            data?.meetBankbookJoinPeriodTf === false ||
+                            data?.meetDepositTf === false)) ||
+                        // 비규제지역
+                        (data?.restrictedAreaTf === false &&
+                            (data?.meetBankbookJoinPeriodTf === false ||
+                                data?.meetDepositTf === false ||
+                                data?.priorityApt === false ||
+                                data?.meetHouseHavingLessThan2Apt === false)))
+                        ? (form.generalMinyeongRes = '2순위')
+                        : null}
+
+                    {/* 탈락 */}
+                    {data?.accountTf === false ||
+                    (data?.americanAge < 20 &&
+                        (form.supportYn === 'n' ||
+                            data?.householderTf === false)) ||
+                    (data?.americanAge >= 20 &&
+                        data?.americanAge < 30 &&
+                        form.lifeYn === 'n')
+                        ? (form.generalMinyeongRes = '탈락')
+                        : null}
+                </div>
+
                 {/* 순위에 따른 페이지 이동 */}
+                {/* 1순위 */}
                 {form.generalMinyeongRes === '1순위' ? (
-                    <div className="rankButton">
+                    <div className="generalRankButton">
                         <Link to="/firstRank">
                             <MainButton
                                 type="submit"
@@ -883,8 +922,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                     </div>
                 ) : null}
 
+                {/* 2순위 */}
                 {form.generalMinyeongRes === '2순위' ? (
-                    <div className="rankButton">
+                    <div className="generalRankButton">
                         <Link to="/secondRank">
                             <MainButton
                                 type="submit"
@@ -896,6 +936,22 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 순위 확인하기
                             </MainButton>
                         </Link>
+                    </div>
+                ) : null}
+
+                {/* 탈락 */}
+                {form.generalMinyeongRes === '탈락' ? (
+                    <div className="generalRankButton">
+                        <MainButton
+                            onClick={fail}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
             </form>

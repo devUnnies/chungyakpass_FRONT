@@ -52,6 +52,13 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
         }
     }, [generalKookminStore?.postGeneralKookminAptNum]);
 
+    // 부적격 발생 시 alert 창
+    const fail = async () => {
+        if (form?.generalKookminRes === '탈락') {
+            alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+        }
+    };
+
     return (
         <>
             <div className="general_title">
@@ -63,7 +70,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
             {/* 자격확인 테이블 */}
             <form className="generalSupply_form" onSubmit={handleSubmit}>
-                <table className="generalPublic_table">
+                <table className="general_table">
                     {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
                     <tr className="general_phase">
                         <td className="qulificaiton">
@@ -85,7 +92,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                         </td>
                         <td className="general_result">
                             <input
-                                className="aptInfoSelect"
+                                className="generalAptInfoSelect"
                                 value={
                                     data?.restrictedAreaTf
                                         ? '규제지역'
@@ -117,7 +124,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                         </td>
                         <td className="general_result">
                             <input
-                                className="aptInfoSelect"
+                                className="generalAptInfoSelect"
                                 value={data?.accountTf ? '충족' : '미충족'}
                                 readOnly={true}
                             />
@@ -186,7 +193,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                 </td>
                                 <td className="special_result">
                                     <input
-                                        className="aptInfoSelect"
+                                        className="generalAptInfoSelect"
                                         value={
                                             data?.meetHomelessHouseholdMembersTf
                                                 ? '충족'
@@ -226,11 +233,12 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                         </td>
                                         <td className="general_result">
                                             <input
-                                                className="aptInfoSelect"
-                                                value={JSON.stringify(
-                                                    data?.americanAge
-                                                )}
-                                                세
+                                                className="generalAptInfoSelect"
+                                                value={
+                                                    data?.americanAge +
+                                                    ' ' +
+                                                    '세'
+                                                }
                                                 readOnly={true}
                                             />
                                             <span>
@@ -264,7 +272,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                 </td>
                                                 <td className="general_result">
                                                     <input
-                                                        className="aptInfoSelect"
+                                                        className="generalAptInfoSelect"
                                                         value={
                                                             data?.householderTf
                                                                 ? '세대주'
@@ -496,7 +504,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                 </td>
                                                                 <td className="general_result">
                                                                     <input
-                                                                        className="aptInfoSelect"
+                                                                        className="generalAptInfoSelect"
                                                                         value={
                                                                             data?.householderTf
                                                                                 ? '세대주'
@@ -543,7 +551,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                 </td>
                                                                 <td className="general_result">
                                                                     <input
-                                                                        className="aptInfoSelect"
+                                                                        className="generalAptInfoSelect"
                                                                         value={
                                                                             data?.meetAllHouseMemberNotWinningIn5yearsTf
                                                                                 ? '충족'
@@ -646,7 +654,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                             </td>
                                                             <td className="general_result">
                                                                 <input
-                                                                    className="aptInfoSelect"
+                                                                    className="generalAptInfoSelect"
                                                                     value={
                                                                         data?.meetBankbookJoinPeriodTf
                                                                             ? '충족'
@@ -745,7 +753,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                     </td>
                                                                     <td className="general_result">
                                                                         <input
-                                                                            className="aptInfoSelect"
+                                                                            className="generalAptInfoSelect"
                                                                             value={
                                                                                 data?.meetNumberOfPaymentsTf
                                                                                     ? '충족'
@@ -806,9 +814,74 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                     ) : null}
                 </table>
 
+                <div className="rankRes">
+                    {/* 순위 매기기 */}
+                    {/* 1순위 */}
+                    {data?.accountTf === true &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    ((data?.restrictedAreaTf === true &&
+                        ((data?.americanAge >= 20 &&
+                            data?.householderTf === true) ||
+                            data?.americanAge < 20) &&
+                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                            true) ||
+                        data?.restrictedAreaTf === false) &&
+                    data?.meetBankbookJoinPeriodTf === true &&
+                    data?.meetNumberOfPaymentsTf === true
+                        ? (form.generalKookminRes = '1순위')
+                        : null}
+
+                    {/* 2순위 */}
+                    {data?.accountTf === true &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    ((data?.americanAge < 20 &&
+                        form.supportYn === 'y' &&
+                        data?.householderTf === true) ||
+                        (data?.americanAge >= 20 &&
+                            data?.americanAge < 30 &&
+                            form.lifeYn === 'y') ||
+                        data?.americanAge >= 30) &&
+                    ((data?.restrictedAreaTf === true && // 규제지역
+                        ((data?.americanAge >= 20 &&
+                            (data?.householderTf === false ||
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false)) ||
+                            (data?.americanAge < 20 &&
+                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                    false))) ||
+                        data?.meetBankbookJoinPeriodTf === false ||
+                        data?.meetNumberOfPaymentsTf === false ||
+                        // 비규제지역
+                        (data?.restrictedAreaTf === false &&
+                            (data?.meetBankbookJoinPeriodTf === false ||
+                                data?.meetNumberOfPaymentsTf === false)))
+                        ? (form.generalKookminRes = '2순위')
+                        : null}
+
+                    {/* 탈락 */}
+                    {data?.accountTf === false ||
+                    data?.meetHomelessHouseholdMembersTf === false ||
+                    (data?.americanAge < 20 &&
+                        (form.supportYn === 'n' ||
+                            data?.householderTf === false)) ||
+                    (data?.americanAge >= 20 &&
+                        data?.americanAge < 30 &&
+                        form.lifeYn === 'n')
+                        ? (form.generalKookminRes = '탈락')
+                        : null}
+                </div>
+
+                {/* 1순위 */}
                 {/* 순위에 따른 페이지 이동 */}
                 {form.generalKookminRes === '1순위' ? (
-                    <div className="rankButton">
+                    <div className="generalRankButton">
                         <Link to="/firstRank">
                             <MainButton
                                 type="button"
@@ -823,8 +896,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                     </div>
                 ) : null}
 
+                {/* 2순위 */}
                 {form.generalKookminRes === '2순위' ? (
-                    <div className="rankButton">
+                    <div className="generalRankButton">
                         <Link to="/secondRank">
                             <MainButton
                                 type="button"
@@ -836,6 +910,22 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                 순위 확인하기
                             </MainButton>
                         </Link>
+                    </div>
+                ) : null}
+
+                {/* 탈락 */}
+                {form.generalKookminRes === '탈락' ? (
+                    <div className="generalRankButton">
+                        <MainButton
+                            onClick={fail}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
             </form>

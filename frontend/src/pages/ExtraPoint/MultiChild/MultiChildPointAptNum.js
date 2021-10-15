@@ -38,8 +38,10 @@ function MultiChildPointAptNum(props) {
     };
 
     const onClick = async () => {
-        if (notificationNumber == '') {
-            alert('아파트 분양정보 입력칸이 비어있습니다.');
+        if (notificationNumber === '' || multiChildHouseholdType == '') {
+            alert(
+                '아파트 분양정보 혹은 다자녀 공급 유형 입력칸이 비어있습니다.'
+            );
         } else {
             dispatch(
                 postMultiChildPointAptNum({
@@ -70,7 +72,7 @@ function MultiChildPointAptNum(props) {
     return (
         <>
             <div className="AptNumForm">
-                <div className="container">
+                <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -86,7 +88,8 @@ function MultiChildPointAptNum(props) {
                             value={multiChildHouseholdType}
                             onChange={handleChangeMultiChildHouseholdType}
                         >
-                            <option value="3세대이상">3세대 이상</option>
+                            <option selected>---선택---</option>
+                            <option value="삼세대이상">3세대 이상</option>
                             <option value="한부모가족">한부모가족</option>
                         </select>
 
@@ -94,10 +97,9 @@ function MultiChildPointAptNum(props) {
                             <MainButton
                                 type="button"
                                 onClick={onClick}
-                                width="80"
+                                width="100"
                                 height="35"
-                                fontSize="13"
-                                margin="5"
+                                fontSize="15"
                             >
                                 다음
                             </MainButton>

@@ -53,6 +53,14 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
         }
     }, [oldParentMinyeongStore?.postOldParentMinyeongAptNum]);
 
+    const fail = async () => {
+        if (form?.oldParentMinyeongRes !== '1순위') {
+            alert(
+                '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
+            );
+        }
+    };
+
     return (
         <>
             <div className="special_title">
@@ -65,7 +73,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
             </div>
 
             <form className="specialSupply_form" onSubmit={handleSubmit}>
-                <table className="specialMinyeong_table">
+                <table className="specialOldParentMinyeong_table">
                     {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
                     <tr className="special_phase">
                         <td className="qulificaiton">
@@ -768,24 +776,27 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                     ) : null}
                 </table>
 
-                {/* 순위 매기기 */}
-                {data?.accountTf === true &&
-                data?.householderTf === true &&
-                ((data?.americanAge < 20 && form.supportYn === true) ||
-                    data?.americanAge >= 20) &&
-                data?.meetHomelessHouseholdMembersTf === true &&
-                data?.meetOldParentSupportMore3yearsTf === true &&
-                ((data?.restrictedAreaTf === true &&
-                    data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
-                    data?.restrictedAreaTf === false) &&
-                data?.meetBankbookJoinPeriodTf === true &&
-                data?.meetDepositTf === true
-                    ? (form.oldParentMinyeongRes = '1순위')
-                    : (form.oldParentMinyeongRes = '탈락')}
+                <div className="rankRes">
+                    {/* 순위 매기기 */}
+                    {data?.accountTf === true &&
+                    data?.householderTf === true &&
+                    ((data?.americanAge < 20 && form.supportYn === 'y') ||
+                        data?.americanAge >= 20) &&
+                    data?.meetHomelessHouseholdMembersTf === true &&
+                    data?.meetOldParentSupportMore3yearsTf === true &&
+                    ((data?.restrictedAreaTf === true &&
+                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                            true) ||
+                        data?.restrictedAreaTf === false) &&
+                    data?.meetBankbookJoinPeriodTf === true &&
+                    data?.meetDepositTf === true
+                        ? (form.oldParentMinyeongRes = '1순위')
+                        : (form.oldParentMinyeongRes = '탈락')}
+                </div>
 
                 {/* 순위에 따른 페이지 이동 */}
                 {form.oldParentMinyeongRes === '1순위' ? (
-                    <div className="rankButton">
+                    <div className="oldParentRankButton">
                         <Link to="/firstRank">
                             <MainButton
                                 type="button"
@@ -798,7 +809,20 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                             </MainButton>
                         </Link>
                     </div>
-                ) : null}
+                ) : (
+                    <div className="oldParentRankButton">
+                        <MainButton
+                            onClick={fail}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
+                    </div>
+                )}
             </form>
         </>
     );

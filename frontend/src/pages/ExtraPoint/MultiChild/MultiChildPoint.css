@@ -14,8 +14,16 @@
     border-radius: 5px;
     font-size: 10pt;
 }
+.aptNumContainer {
+    text-align: center;
+    margin-left: 3%;
+    width: 15%;
+    height: 15%;
+}
 .aptNumButton {
-    float: left;
+    float: center;
+    margin-top: -100%;
+    margin-left: 100%;
 }
 
 /* point_title */
@@ -132,7 +140,7 @@
     background-color: #2a4476;
 }
 .multiChildPointRes {
-    width: 130px;
+    width: 150px;
     margin-top: 1%;
     margin-bottom: 1%;
     margin-right: 23%;
