@@ -11,10 +11,14 @@ import {
     GeneralMinyeongAptNum,
     GeneralKookminApi,
     GeneralKookminAptNum,
+    MultiChildTypeSelect,
     MultiChildMinyeongApi,
     MultiChildKookminApi,
+    OldParentTypeSelect,
     OldParentKookminApi,
+    OldParentKookminAptNum,
     OldParentMinyeongApi,
+    OldParentMinyeongAptNum,
     MultiChildMinyeongAptNum,
     MultiChildKookminAptNum,
     FirstRank,
@@ -35,6 +39,7 @@ import {
     FAQ,
     MyPage,
     GeneralMinyeoungPoint,
+    MultiChildPointAptNum,
     MultiChildPoint,
     OldParentPoint,
     OneParentPoint,
@@ -105,6 +110,10 @@ class App extends Component {
                         component={GeneralKookminAptNum}
                     />
                     <Route
+                        path="/specialMultiChildTypeSelect"
+                        component={MultiChildTypeSelect}
+                    />
+                    <Route
                         path="/specialMultiChildMinyeong"
                         component={MultiChildMinyeongApi}
                     />
@@ -125,8 +134,20 @@ class App extends Component {
                         component={OldParentMinyeongApi}
                     />
                     <Route
+                        path="/specialOldParentMinyeongAptNum"
+                        component={OldParentMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialOldParentTypeSelect"
+                        component={OldParentTypeSelect}
+                    />
+                    <Route
                         path="/specialOldParentKookmin"
                         component={OldParentKookminApi}
+                    />
+                    <Route
+                        path="/specialOldParentKookminAptNum"
+                        component={OldParentKookminAptNum}
                     />
 
                     {/* 순위 확인 페이지 */}
@@ -143,6 +164,11 @@ class App extends Component {
                         exact
                         path="/point/generalMinyeoung"
                         component={GeneralMinyeoungPoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/multiChildAptNum"
+                        component={MultiChildPointAptNum}
                     />
                     <Route
                         exact

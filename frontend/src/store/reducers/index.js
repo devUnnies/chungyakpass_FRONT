@@ -6,6 +6,9 @@ import generalMinyeong from './generalMinyeongReducer';
 import generalKookmin from './generalKookminReducer';
 import multiChildMinyeong from './multiChildMinyeongReducer';
 import multiChildKookmin from './multiChildKookminReducer';
+import multiChildPoint from './pointSpecialMultiChildReducer';
+import oldParentMinyeong from './oldParentMinyeongReducer';
+import oldParentKookmin from './oldParentKookminReducer';
 
 const rootReducer = combineReducers({
     auth,
@@ -15,6 +18,9 @@ const rootReducer = combineReducers({
     generalKookmin,
     multiChildMinyeong,
     multiChildKookmin,
+    multiChildPoint,
+    oldParentMinyeong,
+    oldParentKookmin,
 });
 
 // const rootReducer = (state, action) => {
