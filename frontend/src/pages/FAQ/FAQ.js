@@ -48,14 +48,14 @@ const FAQ = () => {
                     </span>{' '}
                 </h3>
             </div>
-            <div className="searchBar">
+            {/* <div className="searchBar">
                 <SearchBar
                     keyword={keyword}
                     results={results}
                     updateField={updateField}
                     placeholder={'Search...'}
                 ></SearchBar>
-            </div>
+            </div> */}
             <div className="info">
                 {questions.map((question) => (
                     <SingleQuestion key={question.id} {...question} />

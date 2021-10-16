@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
+import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
-function MultiChildMinyeongAptNum(props) {
+function OldParentKookminAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const multiChildMinyeongAptNumStore = useSelector(
-        (state) => state.multiChildMinyeong
+    const oldParentKookminAptNumStore = useSelector(
+        (state) => state.oldParentKookmin
     );
 
     const [
@@ -20,6 +20,11 @@ function MultiChildMinyeongAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
+    const [
+        oldParentKookminType,
+        setOldParentKookminType,
+        handleChangeOldParentKookminType,
+    ] = useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -27,49 +32,56 @@ function MultiChildMinyeongAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postMultiChildMinyeongAptNum({
+            postOldParentKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
+                oldParentKookminType: oldParentKookminType,
             })
         );
     };
 
     const onClick = async () => {
-        if (notificationNumber == '' || housingType == '') {
+        if (
+            notificationNumber == '' ||
+            housingType == '' ||
+            oldParentKookminType == ''
+        ) {
             alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
         } else {
             dispatch(
-                postMultiChildMinyeongAptNum({
+                postOldParentKookminAptNum({
                     notificationNumber: notificationNumber,
                     housingType: housingType,
+                    oldParentKookminType: oldParentKookminType,
                 })
             ); // api 연결 요청.
 
             const data =
-                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+                oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
             console.log(JSON.stringify(data));
             history.push({
-                pathname: '/specialMultiChildMinyeong',
-                props: {
+                pathname: '/specialOldParentKookmin',
+                state: {
                     notificationNumber,
                     housingType,
+                    oldParentKookminType,
                 },
             });
         }
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
-        if (multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 노부모 국민 자격확인 페이지로 이동.
+        if (oldParentKookminAptNumStore.postOldParentKookminAptNum) {
             const data =
-                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+                oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
         }
-    }, [multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum]);
+    }, [oldParentKookminAptNumStore.postOldParentKookminAptNum]);
 
     return (
         <>
             <div className="AptNumForm">
-                <div className="container">
+                <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -87,15 +99,31 @@ function MultiChildMinyeongAptNum(props) {
                             className="aptNumInput"
                         />
                         <br />
+                        <select
+                            className="aptNumInput"
+                            name="oldParentKookminType"
+                            value={oldParentKookminType}
+                            onChange={handleChangeOldParentKookminType}
+                        >
+                            <option value="">---선택---</option>
+                            <option value="공공주택특별법 적용">
+                                공공주택 특별법 적용
+                            </option>
+                            <option value="공공주택특별법 미적용">
+                                공공주택 특별법 미적용
+                            </option>
+                            <option value="그외 국민주택">
+                                그 외 국민주택
+                            </option>
+                        </select>
 
                         <span className="aptNumButton">
                             <MainButton
                                 type="button"
                                 onClick={onClick}
-                                width="100"
+                                width="80"
                                 height="35"
-                                fontSize="13"
-                                margin="5"
+                                fontSize="15"
                             >
                                 다음
                             </MainButton>
@@ -107,4 +135,4 @@ function MultiChildMinyeongAptNum(props) {
     );
 }
 
-export default MultiChildMinyeongAptNum;
+export default OldParentKookminAptNum;
