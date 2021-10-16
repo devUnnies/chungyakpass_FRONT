@@ -46,6 +46,34 @@ export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
 export const HOUSE_HOLDER_PATCH_SUCCESS = 'HOUSE_HOLDER_PATCH_SUCCESS';
 export const HOUSE_HOLDER_PATCH_ERROR = 'HOUSE_HOLDER_PATCH_ERROR';
 
+//자산 저장
+export const ADD_ASSETS_POST = 'ADD_ASSETS_POST';
+export const ADD_ASSETS_POST_SUCCESS = 'ADD_ASSETS_POST_SUCCESS';
+export const ADD_ASSETS_POST_ERROR = 'ADD_ASSETS_POST_ERROR';
+//자산 수정
+export const MOD_ASSETS_PUT = 'MOD_ASSETS_PUT';
+export const MOD_ASSETS_PUT_SUCCESS = 'MOD_ASSETS_PUT_SUCCESS';
+export const MOD_ASSETS_PUT_ERROR = 'MOD_ASSETS_PUT_ERROR';
+
+// 청약당첨이력 저장
+export const ADD_CHUNGYAK_POST = 'ADD_CHUNGYAK_POST';
+export const ADD_CHUNGYAK_POST_SUCCESS = 'ADD_CHUNGYAK_POST_SUCCESS';
+export const ADD_CHUNGYAK_POST_ERROR = 'ADD_CHUNGYAK_POST_ERROR';
+// 청약신청이력 수정
+export const MOD_CHUNGYAK_PUT = 'MOD_CHUNGYAK_PUT';
+export const MOD_CHUNGYAK_PUT_SUCCESS = 'MOD_CHUNGYAK_PUT_SUCCESS';
+export const MOD_CHUNGYAK_PUT_ERROR = 'MOD_CHUNGYAK_PUT_ERROR';
+
+// 청약제한사항 저장
+export const ADD_CHUNGYAK_RESTR_POST = 'ADD_CHUNGYAK_RESTR_POST';
+export const ADD_CHUNGYAK_RESTR_POST_SUCCESS =
+    'ADD_CHUNGYAK_RESTR_POST_SUCCESS';
+export const ADD_CHUNGYAK_RESTR_POST_ERROR = 'ADD_CHUNGYAK_RESTR_POST_ERROR';
+// 청약제한사항 수정
+export const MOD_CHUNGYAK_RESTR_PUT = 'MOD_CHUNGYAK_RESTR_PUT';
+export const MOD_CHUNGYAK_RESTR_PUT_SUCCESS = 'MOD_CHUNGYAK_RESTR_PUT_SUCCESS';
+export const MOD_CHUNGYAK_RESTR_PUT_ERROR = 'MOD_CHUNGYAK_RESTR_PUT_ERROR';
+
 /* Action Creator */
 export const addHouse = createPromiseThunk(
     ADD_HOUSE_POST,
@@ -95,4 +123,34 @@ export const delMem = createPromiseThunk(
 export const patHolder = createPromiseThunk(
     HOUSE_HOLDER_PATCH,
     commonInfoApi.patchHolder
+);
+
+export const addAsse = createPromiseThunk(
+    ADD_ASSETS_POST,
+    commonInfoApi.addAssets
+);
+
+export const modAsse = createPromiseThunk(
+    MOD_ASSETS_PUT,
+    commonInfoApi.modAssets
+);
+
+export const addChung = createPromiseThunk(
+    ADD_CHUNGYAK_POST,
+    commonInfoApi.addChungyak
+);
+
+export const modChung = createPromiseThunk(
+    MOD_CHUNGYAK_PUT,
+    commonInfoApi.modChungyak
+);
+
+export const addRestr = createPromiseThunk(
+    ADD_CHUNGYAK_RESTR_POST,
+    commonInfoApi.addRestriction
+);
+
+export const modRestr = createPromiseThunk(
+    MOD_CHUNGYAK_RESTR_PUT,
+    commonInfoApi.modRestriction
 );

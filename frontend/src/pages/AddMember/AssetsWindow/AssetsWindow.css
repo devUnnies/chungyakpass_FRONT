@@ -138,3 +138,9 @@
     color: #2a4476;
     margin: 10px;
 }
+
+/* 에러메시지 */
+.failMsg {
+    color: #fa1c33;
+    font-weight: bold;
+}

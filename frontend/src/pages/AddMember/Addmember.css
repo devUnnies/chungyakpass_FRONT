@@ -119,6 +119,7 @@
 }
 
 .allInfoTbodyTd {
+    white-space: pre-wrap;
 }
 
 .modifyContainer {
