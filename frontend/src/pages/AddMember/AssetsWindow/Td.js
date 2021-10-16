@@ -37,25 +37,31 @@ const Td = ({ item, handleRemove, handleEdit }) => {
 
             <td className="allInfoTbodyTd">
                 {item?.acquistionDate
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}
+                    ? item?.acquistionDate
+                          .replace('-', '년 ')
+                          .replace('-', '월 ')
+                          .concat('일')
+                    : null}
             </td>
 
             <td className="allInfoTbodyTd">
                 {item?.dispositionDate
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}
+                    ? item?.dispositionDate
+                          .replace('-', '년 ')
+                          .replace('-', '월 ')
+                          .concat('일')
+                    : null}
             </td>
             <td className="allInfoTbodyTd"> {item?.exclusiveArea} </td>
             <td className="allInfoTbodyTd"> {item?.amount} </td>
             <td className="allInfoTbodyTd">
                 {' '}
                 {item?.taxBaseDate
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}{' '}
+                    ? item?.taxBaseDate
+                          .replace('-', '년 ')
+                          .replace('-', '월 ')
+                          .concat('일')
+                    : null}{' '}
             </td>
 
             <td onClick={onEdit} className="modifyContainer">
