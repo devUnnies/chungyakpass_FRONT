@@ -71,11 +71,11 @@ function Signup() {
 
     useEffect(() => {
         // 회원가입 성공시
-        if (authStore.signup) {
+        if (authStore.signup.data) {
             const data = authStore.signup.data;
             if (data !== null) {
                 alert('청약패스에 가입해주신 이용자님, 환영합니다 ! ^____^ *');
-                history.push('/login');
+                window.location.replace('/login');
             }
         }
     }, [authStore.signup]);

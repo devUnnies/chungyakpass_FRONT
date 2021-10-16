@@ -29,6 +29,24 @@ import {
     DEL_MEMBER_DELETE,
     DEL_MEMBER_DELETE_SUCCESS,
     DEL_MEMBER_DELETE_ERROR,
+    ADD_CHUNGYAK_POST,
+    ADD_CHUNGYAK_POST_SUCCESS,
+    ADD_CHUNGYAK_POST_ERROR,
+    ADD_CHUNGYAK_RESTR_POST,
+    ADD_CHUNGYAK_RESTR_POST_SUCCESS,
+    ADD_CHUNGYAK_RESTR_POST_ERROR,
+    ADD_ASSETS_POST,
+    ADD_ASSETS_POST_SUCCESS,
+    ADD_ASSETS_POST_ERROR,
+    MOD_ASSETS_PUT,
+    MOD_ASSETS_PUT_SUCCESS,
+    MOD_ASSETS_PUT_ERROR,
+    MOD_CHUNGYAK_PUT,
+    MOD_CHUNGYAK_PUT_SUCCESS,
+    MOD_CHUNGYAK_PUT_ERROR,
+    MOD_CHUNGYAK_RESTR_PUT,
+    MOD_CHUNGYAK_RESTR_PUT_SUCCESS,
+    MOD_CHUNGYAK_RESTR_PUT_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -46,6 +64,12 @@ const initialState = {
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
+    addAssets: reducerUtils.initial(),
+    modAssets: reducerUtils.initial(),
+    addChungyak: reducerUtils.initial(),
+    modChungyak: reducerUtils.initial(),
+    addRestriction: reducerUtils.initial(),
+    modRestriction: reducerUtils.initial(),
 };
 
 export default function commonInfo(state = initialState, action) {
@@ -108,6 +132,48 @@ export default function commonInfo(state = initialState, action) {
         case HOUSE_HOLDER_PATCH_SUCCESS:
         case HOUSE_HOLDER_PATCH_ERROR:
             return handleAsyncActions(HOUSE_HOLDER_PATCH, 'patHolder')(
+                state,
+                action
+            );
+        case ADD_ASSETS_POST:
+        case ADD_ASSETS_POST_SUCCESS:
+        case ADD_ASSETS_POST_ERROR:
+            return handleAsyncActions(ADD_ASSETS_POST, 'addAssets')(
+                state,
+                action
+            );
+        case MOD_ASSETS_PUT:
+        case MOD_ASSETS_PUT_SUCCESS:
+        case MOD_ASSETS_PUT_ERROR:
+            return handleAsyncActions(MOD_ASSETS_PUT, 'modAssets')(
+                state,
+                action
+            );
+        case ADD_CHUNGYAK_POST:
+        case ADD_CHUNGYAK_POST_SUCCESS:
+        case ADD_CHUNGYAK_POST_ERROR:
+            return handleAsyncActions(ADD_CHUNGYAK_POST, 'addChungyak')(
+                state,
+                action
+            );
+        case MOD_CHUNGYAK_PUT:
+        case MOD_CHUNGYAK_PUT_SUCCESS:
+        case MOD_CHUNGYAK_PUT_ERROR:
+            return handleAsyncActions(MOD_CHUNGYAK_PUT, 'modChungyak')(
+                state,
+                action
+            );
+        case ADD_CHUNGYAK_RESTR_POST:
+        case ADD_CHUNGYAK_RESTR_POST_SUCCESS:
+        case ADD_CHUNGYAK_RESTR_POST_ERROR:
+            return handleAsyncActions(
+                ADD_CHUNGYAK_RESTR_POST,
+                'addRestriction'
+            )(state, action);
+        case MOD_CHUNGYAK_RESTR_PUT:
+        case MOD_CHUNGYAK_RESTR_PUT_SUCCESS:
+        case MOD_CHUNGYAK_RESTR_PUT_ERROR:
+            return handleAsyncActions(MOD_CHUNGYAK_RESTR_PUT, 'modRestriction')(
                 state,
                 action
             );

@@ -7,18 +7,19 @@ const Add = ({
     setStartDates,
     birthDate,
     ineligibleDate,
+    nextId,
 }) => {
     const [asset, setAsset] = useState({
         property: '',
-        saleRightYn: '',
-        residentialBuildingYn: '',
-        residentialBuilding: '',
-        nonResidentialBuilding: '',
-        metropolitanBuildingYn: '',
+        saleRightYn: 'n',
+        residentialBuildingYn: 'n',
+        residentialBuilding: null,
+        nonResidentialBuilding: null,
+        metropolitanBuildingYn: 'n',
         exceptionHouseYn: 'n',
         acquistionDate: '',
         dispositionDate: '',
-        exclusiveArea: '',
+        exclusiveArea: null,
         amount: '',
         taxBaseDate: '',
     });
@@ -36,51 +37,102 @@ const Add = ({
     const [failMsg, setFailMsg] = useState(null);
 
     const logic = () => {
+        // console.log('ADD !!!! ' + JSON.stringify(asset));
+        // console.log('시작일 !!! ' + startDate);
+        // console.log(asset.property === '자동차');
         if (asset.property === '건물') {
             setIsNoStruct(false);
-            // 3개월 이내 처분한 상속주택인지?
-            if (
-                logicData.isInheritance === 'y' &&
-                new Date(asset.dispositionDate) <= ineliDate
-            ) {
-                setIsNoStruct(true);
-                setAsset({ ...asset, exceptionHouseYn: 'y' });
-            }
-            // 폐가, 무허가 건물, 문화재로 지정된 주택, 미분양된 주택, 사업 목적인지?
-            if (logicData.conditionType !== '') {
-                setIsNoStruct(true);
-                setAsset({ ...asset, exceptionHouseYn: 'y' });
-            }
-            // 소형 주택인지?
-            if (
-                (asset.residentialBuilding === '단독주택' ||
-                    asset.residentialBuilding === '공동주택') &&
-                Number(asset.exclusiveArea) <= 60
-            ) {
-                setIsNoStruct(true);
-                setAsset({ ...asset, exceptionHouseYn: 'y' });
-            }
 
-            if (asset.dispositionDate) {
-                setIsNoStruct(false);
-                // setStartDate(asset.dispositionDate);
+            if (asset.property === '건물' && asset.dispositionDate) {
+                // 3개월 이내 처분한 상속주택인지?
+                if (
+                    logicData.isInheritance === 'y' &&
+                    new Date(asset.dispositionDate) <= ineliDate
+                ) {
+                    setIsNoStruct(true);
+                    setAsset({ ...asset, exceptionHouseYn: 'y' });
+
+                    // 폐가, 무허가 건물, 문화재로 지정된 주택, 미분양된 주택, 사업 목적인지?
+                    if (logicData.conditionType !== '') {
+                        setIsNoStruct(true);
+                        setAsset({ ...asset, exceptionHouseYn: 'y' });
+
+                        // 소형 주택인지?
+                        if (
+                            (asset.residentialBuilding === '단독주택' ||
+                                asset.residentialBuilding === '공동주택') &&
+                            Number(asset.exclusiveArea) <= 60
+                        ) {
+                            setIsNoStruct(true);
+                            setAsset({ ...asset, exceptionHouseYn: 'y' });
+                        }
+                    }
+                }
                 setStartDates([
                     ...startDates,
-                    { startDate: asset.dispositionDate },
+                    { id: nextId, startDate: asset.dispositionDate },
                 ]);
             } else {
                 setIsNoStruct(false);
                 setStartDate(null);
-                setStartDates([...startDates, { startDate: null }]);
+                setAsset({ ...asset, exceptionHouseYn: 'n' });
             }
-        } else {
+
+            return;
+        } else if (asset.property === '자동차') {
             setIsNoStruct(true);
+            setStartDate(birthDate);
+
+            return;
         }
     };
 
     useEffect(() => {
-        setStartDate(asset.dispositionDate);
+        if (asset.property === '건물')
+            setStartDates([
+                ...startDates,
+                { id: nextId, startDate: startDate },
+            ]);
+    }, [startDate]);
+
+    useEffect(() => {
+        if (asset.property === '건물') setStartDate(asset.dispositionDate);
     }, [asset.dispositionDate]);
+
+    // 체크해서 아닐 때는 값 없도록
+    useEffect(() => {
+        if (asset.residentialBuildingYn === 'y') {
+            setAsset({ ...asset, nonResidentialBuilding: null });
+        } else {
+            setAsset({ ...asset, residentialBuilding: null });
+        }
+    }, [asset.residentialBuildingYn]);
+
+    useEffect(() => {
+        if (asset.property === '자동차') {
+            setAsset({
+                ...asset,
+                saleRightYn: 'n',
+                residentialBuildingYn: 'n',
+                residentialBuilding: null,
+                nonResidentialBuilding: null,
+                metropolitanBuildingYn: 'n',
+                exceptionHouseYn: 'n',
+            });
+        }
+    }, [asset.property]);
+
+    useEffect(() => {
+        // fail msg 수정
+        if (
+            new Date(Date.parse(asset.acquistionDate)) >
+            new Date(Date.parse(asset.dispositionDate))
+        ) {
+            setFailMsg('!!');
+        } else {
+            setFailMsg(null);
+        }
+    }, [asset]);
 
     const onAssetChange = (e) => {
         const { name, value } = e.target;
@@ -107,19 +159,23 @@ const Add = ({
 
             setAsset({
                 property: '',
-                saleRightYn: '',
-                residentialBuildingYn: '',
-                residentialBuilding: '',
-                nonResidentialBuilding: '',
+                saleRightYn: 'n',
+                residentialBuildingYn: 'n',
+                residentialBuilding: null,
+                nonResidentialBuilding: null,
+                metropolitanBuildingYn: 'n',
+                exceptionHouseYn: 'n',
                 acquistionDate: '',
                 dispositionDate: '',
-                exclusiveArea: '',
+                exclusiveArea: null,
                 amount: '',
                 taxBaseDate: '',
                 startDate: birthDate,
             });
         } else {
-            alert('부적격 받은 사례가 있는 항목을 선택하셨습니다.');
+            alert(
+                '이대로 진행 시 자격을 판단할 수 없습니다.\n입력 내용을 다시 확인해주십시오.'
+            );
         }
     };
 
@@ -388,6 +444,50 @@ const Add = ({
                                     </td>
                                 </tr>
                             ) : null}
+                            {asset.property === '건물' ||
+                            asset.property === '토지' ? (
+                                <tr className="addAssetFormTableTbodyTr">
+                                    <td className="addAssetFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">위치</span>
+                                    </td>
+                                    <td className="addAssetFormTableTbodyTrTd">
+                                        {/* <hr className="Line" /> */}
+                                        <input
+                                            className="assetSaleRightYnInput"
+                                            type="radio"
+                                            name="metropolitanBuildingYn"
+                                            onChange={onAssetChange}
+                                            value="y"
+                                            checked={
+                                                asset.metropolitanBuildingYn ===
+                                                'y'
+                                                    ? true
+                                                    : false
+                                            }
+                                            required
+                                        />
+                                        <span className="assetSaleRightYnText">
+                                            수도권이다
+                                        </span>
+                                        <input
+                                            className="assetSaleRightYnInput"
+                                            type="radio"
+                                            name="metropolitanBuildingYn"
+                                            onChange={onAssetChange}
+                                            value="n"
+                                            checked={
+                                                asset.metropolitanBuildingYn ===
+                                                'n'
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                        <span className="assetSaleRightYnText">
+                                            수도권이 아니다
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null}
                             <tr className="addAssetFormTableTbodyTr">
                                 <td className="addAssetFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">취득일</span>
@@ -402,7 +502,20 @@ const Add = ({
                                         required
                                     />
                                 </td>
+                                <td className="addMemberFormTableTbodyTrTdError">
+                                    {new Date(
+                                        Date.parse(asset.acquistionDate)
+                                    ) >
+                                    new Date(
+                                        Date.parse(asset.dispositionDate)
+                                    ) ? (
+                                        <span className="failMsg">
+                                            {failMsg}
+                                        </span>
+                                    ) : null}
+                                </td>
                             </tr>
+
                             <tr className="addAssetFormTableTbodyTr">
                                 <td className="addAssetFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">처분일</span>
@@ -416,6 +529,18 @@ const Add = ({
                                         onChange={onAssetChange}
                                         required
                                     />
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTdError">
+                                    {new Date(
+                                        Date.parse(asset.acquistionDate)
+                                    ) >
+                                    new Date(
+                                        Date.parse(asset.dispositionDate)
+                                    ) ? (
+                                        <span className="failMsg">
+                                            {failMsg}
+                                        </span>
+                                    ) : null}
                                 </td>
                             </tr>
                             {asset.property === '건물' ||
