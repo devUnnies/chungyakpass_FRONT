@@ -11,6 +11,8 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const OldParentMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -21,6 +23,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
+    const history = useHistory();
 
     const data = oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
@@ -52,6 +55,18 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
             console.log(JSON.stringify(data));
         }
     }, [oldParentMinyeongStore?.postOldParentMinyeongAptNum]);
+
+    // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
+    const rankSuccess = async () => {
+        if (form?.oldParentMinyeongRes === '1순위') {
+            history.push({
+                pathname: '/firstRank',
+                state: {
+                    form,
+                },
+            });
+        }
+    };
 
     const fail = async () => {
         if (form?.oldParentMinyeongRes !== '1순위') {
@@ -797,17 +812,16 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                 {/* 순위에 따른 페이지 이동 */}
                 {form.oldParentMinyeongRes === '1순위' ? (
                     <div className="oldParentRankButton">
-                        <Link to="/firstRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
+                        <MainButton
+                            onClick={rankSuccess}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : (
                     <div className="oldParentRankButton">

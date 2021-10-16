@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../components/Input/Input';
 import useInputState from '../../components/Input/useInputState';
-import { postGeneralKookminAptNum } from '../../store/actions/generalKookminAction';
+import {
+    postGeneralKookminAptNum,
+    RES_GENERAL_KOOKMIN_APTNUM_POST_ERROR,
+} from '../../store/actions/generalKookminAction';
 import MainButton from '../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 import './GeneralSupply.css';

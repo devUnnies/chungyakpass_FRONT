@@ -12,6 +12,7 @@ import {
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
 import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const OldParentKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -23,6 +24,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
     const [oldParentKookminType, setOldParentKookminType] = useState();
+    const history = useHistory();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
     const getParams = location.state.oldParentKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
@@ -56,6 +58,18 @@ const OldParentKookminApi = ({ onSaveData }) => {
             console.log(JSON.stringify(data));
         }
     }, [oldParentKookminStore.postOldParentKookminAptNum]);
+
+    // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
+    const rankSuccess = async () => {
+        if (form?.oldParentKookmines === '1순위') {
+            history.push({
+                pathname: '/firstRank',
+                state: {
+                    form,
+                },
+            });
+        }
+    };
 
     const fail = async () => {
         if (form?.oldParentKookmines !== '1순위') {
@@ -876,17 +890,16 @@ const OldParentKookminApi = ({ onSaveData }) => {
                 {/* 순위에 따른 페이지 이동 */}
                 {form.oldParentKookminRes === '1순위' ? (
                     <div className="oldParentRankButton">
-                        <Link to="/firstRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
+                        <MainButton
+                            onClick={rankSuccess}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : (
                     <div className="oldParentRankButton">

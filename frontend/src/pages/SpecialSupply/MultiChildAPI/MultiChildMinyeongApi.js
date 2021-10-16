@@ -11,6 +11,8 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const MultiChildMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -21,6 +23,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
+    const history = useHistory();
 
     const data = multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
@@ -52,6 +55,25 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
             console.log(JSON.stringify(data));
         }
     }, [multiChildMinyeongStore.postMultiChildMinyeongAptNum]);
+
+    // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
+    const rankSuccess = async () => {
+        if (form?.multiChildMinyeongRes === '1순위') {
+            history.push({
+                pathname: '/firstRank',
+                state: {
+                    form,
+                },
+            });
+        } else if (form?.multiChildMinyeongRes === '2순위') {
+            history.push({
+                pathname: '/secondRank',
+                state: {
+                    form,
+                },
+            });
+        }
+    };
 
     const fail = async () => {
         if (form?.multiChildMinyeongRes === '탈락') {
@@ -1041,37 +1063,20 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                 </div>
 
                 {/* 순위에 따른 페이지 이동 */}
-                {/* 1순위 */}
-                {form.multiChildMinyeongRes === '1순위' ? (
+                {/* 1, 2순위 */}
+                {form.multiChildMinyeongRes === '1순위' ||
+                form.multiChildMinyeongRes === '2순위' ? (
                     <div className="multiChildRankButton">
-                        <Link to="/firstRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
-                    </div>
-                ) : null}
-
-                {/* 2순위 */}
-                {form.multiChildMinyeongRes === '2순위' ? (
-                    <div className="multiChildRankButton">
-                        <Link to="/secondRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
+                        <MainButton
+                            onClick={rankSuccess}
+                            type="button"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
 

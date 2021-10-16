@@ -2,21 +2,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postMultiChildPointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
+import { postGeneralMinyeongPoint } from '../../../store/actions/pointGeneralMinyeongAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
-import './MultiChildPoint.css';
+import './GeneralMinyeongPoint.css';
 
-function GeneralMinyeongPointAptNum(props) {
+function GeneralMinyeongPoint(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const multiChildAptNumStore = useSelector((state) => state.multiChildPoint);
+    const generalMinyeongPointStore = useSelector(
+        (state) => state.generalMinyeongPoint
+    );
 
-    const [
-        notificationNumber,
-        setNotificationNumber,
-        handleChangeNotificationNumber,
-    ] = useInputState('');
+    const [houseMemberId, setHouseMemberId, handleChangeNotificationNumber] =
+        useInputState('');
 
     const [
         multiChildHouseholdType,
@@ -30,9 +29,13 @@ function GeneralMinyeongPointAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postMultiChildPointAptNum({
-                notificationNumber: notificationNumber,
-                multiChildHouseholdType: multiChildHouseholdType,
+            postGeneralMinyeongPoint({
+                houseMemberId: houseMemberId,
+                parentsDeathYn: parentsDeathYn,
+                divorceYn: divorceYn,
+                sameResidentRegistrationYn: isameResidentRegistrationYn,
+                stayOverYn: stayOverYn,
+                nowStayOverYn: nowStayOverYn,
             })
         );
     };
@@ -42,19 +45,28 @@ function GeneralMinyeongPointAptNum(props) {
             alert('아파트 분양정보 입력칸이 비어있습니다.');
         } else {
             dispatch(
-                postMultiChildPointAptNum({
-                    notificationNumber: notificationNumber,
-                    multiChildHouseholdType: multiChildHouseholdType,
+                postGeneralMinyeongPoint({
+                    houseMemberId: houseMemberId,
+                    parentsDeathYn: parentsDeathYn,
+                    divorceYn: divorceYn,
+                    sameResidentRegistrationYn: isameResidentRegistrationYn,
+                    stayOverYn: stayOverYn,
+                    nowStayOverYn: nowStayOverYn,
                 })
             ); // api 연결 요청.
 
-            const data = multiChildAptNumStore?.postMultiChildPointAptNum?.data;
+            const data =
+                generalMinyeongPointStore?.postGeneralMinyeongPoint?.data;
             console.log(JSON.stringify(data));
             history.push({
-                pathname: '/point/multiChild',
+                pathname: '/point/generalMinyeoung',
                 state: {
-                    notificationNumber,
-                    multiChildHouseholdType,
+                    houseMemberId,
+                    parentsDeathYn,
+                    divorceYn,
+                    sameResidentRegistrationYn,
+                    stayOverYn,
+                    nowStayOverYn,
                 },
             });
         }
@@ -62,10 +74,11 @@ function GeneralMinyeongPointAptNum(props) {
 
     useEffect(() => {
         // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
-        if (multiChildAptNumStore?.postMultiChildPointAptNum) {
-            const data = multiChildAptNumStore.postMultiChildPointAptNum.data;
+        if (generalMinyeongPointStore?.postGeneralMinyeongPoint) {
+            const data =
+                generalMinyeongPointStore.postGeneralMinyeongPoint.data;
         }
-    }, [multiChildAptNumStore?.postMultiChildPointAptNum]);
+    }, [generalMinyeongPointStore?.postGeneralMinyeongPoint]);
 
     return (
         <>
@@ -109,4 +122,4 @@ function GeneralMinyeongPointAptNum(props) {
     );
 }
 
-export default GeneralMinyeongPointAptNum;
+export default GeneralMinyeongPoint;

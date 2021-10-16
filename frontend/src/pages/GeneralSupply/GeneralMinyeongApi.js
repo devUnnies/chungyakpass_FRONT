@@ -12,6 +12,7 @@ import {
 import MainButton from '../../components/Button/MainButton';
 import './GeneralSupply.css';
 import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const GeneralMinyeongApi = ({ onSaveData, location }) => {
     const [getList, setGetList] = useState();
@@ -20,6 +21,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
+    const history = useHistory();
 
     const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data; // 일반 민영 로직 접근 변수
 
@@ -51,6 +53,25 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
             console.log(JSON.stringify(data));
         }
     }, [generalMinyeongStore.postGeneralMinyeongAptNum]);
+
+    // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
+    const rankSuccess = async () => {
+        if (form?.generalMinyeongRes === '1순위') {
+            history.push({
+                pathname: '/firstRank',
+                state: {
+                    form,
+                },
+            });
+        } else if (form?.generalMinyeongRes === '2순위') {
+            history.push({
+                pathname: '/secondRank',
+                state: {
+                    form,
+                },
+            });
+        }
+    };
 
     // 부적격 발생 시 alert 창
     const fail = async () => {
@@ -905,37 +926,20 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                 </div>
 
                 {/* 순위에 따른 페이지 이동 */}
-                {/* 1순위 */}
-                {form.generalMinyeongRes === '1순위' ? (
+                {/* 1, 2순위 */}
+                {form.generalMinyeongRes === '1순위' ||
+                form.generalMinyeongRes === '2순위' ? (
                     <div className="generalRankButton">
-                        <Link to="/firstRank">
-                            <MainButton
-                                type="submit"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
-                    </div>
-                ) : null}
-
-                {/* 2순위 */}
-                {form.generalMinyeongRes === '2순위' ? (
-                    <div className="generalRankButton">
-                        <Link to="/secondRank">
-                            <MainButton
-                                type="submit"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
+                        <MainButton
+                            onClick={rankSuccess}
+                            type="submit"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
 

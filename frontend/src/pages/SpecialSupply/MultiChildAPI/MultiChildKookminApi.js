@@ -12,6 +12,7 @@ import {
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
 import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const MultiChildKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -23,6 +24,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
     const [multiChildKookminType, setMultiChildKookminType] = useState();
+    const history = useHistory();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
     const getParams = location.state.multiChildKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
@@ -57,6 +59,25 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             console.log(JSON.stringify(data));
         }
     }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
+
+    // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
+    const rankSuccess = async () => {
+        if (form?.multiChildKookminRes === '1순위') {
+            history.push({
+                pathname: '/firstRank',
+                state: {
+                    form,
+                },
+            });
+        } else if (form?.multiChildKookminRes === '2순위') {
+            history.push({
+                pathname: '/secondRank',
+                state: {
+                    form,
+                },
+            });
+        }
+    };
 
     const fail = async () => {
         if (form?.multiChildKookminRes === '탈락') {
@@ -1036,37 +1057,20 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                 </div>
 
                 {/* 순위에 따른 페이지 이동 */}
-                {/* 1순위 */}
-                {form.multiChildKookminRes === '1순위' ? (
+                {/* 1, 2순위 */}
+                {form.multiChildKookminRes === '1순위' ||
+                form.multiChildKookminRes === '2순위' ? (
                     <div className="multiChildRankButton">
-                        <Link to="/firstRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
-                    </div>
-                ) : null}
-
-                {/* 2순위 */}
-                {form.multiChildKookminRes === '2순위' ? (
-                    <div className="multiChildRankButton">
-                        <Link to="/secondRank">
-                            <MainButton
-                                type="button"
-                                width="100"
-                                height="30"
-                                fontWeight="bold"
-                                marginLeft="20%"
-                            >
-                                순위 확인하기
-                            </MainButton>
-                        </Link>
+                        <MainButton
+                            onClick={rankSuccess}
+                            type="submit"
+                            width="100"
+                            height="30"
+                            fontWeight="bold"
+                            marginLeft="20%"
+                        >
+                            순위 확인하기
+                        </MainButton>
                     </div>
                 ) : null}
 
