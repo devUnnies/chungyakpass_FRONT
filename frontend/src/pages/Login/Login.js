@@ -48,7 +48,8 @@ function Login(props) {
             const data = authStore.login.data;
             dispatch(signinWithToken(data.token));
             storage.set('user-token', data.token);
-            history.push('/');
+
+            if (storage.get('user-token')) window.location.replace('/');
         }
         // 로그인 실패시
         else if (authStore.login.loading) {
