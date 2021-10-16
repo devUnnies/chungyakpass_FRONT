@@ -10,7 +10,7 @@ import {
 } from '../../services/api/asyncUtils';
 
 const initialState = {
-    postMultiChildAptNum: reducerUtils.initial(),
+    postMultiChildPointAptNum: reducerUtils.initial(),
 };
 
 export default function multiChildPoint(state = initialState, action) {
@@ -20,7 +20,7 @@ export default function multiChildPoint(state = initialState, action) {
         case RES_MULTICHILD_APTNUM_POST_ERROR:
             return handleAsyncActions(
                 RES_MULTICHILD_APTNUM_POST,
-                'postMultiChildAptNum'
+                'postMultiChildPointAptNum'
             )(state, action);
         default:
             return state;
