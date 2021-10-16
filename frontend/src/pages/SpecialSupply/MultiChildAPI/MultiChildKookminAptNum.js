@@ -20,7 +20,6 @@ function MultiChildKookminAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
-    //
     const [
         multiChildKookminType,
         setMultiChildKookminType,
@@ -82,7 +81,7 @@ function MultiChildKookminAptNum(props) {
     return (
         <>
             <div className="AptNumForm">
-                <div className="container">
+                <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -120,11 +119,11 @@ function MultiChildKookminAptNum(props) {
 
                         <span className="aptNumButton">
                             <MainButton
+                                type="button"
                                 onClick={onClick}
                                 width="100"
                                 height="35"
-                                fontSize="13"
-                                margin="5"
+                                fontSize="15"
                             >
                                 다음
                             </MainButton>

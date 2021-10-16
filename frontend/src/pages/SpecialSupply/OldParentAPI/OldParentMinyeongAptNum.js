@@ -2,20 +2,25 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postMultiChildPointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
+import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
+import '../SpecialSupply.css';
 
-function MultiChildPointAptNum(props) {
+function OldParentMinyeongAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const multiChildAptNumStore = useSelector((state) => state.multiChildPoint);
+    const oldParentMinyeongAptNumStore = useSelector(
+        (state) => state.oldParentMinyeong
+    );
 
     const [
         notificationNumber,
         setNotificationNumber,
         handleChangeNotificationNumber,
     ] = useInputState('');
+    const [housingType, setHousingType, handleChangeHousingType] =
+        useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -23,39 +28,44 @@ function MultiChildPointAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postMultiChildPointAptNum({
+            postOldParentMinyeongAptNum({
                 notificationNumber: notificationNumber,
+                housingType: housingType,
             })
         );
     };
 
     const onClick = async () => {
-        if (notificationNumber == '') {
-            alert('아파트 분양정보 입력칸이 비어있습니다.');
+        if (notificationNumber == '' || housingType == '') {
+            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
         } else {
             dispatch(
-                postMultiChildPointAptNum({
+                postOldParentMinyeongAptNum({
                     notificationNumber: notificationNumber,
+                    housingType: housingType,
                 })
             ); // api 연결 요청.
 
-            const data = multiChildAptNumStore.postMultiChildPointAptNum.data;
+            const data =
+                oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
             console.log(JSON.stringify(data));
             history.push({
-                pathname: '/specialMultiChildPoint',
+                pathname: '/specialOldParentMinyeong',
                 props: {
                     notificationNumber,
+                    housingType,
                 },
             });
         }
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
-        if (multiChildAptNumStore.postMultiChildPointAptNum) {
-            const data = multiChildAptNumStore.postMultiChildPointAptNum.data;
+        // 아파트 공고번호, 주택형 post 성공시 노부모 민영 자격확인 페이지로 이동.
+        if (oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum) {
+            const data =
+                oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
         }
-    }, [multiChildAptNumStore.postMultiChildPointAptNum]);
+    }, [oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum]);
 
     return (
         <>
@@ -70,9 +80,18 @@ function MultiChildPointAptNum(props) {
                             className="aptNumInput"
                         />
                         <br />
+                        <input
+                            type="text"
+                            placeholder="주택형"
+                            value={housingType}
+                            onChange={handleChangeHousingType}
+                            className="aptNumInput"
+                        />
+                        <br />
 
                         <span className="aptNumButton">
                             <MainButton
+                                type="button"
                                 onClick={onClick}
                                 width="100"
                                 height="35"
@@ -89,4 +108,4 @@ function MultiChildPointAptNum(props) {
     );
 }
 
-export default MultiChildPointAptNum;
+export default OldParentMinyeongAptNum;
