@@ -5,10 +5,12 @@ import Add from './Add';
 import Modify from './Modify';
 
 const List = (props) => {
-    const [asset, setAsset] = useState({});
-    const [assets, setAssets] = useState(props.assets);
+    const [asset, setAsset] = useState();
+    const [assets, setAssets] = useState();
     const [startDate, setStartDate] = useState(props.birthDate);
-    const [startDates, setStartDates] = useState([{ startDate: startDate }]);
+    const [startDates, setStartDates] = useState([
+        { id: 0, startDate: startDate },
+    ]);
     const [selected, setSelected] = useState('');
     const [add, setAdd] = useState(false);
     const [modify, setModify] = useState(false);
@@ -26,15 +28,13 @@ const List = (props) => {
             })
         );
 
-        if (startDates[0].startDate !== props.birthDate) {
+        if (startDates[0]?.startDate !== props.birthDate) {
             setStartDate(startDates[0].startDate);
         } else {
             setStartDate(null);
         }
 
         props.getStartDate(startDate);
-
-        console.log('리스트에서의 스타트 !!!! ' + startDate);
     };
 
     const sendStartDate = (value) => {
@@ -57,8 +57,9 @@ const List = (props) => {
     const handleSave = (data) => {
         // 데이터 수정하기
         if (data.id) {
-            console.log(data.id + '!!!!!');
+            // console.log(data.id + '!!!!!');
             // 받아온 데이터 id 가 있을 경우
+            setAsset(data);
             setAssets(
                 assets.map((row) =>
                     data.id === row.id
@@ -88,14 +89,17 @@ const List = (props) => {
             // console.log(JSON.stringify(data));
             // 기존의 데이터 추가하기
             setAsset({ ...data, id: nextId.current });
-            asset !== {} && assets === []
-                ? setAssets([{ ...data, id: nextId.current }])
-                : setAssets([...assets, { ...data, id: nextId.current }]);
+
             nextId.current += 1;
         }
 
         setAdd(false);
     };
+
+    useEffect(() => {
+        if (assets && asset) setAssets([...assets, asset]);
+        else if (asset) setAssets([asset]);
+    }, [asset]);
 
     const handleRemove = (id) => {
         setAssets((info) => info.filter((item) => item.id !== id));
@@ -121,7 +125,7 @@ const List = (props) => {
             amount: item.amount,
             taxBaseDate: item.taxBaseDate,
         };
-        console.log(selectedData);
+        // console.log(selectedData);
         setSelected(selectedData);
     };
 
@@ -130,15 +134,12 @@ const List = (props) => {
     };
 
     const handleEditSubmit = (item) => {
-        console.log(item);
+        // console.log(item);
         handleSave(item);
         setModify(false);
     };
 
     const handleAssetsSubmit = () => {
-        // alert('입력이 모두 완료되었습니다 !', () => {
-        //     console.log('얜 뭐죠 ?? ');
-        // });
         sendStartDate(startDate);
         sendCloseValue(true);
         sendAssetsValue();
@@ -201,6 +202,7 @@ const List = (props) => {
                     setStartDates={setStartDates}
                     birthDate={props.birthDate}
                     ineligibleDate={props.ineligibleDate}
+                    nextId={nextId}
                 />
             )}
             {modify && (
