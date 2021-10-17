@@ -1,6 +1,8 @@
 import { React } from 'react';
 import { Link } from 'react-router-dom';
+import storage from '../../services/store';
 import './Sitemap.css';
+import { logOut } from '../../store/actions/authAction';
 
 function Sitemap() {
     return (
@@ -24,10 +26,26 @@ function Sitemap() {
                     <div className="Eng_title">SERVICE</div>
                     <div className="Kor_title">청약 서비스</div>
                     <div className="sub_menu">
-                        <Link to="/common">청약자격 확인</Link>
+                        <Link
+                            to={
+                                storage.get('user-token')
+                                    ? '/addHouseHolder'
+                                    : '/needLogin'
+                            }
+                        >
+                            청약자격 확인
+                        </Link>
                     </div>
                     <div className="sub_menu">
-                        <Link to="">가 / 배점 계산</Link>
+                        <Link
+                            to={
+                                storage.get('user-token')
+                                    ? '/point/generalMinyeoung'
+                                    : '/needLogin'
+                            }
+                        >
+                            가배점 계산
+                        </Link>
                     </div>
                 </span>
 
@@ -36,10 +54,26 @@ function Sitemap() {
                     <div className="Eng_title">INFORMATION</div>
                     <div className="Kor_title">주요 소식</div>
                     <div className="sub_menu">
-                        <Link to="/case">부적격 사례</Link>
+                        <Link
+                            to={
+                                storage.get('user-token')
+                                    ? '/case'
+                                    : '/needLogin'
+                            }
+                        >
+                            부적격 사례
+                        </Link>
                     </div>
                     <div className="sub_menu">
-                        <Link to="/FAQ">FAQ</Link>
+                        <Link
+                            to={
+                                storage.get('user-token')
+                                    ? '/FAQ'
+                                    : '/needLogin'
+                            }
+                        >
+                            FAQ
+                        </Link>
                     </div>
                 </span>
 
@@ -57,7 +91,11 @@ function Sitemap() {
                         <Link to="">회원정보수정</Link>
                     </div>
                     <div className="sub_menu">
-                        <Link to="">로그인 / 로그아웃</Link>
+                        <Link
+                            to={storage.get('user-token') ? logOut() : '/login'}
+                        >
+                            {storage.get('user-token') ? '로그아웃' : '로그인'}
+                        </Link>
                     </div>
                 </span>
             </div>
