@@ -38,7 +38,15 @@ const BoardView = ({ history, location, match }) => {
                         </div>
                         <div className="postView_row">
                             <label className="postName">내용</label>
-                            <span className="inner">{data.Link}</span>
+                            <span className="inner">
+                                {data.Link}
+                                <br />
+                                <br />
+                                <a href={data.link} target="_blank">
+                                    {data.link}
+                                </a>
+                                <br />더 보시려면 위 링크로 들어가주세요.
+                            </span>
                         </div>
                     </>
                 ) : (

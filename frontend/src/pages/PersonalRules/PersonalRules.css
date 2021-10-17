@@ -1,0 +1,21 @@
+.personalRulesContainer {
+    width: 65%;
+    margin-left: 18%;
+    margin-bottom: 5%;
+}
+
+.personalRulesText {
+    margin-bottom: 3%;
+}
+
+.personalRuleTitle {
+    margin-left: 20%;
+    margin-bottom: 3%;
+
+    border-left: 5px solid #2a4476;
+    padding: 2px;
+    font-weight: bold;
+}
+.personalRuleTitleText {
+    margin-left: 13px;
+}
