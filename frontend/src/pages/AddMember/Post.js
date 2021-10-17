@@ -170,7 +170,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members, setHouseInfo }) => {
         return (
             <NewWindow
                 name="assetsList"
-                title="자산 정보 목록 - 청약패스(chungyakpass.co.kr)"
+                title="자산 정보 목록 - 청약패스(chungyakpass.com)"
                 center="screen"
                 onBlock={() => {}}
             >
