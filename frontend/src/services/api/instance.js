@@ -5,8 +5,6 @@ const instance = axios.create({
     baseURL: 'http:///3.37.99.145:8080/',
 });
 
-const token = storage.get('user-token');
-
 const interceptorsRequestFulfilled = (config) => {
     return {
         ...config,
@@ -14,7 +12,7 @@ const interceptorsRequestFulfilled = (config) => {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json; charset=UTF-8',
             // prettier-ignore
-            'Authorization': `Bearer ${token ? token : null}`,
+            'Authorization': `Bearer ${storage.get('user-token') ? storage.get('user-token') : null}`,
         },
     };
 };

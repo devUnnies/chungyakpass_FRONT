@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ReactDOM } from 'react';
 import NewWindow from 'react-new-window';
 import List from './AssetsWindow/List';
 import PopupDom from '../AddHouseHolder/PopupDom';
@@ -16,7 +15,7 @@ import {
     addMem,
 } from '../../store/actions/commonInfoAction';
 
-const Post = ({ onSaveData, houseId, setHouseId, members }) => {
+const Post = ({ onSaveData, houseId, setHouseId, members, setHouseInfo }) => {
     const history = useHistory();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isTableOpen, setIsTableOpen] = useState(false);
@@ -28,11 +27,16 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
     const [haveLimit, setHaveLimit] = useState();
 
     const [close, setClose] = useState(false);
-    const [assets, setAssets] = useState([]);
+    const [assets, setAssets] = useState();
 
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
-    const [memberId, setMemberId] = useState();
+    const [houseArr, setHouseArr] = useState({
+        my: commonInfoStore?.addHouse.data?.id,
+        spouse: 0,
+    });
+
+    const [memberId, setMemberId] = useState(commonInfoStore.addMem.data?.id);
 
     const [address, setAddress] = useState({
         sido: '',
@@ -54,7 +58,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
         spousePostcode: '',
         spouseLive: 'base',
         soldierYn: '',
-        isMarried: false,
+        isMarried: 'n',
         marriedDate: '',
         transferDate: '',
         income: '0',
@@ -97,7 +101,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    const onAddress = () => {
         setAddress({
             ...address,
             sido: form.spouseAddress?.split(' ')[0],
@@ -126,7 +130,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                     ? form.spouseAddress?.substring(8)
                     : null,
         });
-    }, [form.spouseAddress]);
+    };
 
     const onAddressChange = (e) => {
         const { name, value } = e.target;
@@ -160,15 +164,13 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
         if (haveAssets === 'y') setClose(false);
     };
 
-    useEffect(() => isAssetsWindow, [haveAssets]);
-
     // 자산 창 열기 !!
     const AssetsWindow = () => {
         if (close) return;
         return (
             <NewWindow
                 name="assetsList"
-                title="자산 정보 목록 - 청약패스(chungyakpass.co.kr)"
+                title="자산 정보 목록 - 청약패스(chungyakpass.com)"
                 center="screen"
                 onBlock={() => {}}
             >
@@ -177,156 +179,36 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                     getAssetsValue={getAssetsValue}
                     getStartDate={getStartDate}
                     assets={form.assets}
+                    setForm={setForm}
                     birthDate={form.birthDate}
-                    ineligibleDate={historyArr.ineligibleDate}
+                    ineligibleDate={historyArr?.ineligibleDate}
                 />
             </NewWindow>
         );
     };
 
     useEffect(() => {
-        setHouseId({
-            ...houseId,
-            my: commonInfoStore?.addHouse.data?.houseId,
-        });
+        setHouseArr({ ...houseArr, my: commonInfoStore?.addHouse.data?.id });
     }, []);
 
     useEffect(() => {
-        setHouseId({
-            ...houseId,
-            spouse: commonInfoStore?.addHouse.data?.houseId,
+        isAssetsWindow();
+    }, [haveAssets]);
+
+    useEffect(() => {
+        onAddress();
+    }, [form.spouseAddress]);
+
+    useEffect(() => {
+        setHouseArr({
+            ...houseArr,
+            spouse: commonInfoStore?.addHouse.data?.id,
         });
     }, [commonInfoStore.addHouse?.data]);
 
     useEffect(() => {
-        setMemberId(commonInfoStore?.addMem.data?.memberId);
-
-        // 세대주 등록
-        if (form.householderYn === 'y') {
-            let userForm = {
-                memberId: memberId,
-                houseId: null,
-            };
-            if (form.spouseYn === 'n' && form.spouseLive === 'base') {
-                userForm = {
-                    ...userForm,
-                    houseId: houseId.my,
-                };
-
-                console.log(
-                    '본인 세대 세대주 등록 !!! ' + JSON.stringify(userForm)
-                );
-            } else if (form.spouseYn === 'y' && form.spouseLive === 'spouse') {
-                userForm = {
-                    ...userForm,
-                    houseId: houseId.spouse,
-                };
-
-                console.log(
-                    '배우자 분리 세대 세대주 등록 !!! ' +
-                        JSON.stringify(userForm)
-                );
-            }
-        }
-
-        // 2명 이상 등록 할 수 없는 경우 !
-    }, [commonInfoStore?.addMem.data]);
-
-    // 세대 구성원 등록하는 api 연결 예정
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        if (failMsg === null) {
-            if (form.relationship === '본인') form.account.push(account);
-            if (haveHistory === 'y') form.histories.push(historyArr);
-            if (haveLimit === 'y') form.limits.push(limitArr);
-
-            if (form.spouseYn === 'y') {
-                // 세대 등록 !!!
-                const userAddress = {
-                    spouseHouseYn: 'y',
-                    addressLevel1: address?.sido.slice(0, 2),
-                    addressLevel2: address?.sigungu,
-                    addressDetail: address?.detail,
-                    zipcode: address?.postcode,
-                };
-                console.log('분리세대 등록 !!!' + userAddress);
-                // dispatch(addHouse(userAddress));
-            }
-
-            // 세대구성원 등록
-            if (form.relationship === '본인') {
-                // 본인일 경우 청약통장 등록
-                // dispatch(addBank(form.account[0]));
-                const userForm = {
-                    houseId: houseId.my,
-                    relation: form.relationship,
-                    name: form.name,
-                    birthDay: form.birthDate,
-                    foreignerYn: form.foreignerYn,
-                    soldierYn: form.soldierYn,
-                    marriageDate:
-                        form.isMarried === 'y' ? form.marriedDate : null,
-                    homelessStartDate: form.homelessStartDate,
-                    transferDate: form.transferDate,
-                    income: form.income,
-                };
-
-                console.log('본인 !!!!!! ' + JSON.stringify(userForm));
-                // dispatch(addMem(userForm));
-            } else {
-                const userForm = {
-                    houseId: houseId.spouse,
-                    relation: form.relationship,
-                    name: form.name,
-                    birthDay: form.birthDate,
-                    foreignerYn: form.foreignerYn,
-                    soldierYn: form.soldierYn,
-                    marriageDate:
-                        form.isMarried === 'y' ? form.marriedDate : null,
-                    homelessStartDate: form.homelessStartDate,
-                    transferDate: form.transferDate,
-                    income: form.income,
-                };
-
-                console.log(
-                    '본인 이외의 구성원 !!!! ' + JSON.stringify(userForm)
-                );
-                // dispatch(addMem(userForm));
-            }
-
-            // 세대구성원 자산 등록
-            const assetsForm = assets.map((content, i) => {
-                return { ...content, houseMemberId: memberId };
-            });
-
-            console.log('자산 !!! ' + JSON.stringify(assetsForm));
-
-            onSaveData(form);
-            setForm({
-                name: '',
-                birthDate: '',
-                account: [],
-                foreignerYn: '',
-                homelessStartDate: '',
-                relationship: '',
-                householderYn: '',
-                spouseYn: '',
-                spousePostcode: '',
-                spouseAddress: '',
-                soldierYn: '',
-                isMarried: false,
-                marriedDate: '',
-                transferDate: '',
-                income: '',
-                assets: [],
-                histories: [],
-                limits: [],
-            });
-        } else {
-            alert('부적격 받은 사례가 있는 항목을 선택하셨습니다.');
-        }
-    };
+        return setForm({ ...form, homelessStartDate: form.birthDate });
+    }, [form.birthDate]);
 
     useEffect(() => {
         setAddress({
@@ -351,7 +233,6 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
     }, [fullAddress, postcode]);
 
     useEffect(() => {
-        console.log(form.homelessStartDate);
         if (
             account.validYn === 'n' ||
             haveHistory === 'exist' ||
@@ -365,6 +246,12 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
             setFailMsg(null);
         }
     }, [form]);
+
+    useEffect(() => {
+        if (haveAssets === 'n') {
+            setForm({ ...form, assets: [] });
+        }
+    }, [haveAssets]);
 
     useEffect(() => {
         if (form.relationship !== '본인') {
@@ -394,7 +281,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
             setLimitArr({
                 ...limitArr,
                 reWinningRestrictedDate: '',
-                specialSupplyRestrictedYn: '',
+                specialSupplyRestrictedYn: 'n',
                 unqualifiedSubscriberRestrictedDate: '',
                 requlatedAreaFirstPriorityRestrictedDate: '',
                 additionalPointSystemRestrictedDate: '',
@@ -416,6 +303,8 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                 winningDate: '',
                 raffle: '',
                 cancelYn: '',
+                ineligibleYn: '',
+                ineligibleDate: '',
             });
         }
     }, [haveHistory]);
@@ -456,10 +345,73 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
         e.preventDefault();
         if (failMsg === null) {
             if (form.relationship === '본인') form.account.push(account);
-
+            if (haveAssets === 'y') form.assets.push(assets);
             if (haveHistory === 'y') form.histories.push(historyArr);
             if (haveLimit === 'y') form.limits.push(limitArr);
+
+            if (form.spouseYn === 'y') {
+                // 세대 등록 !!!
+                const userAddress = {
+                    spouseHouseYn: 'y',
+                    addressLevel1: address?.sido.slice(0, 2),
+                    addressLevel2: address?.sigungu,
+                    addressDetail: address?.detail,
+                    zipcode: address?.postcode,
+                };
+                // console.log('분리세대 등록 !!!' + userAddress);
+                dispatch(addHouse(userAddress));
+            }
+
+            // console.log(JSON.stringify(houseArr));
+
+            // 세대구성원 등록
+            if (form.relationship === '본인' && houseArr.my != 0) {
+                // 본인일 경우 청약통장 등록
+                dispatch(addBank(form.account[0]));
+                const userForm = {
+                    houseId: houseArr.my,
+                    relation: form.relationship,
+                    name: form.name,
+                    birthDay: form.birthDate,
+                    foreignerYn: form.foreignerYn,
+                    soldierYn: form.soldierYn,
+                    marriageDate:
+                        form.isMarried === 'y' ? form.marriedDate : null,
+                    homelessStartDate: form.homelessStartDate,
+                    transferDate: form.transferDate,
+                    income: form.income,
+                };
+
+                // console.log('본인 !!!!!! ' + JSON.stringify(userForm));
+                dispatch(addMem(userForm));
+            } else {
+                const userForm = {
+                    houseId: houseArr.spouse,
+                    relation: form.relationship,
+                    name: form.name,
+                    birthDay: form.birthDate,
+                    foreignerYn: form.foreignerYn,
+                    soldierYn: form.soldierYn,
+                    marriageDate:
+                        form.isMarried === 'y' ? form.marriedDate : null,
+                    homelessStartDate: form.homelessStartDate,
+                    transferDate: form.transferDate,
+                    income: form.income,
+                };
+
+                // console.log(
+                //     '본인 이외의 구성원 !!!! ' + JSON.stringify(userForm)
+                // );
+                dispatch(addMem(userForm));
+            }
+
             onSaveData(form);
+            setHouseId(houseArr);
+            setHouseInfo({
+                relationship: form.relationship,
+                spouseLive: form.spouseLive,
+                householderYn: form.householderYn,
+            });
             setForm({
                 name: '',
                 birthDate: '',
@@ -969,45 +921,52 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                 </td>
                             </tr>
 
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">혼인 여부</span>
-                                </td>
-                                <td className="addMemberFormTableTbodyTrTd">
-                                    {' '}
-                                    <input
-                                        className="isMarriedInput"
-                                        type="radio"
-                                        name="isMarried"
-                                        onChange={onChange}
-                                        value="n"
-                                        checked={
-                                            form.isMarried === 'n'
-                                                ? true
-                                                : false
-                                        }
-                                    />
-                                    <span className="isMarriedInputText">
-                                        결혼한 상태가 아닙니다
-                                    </span>
-                                    <input
-                                        className="isMarriedInput"
-                                        type="radio"
-                                        name="isMarried"
-                                        onChange={onChange}
-                                        value="y"
-                                        checked={
-                                            form.isMarried === 'y'
-                                                ? true
-                                                : false
-                                        }
-                                    />
-                                    <span className="isMarriedInputText">
-                                        결혼한 상태입니다
-                                    </span>
-                                </td>
-                            </tr>
-                            {form.isMarried === 'y' ? (
+                            {form.relationship === '본인' ||
+                            form.relationship === '배우자' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            혼인 여부
+                                        </span>
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        {' '}
+                                        <input
+                                            className="isMarriedInput"
+                                            type="radio"
+                                            name="isMarried"
+                                            onChange={onChange}
+                                            value="n"
+                                            checked={
+                                                form.isMarried === 'n'
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                        <span className="isMarriedInputText">
+                                            결혼한 상태가 아닙니다
+                                        </span>
+                                        <input
+                                            className="isMarriedInput"
+                                            type="radio"
+                                            name="isMarried"
+                                            onChange={onChange}
+                                            value="y"
+                                            checked={
+                                                form.isMarried === 'y'
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                        <span className="isMarriedInputText">
+                                            결혼한 상태입니다
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {(form.relationship === '본인' ||
+                                form.relationship === '배우자') &&
+                            form.isMarried === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1316,12 +1275,16 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                             <option value="특별공급">
                                                 특별공급
                                             </option>
+                                            <option value="특별공급가점">
+                                                특별공급가점
+                                            </option>
                                         </select>
                                     </td>
                                 </tr>
                             ) : null}
-                            {haveHistory === 'y' &&
-                            historyArr.supply === '특별공급' ? (
+                            {(haveHistory === 'y' &&
+                                historyArr.supply === '특별공급') ||
+                            historyArr.supply === '특별공급가점' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1350,9 +1313,6 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                             </option>
                                             <option value="노부모부양">
                                                 노부모부양
-                                            </option>
-                                            <option value="기관추천">
-                                                기관추천
                                             </option>
                                         </select>
                                     </td>
@@ -1682,53 +1642,61 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                             </tr>
                             {haveAssets === 'y' ? AssetsWindow() : null}
                             <tr className="addMemberFormTableTbodyTrSpace"></tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td colSpan="3">
-                                    <div className="normalTitleContainer">
-                                        <span className="normalTitle">
+                            {haveHistory === 'y' ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td colSpan="3">
+                                        <div className="normalTitleContainer">
+                                            <span className="normalTitle">
+                                                청약 제한 사항
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' && historyArr ? (
+                                <tr className="addMemberFormTableTbodyTr">
+                                    <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
                                             청약 제한 사항
                                         </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">
-                                        청약 제한 사항
-                                    </span>
-                                </td>
-                                <td className="addMemberFormTableTbodyTrTd">
-                                    <input
-                                        className="limitInput"
-                                        type="radio"
-                                        name="haveLimit"
-                                        onChange={(e) => {
-                                            setHaveLimit(e.target.value);
-                                        }}
-                                        value="y"
-                                        checked={
-                                            haveLimit === 'y' ? true : false
-                                        }
-                                        required
-                                    />{' '}
-                                    <span className="limitInputText">있음</span>
-                                    <input
-                                        className="limitInput"
-                                        type="radio"
-                                        name="haveLimit"
-                                        onChange={(e) => {
-                                            setHaveLimit(e.target.value);
-                                        }}
-                                        value="n"
-                                        checked={
-                                            haveLimit === 'n' ? true : false
-                                        }
-                                        required
-                                    />{' '}
-                                    <span className="limitInputText">없음</span>
-                                </td>
-                            </tr>
-                            {haveLimit === 'y' ? (
+                                    </td>
+                                    <td className="addMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="haveLimit"
+                                            onChange={(e) => {
+                                                setHaveLimit(e.target.value);
+                                            }}
+                                            value="y"
+                                            checked={
+                                                haveLimit === 'y' ? true : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="limitInputText">
+                                            있음
+                                        </span>
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="haveLimit"
+                                            onChange={(e) => {
+                                                setHaveLimit(e.target.value);
+                                            }}
+                                            value="n"
+                                            checked={
+                                                haveLimit === 'n' ? true : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="limitInputText">
+                                            없음
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null}
+                            {haveHistory === 'y' && haveLimit === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1748,7 +1716,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {haveLimit === 'y' ? (
+                            {haveHistory === 'y' && haveLimit === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1761,14 +1729,13 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                             type="radio"
                                             name="specialSupplyRestrictedYn"
                                             onChange={onLimitArrChange}
-                                            value="청약불가"
+                                            value="y"
                                             checked={
                                                 limitArr.specialSupplyRestrictedYn ===
-                                                '청약불가'
+                                                'y'
                                                     ? true
                                                     : false
                                             }
-                                            required
                                         />{' '}
                                         <span className="limitInputText">
                                             청약불가
@@ -1778,14 +1745,13 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                             type="radio"
                                             name="specialSupplyRestrictedYn"
                                             onChange={onLimitArrChange}
-                                            value="none"
+                                            value="n"
                                             checked={
                                                 limitArr.specialSupplyRestrictedYn ===
-                                                'none'
+                                                'n'
                                                     ? true
                                                     : false
                                             }
-                                            required
                                         />
                                         <span className="limitInputText">
                                             청약가능
@@ -1793,7 +1759,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                     <td className="addMemberFormTableTbodyTrTdError">
                                         {limitArr.specialSupplyRestrictedYn ===
-                                        '청약불가' ? (
+                                        'y' ? (
                                             <span className="failMsg">
                                                 {failMsg}
                                             </span>
@@ -1801,7 +1767,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {haveLimit === 'y' ? (
+                            {haveHistory === 'y' && haveLimit === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1821,7 +1787,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {haveLimit === 'y' ? (
+                            {haveHistory === 'y' && haveLimit === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1845,7 +1811,7 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {haveLimit === 'y' ? (
+                            {haveHistory === 'y' && haveLimit === 'y' ? (
                                 <tr className="addMemberFormTableTbodyTr">
                                     <td className="addMemberFormTableTbodyTrTdSubTitle">
                                         <span className="subTitle">
@@ -1865,14 +1831,6 @@ const Post = ({ onSaveData, houseId, setHouseId, members }) => {
                                     </td>
                                 </tr>
                             ) : null}
-                            {/* <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTd"></td>
-                                <td className="addMemberFormTableTbodyTrTd"></td>
-                            </tr>
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTd"></td>
-                                <td className="addMemberFormTableTbodyTrTd"></td>
-                            </tr> */}
                         </tbody>
                     </table>
 

@@ -11,10 +11,36 @@ import {
     CloseCircleOutlined,
 } from '@ant-design/icons';
 import MonthAverageIncomeTable from './MonthAverageIncomeTable';
+import {
+    modHouse,
+    modBank,
+    modMem,
+    delBank,
+    addBank,
+} from '../../store/actions/commonInfoAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHouse } from '../../services/api/commonInfoApi';
 
-const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
+const Modal = ({
+    selectedData,
+    handleCancel,
+    handleEditSubmit,
+    memberId,
+    setMemberId,
+    houseId,
+    setHouseId,
+    bankBookId,
+    setBankBookId,
+    members,
+}) => {
+    members.map((content, i) => {
+        if (content?.name === selectedData.name) {
+            return setMemberId(content.id);
+        }
+    });
+    // console.log('member !!!! ' + JSON.stringify(members));
     const [edited, setEdited] = useState(selectedData);
-    const [account, setAccount] = useState(selectedData.account);
+    const [account, setAccount] = useState(selectedData.account[0]);
     const [address, setAddress] = useState(selectedData.spouseAddress);
     const [assets, setAssets] = useState(selectedData.assets);
     const [haveAssets, setHaveAssets] = useState('');
@@ -29,6 +55,16 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
     const [close, setClose] = useState(false);
 
     const [failMsg, setFailMsg] = useState('');
+
+    // const dispatch = useDispatch();
+
+    // const commonInfoStore = useSelector((state) => state.commonInfo);
+
+    // useEffect(() => {
+    //     if (commonInfoStore.addBank.data) {
+    //         setBankBookId(commonInfoStore.addBank.data[0]?.id);
+    //     }
+    // }, [commonInfoStore.addBank.data]);
 
     const getStartDate = (date) => {
         setEdited({ ...edited, homelessStartDate: date });
@@ -52,7 +88,7 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
         return (
             <NewWindow
                 name="assetsList"
-                title="자산 정보 목록 - 청약패스(chungyakpass.co.kr)"
+                title="자산 정보 목록 - 청약패스(chungyakpass.com)"
                 center="screen"
                 onBlock={() => {}}
             >
@@ -112,8 +148,88 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
         });
     };
 
+    // // 만약에 세대등록 리듀서의 데이터가 변하면
+    // useEffect(() => {
+    //     // 에러 코드가 'DUPLICATE_HOUSE'인지 확인하고
+    //     if (commonInfoStore.addHouse.data.code === 'DUPLICATE_HOUSE') {
+    //         // 다시 분리세대인지 확인하고
+    //         if (edited.spouseYn === 'y') {
+    //             // 세대 수정 !!!
+    //             const userAddress = {
+    //                 houseId: houseId.spouse,
+    //                 addressArr: {
+    //                     addressLevel1: address?.sido.slice(0, 2),
+    //                     addressLevel2: address?.sigungu,
+    //                     addressDetail: address?.detail,
+    //                     zipcode: address?.postcode,
+    //                 },
+    //             };
+    //             // console.log('분리세대 수정 !!!' + userAddress);
+    //             dispatch(modHouse(userAddress));
+    //         }
+    //     }
+    // }, [commonInfoStore.addHouse.data]);
+
     const onSubmitEdit = (e) => {
         e.preventDefault();
+        // if (failMsg === null) {
+        //     if (edited.relationship === '본인') edited.account.unshift(account);
+        //     if (haveAssets === 'y') edited.assets.unshift(assets);
+        //     if (haveHistory === 'y') edited.histories.unshift(historyArr);
+        //     if (haveLimit === 'y') edited.limits.unshift(limitArr);
+
+        //     if (edited.spouseYn === 'y') {
+        //         // 우선 하우스가 있는지 없는지 판단하지 못하니까 이런 식으로 add 먼저 날려서
+        //         const userAddress = {
+        //             spouseHouseYn: edited.spouseYn,
+        //             addressLevel1: address?.sido.slice(0, 2),
+        //             addressLevel2: address?.sigungu,
+        //             addressDetail: address?.detail,
+        //             zipcode: address?.postcode,
+        //         };
+
+        //         dispatch(addHouse(userAddress));
+        //     }
+
+        //     // console.log(JSON.stringify(edited));
+
+        //     const userForm = {
+        //         memberId: members[edited.id - 1]?.id,
+        //         relation: edited.relationship,
+        //         name: edited.name,
+        //         birthDay: edited.birthDate,
+        //         foreignerYn: edited.foreignerYn,
+        //         soldierYn: edited.soldierYn,
+        //         marriageDate:
+        //             edited.isMarried === 'y' ? edited.marriedDate : null,
+        //         homelessStartDate: edited.homelessStartDate,
+        //         transferDate: edited.transferDate,
+        //         income: edited.income,
+        //     };
+
+        //     // 세대구성원 등록
+        //     // 본인일 경우
+        //     if (edited.relationship === '본인') {
+        //         // 만약 전달받은 bankBookId가 있으면 이미 통장을 한번 저장했다는 뜻
+        //         if (bankBookId) {
+        //             const accountForm = {
+        //                 ...edited.account[0],
+        //                 bankBookId: bankBookId,
+        //             };
+        //             // 그래서 수정하게
+        //             dispatch(modBank(accountForm));
+        //         } else {
+        //             // 만약에 없으면 통장을 저장하지 않았으므로 addBank 액션으로 저장해주기
+        //             dispatch(addBank(edited.account[0]));
+        //         }
+        //         dispatch(modMem(userForm));
+        //     } else {
+        //         // 본인 이외의 세대구성원일 경우
+        //         // 본인에서 본인 이외의 세대구성원으로 변경되었다면 bankBookId가 남아있을 것
+        //         if (bankBookId) dispatch(delBank(bankBookId));
+        //         dispatch(modMem(userForm));
+        //     }
+        // }
         handleEditSubmit(edited);
     };
 
@@ -125,7 +241,85 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
         if (Object.keys(edited.limits).length == 0) setHaveLimit('n');
         else setHaveLimit('y');
     }, []);
+
+    useEffect(() => {
+        if (
+            account?.validYn === 'n' ||
+            haveHistory === 'exist' ||
+            limitArr?.specialSupplyRestrictedYn === '청약불가' ||
+            (edited.homelessStartDate &&
+                Number(new Date(edited.birthDate)) >
+                    Number(new Date(edited.homelessStartDate)))
+        ) {
+            setFailMsg('!!');
+        } else {
+            setFailMsg(null);
+        }
+    }, [edited]);
+
     useEffect(() => isAssetsWindow, [haveAssets]);
+
+    useEffect(() => {
+        if (haveAssets === 'n') {
+            setEdited({ ...edited, assets: [] });
+        }
+    }, [haveAssets]);
+
+    useEffect(() => {
+        if (edited.relationship !== '본인') {
+            setAccount({
+                ...account,
+                bank: '',
+                bankbook: '',
+                joinDate: '',
+                deposit: 0,
+                paymentsCount: 0,
+                validYn: '',
+            });
+
+            setEdited({
+                ...edited,
+                soldierYn: 'n',
+            });
+        } else {
+            return edited.spouseYn === 'y'
+                ? alert('회원은 배우자 분리세대에 속할 수 없습니다 !')
+                : null;
+        }
+    }, [edited.relationship]);
+
+    useEffect(() => {
+        if (haveLimit === 'n') {
+            setLimitArr({
+                ...limitArr,
+                reWinningRestrictedDate: '',
+                specialSupplyRestrictedYn: 'n',
+                unqualifiedSubscriberRestrictedDate: '',
+                requlatedAreaFirstPriorityRestrictedDate: '',
+                additionalPointSystemRestrictedDate: '',
+            });
+        }
+    }, [haveLimit]);
+
+    useEffect(() => {
+        if (haveHistory === 'n') {
+            setHistoryArr({
+                ...historyArr,
+                houseName: '',
+                supply: '',
+                specialSupply: '',
+                housingType: '',
+                ranking: '',
+                result: '',
+                preliminaryNumber: '',
+                winningDate: '',
+                raffle: '',
+                cancelYn: '',
+                ineligibleYn: '',
+                ineligibleDate: '',
+            });
+        }
+    }, [haveHistory]);
 
     return (
         <div className="modifyMemberFormContainer">
@@ -1215,47 +1409,61 @@ const Modal = ({ selectedData, handleCancel, handleEditSubmit, memberId }) => {
                             </td>
                         </tr>
                         {haveAssets === 'y' ? AssetsWindow() : null}
-                        <tr className="modifyMemberFormTableTbodyTrSpace"></tr>
-                        <tr className="modifyMemberFormTableTbodyTr">
-                            <td colSpan="3">
-                                <div className="normalTitleContainer">
-                                    <span className="normalTitle">
-                                        청약 제한 사항
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className="modifyMemberFormTableTbodyTr">
-                            <td className="modifyMemberFormTableTbodyTrTdSubTitle">
-                                <span className="subTitle">청약 제한 사항</span>
-                            </td>
-                            <td className="modifyMemberFormTableTbodyTrTd">
-                                <input
-                                    className="limitInput"
-                                    type="radio"
-                                    name="haveLimit"
-                                    onChange={(e) => {
-                                        setHaveLimit(e.target.value);
-                                    }}
-                                    value="y"
-                                    checked={haveLimit === 'y' ? true : false}
-                                    required
-                                />{' '}
-                                <span className="limitInputText">있음</span>
-                                <input
-                                    className="limitInput"
-                                    type="radio"
-                                    name="haveLimit"
-                                    onChange={(e) => {
-                                        setHaveLimit(e.target.value);
-                                    }}
-                                    value="n"
-                                    checked={haveLimit === 'n' ? true : false}
-                                    required
-                                />{' '}
-                                <span className="limitInputText">없음</span>
-                            </td>
-                        </tr>
+                        {haveHistory === 'y' ? (
+                            <>
+                                <tr className="modifyMemberFormTableTbodyTrSpace"></tr>
+                                <tr className="modifyMemberFormTableTbodyTr">
+                                    <td colSpan="3">
+                                        <div className="normalTitleContainer">
+                                            <span className="normalTitle">
+                                                청약 제한 사항
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr className="modifyMemberFormTableTbodyTr">
+                                    <td className="modifyMemberFormTableTbodyTrTdSubTitle">
+                                        <span className="subTitle">
+                                            청약 제한 사항
+                                        </span>
+                                    </td>
+                                    <td className="modifyMemberFormTableTbodyTrTd">
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="haveLimit"
+                                            onChange={(e) => {
+                                                setHaveLimit(e.target.value);
+                                            }}
+                                            value="y"
+                                            checked={
+                                                haveLimit === 'y' ? true : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="limitInputText">
+                                            있음
+                                        </span>
+                                        <input
+                                            className="limitInput"
+                                            type="radio"
+                                            name="haveLimit"
+                                            onChange={(e) => {
+                                                setHaveLimit(e.target.value);
+                                            }}
+                                            value="n"
+                                            checked={
+                                                haveLimit === 'n' ? true : false
+                                            }
+                                            required
+                                        />{' '}
+                                        <span className="limitInputText">
+                                            없음
+                                        </span>
+                                    </td>
+                                </tr>
+                            </>
+                        ) : null}
                         {haveLimit === 'y' ? (
                             <tr className="modifyMemberFormTableTbodyTr">
                                 <td className="modifyMemberFormTableTbodyTrTdSubTitle">

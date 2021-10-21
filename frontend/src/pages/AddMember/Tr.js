@@ -5,7 +5,7 @@ import './Addmember.css';
 const Tr = ({ info, handleRemove, handleEdit }) => {
     return (
         <tbody className="allInfoTbody">
-            {info.map((item) => {
+            {info?.map((item) => {
                 return (
                     <Td
                         key={item.id}
