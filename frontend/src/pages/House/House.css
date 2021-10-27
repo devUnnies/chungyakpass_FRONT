@@ -1,0 +1,132 @@
+.selectHouseContainer {
+    width: 800px;
+    padding: 5% 0 0 35%;
+    margin-bottom: 10%;
+}
+
+.selectHouseHeaderContainer {
+    margin-left: 10%;
+    margin-bottom: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.selectHouseHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.selectHouseHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.selectHouseForm {
+    padding-top: 5%;
+    padding-left: 20%;
+    width: 600px;
+}
+
+.selectHouseForm .saveButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10%;
+    margin-right: 15%;
+    margin-bottom: 5%;
+}
+
+.addHouseView {
+    margin-top: 1%;
+    margin-bottom: 4.5%;
+}
+
+.addHouseHeaderContainer {
+    margin-left: 38%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addAddressTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.findAddressButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 38%;
+    width: 500px;
+}
+
+.popupDomContainer {
+    margin-top: 10px;
+}
+
+.addHouseContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addressFormContainer {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.addressFormTable {
+    width: 500px;
+}
+
+.addressFormLabel {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.addressFormInputPostcode {
+    width: 80px;
+    justify-content: left;
+    align-items: center;
+}
+
+.addressFormInputAddress {
+    width: 400px;
+    justify-content: left;
+    align-items: center;
+}
+
+.popupPostCodeView {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.closeButton {
+    margin-left: 30%;
+}
+
+.closeButtonIcon {
+    font-size: 150%;
+    cursor: pointer;
+}
+
+.submitButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
