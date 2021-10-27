@@ -1,0 +1,115 @@
+.addBankbookContainer {
+    width: 800px;
+    padding: 0 0 0 35%;
+    margin-top: 1%;
+    margin-bottom: 10%;
+}
+
+.addBankbookHeaderContainer {
+    margin-left: 3%;
+    margin-top: 50px;
+    margin-bottom: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addBankbookHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.addBankbookHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.addBankbookForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 30%;
+}
+
+/* 표 */
+.addBankbookFormTable {
+    width: 300%;
+    margin-left: 100%;
+}
+
+.addBankbookFormTableTbody {
+}
+
+.addBankbookFormTableTbodyTr {
+}
+
+.addBankbookFormTableTbodyTrTd {
+}
+
+.addBankbookFormTableTbodyTrTdError {
+    width: 50px;
+    text-align: left;
+}
+
+/* 제목 */
+.normalTitleContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.normalTitle {
+    border-left: 3px #2a4476 solid;
+    padding-left: 10px;
+    color: #2a4476;
+    font-family: Noto Sans;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+.addBankbookFormTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
+}
+
+.subTitle {
+    font-family: Noto Sans;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+/* 에러메시지 */
+.failMsg {
+    color: #fa1c33;
+    font-weight: bold;
+}
+
+/* 저장버튼 */
+.saveButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    /* margin-left: 150%; */
+}
+
+.saveButtonContainer .save {
+    width: 80px;
+    /* padding: 10px; */
+    /* margin-left: 300px; */
+    color: #ffffff;
+    font-weight: bold;
+    border: 0px;
+    border-radius: 20px;
+    background-color: #2a4476;
+    cursor: pointer;
+}
