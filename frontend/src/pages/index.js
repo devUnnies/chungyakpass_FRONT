@@ -36,6 +36,11 @@ export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/Ol
 export { default as OldParentMinyeongAptNum } from './SpecialSupply/OldParentAPI/OldParentMinyeongAptNum';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
 export { default as OldParentKookminAptNum } from './SpecialSupply/OldParentAPI/OldParentKookminAptNum';
+export { default as FirstLifeTypeSelect } from './SpecialSupply/FirstLifeAPI/FirstLifeTypeSelect';
+export { default as FirstLifeMinyeongAptNum } from './SpecialSupply/FirstLifeAPI/FirstLifeMinyeongAptNum';
+export { default as FirstLifeMinyeongApi } from './SpecialSupply/FirstLifeAPI/FirstLifeMinyeongApi';
+export { default as FirstLifeKookminAptNum } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminAptNum';
+export { default as FirstLifeKookminApi } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminApi';
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';

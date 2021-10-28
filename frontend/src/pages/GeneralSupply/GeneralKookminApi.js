@@ -593,10 +593,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                         false ? (
                                                                             <span className="secondRankTootip">
                                                                                 <PauseCircleOutlined />
-                                                                                {
-                                                                                    (form.generalKookminRes =
-                                                                                        '2순위')
-                                                                                }
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -696,10 +692,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                     false ? (
                                                                         <span className="secondRankTootip">
                                                                             <PauseCircleOutlined />
-                                                                            {
-                                                                                (form.generalKookminRes =
-                                                                                    '2순위')
-                                                                            }
                                                                         </span>
                                                                     ) : null}
                                                                 </span>
@@ -803,20 +795,12 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                     true) ? (
                                                                                 <span className="progress">
                                                                                     <CheckCircleOutlined />
-                                                                                    {
-                                                                                        (form.generalKookminRes =
-                                                                                            '1순위')
-                                                                                    }
                                                                                 </span>
                                                                             ) : null}
                                                                             {data?.meetNumberOfPaymentsTf ===
                                                                             false ? (
                                                                                 <span className="secondRankTootip">
                                                                                     <PauseCircleOutlined />
-                                                                                    {
-                                                                                        (form.generalKookminRes =
-                                                                                            '2순위')
-                                                                                    }
                                                                                 </span>
                                                                             ) : null}
                                                                         </span>

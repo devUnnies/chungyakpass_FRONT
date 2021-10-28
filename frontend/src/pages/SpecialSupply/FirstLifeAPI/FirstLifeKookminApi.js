@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
+import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
 import { Link } from 'react-router-dom';
 import {
     CheckCircleOutlined,
@@ -14,27 +14,27 @@ import '../SpecialSupply.css';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
-const MultiChildKookminApi = ({ onSaveData }) => {
+const FirstLifeKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-    const multiChildKookminStore = useSelector(
-        (state) => state.multiChildKookmin
+    const firstLifeKookminStore = useSelector(
+        (state) => state.firstInLifeKookmin
     ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
-    const [multiChildKookminType, setMultiChildKookminType] = useState();
+    const [firstLifeKookminType, setFirstLifeKookminType] = useState();
     const history = useHistory();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
-    const getParams = location.state.multiChildKookminType; // 국민주택 유형 props 가져오기
+    const getParams = location.state.firstLifeKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
 
-    const data = multiChildKookminStore?.postMultiChildKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
+    const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
         supportYn: '',
-        multiChildKookminRes: '',
+        firstLifeKookminRes: '',
     });
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -48,28 +48,28 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         onSaveData(form);
         console.log(form);
         setForm({
-            multiChildKookminRes: '',
+            firstLifeKookminRes: '',
         });
     };
 
     useEffect(() => {
-        if (multiChildKookminStore?.postMultiChildKookminAptNum?.data) {
+        if (firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data) {
             const data =
-                multiChildKookminStore.postMultiChildKookminAptNum.data;
+                firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
             console.log(JSON.stringify(data));
         }
-    }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
+    }, [firstLifeKookminStore?.postFirstInLifeKookminAptNum]);
 
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.multiChildKookminRes === '1순위') {
+        if (form?.firstLifeKookminRes === '1순위') {
             history.push({
                 pathname: '/firstRank',
                 state: {
                     form,
                 },
             });
-        } else if (form?.multiChildKookminRes === '2순위') {
+        } else if (form?.firstLifeKookminRes === '2순위') {
             history.push({
                 pathname: '/secondRank',
                 state: {
@@ -80,7 +80,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     };
 
     const fail = async () => {
-        if (form?.multiChildKookminRes === '탈락') {
+        if (form?.firstLifeKookminRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
@@ -90,7 +90,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             <div className="special_title">
                 <h3 className="special_mainTitle">
                     특별공급
-                    <span className="special_subTitle">| 다자녀 국민주택</span>
+                    <span className="special_subTitle">
+                        | 생애최초 국민주택
+                    </span>
                 </h3>
             </div>
 
@@ -991,7 +993,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                         data?.restrictedAreaTf === false) &&
                     data?.meetBankbookJoinPeriodTf === true &&
                     data?.meetNumberOfPaymentsTf === true
-                        ? (form.multiChildKookminRes = '1순위')
+                        ? (form.firstLifeKookminRes = '1순위')
                         : null}
 
                     {/* 2순위 */}
@@ -1019,7 +1021,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                         (data?.restrictedAreaTf === false &&
                             (data?.meetBankbookJoinPeriodTf === false ||
                                 data?.meetNumberOfPaymentsTf === false)))
-                        ? (form.multiChildKookminRes = '2순위')
+                        ? (form.firstLifeKookminRes = '2순위')
                         : null}
 
                     {/* 탈락 */}
@@ -1032,14 +1034,14 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                     (data?.americanAge >= 20 &&
                         data?.americanAge < 30 &&
                         form.lifeYn === 'n')
-                        ? (form.multiChildKookminRes = '탈락')
+                        ? (form.firstLifeKookminRes = '탈락')
                         : null}
                 </div>
 
                 {/* 순위에 따른 페이지 이동 */}
                 {/* 1, 2순위 */}
-                {form.multiChildKookminRes === '1순위' ||
-                form.multiChildKookminRes === '2순위' ? (
+                {form.firstLifeKookminRes === '1순위' ||
+                form.firstLifeKookminRes === '2순위' ? (
                     <div className="multiChildRankButton">
                         <MainButton
                             onClick={rankSuccess}
@@ -1055,7 +1057,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                 ) : null}
 
                 {/*탈락 */}
-                {form.multiChildKookminRes === '탈락' ? (
+                {form.firstLifeKookminRes === '탈락' ? (
                     <div className="multiChildRankButton">
                         <MainButton
                             onClick={fail}
@@ -1074,4 +1076,4 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     );
 };
 
-export default MultiChildKookminApi;
+export default FirstLifeKookminApi;

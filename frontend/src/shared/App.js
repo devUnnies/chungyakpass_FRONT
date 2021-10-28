@@ -12,15 +12,21 @@ import {
     GeneralKookminApi,
     GeneralKookminAptNum,
     MultiChildTypeSelect,
+    MultiChildMinyeongAptNum,
     MultiChildMinyeongApi,
+    MultiChildKookminAptNum,
     MultiChildKookminApi,
     OldParentTypeSelect,
     OldParentKookminApi,
     OldParentKookminAptNum,
     OldParentMinyeongApi,
     OldParentMinyeongAptNum,
-    MultiChildMinyeongAptNum,
-    MultiChildKookminAptNum,
+    FirstLifeTypeSelect,
+    FirstLifeKookminAptNum,
+    FirstLifeKookminApi,
+    FirstLifeKookminSpecialLawApi,
+    FirstLifeMinyeongAptNum,
+    FirstLifeMinyeongApi,
     FirstRank,
     SecondRank,
     PassbookInfo,
@@ -148,6 +154,30 @@ class App extends Component {
                     <Route
                         path="/specialOldParentKookminAptNum"
                         component={OldParentKookminAptNum}
+                    />
+                    <Route
+                        path="/specialFirstLifeTypeSelect"
+                        component={FirstLifeTypeSelect}
+                    />
+                    <Route
+                        path="/specialFirstLifeKookminAptNum"
+                        component={FirstLifeKookminAptNum}
+                    />
+                    <Route
+                        path="/specialFirstLifeKookmin"
+                        component={FirstLifeKookminApi}
+                    />
+                    {/* <Route
+                        path="/specialFirstLifeKookmin/specialLaw"
+                        component={FirstLifeKookminSpecialLawApi}
+                    /> */}
+                    <Route
+                        path="/specialFirstLifeMinyeongAptNum"
+                        component={FirstLifeMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialFirstLifeMinyeong"
+                        component={FirstLifeMinyeongApi}
                     />
 
                     {/* 순위 확인 페이지 */}

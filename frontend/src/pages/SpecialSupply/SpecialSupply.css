@@ -176,7 +176,8 @@
 }
 
 /* rank 버튼 위치 조정 */
-.multiChildRankButton {
+.multiChildRankButton,
+.firstLifeRankButton {
     float: right;
     margin-right: 24%;
 

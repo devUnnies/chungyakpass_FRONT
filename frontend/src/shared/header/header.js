@@ -64,7 +64,7 @@ const data = {
                                 {
                                     idx: 2,
                                     name: '생애최초',
-                                    link: '',
+                                    link: '/specialFirstLifeTypeSelect',
                                 },
                                 {
                                     idx: 3,

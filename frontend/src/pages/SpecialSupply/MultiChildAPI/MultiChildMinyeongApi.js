@@ -532,10 +532,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="secondRankTootip">
                                                                         <PauseCircleOutlined />
-                                                                        {
-                                                                            (form.multiChildMinyeongRes =
-                                                                                '2순위')
-                                                                        }
                                                                     </span>
                                                                 ) : null}
                                                             </span>
@@ -584,10 +580,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                         false ? (
                                                                             <span className="secondRankTootip">
                                                                                 <PauseCircleOutlined />
-                                                                                {
-                                                                                    (form.multiChildMinyeongRes =
-                                                                                        '2순위')
-                                                                                }
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -635,10 +627,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 false ? (
                                                                                                     <span className="secondRankTootip">
                                                                                                         <PauseCircleOutlined />
-                                                                                                        {
-                                                                                                            (form.multiChildMinyeongRes =
-                                                                                                                '2순위')
-                                                                                                        }
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -793,10 +781,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                             false ? (
                                                                                                 <span className="secondRankTootip">
                                                                                                     <PauseCircleOutlined />
-                                                                                                    {
-                                                                                                        (form.multiChildMinyeongRes =
-                                                                                                            '2순위')
-                                                                                                    }
                                                                                                 </span>
                                                                                             ) : null}
                                                                                         </span>
@@ -952,10 +936,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                         true) ? (
                                                                                                     <span className="progress">
                                                                                                         <CheckCircleOutlined />
-                                                                                                        {
-                                                                                                            (form.multiChildMinyeongRes =
-                                                                                                                '1순위')
-                                                                                                        }
                                                                                                     </span>
                                                                                                 ) : null
                                                                                             }
@@ -963,10 +943,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                             false ? (
                                                                                                 <span className="secondRankTootip">
                                                                                                     <PauseCircleOutlined />
-                                                                                                    {
-                                                                                                        (form.multiChildMinyeongRes =
-                                                                                                            '2순위')
-                                                                                                    }
                                                                                                 </span>
                                                                                             ) : null}
                                                                                         </span>
