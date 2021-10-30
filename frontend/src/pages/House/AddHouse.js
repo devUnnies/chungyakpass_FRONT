@@ -7,7 +7,6 @@ import PopupPostCode from './PopupPostCode';
 import NextButton from '../../components/Button/NextButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { addHouse } from '../../store/actions/commonInfoAction';
-import storage from '../../services/store';
 
 const AddHouse = (props) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -26,6 +25,7 @@ const AddHouse = (props) => {
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const location = useLocation();
 
+    // 본인 세대인지 배우자 분리 세대인지 전달받은 값을 저장 (history.push에서 전달받음)
     const houseState = location.state.houseState;
 
     const openPostCode = () => {
@@ -49,20 +49,18 @@ const AddHouse = (props) => {
         if (commonInfoStore.addHouse) {
             const data = commonInfoStore.addHouse.data;
             if (data) {
+                // 세대가 이미 있다면 얼럿 띄우기
                 if (data.status === 409) {
                     alert(data.message);
                 } else {
-                    history.push('/members');
+                    history.push('/members', { houseState: houseState });
                 }
             }
         }
     }, [commonInfoStore.addHouse]);
 
-    // 세대 등록하는 api 연결 예정
+    // 세대 등록하는 api 연결
     const handleSubmit = (event) => {
-        // console.log('누르기 !!');
-        // event.preventDafault();
-
         const userForm = {
             spouseHouseYn: houseState === 'my' ? 'n' : 'y',
             addressLevel1: address?.sido.slice(0, 2),
@@ -128,7 +126,7 @@ const AddHouse = (props) => {
                     width={80}
                     height={30}
                     paddingLeft={10}
-                    onClick={openPostCode}
+                    onClick={() => openPostCode()}
                 >
                     주소 찾기
                 </MainButton>
@@ -196,10 +194,20 @@ const AddHouse = (props) => {
                         <NextButton
                             width={50}
                             height={50}
+                            className="addAddressButton"
                             type="addAddress"
                             fontSize={150}
                             onClick={() => handleSubmit()}
                         />
+
+                        {/* <MainButton
+                            type="submit"
+                            width="60"
+                            height="30"
+                            onClick={handleSubmit}
+                        >
+                            등록
+                        </MainButton> */}
                     </div>
                 </div>
                 {/* </form> */}
