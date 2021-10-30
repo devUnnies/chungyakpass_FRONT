@@ -214,19 +214,25 @@ const AddBankbook = () => {
                                 ) : null}
                             </td>
                         </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td
+                                className="addMemberFormTableTbodyTrTd"
+                                colSpan="3"
+                            >
+                                <div className="saveButtonContainer">
+                                    <MainButton
+                                        type="submit"
+                                        // className="save"
+                                        width="80"
+                                        height="30"
+                                    >
+                                        등록
+                                    </MainButton>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-
-                <div className="saveButtonContainer">
-                    <MainButton
-                        type="submit"
-                        className="save"
-                        width="80"
-                        height="30"
-                    >
-                        등록
-                    </MainButton>
-                </div>
             </form>
         </div>
     );
