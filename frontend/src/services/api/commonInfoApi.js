@@ -72,6 +72,11 @@ export const modAssets = (info) =>
         houseMemberPropertyUpdateDtoList: info.assets,
     });
 
+//  - 세대구성원무주택시작일수정 API
+export const patchStartDate = (info) =>
+    patch(`user/house/member/homeless-start-date/${info.memberId}`, {
+        homelessStartDate: info.homelessStartDate,
+    });
 // ----------------------------------------------------------------------------
 
 //  - 세대구성원청약신청이력등록 API
