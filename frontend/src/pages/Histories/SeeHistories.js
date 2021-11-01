@@ -3,7 +3,6 @@ import './Histories.css';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import HistoriesTr from './HistoriesTr';
 import AddHistory from './AddHistory';
-import ModifyHistory from './ModifyHistory';
 import { useSelector } from 'react-redux';
 import AddLimit from './AddLimit';
 import { useHistory, useLocation } from 'react-router';
@@ -274,13 +273,13 @@ const SeeHistories = (props) => {
                 />
             )}
             {addLimit && <AddLimit onSaveData={handleLimitSave} />}
-            {modify && (
+            {/* {modify && (
                 <ModifyHistory
                     selectedData={selected}
                     handleCancel={handleCancel}
                     handleEditSubmit={handleHistoryEditSubmit}
                 />
-            )}
+            )} */}
         </div>
     );
 };

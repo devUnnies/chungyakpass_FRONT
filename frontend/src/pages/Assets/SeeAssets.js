@@ -3,7 +3,6 @@ import './Assets.css';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import AssetsTr from './AssetsTr';
 import AddAsset from './AddAsset';
-import ModifyAsset from './ModifyAsset';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { addAsse, patStart } from '../../store/actions/commonInfoAction';
@@ -288,7 +287,7 @@ const SeeAssets = () => {
                     ineligibleDate={ineligibleDate}
                 />
             )}
-            {modify && (
+            {/* {modify && (
                 <ModifyAsset
                     selectedData={selected}
                     startDates={startDates}
@@ -298,7 +297,7 @@ const SeeAssets = () => {
                     birthDate={birthDate}
                     ineligibleDate={ineligibleDate}
                 />
-            )}
+            )} */}
         </div>
     );
 };
