@@ -70,6 +70,7 @@ const AddHouse = (props) => {
         };
 
         // console.log(JSON.stringify(userForm));
+        history.push('/members', { houseState: houseState });
         dispatch(addHouse(userForm));
 
         return false;
