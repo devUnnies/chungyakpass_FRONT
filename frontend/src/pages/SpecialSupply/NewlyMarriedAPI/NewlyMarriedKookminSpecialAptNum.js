@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction';
+import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
-function OldParentKookminAptNum(props) {
+function NewlyMarriedKookminSpecialAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const oldParentKookminAptNumStore = useSelector(
-        (state) => state.oldParentKookmin
+    const newlyMarriedKookminSpecialAptNumStore = useSelector(
+        (state) => state.newlyMarriedKookminSpecial
     );
 
     const [
@@ -21,9 +21,9 @@ function OldParentKookminAptNum(props) {
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
     const [
-        oldParentKookminType,
-        setOldParentKookminType,
-        handleChangeOldParentKookminType,
+        exceptionHouseTf,
+        setExceptionHouseTf,
+        handleChangeExceptionHouseTf,
     ] = useInputState('');
 
     const handleSubmit = (event) => {
@@ -32,43 +32,49 @@ function OldParentKookminAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postOldParentKookminAptNum({
+            postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                oldParentKookminType: oldParentKookminType,
+                exceptionHouseTf: exceptionHouseTf,
             })
         );
     };
 
     const onClick = async () => {
         dispatch(
-            postOldParentKookminAptNum({
+            postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                oldParentKookminType: oldParentKookminType,
+                exceptionHouseTf: exceptionHouseTf,
             })
         ); // api 연결 요청.
 
         const data =
-            oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
+            newlyMarriedKookminSpecialAptNumStore
+                ?.postNewlyMarriedKookminSpecialAptNum?.data;
         console.log(JSON.stringify(data));
         history.push({
-            pathname: '/specialOldParentKookmin',
+            pathname: '/specialNewlyMarriedKookminSpecial',
             state: {
                 notificationNumber,
                 housingType,
-                oldParentKookminType,
+                exceptionHouseTf,
             },
         });
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 노부모 국민 자격확인 페이지로 이동.
-        if (oldParentKookminAptNumStore.postOldParentKookminAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 신혼부부 국민 공특법 적용 자격확인 페이지로 이동.
+        if (
+            newlyMarriedKookminSpecialAptNumStore?.postNewlyMarriedKookminSpecialAptNum
+        ) {
             const data =
-                oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
+                newlyMarriedKookminSpecialAptNumStore
+                    .postNewlyMarriedKookminSpecialAptNum.data;
         }
-    }, [oldParentKookminAptNumStore.postOldParentKookminAptNum]);
+    }, [
+        newlyMarriedKookminSpecialAptNumStore?.postNewlyMarriedKookminSpecialAptNum,
+    ]);
 
     return (
         <>
@@ -93,29 +99,33 @@ function OldParentKookminAptNum(props) {
                             required
                         />
                         <br />
-                        <select
-                            className="aptNumInput"
-                            name="oldParentKookminType"
-                            value={oldParentKookminType}
-                            onChange={handleChangeOldParentKookminType}
-                        >
-                            <option value="">---선택---</option>
-                            <option value="공공주택특별법 적용">
-                                공공주택 특별법 적용
-                            </option>
-                            <option value="공공주택특별법 미적용">
-                                공공주택 특별법 미적용
-                            </option>
-                            <option value="그외 국민주택">
-                                그 외 국민주택
-                            </option>
-                        </select>
+                        <span className="qulificaitonBox">
+                            주택 예외사항 해당 여부
+                        </span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeExceptionHouseTf}
+                            value="y"
+                            checked={exceptionHouseTf === 'y' ? true : false}
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeExceptionHouseTf}
+                            value="n"
+                            checked={exceptionHouseTf === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
 
                         <span className="aptNumButton">
                             <MainButton
                                 type="button"
                                 onClick={onClick}
-                                width="80"
+                                width="100"
                                 height="35"
                                 fontSize="15"
                             >
@@ -129,4 +139,4 @@ function OldParentKookminAptNum(props) {
     );
 }
 
-export default OldParentKookminAptNum;
+export default NewlyMarriedKookminSpecialAptNum;
