@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.heightBar {
+.allInfoHeaderContainer .heightBar {
     width: 5px;
     height: 35px;
 
@@ -18,7 +18,7 @@
     margin-right: 10px;
 }
 
-.listTitle {
+.allInfoHeaderContainer .listTitle {
     font-family: Gothic A1;
     font-weight: bold;
     font-size: 18px;
@@ -66,21 +66,21 @@
     align-content: center;
 }
 
-.buttonContainer {
+.allInfo .buttonContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
 }
 
-.addButtonContainer {
+.allInfo .addButtonContainer {
     display: inline-block;
     justify-content: center;
     align-content: center;
     margin-bottom: 5%;
 }
 
-.addButton {
+.allInfo .addButton {
     display: block;
     vertical-align: middle;
     text-align: center;
@@ -89,14 +89,14 @@
     cursor: pointer;
 }
 
-.buttonContainer .submitButtonContainer {
+.allInfo .buttonContainer .submitButtonContainer {
     display: inline-block;
     justify-content: center;
     align-content: center;
     margin-bottom: 5%;
 }
 
-.buttonContainer .submitButton {
+.allInfo .buttonContainer .submitButton {
     display: block;
     vertical-align: middle;
     text-align: center;
@@ -122,19 +122,19 @@
     white-space: pre-wrap;
 }
 
-.modifyContainer {
+.allInfoTbodyTd .modifyContainer {
 }
 
-.modifyColor {
+.allInfoTbodyTd .modifyColor {
     font-size: 150%;
     color: #2a4476;
     margin: 10px;
 }
 
-.deleteContainer {
+.allInfoTbodyTd .deleteContainer {
 }
 
-.deleteContainer {
+.allInfoTbodyTd .deleteContainer {
     font-size: 150%;
     color: #2a4476;
     margin: 10px;
