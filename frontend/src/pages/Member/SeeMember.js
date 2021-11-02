@@ -19,8 +19,13 @@ const SeeMember = () => {
     const houseState = location.state.houseState;
     const membersPrev = location.state.members;
     const houseId = commonInfoStore.addHouse.data?.id;
-    const [members, setMembers] = useState(membersPrev);
+    const [members, setMembers] = useState([]);
     const [selected, setSelected] = useState('');
+
+    useEffect(() => {
+        // if (membersPrev !== []) setMembers(membersPrev);
+        console.log(JSON.stringify(members));
+    }, [members]);
 
     const handleAdd = () => {
         // console.log('추가 버튼을 눌렀습니다 !!!');
@@ -65,7 +70,7 @@ const SeeMember = () => {
         const member = commonInfoStore.addMem.data;
 
         if (member && membersPrev) {
-            if (members.length === 0) {
+            if (members === []) {
                 setMembers([member]);
             } else {
                 setMembers([...membersPrev, member]);
@@ -104,7 +109,7 @@ const SeeMember = () => {
                     </tr>
                 </thead>
                 <tbody className="membersInfoTbody">
-                    {members != [] ? (
+                    {members ? (
                         <Tr
                             members={members}
                             handleEdit={handleEdit}

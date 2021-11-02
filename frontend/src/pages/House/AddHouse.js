@@ -46,15 +46,13 @@ const AddHouse = (props) => {
 
     useEffect(() => {
         // 세대 등록 성공시
-        if (commonInfoStore.addHouse) {
-            const data = commonInfoStore.addHouse.data;
-            if (data) {
-                // 세대가 이미 있다면 얼럿 띄우기
-                if (data.status === 409) {
-                    alert(data.message);
-                } else {
-                    history.push('/members', { houseState: houseState });
-                }
+        const data = commonInfoStore.addHouse.data;
+        if (data) {
+            // 세대가 이미 있다면 얼럿 띄우기
+            if (data.status === 409) {
+                alert(data.message);
+            } else {
+                history.push('/members', { houseState: houseState });
             }
         }
     }, [commonInfoStore.addHouse]);
