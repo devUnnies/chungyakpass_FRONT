@@ -2,15 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
+import { postNewlyMarriagePointAptNum } from '../../../store/actions/pointSpecialNewlyMarriageAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
+import './NewlyMarriagePoint.css';
 
-function MultiChildMinyeongAptNum(props) {
+function NewlyMarriagePointAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const multiChildMinyeongAptNumStore = useSelector(
-        (state) => state.multiChildMinyeong
+    const newlyMarriageAptNumStore = useSelector(
+        (state) => state.newlyMarriagePoint
     );
 
     const [
@@ -18,8 +19,6 @@ function MultiChildMinyeongAptNum(props) {
         setNotificationNumber,
         handleChangeNotificationNumber,
     ] = useInputState('');
-    const [housingType, setHousingType, handleChangeHousingType] =
-        useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -27,45 +26,42 @@ function MultiChildMinyeongAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postMultiChildMinyeongAptNum({
+            postNewlyMarriagePointAptNum({
                 notificationNumber: notificationNumber,
-                housingType: housingType,
             })
         );
     };
 
     const onClick = async () => {
         dispatch(
-            postMultiChildMinyeongAptNum({
+            postNewlyMarriagePointAptNum({
                 notificationNumber: notificationNumber,
-                housingType: housingType,
             })
         ); // api 연결 요청.
 
         const data =
-            multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+            newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum?.data;
         console.log(JSON.stringify(data));
         history.push({
-            pathname: '/specialMultiChildMinyeong',
-            props: {
+            pathname: '/point/newlyMarriage',
+            state: {
                 notificationNumber,
-                housingType,
             },
         });
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
-        if (multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 신혼부부 가배점 확인 페이지로 이동.
+        if (newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum) {
             const data =
-                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+                newlyMarriageAptNumStore.postNewlyMarriagePointAptNum.data;
         }
-    }, [multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum]);
+    }, [newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum]);
 
     return (
         <>
             <div className="AptNumForm">
-                <div className="container">
+                <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -73,18 +69,7 @@ function MultiChildMinyeongAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
-                            required
                         />
-                        <br />
-                        <input
-                            type="text"
-                            placeholder="주택형"
-                            value={housingType}
-                            onChange={handleChangeHousingType}
-                            className="aptNumInput"
-                            required
-                        />
-                        <br />
 
                         <span className="aptNumButton">
                             <MainButton
@@ -92,8 +77,7 @@ function MultiChildMinyeongAptNum(props) {
                                 onClick={onClick}
                                 width="100"
                                 height="35"
-                                fontSize="13"
-                                margin="5"
+                                fontSize="15"
                             >
                                 다음
                             </MainButton>
@@ -105,4 +89,4 @@ function MultiChildMinyeongAptNum(props) {
     );
 }
 
-export default MultiChildMinyeongAptNum;
+export default NewlyMarriagePointAptNum;

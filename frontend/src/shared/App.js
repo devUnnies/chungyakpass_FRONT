@@ -12,15 +12,28 @@ import {
     GeneralKookminApi,
     GeneralKookminAptNum,
     MultiChildTypeSelect,
+    MultiChildMinyeongAptNum,
     MultiChildMinyeongApi,
+    MultiChildKookminAptNum,
     MultiChildKookminApi,
     OldParentTypeSelect,
     OldParentKookminApi,
     OldParentKookminAptNum,
     OldParentMinyeongApi,
     OldParentMinyeongAptNum,
-    MultiChildMinyeongAptNum,
-    MultiChildKookminAptNum,
+    FirstLifeTypeSelect,
+    FirstLifeKookminAptNum,
+    FirstLifeKookminApi,
+    FirstLifeKookminSpecialLawApi,
+    FirstLifeMinyeongAptNum,
+    FirstLifeMinyeongApi,
+    NewlyMarriedTypeSelect,
+    NewlyMarriedKookminAptNum,
+    NewlyMarriedKookminApi,
+    NewlyMarriedKookminSpecialAptNum,
+    NewlyMarriedKookminSpecialApi,
+    NewlyMarriedMinyeongAptNum,
+    NewlyMarriedMinyeongApi,
     FirstRank,
     SecondRank,
     PassbookInfo,
@@ -42,7 +55,10 @@ import {
     MultiChildPointAptNum,
     MultiChildPoint,
     OldParentPoint,
+    OneParentPointAptNum,
     OneParentPoint,
+    NewlyMarriagePointAptNum,
+    NewlyMarriagePoint,
     NewMarriagePoint,
     AddBankbook,
     SelectHouse,
@@ -141,6 +157,54 @@ class App extends Component {
                         path="/specialOldParentKookminAptNum"
                         component={OldParentKookminAptNum}
                     />
+                    <Route
+                        path="/specialFirstLifeTypeSelect"
+                        component={FirstLifeTypeSelect}
+                    />
+                    <Route
+                        path="/specialFirstLifeKookminAptNum"
+                        component={FirstLifeKookminAptNum}
+                    />
+                    <Route
+                        path="/specialFirstLifeKookmin"
+                        component={FirstLifeKookminApi}
+                    />
+                    <Route
+                        path="/specialFirstLifeMinyeongAptNum"
+                        component={FirstLifeMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialFirstLifeMinyeong"
+                        component={FirstLifeMinyeongApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedTypeSelect"
+                        component={NewlyMarriedTypeSelect}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminAptNum"
+                        component={NewlyMarriedKookminAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookmin"
+                        component={NewlyMarriedKookminApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminSpecialAptNum"
+                        component={NewlyMarriedKookminSpecialAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminSpecial"
+                        component={NewlyMarriedKookminSpecialApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedMinyeongAptNum"
+                        component={NewlyMarriedMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedMinyeong"
+                        component={NewlyMarriedMinyeongApi}
+                    />
 
                     {/* 순위 확인 페이지 */}
                     <Route path="/firstRank" component={FirstRank} />
@@ -168,13 +232,23 @@ class App extends Component {
                     />
                     <Route
                         exact
+                        path="/point/oneParentAptNum"
+                        component={OneParentPointAptNum}
+                    />
+                    <Route
+                        exact
                         path="/point/oneParent"
                         component={OneParentPoint}
                     />
                     <Route
                         exact
-                        path="/point/newMarriage"
-                        component={NewMarriagePoint}
+                        path="/point/newlyMarriageAptNum"
+                        component={NewlyMarriagePointAptNum}
+                    />
+                    <Route
+                        exact
+                        path="/point/newlyMarriage"
+                        component={NewlyMarriagePoint}
                     />
                     <Route
                         exact

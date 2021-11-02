@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction';
+import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
-function OldParentKookminAptNum(props) {
+function FirstLifeKookminAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const oldParentKookminAptNumStore = useSelector(
-        (state) => state.oldParentKookmin
+    const firstLifeKookminStore = useSelector(
+        (state) => state.firstInLifeKookmin
     );
 
     const [
@@ -21,9 +21,9 @@ function OldParentKookminAptNum(props) {
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
     const [
-        oldParentKookminType,
-        setOldParentKookminType,
-        handleChangeOldParentKookminType,
+        firstLifeKookminType,
+        setFirstLifeKookminType,
+        handleChangeFirstLifeKookminType,
     ] = useInputState('');
 
     const handleSubmit = (event) => {
@@ -32,48 +32,47 @@ function OldParentKookminAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postOldParentKookminAptNum({
+            postFirstInLifeKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                oldParentKookminType: oldParentKookminType,
+                firstLifeKookminType: firstLifeKookminType,
             })
         );
     };
 
     const onClick = async () => {
         dispatch(
-            postOldParentKookminAptNum({
+            postFirstInLifeKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                oldParentKookminType: oldParentKookminType,
+                firstLifeKookminType: firstLifeKookminType,
             })
         ); // api 연결 요청.
 
-        const data =
-            oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
+        const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
         console.log(JSON.stringify(data));
         history.push({
-            pathname: '/specialOldParentKookmin',
-            state: {
+            pathname: '/specialFirstLifeKookmin',
+            props: {
                 notificationNumber,
                 housingType,
-                oldParentKookminType,
+                firstLifeKookminType,
             },
         });
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 노부모 국민 자격확인 페이지로 이동.
-        if (oldParentKookminAptNumStore.postOldParentKookminAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 생애최초 국민 자격확인 페이지로 이동.
+        if (firstLifeKookminStore.postFirstInLifeKookminAptNum) {
             const data =
-                oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
+                firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
         }
-    }, [oldParentKookminAptNumStore.postOldParentKookminAptNum]);
+    }, [firstLifeKookminStore.postFirstInLifeKookminAptNum]);
 
     return (
         <>
             <div className="AptNumForm">
-                <div className="aptNumContainer">
+                <div className="container">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -84,20 +83,11 @@ function OldParentKookminAptNum(props) {
                             required
                         />
                         <br />
-                        <input
-                            type="text"
-                            placeholder="주택형"
-                            value={housingType}
-                            onChange={handleChangeHousingType}
-                            className="aptNumInput"
-                            required
-                        />
-                        <br />
                         <select
                             className="aptNumInput"
-                            name="oldParentKookminType"
-                            value={oldParentKookminType}
-                            onChange={handleChangeOldParentKookminType}
+                            name="firstLifeKookminType"
+                            value={firstLifeKookminType}
+                            onChange={handleChangeFirstLifeKookminType}
                         >
                             <option value="">---선택---</option>
                             <option value="공공주택특별법 적용">
@@ -106,18 +96,19 @@ function OldParentKookminAptNum(props) {
                             <option value="공공주택특별법 미적용">
                                 공공주택 특별법 미적용
                             </option>
-                            <option value="그외 국민주택">
+                            {/* <option value="그외 국민주택">
                                 그 외 국민주택
-                            </option>
+                            </option> */}
                         </select>
 
                         <span className="aptNumButton">
                             <MainButton
                                 type="button"
                                 onClick={onClick}
-                                width="80"
+                                width="100"
                                 height="35"
-                                fontSize="15"
+                                fontSize="13"
+                                margin="5"
                             >
                                 다음
                             </MainButton>
@@ -129,4 +120,4 @@ function OldParentKookminAptNum(props) {
     );
 }
 
-export default OldParentKookminAptNum;
+export default FirstLifeKookminAptNum;

@@ -20,7 +20,8 @@ function FirstRank({ history }) {
     const GreetingMessage =
         '모든 자격 조건을 충족하셨습니다. \n1순위 축하드립니다!';
     const location = useLocation(); // 각 공급별 결과 props 불러오기
-    const generalMinyeongRes = location?.state?.form?.generalMinyeongRes; // 일반공급 결과 props 가져오기
+    const generalMinyeongRes = location?.state?.form?.generalMinyeongRes; // 일반공급 민영 결과 props 가져오기
+    const generalKookminRes = location?.state?.form?.generalKookminRes; // 일반공급 국민 결과 props 가져오기
 
     return (
         <div className="FirstRankMain">
@@ -30,7 +31,9 @@ function FirstRank({ history }) {
             {/* 제출 서류확인 테이블 */}
             {/* 일반 공급 서류제출 */}
             {generalMinyeongRes === '1순위' ||
-            generalMinyeongRes === '2순위' ? (
+            generalMinyeongRes === '2순위' ||
+            generalKookminRes === '1순위' ||
+            generalKookminRes === '2순위' ? (
                 <NormalRequiredDocuments />
             ) : null}
 
