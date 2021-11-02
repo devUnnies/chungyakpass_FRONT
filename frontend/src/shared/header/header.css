@@ -1290,7 +1290,7 @@
 
     .nav-subItem:hover .nav-subsubItems {
         visibility: visible;
-        top: 120px;
+        top: 80px;
         transition: 350ms;
     }
 
@@ -1307,7 +1307,7 @@
         padding: 0;
         position: absolute;
         left: 0;
-        top: 120px;
+        top: 80px;
         width: 100%;
         background-color: #2a4476;
         border-radius: 3px;

@@ -47,6 +47,10 @@ import {
     MOD_CHUNGYAK_RESTR_PUT,
     MOD_CHUNGYAK_RESTR_PUT_SUCCESS,
     MOD_CHUNGYAK_RESTR_PUT_ERROR,
+    ADD_MEMBER_DELETE,
+    HOMELESS_START_DATE_PATCH_SUCCESS,
+    HOMELESS_START_DATE_PATCH,
+    HOMELESS_START_DATE_PATCH_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -65,6 +69,7 @@ const initialState = {
     delMem: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
     addAssets: reducerUtils.initial(),
+    patchStartDate: reducerUtils.initial(),
     modAssets: reducerUtils.initial(),
     addChungyak: reducerUtils.initial(),
     modChungyak: reducerUtils.initial(),
@@ -117,6 +122,11 @@ export default function commonInfo(state = initialState, action) {
         case ADD_MEMBER_POST_SUCCESS:
         case ADD_MEMBER_POST_ERROR:
             return handleAsyncActions(ADD_MEMBER_POST, 'addMem')(state, action);
+        case ADD_MEMBER_DELETE:
+            return {
+                ...state,
+                addMem: reducerUtils.initial(),
+            };
         case MOD_MEMBER_PUT:
         case MOD_MEMBER_PUT_SUCCESS:
         case MOD_MEMBER_PUT_ERROR:
@@ -149,6 +159,13 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case HOMELESS_START_DATE_PATCH:
+        case HOMELESS_START_DATE_PATCH_SUCCESS:
+        case HOMELESS_START_DATE_PATCH_ERROR:
+            return handleAsyncActions(
+                HOMELESS_START_DATE_PATCH,
+                'patchStartDate'
+            )(state, action);
         case ADD_CHUNGYAK_POST:
         case ADD_CHUNGYAK_POST_SUCCESS:
         case ADD_CHUNGYAK_POST_ERROR:
