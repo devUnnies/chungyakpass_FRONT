@@ -11,14 +11,31 @@ const data = {
     category: [
         {
             idx: 0,
+            name: '기초정보등록',
+            link: '/addBankbook',
+            subcategory: [
+                // {
+                //     idx: 0,
+                //     name: '청약통장',
+                //     link: '',
+                // },
+                // {
+                //     idx: 1,
+                //     name: '세대',
+                //     link: '',
+                // },
+            ],
+        },
+        {
+            idx: 1,
             name: '청약자격확인',
             link: '/addHouseHolder',
             subcategory: [
-                {
-                    idx: 0,
-                    name: '공통정보입력',
-                    link: '/addHouseHolder',
-                },
+                // {
+                //     idx: 0,
+                //     name: '공통정보입력',
+                //     link: '/addHouseHolder',
+                // },
                 {
                     idx: 1,
                     name: '한눈에보기',
@@ -78,7 +95,7 @@ const data = {
             ],
         },
         {
-            idx: 1,
+            idx: 2,
             name: '가배점계산기',
             link: '',
             subcategory: [
@@ -124,14 +141,14 @@ const data = {
             ],
         },
         {
-            idx: 2,
+            idx: 3,
             name: '부적격사례',
             link: '/case',
             subcategory: [],
         },
         {
-            idx: 3,
-            name: 'FAQ',
+            idx: 4,
+            name: '자주묻는질문',
             link: '/FAQ',
             subcategory: [],
         },
@@ -255,7 +272,7 @@ function Nav(props) {
                                                     </NavLink>
                                                     <ul
                                                         className={
-                                                            i === 0
+                                                            i === 1
                                                                 ? 'nav-subsubItems'
                                                                 : 'nav-subsubItemsSecond'
                                                         }

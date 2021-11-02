@@ -8,14 +8,16 @@ export { default as AllowLogin } from './AllowLogin/AllowLogin';
 export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
 export { default as Sitemap } from './Sitemap/Sitemap';
-// 공통입력정보
-export { default as PassbookInfo } from './PassbookInput/PassbookInfo';
-export { default as HousingInfo } from './HousingInput/HousingInfo';
-export { default as MemberInfo } from './MemberInput/MemberInfo';
-export { default as MemberHousingInfo } from './MemberHousingInput/MemberHousingInfo';
-export { default as AddHouseHolder } from './AddHouseHolder/AddHouseHolder';
-export { default as Board } from './AddMember/Board';
-export { default as Post } from './AddMember/Post';
+// 바뀐 공통입력정보
+export { default as AddBankbook } from './Bankbook/AddBankbook';
+export { default as SelectHouse } from './House/SelectHouse';
+export { default as AddHouse } from './House/AddHouse';
+export { default as AddMember } from './Member/AddMember';
+export { default as SeeMember } from './Member/SeeMember';
+export { default as SeeHistories } from './Histories/SeeHistories';
+export { default as AddHistory } from './Histories/AddHistory';
+export { default as SeeAssets } from './Assets/SeeAssets';
+// 끝 ---
 export { default as AtAGlance } from './AtAGlance/AtAGlance';
 export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
