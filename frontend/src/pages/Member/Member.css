@@ -128,8 +128,16 @@
 }
 
 .addMemberFormContainer {
+    /* margin-top: 3%;
+    margin-left: 10%; */
+}
+
+.addMemberFormTable {
+    display: flex;
     margin-top: 3%;
-    margin-left: 10%;
+    margin-left: 30%;
+    /* justify-content: center;
+    align-items: center; */
 }
 
 .addMemberFormTableTbodyTrTdTooltip {

@@ -186,7 +186,8 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="foreignerInputText">
-                                    외국인
+                                    {' '}
+                                    외국인{'  '}
                                 </span>
                                 <input
                                     className="foreignerInput"
@@ -200,6 +201,7 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="foreignerInputText">
+                                    {' '}
                                     내국인
                                 </span>
                             </td>
@@ -271,7 +273,8 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="householderInputText">
-                                    세대주이다
+                                    {' '}
+                                    세대주이다{'  '}
                                 </span>
                                 <input
                                     className="householderInput"
@@ -287,6 +290,7 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="householderInputText">
+                                    {' '}
                                     세대주가 아니다
                                 </span>
                             </td>
@@ -312,7 +316,8 @@ const AddMember = () => {
                                         }
                                     />
                                     <span className="isSoldierInputText">
-                                        예
+                                        {' '}
+                                        예{'  '}
                                     </span>
                                     <input
                                         className="isSoldierInput"
@@ -327,7 +332,8 @@ const AddMember = () => {
                                         }
                                     />
                                     <span className="isSoldierInputText">
-                                        아니오
+                                        {' '}
+                                        아니오{'  '}
                                     </span>
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError"></td>
@@ -408,7 +414,8 @@ const AddMember = () => {
                                         }
                                     />
                                     <span className="isMarriedInputText">
-                                        결혼한 상태가 아닙니다
+                                        {' '}
+                                        결혼한 상태가 아닙니다{'  '}
                                     </span>
                                     <input
                                         className="isMarriedInput"
@@ -423,7 +430,8 @@ const AddMember = () => {
                                         }
                                     />
                                     <span className="isMarriedInputText">
-                                        결혼한 상태입니다
+                                        {' '}
+                                        결혼한 상태입니다{'  '}
                                     </span>
                                 </td>
                             </tr>
@@ -489,7 +497,8 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="assetHaveAssetsInputText">
-                                    있습니다
+                                    {' '}
+                                    있습니다{'  '}
                                 </span>
                                 <input
                                     className="assetHaveAssetsInput"
@@ -505,6 +514,7 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="assetHaveAssetsInputText">
+                                    {' '}
                                     없습니다
                                 </span>
                             </td>
@@ -526,7 +536,8 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="assetHaveAssetsInputText">
-                                    있습니다
+                                    {' '}
+                                    있습니다{'  '}
                                 </span>
                                 <input
                                     className="assetHaveAssetsInput"
@@ -540,6 +551,7 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="assetHaveAssetsInputText">
+                                    {' '}
                                     없습니다
                                 </span>
                             </td>
