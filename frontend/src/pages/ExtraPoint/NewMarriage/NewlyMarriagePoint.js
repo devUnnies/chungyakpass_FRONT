@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postMultiChildPointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
+import { postNewlyMarriagePointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
 import { Link } from 'react-router-dom';
 import {
     CheckCircleOutlined,
@@ -12,29 +12,27 @@ import {
 import MainButton from '../../../components/Button/MainButton';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import './MultiChildPoint.css';
+import './NewlyMarriagePoint.css';
 
-const MultiChildPoint = ({ onSaveData }) => {
+const NewlyMarriagePoint = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-    const multiChildAptNumStore = useSelector((state) => state.multiChildPoint); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    const newlyMarriageAptNumStore = useSelector(
+        (state) => state.newlyMarriagePoint
+    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
-    const [multiChildHouseholdType, setMultiChildHouseholdType] = useState();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
     const history = useHistory();
-    const getParams = location.state.multiChildHouseholdType; // notificationNumber props 가져오기
-    console.log(getParams); // aptNum 페이지에서 받은 multiChildHouseholdType console로 찍기.
 
-    const data = multiChildAptNumStore?.postMultiChildPointAptNum?.data; // 다자녀 가점 로직 접근 변수
-    const multiChildPointSum =
-        data?.numberOfChild +
-        data?.numberOfChildUnder6Year +
-        data?.bankbookJoinPeriod +
+    const data = newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum?.data; // 신혼부부 가점 로직 접근 변수
+    const newlyMarriagePointSum =
+        data?.numberOfMinors +
+        data?.periodOfMarriged +
+        data?.bankbookPaymentsCount +
         data?.periodOfApplicableAreaResidence +
-        data?.periodOfHomelessness +
-        data?.generationComposition; // 다자녀 가점 총점 합산.
-    console.log(multiChildPointSum);
+        data?.monthOfAverageIncome; // 신혼부부 가점 총점 합산.
+    console.log(newlyMarriagePointSum);
 
     const [form, setForm] = useState({
         name: '',
@@ -54,11 +52,12 @@ const MultiChildPoint = ({ onSaveData }) => {
     };
 
     useEffect(() => {
-        if (multiChildAptNumStore?.postMultiChildPointAptNum?.data) {
-            const data = multiChildAptNumStore.postMultiChildPointAptNum.data;
+        if (newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum?.data) {
+            const data =
+                newlyMarriageAptNumStore.postNewlyMarriagePointAptNum.data;
             console.log(JSON.stringify(data));
         }
-    }, [multiChildAptNumStore?.postMultiChildPointAptNum]);
+    }, [newlyMarriageAptNumStore?.postNewlyMarriagePointAptNum]);
 
     return (
         <>
@@ -75,49 +74,17 @@ const MultiChildPoint = ({ onSaveData }) => {
                         <h3 className="point_mainTitle">
                             가점 계산
                             <span className="point_subTitle">
-                                | 다자녀 특별공급{' '}
+                                | 신혼부부 특별공급{' '}
                             </span>
                         </h3>
                     </div>
 
-                    {/* 다자녀 가점 테이블 */}
+                    {/* 신혼부부 가점 테이블 */}
                     <form
                         className="multiChildPoint_form"
                         onSubmit={handleSubmit}
                     >
                         <table className="multiChildPoint_table">
-                            {/* 다자녀 유형 */}
-                            <tr className="point_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        다자녀 유형
-                                    </span>
-                                    <span className="info_tooltip">
-                                        <InfoCircleOutlined />
-                                        <span class="tooltip-text"></span>
-                                    </span>
-                                </td>
-                                <td className="point_result">
-                                    <input
-                                        className="aptInfoSelect"
-                                        value={getParams}
-                                        readOnly={true}
-                                    />
-                                    <span>
-                                        {getParams !== '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                        {getParams === '' ? (
-                                            <span className="pause_tooltip">
-                                                <CloseCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                    </span>
-                                </td>
-                            </tr>
-
                             {/* 만 19세 미만 자녀수 */}
                             <tr className="point_phase">
                                 <td className="qulificaiton">
@@ -126,7 +93,9 @@ const MultiChildPoint = ({ onSaveData }) => {
                                     </span>
                                     <span className="info_tooltip">
                                         <InfoCircleOutlined />
-                                        <span class="tooltip-text"></span>
+                                        <span class="tooltip-text">
+                                            만 19세 미만 미성년 자녀(태아 포함)
+                                        </span>
                                     </span>
                                 </td>
                                 <td className="point_result">
@@ -134,7 +103,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                         className="aptInfoSelect"
                                         value={
                                             JSON.stringify(
-                                                data?.numberOfChild
+                                                data?.numberOfMinors
                                             ) +
                                             ' ' +
                                             '점'
@@ -142,12 +111,12 @@ const MultiChildPoint = ({ onSaveData }) => {
                                         readOnly={true}
                                     />
                                     <span>
-                                        {data?.numberOfChild !== '' ? (
+                                        {data?.numberOfMinors !== '' ? (
                                             <span className="progress">
                                                 <CheckCircleOutlined />
                                             </span>
                                         ) : null}
-                                        {data?.numberOfChild === '' ? (
+                                        {data?.numberOfMinors === '' ? (
                                             <span className="pause_tooltip">
                                                 <CloseCircleOutlined />
                                             </span>
@@ -156,98 +125,106 @@ const MultiChildPoint = ({ onSaveData }) => {
                                 </td>
                             </tr>
 
-                            {/* 만 6세 미만 자녀수 */}
+                            {/* 혼인 기간 가점 결과 */}
                             <tr className="point_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
-                                        만 6세 미만 자녀 수 가점 결과
-                                    </span>
-                                </td>
-                                <td className="point_result">
-                                    <input
-                                        className="aptInfoSelect"
-                                        value={
-                                            JSON.stringify(
-                                                data?.numberOfChildUnder6Year
-                                            ) +
-                                            ' ' +
-                                            '점'
-                                        }
-                                        readOnly={true}
-                                    />
-                                    <span>
-                                        {data?.numberOfChildUnder6Year !==
-                                        '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {data?.numberOfChildUnder6Year ===
-                                        '' ? (
-                                            <span className="pause_tooltip">
-                                                <CloseCircleOutlined />
-                                                <span class="pause-tooltip-text"></span>
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </span>
-                                </td>
-                            </tr>
-
-                            {/* 청약통장 가입기간 */}
-                            <tr className="point_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        청약통장 가입기간 가점 결과
-                                    </span>
-                                </td>
-                                <td className="point_result">
-                                    <input
-                                        className="aptInfoSelect"
-                                        value={
-                                            JSON.stringify(
-                                                data?.bankbookJoinPeriod
-                                            ) +
-                                            ' ' +
-                                            '점'
-                                        }
-                                        readOnly={true}
-                                    />
-                                    <span>
-                                        {data?.bankbookJoinPeriod !== '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {data?.bankbookJoinPeriod === '' ? (
-                                            <span className="pause_tooltip">
-                                                <CloseCircleOutlined />
-                                                <span class="pause-tooltip-text"></span>
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </span>
-                                </td>
-                            </tr>
-
-                            {/* 해당지역 거주기간 */}
-                            <tr className="point_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        해당지역 거주기간 가점 결과
+                                        혼인 기간 가점 결과
                                     </span>
                                     <span className="info_tooltip">
                                         <InfoCircleOutlined />
                                         <span class="tooltip-text">
-                                            <p>만 19세부터 계산.</p>
-                                            수도권은 서울 인천 경기 합산하여
-                                            계산.
+                                            신혼부부, 예비 신혼부부만 적용함.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td className="point_result">
+                                    <input
+                                        className="aptInfoSelect"
+                                        value={
+                                            JSON.stringify(
+                                                data?.periodOfMarriged
+                                            ) +
+                                            ' ' +
+                                            '점'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.periodOfMarriged !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {data?.periodOfMarriged === '' ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text"></span>
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </span>
+                                </td>
+                            </tr>
+
+                            {/* 청약통장 납입 횟수 */}
+                            <tr className="point_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        청약통장 납입 횟수 가점 결과
+                                    </span>
+                                </td>
+                                <td className="point_result">
+                                    <input
+                                        className="aptInfoSelect"
+                                        value={
+                                            JSON.stringify(
+                                                data?.bankbookPaymentsCount
+                                            ) +
+                                            ' ' +
+                                            '점'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.bankbookPaymentsCount !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {data?.bankbookPaymentsCount === '' ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text"></span>
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </span>
+                                </td>
+                            </tr>
+
+                            {/* 해당지역 연속 거주기간 */}
+                            <tr className="point_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        해당지역 연속 거주기간 가점 결과
+                                    </span>
+                                    <span className="info_tooltip">
+                                        <InfoCircleOutlined />
+                                        <span class="tooltip-text">
+                                            <p>
+                                                청약 신청하는 아파트 공고번호와
+                                                거주지 비교 후 일치/불일치 확인
+                                                후 산정.
+                                            </p>
+                                            특별시, 광역시, 특별자치시,
+                                            특별자치도 또는 시군의 행정구역
                                         </span>
                                     </span>
                                 </td>
@@ -285,18 +262,31 @@ const MultiChildPoint = ({ onSaveData }) => {
                                 </td>
                             </tr>
 
-                            {/* 무주택 기간 */}
+                            {/* 소득 */}
                             <tr className="point_phase">
                                 <td className="qulificaiton">
                                     <span className="qulificaitonBox">
-                                        무주택 기간 가점 결과
+                                        소득 가점 결과
                                     </span>
                                     <span className="info_tooltip">
                                         <InfoCircleOutlined />
                                         <span class="tooltip-text">
-                                            <p>만19세부터 계산.</p>
-                                            신청자 본인과 배우자중 짧은 기간으로
-                                            산정하여 계산.
+                                            <p>
+                                                가구당 월 평균 소득액 산정 기준
+                                            </p>
+                                            <div>
+                                                가구원 중 공급신청자 및 만 19세
+                                                이상 무주택세대구성원 전원의
+                                                소득을 합산.
+                                            </div>
+                                            <div>외벌이</div>
+                                            <li>소득 80 미만</li>
+                                            <div>맞벌이</div>
+                                            <li>
+                                                부부 중 한명의 소득이 가구100%
+                                                미만
+                                            </li>
+                                            <li>소득 100 미만</li>
                                         </span>
                                     </span>
                                 </td>
@@ -305,7 +295,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                         className="aptInfoSelect"
                                         value={
                                             JSON.stringify(
-                                                data?.periodOfHomelessness
+                                                data?.monthOfAverageIncome
                                             ) +
                                             ' ' +
                                             '점'
@@ -313,53 +303,14 @@ const MultiChildPoint = ({ onSaveData }) => {
                                         readOnly={true}
                                     />
                                     <span>
-                                        {data?.periodOfHomelessness !== '' ? (
+                                        {data?.monthOfAverageIncome !== '' ? (
                                             <span className="progress">
                                                 <CheckCircleOutlined />
                                             </span>
                                         ) : (
                                             <></>
                                         )}
-                                        {data?.periodOfHomelessness === '' ? (
-                                            <span className="pause_tooltip">
-                                                <CloseCircleOutlined />
-                                                <span class="pause-tooltip-text"></span>
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </span>
-                                </td>
-                            </tr>
-
-                            {/* 세대 구성 */}
-                            <tr className="point_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        세대 구성 가점 결과
-                                    </span>
-                                </td>
-                                <td className="point_result">
-                                    <input
-                                        className="aptInfoSelect"
-                                        value={
-                                            JSON.stringify(
-                                                data?.generationComposition
-                                            ) +
-                                            ' ' +
-                                            '점'
-                                        }
-                                        readOnly={true}
-                                    />
-                                    <span>
-                                        {data?.generationComposition !== '' ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {data?.generationComposition === '' ? (
+                                        {data?.monthOfAverageIncome === '' ? (
                                             <span className="pause_tooltip">
                                                 <CloseCircleOutlined />
                                                 <span class="pause-tooltip-text"></span>
@@ -374,11 +325,11 @@ const MultiChildPoint = ({ onSaveData }) => {
 
                         <hr className="sum_hr" />
 
-                        {/* 총 다자녀 가점 */}
+                        {/* 총 신혼부부 가점 */}
                         <div className="multiChildPointRes">
                             <span className="sum_text">총</span>
                             <span className="multiChildPointSum">
-                                {multiChildPointSum}
+                                {newlyMarriagePointSum}
                             </span>
                             <span className="sum_text">점</span>
                         </div>
@@ -389,4 +340,4 @@ const MultiChildPoint = ({ onSaveData }) => {
     );
 };
 
-export default MultiChildPoint;
+export default NewlyMarriagePoint;

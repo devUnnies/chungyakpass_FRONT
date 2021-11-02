@@ -71,7 +71,7 @@ const data = {
                                 {
                                     idx: 0,
                                     name: '신혼부부',
-                                    link: '',
+                                    link: '/specialNewlyMarriedTypeSelect',
                                 },
                                 {
                                     idx: 1,
@@ -81,7 +81,7 @@ const data = {
                                 {
                                     idx: 2,
                                     name: '생애최초',
-                                    link: '',
+                                    link: '/specialFirstLifeTypeSelect',
                                 },
                                 {
                                     idx: 3,
@@ -119,7 +119,7 @@ const data = {
                         {
                             idx: 0,
                             name: '신혼부부',
-                            link: '/point/newMarriage',
+                            link: '/point/newlyMarriageAptNum',
                         },
                         {
                             idx: 1,
@@ -129,12 +129,12 @@ const data = {
                         {
                             idx: 2,
                             name: '노부모',
-                            link: '/point/oldParent',
+                            link: '/point/oldParentAptNum',
                         },
                         {
                             idx: 3,
                             name: '한부모',
-                            link: '/point/oneParent',
+                            link: '/point/oneParentAptNum',
                         },
                     ],
                 },

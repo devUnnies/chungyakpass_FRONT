@@ -87,365 +87,432 @@ const MultiChildKookminApi = ({ onSaveData }) => {
 
     return (
         <>
-            <div className="special_title">
-                <h3 className="special_mainTitle">
-                    특별공급
-                    <span className="special_subTitle">| 다자녀 국민주택</span>
-                </h3>
-            </div>
+            {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
+        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
+            {data?.error === 'BAD_REQUEST' ? (
+                alert(
+                    '자격 확인을 진행할 수 없습니다' +
+                        '\n' +
+                        '사유: ' +
+                        data?.message
+                ) + history.push('/')
+            ) : (
+                <>
+                    <div className="special_title">
+                        <h3 className="special_mainTitle">
+                            특별공급
+                            <span className="special_subTitle">
+                                | 다자녀 국민주택
+                            </span>
+                        </h3>
+                    </div>
 
-            <form className="specialSupply_form" onSubmit={handleSubmit}>
-                <table className="specialMultiChildKookmin_table">
-                    <p className="foreignWarning" style={{ color: 'red' }}>
-                        * 외국인을 세대주 혹은 세대원으로 포함시킬 경우 부적격
-                        판정이 날 수 있음을 알려드립니다.
-                    </p>
+                    <form
+                        className="specialSupply_form"
+                        onSubmit={handleSubmit}
+                    >
+                        <table className="specialMultiChildKookmin_table">
+                            <p
+                                className="foreignWarning"
+                                style={{ color: 'red' }}
+                            >
+                                * 외국인을 세대주 혹은 세대원으로 포함시킬 경우
+                                부적격 판정이 날 수 있음을 알려드립니다.
+                            </p>
 
-                    {/* 국민주택 유형 */}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                선택한 국민 주택 유형
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    선택한 국민 주택 유형에 따라 자격 확인
-                                    조건이 달라질 수 있습니다.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={getParams}
-                                readOnly={true}
-                            />
-                            <span>
-                                {getParams !== '' ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {getParams === '' ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            국민주택 유형을 선택하지 않았습니다.
-                                        </span>
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
-
-                    {/* 규제지역 판단. (규제지역 로직 결과값)*/}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                선택한 아파트가 투기과열지구 또는
-                                청약과열지역인가?
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>
-                                        규제 지역('투기과열지구' 혹은
-                                        '청약과열지역') ?
-                                    </p>
-                                    정부에서 주로 부동산의 투기 방지, 주택 시장
-                                    안정화 등을 위해 지정하여 관리하는 지역.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={
-                                    data?.restrictedAreaTf
-                                        ? '규제지역'
-                                        : '비규제지역'
-                                }
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.restrictedAreaTf !== '' ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {data?.restrictedAreaTf === '' ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            값 입력 필요
-                                        </span>
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
-
-                    {/* 청약통장 조건 충족 여부 */}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                청약통장 조건 충족 여부
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>※ 국민 주택의 경우</p>
-                                    주택청약종합저축 혹은 청약 저축인 경우에만
-                                    청약통장 조건 만족.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={data?.accountTf ? '충족' : '미충족'}
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.accountTf === true ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {data?.accountTf === false ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            청약 통장 조건 미충족 시 부적격
-                                            발생.
-                                        </span>
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
-
-                    {/* 세대구성원 무주택 판별 */}
-                    {data?.accountTf === true ? (
-                        <>
-                            <tr className="special_phase">
-                                <td className="qulificaiton">
-                                    <span className="qulificaitonBox">
-                                        전세대구성원의 무주택 여부
-                                    </span>
-                                    <span className="info_tooltip">
-                                        <InfoCircleOutlined />
-                                        <span class="tooltip-text">
-                                            <p>
-                                                <div>※ 무주택 조건</div>
-                                                <div className="tooltip-text-info">
-                                                    : 무주택 기간 산정은 본인
-                                                    기준 만 30세부터 하되, 그
-                                                    전에 혼인한 경우
-                                                    혼인신고일을 기준으로
-                                                    산정함.
-                                                </div>
-                                            </p>
-                                            <p>
-                                                <li>
-                                                    60세 이상 직계존속이 소유한
-                                                    주택 혹은 분양권
-                                                </li>
-                                                <li>
-                                                    3개월 이내 처분한 상속주택
-                                                </li>
-                                                <li>비도시 지역 단독주택</li>
-                                                <li>소형, 저가 주택</li>
-                                                <li>폐가 소유</li>
-                                                <li>무허가 건물 소유</li>
-                                                <li>문화재 지정 주택</li>
-                                                <li>미분양 주택 분양권</li>
-                                                <li>사업 목적</li>
-                                            </p>
-                                        </span>
-                                    </span>
-                                </td>
-                                <td className="special_result">
-                                    <input
-                                        className="aptInfoSelect"
-                                        value={
-                                            data?.meetHomelessHouseholdMembersTf
-                                                ? '충족'
-                                                : '미충족'
-                                        }
-                                        readOnly={true}
-                                    />
-                                    <span>
-                                        {data?.meetHomelessHouseholdMembersTf ===
-                                        true ? (
-                                            <span className="progress">
-                                                <CheckCircleOutlined />
-                                            </span>
-                                        ) : null}
-                                        {data?.meetHomelessHouseholdMembersTf ===
-                                        false ? (
-                                            <span className="pause_tooltip">
-                                                <CloseCircleOutlined />
-                                                <span class="pause-tooltip-text">
-                                                    전 세대 구성원이 무주택이
-                                                    아닐 시 청약 자격 미달.
-                                                </span>
-                                            </span>
-                                        ) : null}
-                                    </span>
-                                </td>
-                            </tr>
-
-                            {/* 3명 이상의 미성년 자녀수 충족 여부*/}
-                            {data?.meetHomelessHouseholdMembersTf === true ? (
+                            {data !== null ? (
                                 <>
+                                    {/* 국민주택 유형 */}
                                     <tr className="special_phase">
                                         <td className="qulificaiton">
                                             <span className="qulificaitonBox">
-                                                3명 이상의 미성년 자녀 수 충족
-                                                여부
+                                                선택한 국민 주택 유형
+                                            </span>
+                                            <span className="info_tooltip">
+                                                <InfoCircleOutlined />
+                                                <span class="tooltip-text">
+                                                    선택한 국민 주택 유형에 따라
+                                                    자격 확인 조건이 달라질 수
+                                                    있습니다.
+                                                </span>
+                                            </span>
+                                        </td>
+                                        <td className="special_result">
+                                            <input
+                                                className="aptInfoSelect"
+                                                value={getParams}
+                                                readOnly={true}
+                                            />
+                                            <span>
+                                                {getParams !== '' ? (
+                                                    <span className="progress">
+                                                        <CheckCircleOutlined />
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                                {getParams === '' ? (
+                                                    <span className="pause_tooltip">
+                                                        <CloseCircleOutlined />
+                                                        <span class="pause-tooltip-text">
+                                                            국민주택 유형을
+                                                            선택하지 않았습니다.
+                                                        </span>
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </>
+                            ) : null}
+
+                            {data !== null ? (
+                                <>
+                                    {/* 규제지역 판단. (규제지역 로직 결과값)*/}
+                                    <tr className="special_phase">
+                                        <td className="qulificaiton">
+                                            <span className="qulificaitonBox">
+                                                선택한 아파트가 투기과열지구
+                                                또는 청약과열지역인가?
+                                            </span>
+                                            <span className="info_tooltip">
+                                                <InfoCircleOutlined />
+                                                <span class="tooltip-text">
+                                                    <p>
+                                                        규제 지역('투기과열지구'
+                                                        혹은 '청약과열지역') ?
+                                                    </p>
+                                                    정부에서 주로 부동산의 투기
+                                                    방지, 주택 시장 안정화 등을
+                                                    위해 지정하여 관리하는 지역.
+                                                </span>
                                             </span>
                                         </td>
                                         <td className="special_result">
                                             <input
                                                 className="aptInfoSelect"
                                                 value={
-                                                    data?.calcMinorChildren
+                                                    data?.restrictedAreaTf
+                                                        ? '규제지역'
+                                                        : '비규제지역'
+                                                }
+                                                readOnly={true}
+                                            />
+                                            <span>
+                                                {data?.restrictedAreaTf !==
+                                                '' ? (
+                                                    <span className="progress">
+                                                        <CheckCircleOutlined />
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                                {data?.restrictedAreaTf ===
+                                                '' ? (
+                                                    <span className="pause_tooltip">
+                                                        <CloseCircleOutlined />
+                                                        <span class="pause-tooltip-text">
+                                                            값 입력 필요
+                                                        </span>
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </>
+                            ) : null}
+
+                            {data !== null ? (
+                                <>
+                                    {/* 청약통장 조건 충족 여부 */}
+                                    <tr className="special_phase">
+                                        <td className="qulificaiton">
+                                            <span className="qulificaitonBox">
+                                                청약통장 조건 충족 여부
+                                            </span>
+                                            <span className="info_tooltip">
+                                                <InfoCircleOutlined />
+                                                <span class="tooltip-text">
+                                                    <p>※ 국민 주택의 경우</p>
+                                                    주택청약종합저축 혹은 청약
+                                                    저축인 경우에만 청약통장
+                                                    조건 만족.
+                                                </span>
+                                            </span>
+                                        </td>
+                                        <td className="special_result">
+                                            <input
+                                                className="aptInfoSelect"
+                                                value={
+                                                    data?.accountTf
                                                         ? '충족'
                                                         : '미충족'
                                                 }
                                                 readOnly={true}
                                             />
                                             <span>
-                                                {data?.calcMinorChildren >=
-                                                3 ? (
+                                                {data?.accountTf === true ? (
+                                                    <span className="progress">
+                                                        <CheckCircleOutlined />
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                                {data?.accountTf === false ? (
+                                                    <span className="pause_tooltip">
+                                                        <CloseCircleOutlined />
+                                                        <span class="pause-tooltip-text">
+                                                            청약 통장 조건
+                                                            미충족 시 부적격
+                                                            발생.
+                                                        </span>
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </>
+                            ) : null}
+
+                            {/* 세대구성원 무주택 판별 */}
+                            {data?.accountTf === true ? (
+                                <>
+                                    <tr className="special_phase">
+                                        <td className="qulificaiton">
+                                            <span className="qulificaitonBox">
+                                                전세대구성원의 무주택 여부
+                                            </span>
+                                            <span className="info_tooltip">
+                                                <InfoCircleOutlined />
+                                                <span class="tooltip-text">
+                                                    <p>
+                                                        <div>※ 무주택 조건</div>
+                                                        <div className="tooltip-text-info">
+                                                            : 무주택 기간 산정은
+                                                            본인 기준 만
+                                                            30세부터 하되, 그
+                                                            전에 혼인한 경우
+                                                            혼인신고일을
+                                                            기준으로 산정함.
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <li>
+                                                            60세 이상 직계존속이
+                                                            소유한 주택 혹은
+                                                            분양권
+                                                        </li>
+                                                        <li>
+                                                            3개월 이내 처분한
+                                                            상속주택
+                                                        </li>
+                                                        <li>
+                                                            비도시 지역 단독주택
+                                                        </li>
+                                                        <li>소형, 저가 주택</li>
+                                                        <li>폐가 소유</li>
+                                                        <li>
+                                                            무허가 건물 소유
+                                                        </li>
+                                                        <li>
+                                                            문화재 지정 주택
+                                                        </li>
+                                                        <li>
+                                                            미분양 주택 분양권
+                                                        </li>
+                                                        <li>사업 목적</li>
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                        <td className="special_result">
+                                            <input
+                                                className="aptInfoSelect"
+                                                value={
+                                                    data?.meetHomelessHouseholdMembersTf
+                                                        ? '충족'
+                                                        : '미충족'
+                                                }
+                                                readOnly={true}
+                                            />
+                                            <span>
+                                                {data?.meetHomelessHouseholdMembersTf ===
+                                                true ? (
                                                     <span className="progress">
                                                         <CheckCircleOutlined />
                                                     </span>
                                                 ) : null}
-                                                {data?.calcMinorChildren < 3 ? (
+                                                {data?.meetHomelessHouseholdMembersTf ===
+                                                false ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
                                                         <span class="pause-tooltip-text">
-                                                            3명 이상의 미성년
-                                                            자녀 수를 충족하는
-                                                            경우에만 해당 청약
-                                                            진행 가능.
+                                                            전 세대 구성원이
+                                                            무주택이 아닐 시
+                                                            청약 자격 미달.
                                                         </span>
                                                     </span>
                                                 ) : null}
                                             </span>
                                         </td>
                                     </tr>
-                                    {/* 월평균 기준 소득 충족 여부 */}
-                                    {/* "공공주택특별법적용&미적용 이외의 국민주택" 은 소득, 자산 기준 미적용*/}
-                                    {data?.calcMinorChildren >= 3 ? (
-                                        <>
-                                            {getParams !== '그외 국민주택' ? (
-                                                <>
-                                                    <tr className="special_phase">
-                                                        <td className="qulificaiton">
-                                                            <span className="qulificaitonBox">
-                                                                월평균 소득 기준
-                                                                충족 여부
-                                                            </span>
-                                                        </td>
-                                                        <td className="special_result">
-                                                            <input
-                                                                className="aptInfoSelect"
-                                                                value={
-                                                                    data?.meetMonthlyAverageIncome
-                                                                        ? '충족'
-                                                                        : '미충족'
-                                                                }
-                                                                readOnly={true}
-                                                            />
-                                                            <span>
-                                                                {data?.meetMonthlyAverageIncome ===
-                                                                true ? (
-                                                                    <span className="progress">
-                                                                        <CheckCircleOutlined />
-                                                                    </span>
-                                                                ) : null}
-                                                                {data?.meetMonthlyAverageIncome ===
-                                                                false ? (
-                                                                    <span className="pause_tooltip">
-                                                                        <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            월평균
-                                                                            소득
-                                                                            미충족
-                                                                        </span>
-                                                                    </span>
-                                                                ) : null}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
 
-                                                    {data?.meetMonthlyAverageIncome ===
-                                                    true ? (
+                                    {/* 3명 이상의 미성년 자녀수 충족 여부*/}
+                                    {data?.meetHomelessHouseholdMembersTf ===
+                                    true ? (
+                                        <>
+                                            <tr className="special_phase">
+                                                <td className="qulificaiton">
+                                                    <span className="qulificaitonBox">
+                                                        3명 이상의 미성년 자녀
+                                                        수 충족 여부
+                                                    </span>
+                                                </td>
+                                                <td className="special_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            data?.calcMinorChildren
+                                                                ? '충족'
+                                                                : '미충족'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                    <span>
+                                                        {data?.calcMinorChildren >=
+                                                        3 ? (
+                                                            <span className="progress">
+                                                                <CheckCircleOutlined />
+                                                            </span>
+                                                        ) : null}
+                                                        {data?.calcMinorChildren <
+                                                        3 ? (
+                                                            <span className="pause_tooltip">
+                                                                <CloseCircleOutlined />
+                                                                <span class="pause-tooltip-text">
+                                                                    3명 이상의
+                                                                    미성년 자녀
+                                                                    수를
+                                                                    충족하는
+                                                                    경우에만
+                                                                    해당 청약
+                                                                    진행 가능.
+                                                                </span>
+                                                            </span>
+                                                        ) : null}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {/* 월평균 기준 소득 충족 여부 */}
+                                            {/* "공공주택특별법적용&미적용 이외의 국민주택" 은 소득, 자산 기준 미적용*/}
+                                            {data?.calcMinorChildren >= 3 ? (
+                                                <>
+                                                    {getParams !==
+                                                    '그외 국민주택' ? (
                                                         <>
-                                                            {/* 자산 기준 충족 여부*/}
-                                                            {/* 공공주택특별법 적용인 경우에만 적용 */}
-                                                            {getParams ===
-                                                            '공공주택특별법 적용' ? (
-                                                                <tr className="special_phase">
-                                                                    <td className="qulificaiton">
-                                                                        <span className="qulificaitonBox">
-                                                                            자산
-                                                                            기준
-                                                                            충족
-                                                                            여부
-                                                                        </span>
-                                                                    </td>
-                                                                    <td className="special_result">
-                                                                        {data && (
-                                                                            <input
-                                                                                className="aptInfoSelect"
-                                                                                value={
-                                                                                    data?.meetPropertyTf
-                                                                                        ? '충족'
-                                                                                        : '미충족'
-                                                                                }
-                                                                                readOnly={
-                                                                                    true
-                                                                                }
-                                                                            />
-                                                                        )}
-                                                                        <span>
-                                                                            {data?.meetPropertyTf ===
-                                                                            true ? (
-                                                                                <span className="progress">
-                                                                                    <CheckCircleOutlined />
+                                                            <tr className="special_phase">
+                                                                <td className="qulificaiton">
+                                                                    <span className="qulificaitonBox">
+                                                                        월평균
+                                                                        소득
+                                                                        기준
+                                                                        충족
+                                                                        여부
+                                                                    </span>
+                                                                </td>
+                                                                <td className="special_result">
+                                                                    <input
+                                                                        className="aptInfoSelect"
+                                                                        value={
+                                                                            data?.meetMonthlyAverageIncomeTf
+                                                                                ? '충족'
+                                                                                : '미충족'
+                                                                        }
+                                                                        readOnly={
+                                                                            true
+                                                                        }
+                                                                    />
+                                                                    <span>
+                                                                        {data?.meetMonthlyAverageIncomeTf ===
+                                                                        true ? (
+                                                                            <span className="progress">
+                                                                                <CheckCircleOutlined />
+                                                                            </span>
+                                                                        ) : null}
+                                                                        {data?.meetMonthlyAverageIncomeTf ===
+                                                                        false ? (
+                                                                            <span className="pause_tooltip">
+                                                                                <CloseCircleOutlined />
+                                                                                <span class="pause-tooltip-text">
+                                                                                    월평균
+                                                                                    소득
+                                                                                    미충족
                                                                                 </span>
-                                                                            ) : null}
-                                                                            {data?.meetPropertyTf ===
-                                                                            false ? (
-                                                                                <span className="pause_tooltip">
-                                                                                    <CloseCircleOutlined />
-                                                                                    <span class="pause-tooltip-text">
-                                                                                        자산
-                                                                                        기준
-                                                                                        미충족
-                                                                                    </span>
+                                                                            </span>
+                                                                        ) : null}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+
+                                                            {data?.meetMonthlyAverageIncomeTf ===
+                                                            true ? (
+                                                                <>
+                                                                    {/* 자산 기준 충족 여부*/}
+                                                                    {/* 공공주택특별법 적용인 경우에만 적용 */}
+                                                                    {getParams ===
+                                                                    '공공주택특별법 적용' ? (
+                                                                        <tr className="special_phase">
+                                                                            <td className="qulificaiton">
+                                                                                <span className="qulificaitonBox">
+                                                                                    자산
+                                                                                    기준
+                                                                                    충족
+                                                                                    여부
                                                                                 </span>
-                                                                            ) : null}
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
+                                                                            </td>
+                                                                            <td className="special_result">
+                                                                                {data && (
+                                                                                    <input
+                                                                                        className="aptInfoSelect"
+                                                                                        value={
+                                                                                            data?.meetPropertyTf
+                                                                                                ? '충족'
+                                                                                                : '미충족'
+                                                                                        }
+                                                                                        readOnly={
+                                                                                            true
+                                                                                        }
+                                                                                    />
+                                                                                )}
+                                                                                <span>
+                                                                                    {data?.meetPropertyTf ===
+                                                                                    true ? (
+                                                                                        <span className="progress">
+                                                                                            <CheckCircleOutlined />
+                                                                                        </span>
+                                                                                    ) : null}
+                                                                                    {data?.meetPropertyTf ===
+                                                                                    false ? (
+                                                                                        <span className="pause_tooltip">
+                                                                                            <CloseCircleOutlined />
+                                                                                            <span class="pause-tooltip-text">
+                                                                                                자산
+                                                                                                기준
+                                                                                                미충족
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    ) : null}
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    ) : null}
+                                                                </>
                                                             ) : null}
                                                         </>
                                                     ) : null}
@@ -453,6 +520,8 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                     {(getParams ===
                                                         '공공주택특별법 적용' &&
                                                         data?.meetPropertyTf >=
+                                                            true &&
+                                                        data?.meetMonthlyAverageIncomeTf ===
                                                             true) ||
                                                     (getParams ===
                                                         '공공주택특별법 미적용' &&
@@ -480,7 +549,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                             true
                                                                         }
                                                                     />
-                                                                    세
                                                                     <span>
                                                                         {data?.americanAge !==
                                                                         '' ? (
@@ -681,10 +749,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="secondRankTootip">
                                                                                                 <PauseCircleOutlined />
-                                                                                                {
-                                                                                                    (form.multiChildKookminRes =
-                                                                                                        '2순위')
-                                                                                                }
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -733,10 +797,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="secondRankTootip">
                                                                                                 <PauseCircleOutlined />
-                                                                                                {
-                                                                                                    (form.multiChildKookminRes =
-                                                                                                        '2순위')
-                                                                                                }
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -838,10 +898,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                     false ? (
                                                                                         <span className="secondRankTootip">
                                                                                             <PauseCircleOutlined />
-                                                                                            {
-                                                                                                (form.multiChildKookminRes =
-                                                                                                    '2순위')
-                                                                                            }
                                                                                         </span>
                                                                                     ) : null}
                                                                                 </span>
@@ -951,10 +1007,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                             true) ? (
                                                                                                         <span className="progress">
                                                                                                             <CheckCircleOutlined />
-                                                                                                            {
-                                                                                                                (form.multiChildKookminRes =
-                                                                                                                    '1순위')
-                                                                                                            }
                                                                                                         </span>
                                                                                                     ) : null
                                                                                                 }
@@ -962,10 +1014,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                 false ? (
                                                                                                     <span className="secondRankTootip">
                                                                                                         <PauseCircleOutlined />
-                                                                                                        {
-                                                                                                            (form.multiChildKookminRes =
-                                                                                                                '2순위')
-                                                                                                        }
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -985,111 +1033,131 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     ) : null}
                                 </>
                             ) : null}
-                        </>
-                    ) : null}
-                </table>
+                        </table>
 
-                <div className="rankRes">
-                    {/* 순위 매기기 */}
-                    {/* 1순위 */}
-                    {data?.accountTf === true &&
-                    data?.meetHomelessHouseholdMembersTf === true &&
-                    data?.calcMinorChildren >= 3 &&
-                    ((data?.americanAge < 20 &&
-                        form.supportYn === 'y' &&
-                        data?.householderTf === true) ||
-                        (data?.americanAge >= 20 &&
-                            data?.americanAge < 30 &&
-                            form.lifeYn === 'y') ||
-                        data?.americanAge >= 30) &&
-                    ((data?.restrictedAreaTf === true &&
-                        ((data?.americanAge >= 20 &&
-                            data?.householderTf === true) ||
-                            data?.americanAge < 20) &&
-                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                            true) ||
-                        data?.restrictedAreaTf === false) &&
-                    data?.meetBankbookJoinPeriodTf === true &&
-                    data?.meetNumberOfPaymentsTf === true
-                        ? (form.multiChildKookminRes = '1순위')
-                        : null}
-
-                    {/* 2순위 */}
-                    {data?.accountTf === true &&
-                    data?.meetHomelessHouseholdMembersTf === true &&
-                    data?.calcMinorChildren >= 3 &&
-                    ((data?.americanAge < 20 &&
-                        form.supportYn === 'y' &&
-                        data?.householderTf === true) ||
-                        (data?.americanAge >= 20 &&
-                            data?.americanAge < 30 &&
-                            form.lifeYn === 'y') ||
-                        data?.americanAge >= 30) &&
-                    ((data?.restrictedAreaTf === true && // 규제지역
-                        ((data?.americanAge >= 20 &&
-                            (data?.householderTf === false ||
+                        <div className="rankRes">
+                            {/* 순위 매기기 */}
+                            {/* 1순위 */}
+                            {data?.accountTf === true &&
+                            data?.meetHomelessHouseholdMembersTf === true &&
+                            data?.calcMinorChildren >= 3 &&
+                            (getParams === '그외 국민주택' ||
+                                (getParams === '공공주택특별법 적용' &&
+                                    data?.meetMonthlyAverageIncomeTf === true &&
+                                    data?.meetPropertyTf === true) ||
+                                (getParams === '공공주택특별법 미적용' &&
+                                    data?.meetMonthlyAverageIncomeTf ===
+                                        true)) &&
+                            ((data?.americanAge < 20 &&
+                                form.supportYn === 'y' &&
+                                data?.householderTf === true) ||
+                                (data?.americanAge >= 20 &&
+                                    data?.americanAge < 30 &&
+                                    form.lifeYn === 'y') ||
+                                data?.americanAge >= 30) &&
+                            ((data?.restrictedAreaTf === true &&
+                                ((data?.americanAge >= 20 &&
+                                    data?.householderTf === true) ||
+                                    data?.americanAge < 20) &&
                                 data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                    false)) ||
+                                    true) ||
+                                data?.restrictedAreaTf === false) &&
+                            data?.meetBankbookJoinPeriodTf === true &&
+                            data?.meetNumberOfPaymentsTf === true
+                                ? (form.multiChildKookminRes = '1순위')
+                                : null}
+
+                            {/* 2순위 */}
+                            {data?.accountTf === true &&
+                            data?.meetHomelessHouseholdMembersTf === true &&
+                            data?.calcMinorChildren >= 3 &&
+                            (getParams === '그외 국민주택' ||
+                                (getParams === '공공주택특별법 적용' &&
+                                    data?.meetMonthlyAverageIncomeTf === true &&
+                                    data?.meetPropertyTf === true) ||
+                                (getParams === '공공주택특별법 미적용' &&
+                                    data?.meetMonthlyAverageIncomeTf ===
+                                        true)) &&
+                            ((data?.americanAge < 20 &&
+                                form.supportYn === 'y' &&
+                                data?.householderTf === true) ||
+                                (data?.americanAge >= 20 &&
+                                    data?.americanAge < 30 &&
+                                    form.lifeYn === 'y') ||
+                                data?.americanAge >= 30) &&
+                            ((data?.restrictedAreaTf === true && // 규제지역
+                                ((data?.americanAge >= 20 &&
+                                    (data?.householderTf === false ||
+                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                            false)) ||
+                                    (data?.americanAge < 20 &&
+                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
+                                            false))) ||
+                                data?.meetBankbookJoinPeriodTf === false ||
+                                data?.meetNumberOfPaymentsTf === false ||
+                                // 비규제지역
+                                (data?.restrictedAreaTf === false &&
+                                    (data?.meetBankbookJoinPeriodTf === false ||
+                                        data?.meetNumberOfPaymentsTf ===
+                                            false)))
+                                ? (form.multiChildKookminRes = '2순위')
+                                : null}
+
+                            {/* 탈락 */}
+                            {data?.accountTf === false ||
+                            data?.meetHomelessHouseholdMembersTf === false ||
+                            data?.calcMinorChildren < 3 ||
                             (data?.americanAge < 20 &&
-                                data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                    false))) ||
-                        data?.meetBankbookJoinPeriodTf === false ||
-                        data?.meetNumberOfPaymentsTf === false ||
-                        // 비규제지역
-                        (data?.restrictedAreaTf === false &&
-                            (data?.meetBankbookJoinPeriodTf === false ||
-                                data?.meetNumberOfPaymentsTf === false)))
-                        ? (form.multiChildKookminRes = '2순위')
-                        : null}
+                                (form.supportYn === 'n' ||
+                                    data?.householderTf === false)) ||
+                            (data?.americanAge >= 20 &&
+                                data?.americanAge < 30 &&
+                                form.lifeYn === 'n') ||
+                            (getParams === '공공주택특별법 적용' &&
+                                (data?.meetMonthlyAverageIncomeTf === false ||
+                                    data?.meetPropertyTf === false)) ||
+                            (getParams === '공공주택특별법 미적용' &&
+                                data?.meetMonthlyAverageIncomeTf === false)
+                                ? (form.multiChildKookminRes = '탈락')
+                                : null}
+                        </div>
 
-                    {/* 탈락 */}
-                    {data?.accountTf === false ||
-                    data?.meetHomelessHouseholdMembersTf === false ||
-                    data?.calcMinorChildren < 3 ||
-                    (data?.americanAge < 20 &&
-                        (form.supportYn === 'n' ||
-                            data?.householderTf === false)) ||
-                    (data?.americanAge >= 20 &&
-                        data?.americanAge < 30 &&
-                        form.lifeYn === 'n')
-                        ? (form.multiChildKookminRes = '탈락')
-                        : null}
-                </div>
+                        {/* 순위에 따른 페이지 이동 */}
+                        {/* 1, 2순위 */}
+                        {form.multiChildKookminRes === '1순위' ||
+                        form.multiChildKookminRes === '2순위' ? (
+                            <div className="multiChildRankButton">
+                                <MainButton
+                                    onClick={rankSuccess}
+                                    type="submit"
+                                    width="100"
+                                    height="30"
+                                    fontWeight="bold"
+                                    marginLeft="20%"
+                                >
+                                    순위 확인하기
+                                </MainButton>
+                            </div>
+                        ) : null}
 
-                {/* 순위에 따른 페이지 이동 */}
-                {/* 1, 2순위 */}
-                {form.multiChildKookminRes === '1순위' ||
-                form.multiChildKookminRes === '2순위' ? (
-                    <div className="multiChildRankButton">
-                        <MainButton
-                            onClick={rankSuccess}
-                            type="submit"
-                            width="100"
-                            height="30"
-                            fontWeight="bold"
-                            marginLeft="20%"
-                        >
-                            순위 확인하기
-                        </MainButton>
-                    </div>
-                ) : null}
-
-                {/*탈락 */}
-                {form.multiChildKookminRes === '탈락' ? (
-                    <div className="multiChildRankButton">
-                        <MainButton
-                            onClick={fail}
-                            type="button"
-                            width="100"
-                            height="30"
-                            fontWeight="bold"
-                            marginLeft="20%"
-                        >
-                            순위 확인하기
-                        </MainButton>
-                    </div>
-                ) : null}
-            </form>
+                        {/*탈락 */}
+                        {form.multiChildKookminRes === '탈락' ? (
+                            <div className="multiChildRankButton">
+                                <MainButton
+                                    onClick={fail}
+                                    type="button"
+                                    width="100"
+                                    height="30"
+                                    fontWeight="bold"
+                                    marginLeft="20%"
+                                >
+                                    순위 확인하기
+                                </MainButton>
+                            </div>
+                        ) : null}
+                    </form>
+                </>
+            )}
         </>
     );
 };
