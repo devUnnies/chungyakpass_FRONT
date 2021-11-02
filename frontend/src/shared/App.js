@@ -59,6 +59,14 @@ import {
     OneParentPoint,
     NewlyMarriagePointAptNum,
     NewlyMarriagePoint,
+    NewMarriagePoint,
+    AddBankbook,
+    SelectHouse,
+    AddHouse,
+    SeeMember,
+    AddMember,
+    SeeAssets,
+    SeeHistories,
 } from '../pages';
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
@@ -73,40 +81,25 @@ class App extends Component {
                     <Route exact path="/" component={Main} />
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
-                    <Route exact path="/needLogin" component={AllowLogin} />
-                    <Route exact path="/mypage" component={MyPage} />
+                    <Route path="/needLogin" component={AllowLogin} />
+                    <Route path="/mypage" component={MyPage} />
                     <Route path="/personalRule" component={PersonalRules} />
                     <Route path="/noEmail" component={NoEmail} />
                     <Route path="/sitemap" component={Sitemap} />
-                    <Route
-                        exact
-                        path="/addHouseHolder"
-                        component={AddHouseHolder}
-                    />
+                    <Route path="/addBankbook" component={AddBankbook} />
+                    <Route path="/selectHouse" component={SelectHouse} />
+                    <Route path="/addHouse" component={AddHouse} />
+                    <Route path="/members" component={SeeMember} />
+                    <Route path="/addMember" component={AddMember} />
+                    <Route path="/histories" component={SeeHistories} />
+                    <Route path="/assets" component={SeeAssets} />
 
-                    <Route exact path="/addHouseHolder/see" component={Board} />
                     <Route
                         exact
                         path="/addHouseHolder/assetList"
                         component={List}
                     />
                     <Route exact path="/atAGlance" component={AtAGlance} />
-                    <Route
-                        exact
-                        path="/common/passbook"
-                        component={PassbookInfo}
-                    />
-                    <Route
-                        exact
-                        path="/common/housing"
-                        component={HousingInfo}
-                    />
-                    <Route exact path="/common/member" component={MemberInfo} />
-                    <Route
-                        exact
-                        path="/common/memberHousing"
-                        component={MemberHousingInfo}
-                    />
 
                     <Route
                         path="/generalMinyeong"
@@ -216,8 +209,7 @@ class App extends Component {
                     {/* 순위 확인 페이지 */}
                     <Route path="/firstRank" component={FirstRank} />
                     <Route path="/secondRank" component={SecondRank} />
-                    <Route path="/board" component={Board} />
-                    <Route path="/common/personal/addMember" component={Post} />
+
                     <Route exact path="/boardView/:no" component={BoardView} />
                     <Route path="/case" component={BoardMain} />
                     <Route path="/FAQ" component={FAQ} />
