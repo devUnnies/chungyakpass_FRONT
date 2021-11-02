@@ -86,7 +86,12 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
     return (
         <>
             {data?.error === 'BAD_REQUEST' ? (
-                alert(data?.code + '\n' + data?.message) + history.push('/')
+                alert(
+                    '자격 확인을 진행할 수 없습니다' +
+                        '\n' +
+                        '사유: ' +
+                        data?.message
+                ) + history.push('/')
             ) : (
                 <>
                     <div className="general_title">

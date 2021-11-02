@@ -23,13 +23,11 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
-    const [multiChildKookminType, setMultiChildKookminType] = useState();
+    const [exceptionHouseTf, setExceptionHouseTf] = useState();
     const history = useHistory();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
-    const getParams = location.state.newlyMarriedKookminType; // 국민주택 유형 props 가져오기
-    console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
 
-    const data = newlyMarriedKookminStore?.postNewlyMarriedKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
+    const data = newlyMarriedKookminStore?.postNewlyMarriedKookminAptNum?.data; // 신혼부부 국민 로직 접근 변수
 
     const [form, setForm] = useState({
         name: '',
@@ -90,7 +88,12 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
             {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
         공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
             {data?.error === 'BAD_REQUEST' ? (
-                alert(data?.code + '\n' + data?.message) + history.push('/')
+                alert(
+                    '자격 확인을 진행할 수 없습니다' +
+                        '\n' +
+                        '사유: ' +
+                        data?.message
+                ) + history.push('/')
             ) : (
                 <>
                     <div className="special_title">
@@ -779,7 +782,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                             <input
                                                                                                 className="aptInfoSelect"
                                                                                                 value={
-                                                                                                    data?.is2ndChungyak
+                                                                                                    data?.secondChungyak
                                                                                                         ? '충족'
                                                                                                         : '미충족'
                                                                                                 }
@@ -788,13 +791,13 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                 }
                                                                                             />
                                                                                             <span>
-                                                                                                {data?.is2ndChungyak ===
+                                                                                                {data?.secondChungyak ===
                                                                                                 false ? (
                                                                                                     <span className="progress">
                                                                                                         <CheckCircleOutlined />
                                                                                                     </span>
                                                                                                 ) : null}
-                                                                                                {data?.is2ndChungyak ===
+                                                                                                {data?.secondChungyak ===
                                                                                                 true ? (
                                                                                                     <span className="secondRankTootip">
                                                                                                         <PauseCircleOutlined />
@@ -805,7 +808,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                     </tr>
 
                                                                                     {/* 미성년 자녀(태아 포함) 존재하는지 여부 */}
-                                                                                    {data?.is2ndChungyak ===
+                                                                                    {data?.secondChungyak ===
                                                                                     false ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
@@ -882,7 +885,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                     true) &&
                             data?.meetBankbookJoinPeriodTf === true &&
                             data?.meetNumberOfPaymentsTf === true &&
-                            data?.is2ndChungyak === false &&
+                            data?.secondChungyak === false &&
                             data?.hasMinorChildren === true
                                 ? (form.newlyMarriedKookminRes = '1순위')
                                 : null}
@@ -899,7 +902,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                     true) &&
                             data?.meetBankbookJoinPeriodTf === true &&
                             data?.meetNumberOfPaymentsTf === true &&
-                            (data?.is2ndChungyak === true ||
+                            (data?.secondChungyak === true ||
                                 data?.hasMinorChildren === false)
                                 ? (form.newlyMarriedKookminRes = '2순위')
                                 : null}

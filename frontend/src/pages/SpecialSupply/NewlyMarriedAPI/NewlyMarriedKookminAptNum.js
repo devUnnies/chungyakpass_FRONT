@@ -21,9 +21,9 @@ function NewlyMarriedKookminAptNum(props) {
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
     const [
-        newlyMarriedKookminType,
-        setNewlyMarriedKookminType,
-        handleChangeNewlyMarriedKookminType,
+        exceptionHouseTf,
+        setExceptionHouseTf,
+        handleChangeExceptionHouseTf,
     ] = useInputState('');
 
     const handleSubmit = (event) => {
@@ -35,7 +35,7 @@ function NewlyMarriedKookminAptNum(props) {
             postNewlyMarriedKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                newlyMarriedKookminType: newlyMarriedKookminType,
+                exceptionHouseTf: exceptionHouseTf,
             })
         );
     };
@@ -45,7 +45,7 @@ function NewlyMarriedKookminAptNum(props) {
             postNewlyMarriedKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                newlyMarriedKookminType: newlyMarriedKookminType,
+                exceptionHouseTf: exceptionHouseTf,
             })
         ); // api 연결 요청.
 
@@ -57,7 +57,7 @@ function NewlyMarriedKookminAptNum(props) {
             state: {
                 notificationNumber,
                 housingType,
-                newlyMarriedKookminType,
+                exceptionHouseTf,
             },
         });
     };
@@ -94,23 +94,27 @@ function NewlyMarriedKookminAptNum(props) {
                             required
                         />
                         <br />
-                        <select
-                            className="aptNumInput"
-                            name="newlyMarriedKookminType"
-                            value={newlyMarriedKookminType}
-                            onChange={handleChangeNewlyMarriedKookminType}
-                        >
-                            <option value="">---선택---</option>
-                            <option value="공공주택특별법 적용">
-                                공공주택 특별법 적용
-                            </option>
-                            <option value="공공주택특별법 미적용">
-                                공공주택 특별법 미적용
-                            </option>
-                            <option value="그외 국민주택">
-                                그 외 국민주택
-                            </option>
-                        </select>
+                        <span className="qulificaitonBox">
+                            주택 예외사항 해당 여부
+                        </span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeExceptionHouseTf}
+                            value="y"
+                            checked={exceptionHouseTf === 'y' ? true : false}
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeExceptionHouseTf}
+                            value="n"
+                            checked={exceptionHouseTf === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
 
                         <span className="aptNumButton">
                             <MainButton

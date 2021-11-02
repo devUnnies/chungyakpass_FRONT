@@ -62,8 +62,12 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
     return (
         <>
             {data?.error === 'NOT_FOUND' ? (
-                alert('가/배점을 확인할 수 없습니다.' + '\n' + data?.message) +
-                history.push('/')
+                alert(
+                    '가/배점을 확인할 수 없습니다.' +
+                        '\n' +
+                        '사유: ' +
+                        data?.message
+                ) + history.push('/')
             ) : (
                 <>
                     <div className="point_title">

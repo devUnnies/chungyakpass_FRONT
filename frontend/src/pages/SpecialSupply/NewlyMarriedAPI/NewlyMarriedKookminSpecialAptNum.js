@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postNewlyMarriedMinyeongAptNum } from '../../../store/actions/newlyMarriedMinyeongAction';
+import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
-function NewlyMarriedMinyeongAptNum(props) {
+function NewlyMarriedKookminSpecialAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const newlyMarriedMinyeongStore = useSelector(
-        (state) => state.newlyMarriedMinyeong
+    const newlyMarriedKookminSpecialAptNumStore = useSelector(
+        (state) => state.newlyMarriedKookminSpecial
     );
 
     const [
@@ -32,7 +32,7 @@ function NewlyMarriedMinyeongAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postNewlyMarriedMinyeongAptNum({
+            postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
                 exceptionHouseTf: exceptionHouseTf,
@@ -42,7 +42,7 @@ function NewlyMarriedMinyeongAptNum(props) {
 
     const onClick = async () => {
         dispatch(
-            postNewlyMarriedMinyeongAptNum({
+            postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
                 exceptionHouseTf: exceptionHouseTf,
@@ -50,11 +50,12 @@ function NewlyMarriedMinyeongAptNum(props) {
         ); // api 연결 요청.
 
         const data =
-            newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data;
+            newlyMarriedKookminSpecialAptNumStore
+                ?.postNewlyMarriedKookminSpecialAptNum?.data;
         console.log(JSON.stringify(data));
         history.push({
-            pathname: '/specialNewlyMarriedMinyeong',
-            props: {
+            pathname: '/specialNewlyMarriedKookminSpecial',
+            state: {
                 notificationNumber,
                 housingType,
                 exceptionHouseTf,
@@ -63,17 +64,22 @@ function NewlyMarriedMinyeongAptNum(props) {
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 신혼부부 민영 자격확인 페이지로 이동.
-        if (newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 신혼부부 국민 공특법 적용 자격확인 페이지로 이동.
+        if (
+            newlyMarriedKookminSpecialAptNumStore?.postNewlyMarriedKookminSpecialAptNum
+        ) {
             const data =
-                newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data;
+                newlyMarriedKookminSpecialAptNumStore
+                    .postNewlyMarriedKookminSpecialAptNum.data;
         }
-    }, [newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum]);
+    }, [
+        newlyMarriedKookminSpecialAptNumStore?.postNewlyMarriedKookminSpecialAptNum,
+    ]);
 
     return (
         <>
             <div className="AptNumForm">
-                <div className="container">
+                <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
                         <input
                             type="number"
@@ -121,8 +127,7 @@ function NewlyMarriedMinyeongAptNum(props) {
                                 onClick={onClick}
                                 width="100"
                                 height="35"
-                                fontSize="13"
-                                margin="5"
+                                fontSize="15"
                             >
                                 다음
                             </MainButton>
@@ -134,4 +139,4 @@ function NewlyMarriedMinyeongAptNum(props) {
     );
 }
 
-export default NewlyMarriedMinyeongAptNum;
+export default NewlyMarriedKookminSpecialAptNum;

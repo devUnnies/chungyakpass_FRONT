@@ -22,6 +22,20 @@ const NewlyMarriedTypeSelect = () => {
                     height="40"
                     fontSize="15"
                     onClick={() => {
+                        history.push(
+                            '/specialNewlyMarriedKookminSpecialAptNum'
+                        );
+                    }}
+                >
+                    공특법 적용 국민주택
+                </MainButton>
+
+                <MainButton
+                    type="button"
+                    width="100"
+                    height="40"
+                    fontSize="15"
+                    onClick={() => {
                         history.push('/specialNewlyMarriedKookminAptNum');
                     }}
                 >

@@ -46,6 +46,8 @@ export { default as NewlyMarriedMinyeongAptNum } from './SpecialSupply/NewlyMarr
 export { default as NewlyMarriedMinyeongApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedMinyeongApi';
 export { default as NewlyMarriedKookminAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminAptNum';
 export { default as NewlyMarriedKookminApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminApi';
+export { default as NewlyMarriedKookminSpecialAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialAptNum';
+export { default as NewlyMarriedKookminSpecialApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialApi';
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';

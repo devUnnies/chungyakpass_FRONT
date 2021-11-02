@@ -12,7 +12,9 @@ import oldParentMinyeong from './oldParentMinyeongReducer';
 import oldParentKookmin from './oldParentKookminReducer';
 import firstInLifeMinyeong from './firstInLifeMinyeongReducer';
 import firstInLifeKookmin from './firstInLifeKookminReducer';
+import newlyMarriedMinyeong from './newlyMarriedMinyeongReducer';
 import newlyMarriedKookmin from './newlyMarriedKookminReducer';
+import newlyMarriedKookminSpecial from './newlyMarriedKookminSpecialReducer';
 import newlyMarriagePoint from './pointSpecialNewlyMarriageReducer';
 import oneParentPoint from './pointSpecialOneParentReducer';
 
@@ -30,6 +32,8 @@ const rootReducer = combineReducers({
     oldParentKookmin,
     firstInLifeMinyeong,
     newlyMarriedKookmin,
+    newlyMarriedKookminSpecial,
+    newlyMarriedMinyeong,
     newlyMarriagePoint,
     oneParentPoint,
 });

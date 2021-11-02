@@ -90,7 +90,12 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
         공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
             {data?.error === 'BAD_REQUEST' ? (
-                alert(data?.code + '\n' + data?.message) + history.push('/')
+                alert(
+                    '자격 확인을 진행할 수 없습니다' +
+                        '\n' +
+                        '사유: ' +
+                        data?.message
+                ) + history.push('/')
             ) : (
                 <>
                     <div className="special_title">
@@ -1036,6 +1041,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                             {data?.accountTf === true &&
                             data?.meetHomelessHouseholdMembersTf === true &&
                             data?.calcMinorChildren >= 3 &&
+                            (getParams === '그외 국민주택' ||
+                                (getParams === '공공주택특별법 적용' &&
+                                    data?.meetMonthlyAverageIncomeTf === true &&
+                                    data?.meetPropertyTf === true) ||
+                                (getParams === '공공주택특별법 미적용' &&
+                                    data?.meetMonthlyAverageIncomeTf ===
+                                        true)) &&
                             ((data?.americanAge < 20 &&
                                 form.supportYn === 'y' &&
                                 data?.householderTf === true) ||
@@ -1059,6 +1071,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                             {data?.accountTf === true &&
                             data?.meetHomelessHouseholdMembersTf === true &&
                             data?.calcMinorChildren >= 3 &&
+                            (getParams === '그외 국민주택' ||
+                                (getParams === '공공주택특별법 적용' &&
+                                    data?.meetMonthlyAverageIncomeTf === true &&
+                                    data?.meetPropertyTf === true) ||
+                                (getParams === '공공주택특별법 미적용' &&
+                                    data?.meetMonthlyAverageIncomeTf ===
+                                        true)) &&
                             ((data?.americanAge < 20 &&
                                 form.supportYn === 'y' &&
                                 data?.householderTf === true) ||

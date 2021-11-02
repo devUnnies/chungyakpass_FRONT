@@ -30,6 +30,8 @@ import {
     NewlyMarriedTypeSelect,
     NewlyMarriedKookminAptNum,
     NewlyMarriedKookminApi,
+    NewlyMarriedKookminSpecialAptNum,
+    NewlyMarriedKookminSpecialApi,
     NewlyMarriedMinyeongAptNum,
     NewlyMarriedMinyeongApi,
     FirstRank,
@@ -193,6 +195,14 @@ class App extends Component {
                     <Route
                         path="/specialNewlyMarriedKookmin"
                         component={NewlyMarriedKookminApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminSpecialAptNum"
+                        component={NewlyMarriedKookminSpecialAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminSpecial"
+                        component={NewlyMarriedKookminSpecialApi}
                     />
                     <Route
                         path="/specialNewlyMarriedMinyeongAptNum"
