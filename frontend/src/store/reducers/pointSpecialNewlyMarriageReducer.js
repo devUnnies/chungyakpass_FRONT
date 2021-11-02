@@ -19,7 +19,7 @@ export default function newlyMarriagePoint(state = initialState, action) {
         case RES_NEWLYMARRIAGE_APTNUM_POST_SUCCESS:
         case RES_NEWLYMARRIAGE_APTNUM_POST_ERROR:
             return handleAsyncActions(
-                RES_MULTICHILD_APTNUM_POST,
+                RES_NEWLYMARRIAGE_APTNUM_POST,
                 'postNewlyMarriagePointAptNum'
             )(state, action);
         default:

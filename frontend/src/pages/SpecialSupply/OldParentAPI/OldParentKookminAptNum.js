@@ -60,16 +60,6 @@ function OldParentKookminAptNum(props) {
                 oldParentKookminType,
             },
         });
-
-        // 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-        // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
-        if (
-            oldParentKookminAptNumStore?.postOldParentKookminAptNum?.data
-                ?.error === 'BAD_REQUEST'
-        ) {
-            alert(data?.code + '\n' + data?.message);
-            history.push('/specialOldParentTypeSelect');
-        }
     };
 
     useEffect(() => {

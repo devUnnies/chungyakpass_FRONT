@@ -6,8 +6,8 @@ import { createPromiseThunk } from '../../services/api/asyncUtils';
 export const RES_NEWLYMARRIAGE_APTNUM_POST = 'RES_NEWLYMARRIAGE_APTNUM_POST';
 export const RES_NEWLYMARRIAGE_APTNUM_POST_SUCCESS =
     'RES_NEWLYMARRIAGE_APTNUM_POST_SUCCESS';
-export const RRES_NEWLYMARRIAGE_APTNUM_POST_ERROR =
-    'RRES_NEWLYMARRIAGE_APTNUM_POST_ERROR';
+export const RES_NEWLYMARRIAGE_APTNUM_POST_ERROR =
+    'RES_NEWLYMARRIAGE_APTNUM_POST_ERROR';
 
 /* Action Creator */
 export const postNewlyMarriagePointAptNum = createPromiseThunk(

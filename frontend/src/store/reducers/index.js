@@ -13,6 +13,8 @@ import oldParentKookmin from './oldParentKookminReducer';
 import firstInLifeMinyeong from './firstInLifeMinyeongReducer';
 import firstInLifeKookmin from './firstInLifeKookminReducer';
 import newlyMarriedKookmin from './newlyMarriedKookminReducer';
+import newlyMarriagePoint from './pointSpecialNewlyMarriageReducer';
+import oneParentPoint from './pointSpecialOneParentReducer';
 
 const rootReducer = combineReducers({
     auth,
@@ -28,6 +30,8 @@ const rootReducer = combineReducers({
     oldParentKookmin,
     firstInLifeMinyeong,
     newlyMarriedKookmin,
+    newlyMarriagePoint,
+    oneParentPoint,
 });
 
 // const rootReducer = (state, action) => {
