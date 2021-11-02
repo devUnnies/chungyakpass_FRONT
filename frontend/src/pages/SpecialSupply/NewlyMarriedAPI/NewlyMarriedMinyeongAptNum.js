@@ -2,16 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
+import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
-import '../SpecialSupply.css';
 
-function OldParentMinyeongAptNum(props) {
+function MultiChildMinyeongAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const oldParentMinyeongAptNumStore = useSelector(
-        (state) => state.oldParentMinyeong
+    const multiChildMinyeongAptNumStore = useSelector(
+        (state) => state.multiChildMinyeong
     );
 
     const [
@@ -28,7 +27,7 @@ function OldParentMinyeongAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postOldParentMinyeongAptNum({
+            postMultiChildMinyeongAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
             })
@@ -37,17 +36,17 @@ function OldParentMinyeongAptNum(props) {
 
     const onClick = async () => {
         dispatch(
-            postOldParentMinyeongAptNum({
+            postMultiChildMinyeongAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
             })
         ); // api 연결 요청.
 
         const data =
-            oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
+            multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
         console.log(JSON.stringify(data));
         history.push({
-            pathname: '/specialOldParentMinyeong',
+            pathname: '/specialMultiChildMinyeong',
             props: {
                 notificationNumber,
                 housingType,
@@ -58,17 +57,17 @@ function OldParentMinyeongAptNum(props) {
         // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
         if (data?.error === 'BAD_REQUEST') {
             alert(data?.code + '\n' + data?.message);
-            history.push('/specialOldParentTypeSelect');
+            history.push('/specialNewlyMarriedTypeSelect');
         }
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 노부모 민영 자격확인 페이지로 이동.
-        if (oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum) {
+        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
+        if (multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum) {
             const data =
-                oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
+                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
         }
-    }, [oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum]);
+    }, [multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum]);
 
     return (
         <>
@@ -113,4 +112,4 @@ function OldParentMinyeongAptNum(props) {
     );
 }
 
-export default OldParentMinyeongAptNum;
+export default MultiChildMinyeongAptNum;

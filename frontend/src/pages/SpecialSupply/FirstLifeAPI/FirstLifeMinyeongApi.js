@@ -98,64 +98,75 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                             * 일반공급 1순위인 경우에만 청약 신청 가능합니다.
                         </p>
                     </p>
-                    {/* 세대구성원 무주택 판별 */}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                전세대구성원의 무주택 여부
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>
-                                        <div>※ 무주택 조건</div>
-                                        <div className="tooltip-text-info">
-                                            : 무주택 기간 산정은 본인 기준 만
-                                            30세부터 하되, 그 전에 혼인한 경우
-                                            혼인신고일을 기준으로 산정함.
-                                        </div>
-                                    </p>
-                                    <p>
-                                        <li>
-                                            60세 이상 직계존속이 소유한 주택
-                                            혹은 분양권
-                                        </li>
-                                        <li>3개월 이내 처분한 상속주택</li>
-                                        <li>비도시 지역 단독주택</li>
-                                        <li>소형, 저가 주택</li>
-                                        <li>폐가 소유</li>
-                                        <li>무허가 건물 소유</li>
-                                        <li>문화재 지정 주택</li>
-                                        <li>미분양 주택 분양권</li>
-                                        <li>사업 목적</li>
-                                    </p>
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={data?.homelessYn ? '충족' : '미충족'}
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.homelessYn === true ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
+
+                    {data !== null ? (
+                        <>
+                            {/* 세대구성원 무주택 판별 */}
+                            <tr className="special_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        전세대구성원의 무주택 여부
                                     </span>
-                                ) : null}
-                                {data?.homelessYn === false ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            전 세대 구성원이 무주택이 아닐 시
-                                            청약 자격 미달.
+                                    <span className="info_tooltip">
+                                        <InfoCircleOutlined />
+                                        <span class="tooltip-text">
+                                            <p>
+                                                <div>※ 무주택 조건</div>
+                                                <div className="tooltip-text-info">
+                                                    : 무주택 기간 산정은 본인
+                                                    기준 만 30세부터 하되, 그
+                                                    전에 혼인한 경우
+                                                    혼인신고일을 기준으로
+                                                    산정함.
+                                                </div>
+                                            </p>
+                                            <p>
+                                                <li>
+                                                    60세 이상 직계존속이 소유한
+                                                    주택 혹은 분양권
+                                                </li>
+                                                <li>
+                                                    3개월 이내 처분한 상속주택
+                                                </li>
+                                                <li>비도시 지역 단독주택</li>
+                                                <li>소형, 저가 주택</li>
+                                                <li>폐가 소유</li>
+                                                <li>무허가 건물 소유</li>
+                                                <li>문화재 지정 주택</li>
+                                                <li>미분양 주택 분양권</li>
+                                                <li>사업 목적</li>
+                                            </p>
                                         </span>
                                     </span>
-                                ) : null}
-                            </span>
-                        </td>
-                    </tr>
+                                </td>
+                                <td className="special_result">
+                                    <input
+                                        className="aptInfoSelect"
+                                        value={
+                                            data?.homelessYn ? '충족' : '미충족'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.homelessYn === true ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : null}
+                                        {data?.homelessYn === false ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text">
+                                                    전 세대 구성원이 무주택이
+                                                    아닐 시 청약 자격 미달.
+                                                </span>
+                                            </span>
+                                        ) : null}
+                                    </span>
+                                </td>
+                            </tr>
+                        </>
+                    ) : null}
 
                     {data?.homelessYn === true ? (
                         <>

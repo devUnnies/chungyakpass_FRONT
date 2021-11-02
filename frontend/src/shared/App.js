@@ -27,6 +27,11 @@ import {
     FirstLifeKookminSpecialLawApi,
     FirstLifeMinyeongAptNum,
     FirstLifeMinyeongApi,
+    NewlyMarriedTypeSelect,
+    NewlyMarriedKookminAptNum,
+    NewlyMarriedKookminApi,
+    NewlyMarriedMinyeongAptNum,
+    NewlyMarriedMinyeongApi,
     FirstRank,
     SecondRank,
     PassbookInfo,
@@ -48,8 +53,10 @@ import {
     MultiChildPointAptNum,
     MultiChildPoint,
     OldParentPoint,
+    OneParentPointAptNum,
     OneParentPoint,
-    NewMarriagePoint,
+    NewlyMarriagePointAptNum,
+    NewlyMarriagePoint,
 } from '../pages';
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
@@ -167,10 +174,6 @@ class App extends Component {
                         path="/specialFirstLifeKookmin"
                         component={FirstLifeKookminApi}
                     />
-                    {/* <Route
-                        path="/specialFirstLifeKookmin/specialLaw"
-                        component={FirstLifeKookminSpecialLawApi}
-                    /> */}
                     <Route
                         path="/specialFirstLifeMinyeongAptNum"
                         component={FirstLifeMinyeongAptNum}
@@ -178,6 +181,26 @@ class App extends Component {
                     <Route
                         path="/specialFirstLifeMinyeong"
                         component={FirstLifeMinyeongApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedTypeSelect"
+                        component={NewlyMarriedTypeSelect}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookminAptNum"
+                        component={NewlyMarriedKookminAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedKookmin"
+                        component={NewlyMarriedKookminApi}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedMinyeongAptNum"
+                        component={NewlyMarriedMinyeongAptNum}
+                    />
+                    <Route
+                        path="/specialNewlyMarriedMinyeong"
+                        component={NewlyMarriedMinyeongApi}
                     />
 
                     {/* 순위 확인 페이지 */}
@@ -207,13 +230,23 @@ class App extends Component {
                     />
                     <Route
                         exact
+                        path="/point/oneParentAptNum"
+                        component={OneParentPointAptNum}
+                    />
+                    <Route
+                        exact
                         path="/point/oneParent"
                         component={OneParentPoint}
                     />
                     <Route
                         exact
-                        path="/point/newMarriage"
-                        component={NewMarriagePoint}
+                        path="/point/newlyMarriageAptNum"
+                        component={NewlyMarriagePointAptNum}
+                    />
+                    <Route
+                        exact
+                        path="/point/newlyMarriage"
+                        component={NewlyMarriagePoint}
                     />
                     <Route
                         exact

@@ -41,13 +41,20 @@ export { default as FirstLifeMinyeongAptNum } from './SpecialSupply/FirstLifeAPI
 export { default as FirstLifeMinyeongApi } from './SpecialSupply/FirstLifeAPI/FirstLifeMinyeongApi';
 export { default as FirstLifeKookminAptNum } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminAptNum';
 export { default as FirstLifeKookminApi } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminApi';
+export { default as NewlyMarriedTypeSelect } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedTypeSelect';
+export { default as NewlyMarriedMinyeongAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedMinyeongAptNum';
+export { default as NewlyMarriedMinyeongApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedMinyeongApi';
+export { default as NewlyMarriedKookminAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminAptNum';
+export { default as NewlyMarriedKookminApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminApi';
 // 순위 확인 페이지
 export { default as FirstRank } from './Rank/FirstRank';
 export { default as SecondRank } from './Rank/SecondRank';
 // 가배점 페이지
 export { default as MultiChildPointAptNum } from './ExtraPoint/MultiChild/MultiChildPointAptNum';
 export { default as MultiChildPoint } from './ExtraPoint/MultiChild/MultiChildPoint';
-export { default as NewMarriagePoint } from './ExtraPoint/NewMarriage/NewMarriagePoint';
+export { default as NewlyMarriagePointAptNum } from './ExtraPoint/NewMarriage/NewlyMarriagePointAptNum';
+export { default as NewlyMarriagePoint } from './ExtraPoint/NewMarriage/NewlyMarriagePoint';
 export { default as OldParentPoint } from './ExtraPoint/OldParent/OldParentPoint';
 export { default as GeneralMinyeoungPoint } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
+export { default as OneParentPointAptNum } from './ExtraPoint/OneParent/OneParentPointAptNum';
 export { default as OneParentPoint } from './ExtraPoint/OneParent/OneParentPoint';

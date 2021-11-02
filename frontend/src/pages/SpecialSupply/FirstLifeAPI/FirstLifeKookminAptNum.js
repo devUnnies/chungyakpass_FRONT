@@ -32,7 +32,7 @@ function FirstLifeKookminAptNum(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postFirstInLifeMinyeongAptNum({
+            postFirstInLifeKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
                 firstLifeKookminType: firstLifeKookminType,
@@ -41,32 +41,30 @@ function FirstLifeKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        if (
-            notificationNumber == '' ||
-            housingType == '' ||
-            firstLifeKookminType == ''
-        ) {
-            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
-        } else {
-            dispatch(
-                postFirstInLifeKookminAptNum({
-                    notificationNumber: notificationNumber,
-                    housingType: housingType,
-                    firstLifeKookminType: firstLifeKookminType,
-                })
-            ); // api 연결 요청.
+        dispatch(
+            postFirstInLifeKookminAptNum({
+                notificationNumber: notificationNumber,
+                housingType: housingType,
+                firstLifeKookminType: firstLifeKookminType,
+            })
+        ); // api 연결 요청.
 
-            const data =
-                firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
-            console.log(JSON.stringify(data));
-            history.push({
-                pathname: '/specialFirstLifeKookmin',
-                props: {
-                    notificationNumber,
-                    housingType,
-                    firstLifeKookminType,
-                },
-            });
+        const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
+        console.log(JSON.stringify(data));
+        history.push({
+            pathname: '/specialFirstLifeKookmin',
+            props: {
+                notificationNumber,
+                housingType,
+                firstLifeKookminType,
+            },
+        });
+
+        // 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
+        // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
+        if (data?.error === 'BAD_REQUEST') {
+            alert(data?.code + '\n' + data?.message);
+            history.push('/specialFirstLifeTypeSelect');
         }
     };
 
@@ -89,6 +87,7 @@ function FirstLifeKookminAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <select

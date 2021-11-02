@@ -103,98 +103,108 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                         판정이 날 수 있음을 알려드립니다.
                     </p>
 
-                    {/* 국민주택 유형 */}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                선택한 국민 주택 유형
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    선택한 국민 주택 유형에 따라 자격 확인
-                                    조건이 달라질 수 있습니다.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={getParams}
-                                readOnly={true}
-                            />
-                            <span>
-                                {getParams !== '' ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
+                    {data !== null ? (
+                        <>
+                            {/* 국민주택 유형 */}
+                            <tr className="special_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        선택한 국민 주택 유형
                                     </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {getParams === '' ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            국민주택 유형을 선택하지 않았습니다.
+                                    <span className="info_tooltip">
+                                        <InfoCircleOutlined />
+                                        <span class="tooltip-text">
+                                            선택한 국민 주택 유형에 따라 자격
+                                            확인 조건이 달라질 수 있습니다.
                                         </span>
                                     </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
+                                </td>
+                                <td className="special_result">
+                                    <input
+                                        className="aptInfoSelect"
+                                        value={getParams}
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {getParams !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {getParams === '' ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text">
+                                                    국민주택 유형을 선택하지
+                                                    않았습니다.
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </span>
+                                </td>
+                            </tr>
+                        </>
+                    ) : null}
 
-                    {/* 규제지역 판단. (규제지역 로직 결과값)*/}
-                    <tr className="special_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                선택한 아파트가 투기과열지구 또는
-                                청약과열지역인가?
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>
-                                        규제 지역('투기과열지구' 혹은
-                                        '청약과열지역') ?
-                                    </p>
-                                    정부에서 주로 부동산의 투기 방지, 주택 시장
-                                    안정화 등을 위해 지정하여 관리하는 지역.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="special_result">
-                            <input
-                                className="aptInfoSelect"
-                                value={
-                                    data?.restrictedAreaTf
-                                        ? '규제지역'
-                                        : '비규제지역'
-                                }
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.restrictedAreaTf !== '' ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
+                    {data !== null ? (
+                        <>
+                            {/* 규제지역 판단. (규제지역 로직 결과값)*/}
+                            <tr className="special_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        선택한 아파트가 투기과열지구 또는
+                                        청약과열지역인가?
                                     </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {data?.restrictedAreaTf === '' ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            값 입력 필요
+                                    <span className="info_tooltip">
+                                        <InfoCircleOutlined />
+                                        <span class="tooltip-text">
+                                            <p>
+                                                규제 지역('투기과열지구' 혹은
+                                                '청약과열지역') ?
+                                            </p>
+                                            정부에서 주로 부동산의 투기 방지,
+                                            주택 시장 안정화 등을 위해 지정하여
+                                            관리하는 지역.
                                         </span>
                                     </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
+                                </td>
+                                <td className="special_result">
+                                    <input
+                                        className="aptInfoSelect"
+                                        value={
+                                            data?.restrictedAreaTf
+                                                ? '규제지역'
+                                                : '비규제지역'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.restrictedAreaTf !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {data?.restrictedAreaTf === '' ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text">
+                                                    값 입력 필요
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </span>
+                                </td>
+                            </tr>
+                        </>
+                    ) : null}
 
                     {/* 청약통장 조건 충족 여부 */}
                     <tr className="special_phase">

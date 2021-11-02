@@ -41,32 +41,34 @@ function MultiChildKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        if (
-            notificationNumber == '' ||
-            housingType == '' ||
-            multiChildKookminType == ''
-        ) {
-            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
-        } else {
-            dispatch(
-                postMultiChildKookminAptNum({
-                    notificationNumber: notificationNumber,
-                    housingType: housingType,
-                    multiChildKookminType: multiChildKookminType,
-                })
-            ); // api 연결 요청.
+        dispatch(
+            postMultiChildKookminAptNum({
+                notificationNumber: notificationNumber,
+                housingType: housingType,
+                multiChildKookminType: multiChildKookminType,
+            })
+        ); // api 연결 요청.
 
-            const data =
-                multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data;
-            console.log(JSON.stringify(data));
-            history.push({
-                pathname: '/specialMultiChildKookmin',
-                state: {
-                    notificationNumber,
-                    housingType,
-                    multiChildKookminType,
-                },
-            });
+        const data =
+            multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data;
+        console.log(JSON.stringify(data));
+        history.push({
+            pathname: '/specialMultiChildKookmin',
+            state: {
+                notificationNumber,
+                housingType,
+                multiChildKookminType,
+            },
+        });
+
+        // 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
+        // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
+        if (
+            multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data
+                ?.error === 'BAD_REQUEST'
+        ) {
+            alert(data?.code + '\n' + data?.message);
+            history.push('/specialMultiChildTypeSelect');
         }
     };
 
@@ -89,6 +91,7 @@ function MultiChildKookminAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <input
@@ -97,6 +100,7 @@ function MultiChildKookminAptNum(props) {
                             value={housingType}
                             onChange={handleChangeHousingType}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <select

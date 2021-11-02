@@ -24,6 +24,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
     const history = useHistory();
 
     const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 민영 로직 접근 변수
+    // 입력 값 오류에 의한 error 발생 시 처리 코드
 
     const [form, setForm] = useState({
         name: '',
@@ -80,6 +81,8 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
         }
     };
 
+    console.log(data);
+
     return (
         <>
             <div className="general_title">
@@ -92,85 +95,97 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
             {/* 자격확인 테이블 */}
             <form className="generalSupply_form" onSubmit={handleSubmit}>
                 <table className="general_table">
-                    {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
-                    <tr className="general_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                선택한 아파트가 투기과열지구 또는
-                                청약과열지역인가?
-                            </span>
-                            <span className="info_tooltip">
-                                <InfoCircleOutlined />
-                                <span class="tooltip-text">
-                                    <p>
-                                        규제 지역('투기과열지구' 혹은
-                                        '청약과열지역') ?
-                                    </p>
-                                    정부에서 주로 부동산의 투기 방지, 주택 시장
-                                    안정화 등을 위해 지정하여 관리하는 지역.
-                                </span>
-                            </span>
-                        </td>
-                        <td className="general_result">
-                            <input
-                                className="generalAptInfoSelect"
-                                value={
-                                    data?.restrictedAreaTf
-                                        ? '규제지역'
-                                        : '비규제지역'
-                                }
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.restrictedAreaTf !== '' ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
+                    {/* 아파트 공고 번호 및 주택형을 받아 data가 비어있지 않을 경우 보여야하는 로직 */}
+                    {data !== null ? (
+                        <>
+                            {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
+                            <tr className="general_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        선택한 아파트가 투기과열지구 또는
+                                        청약과열지역인가?
                                     </span>
-                                ) : null}
-                                {data?.restrictedAreaTf === '' ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                    </span>
-                                ) : null}
-                            </span>
-                        </td>
-                    </tr>
-
-                    {/* 청약통장 조건 충족 여부 */}
-                    <tr className="general_phase">
-                        <td className="qulificaiton">
-                            <span className="qulificaitonBox">
-                                청약통장 조건 충족 여부
-                            </span>
-                        </td>
-                        <td className="general_result">
-                            <input
-                                className="generalAptInfoSelect"
-                                value={data?.accountTf ? '충족' : '미충족'}
-                                readOnly={true}
-                            />
-                            <span>
-                                {data?.accountTf === true ? (
-                                    <span className="progress">
-                                        <CheckCircleOutlined />
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}
-                                {data?.accountTf === false ? (
-                                    <span className="pause_tooltip">
-                                        <CloseCircleOutlined />
-                                        <span class="pause-tooltip-text">
-                                            청약 통장 조건 미충족 시 부적격
-                                            발생.
+                                    <span className="info_tooltip">
+                                        <InfoCircleOutlined />
+                                        <span class="tooltip-text">
+                                            <p>
+                                                규제 지역('투기과열지구' 혹은
+                                                '청약과열지역') ?
+                                            </p>
+                                            정부에서 주로 부동산의 투기 방지,
+                                            주택 시장 안정화 등을 위해 지정하여
+                                            관리하는 지역.
                                         </span>
                                     </span>
-                                ) : (
-                                    <></>
-                                )}
-                            </span>
-                        </td>
-                    </tr>
+                                </td>
+                                <td className="general_result">
+                                    <input
+                                        className="generalAptInfoSelect"
+                                        value={
+                                            data?.restrictedAreaTf
+                                                ? '규제지역'
+                                                : '비규제지역'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.restrictedAreaTf !== '' ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : null}
+                                        {data?.restrictedAreaTf === '' ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                            </span>
+                                        ) : null}
+                                    </span>
+                                </td>
+                            </tr>
+                        </>
+                    ) : null}
+
+                    {data !== null ? (
+                        <>
+                            {/* 청약통장 조건 충족 여부 */}
+                            <tr className="general_phase">
+                                <td className="qulificaiton">
+                                    <span className="qulificaitonBox">
+                                        청약통장 조건 충족 여부
+                                    </span>
+                                </td>
+                                <td className="general_result">
+                                    <input
+                                        className="generalAptInfoSelect"
+                                        value={
+                                            data?.accountTf ? '충족' : '미충족'
+                                        }
+                                        readOnly={true}
+                                    />
+                                    <span>
+                                        {data?.accountTf === true ? (
+                                            <span className="progress">
+                                                <CheckCircleOutlined />
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {data?.accountTf === false ? (
+                                            <span className="pause_tooltip">
+                                                <CloseCircleOutlined />
+                                                <span class="pause-tooltip-text">
+                                                    청약 통장 조건 미충족 시
+                                                    부적격 발생.
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </span>
+                                </td>
+                            </tr>
+                        </>
+                    ) : null}
 
                     {/* 세대구성원 무주택 판별 */}
                     {data?.accountTf === true ? (

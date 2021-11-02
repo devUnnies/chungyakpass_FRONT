@@ -4,12 +4,15 @@ import token from './tokenReducer';
 import commonInfo from './commonInfoReducer';
 import generalMinyeong from './generalMinyeongReducer';
 import generalKookmin from './generalKookminReducer';
+import generalMinyeongPoint from './pointGeneralMinyeongReducer';
 import multiChildMinyeong from './multiChildMinyeongReducer';
 import multiChildKookmin from './multiChildKookminReducer';
 import multiChildPoint from './pointSpecialMultiChildReducer';
 import oldParentMinyeong from './oldParentMinyeongReducer';
 import oldParentKookmin from './oldParentKookminReducer';
 import firstInLifeMinyeong from './firstInLifeMinyeongReducer';
+import firstInLifeKookmin from './firstInLifeKookminReducer';
+import newlyMarriedKookmin from './newlyMarriedKookminReducer';
 
 const rootReducer = combineReducers({
     auth,
@@ -17,12 +20,14 @@ const rootReducer = combineReducers({
     commonInfo,
     generalMinyeong,
     generalKookmin,
+    generalMinyeongPoint,
     multiChildMinyeong,
     multiChildKookmin,
     multiChildPoint,
     oldParentMinyeong,
     oldParentKookmin,
     firstInLifeMinyeong,
+    newlyMarriedKookmin,
 });
 
 // const rootReducer = (state, action) => {
