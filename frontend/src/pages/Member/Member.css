@@ -1,0 +1,186 @@
+/* SeeMembers.js */
+.membersInfo {
+    margin-top: 1%;
+    margin-bottom: 4.5%;
+}
+
+.membersInfoHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.membersInfoHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.membersInfoHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.membersInfo .tableContainer {
+    border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse;
+    width: 600px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.membersInfoThead {
+    border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse;
+    background-color: #e5e8ed;
+}
+
+.membersInfoThead > .membersInfoTheadTrTh {
+    width: 20px;
+}
+
+.membersInfoTheadTrTh {
+    width: 80px;
+    /* border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    border-collapse: collapse; */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.membersInfoTbodyTr {
+    text-align: center;
+}
+
+.membersInfoTbodyTrTd {
+    width: 120px;
+    white-space: pre-wrap;
+}
+
+.membersInfoTrTdAdd {
+    height: 50px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.membersInfo .buttonContainer {
+}
+
+.membersInfo .addButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 5%;
+}
+
+.membersInfo .addButton {
+    text-align: center;
+    font-size: 250%;
+    color: #2a4476;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* AddMember.js */
+.addMemberContainer {
+    margin-top: 1%;
+    margin-bottom: 4.5%;
+}
+
+.addMemberHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addMemberHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.addMemberHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.addMemberFormContainer {
+    margin-top: 3%;
+    margin-left: 10%;
+}
+
+.addMemberFormTableTbodyTrTdTooltip {
+    display: flex;
+    flex-direction: 'row';
+    width: fit-content;
+}
+
+.addMemberFormTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
+}
+
+.subTitle {
+    font-family: Noto Sans;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.incomeUnit {
+    margin-left: 5px;
+}
+
+.tooltipIcon {
+    font-weight: bold;
+    color: #2a4476;
+    margin-left: 5px;
+}
+
+.addMemberFormTableTbodyTrSpace {
+    height: 20px;
+}
+
+/* 저장버튼 */
+.membersInfo .saveButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-bottom: 20px;
+}
+
+.membersInfo .save {
+    width: 80px;
+    padding: 10px;
+    margin-left: 200px;
+    color: #ffffff;
+    font-weight: bold;
+    border: 0px;
+    border-radius: 20px;
+    background-color: #2a4476;
+    cursor: pointer;
+}

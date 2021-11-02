@@ -40,6 +40,8 @@ export const MOD_MEMBER_PUT_ERROR = 'MOD_MEMBER_PUT_ERROR';
 export const DEL_MEMBER_DELETE = 'DEL_MEMBER_DELETE';
 export const DEL_MEMBER_DELETE_SUCCESS = 'DEL_MEMBER_DELETE_SUCCESS';
 export const DEL_MEMBER_DELETE_ERROR = 'DEL_MEMBER_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const ADD_MEMBER_DELETE = 'ADD_MEMBER_DELETE';
 
 //세대주 지정
 export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
@@ -54,6 +56,13 @@ export const ADD_ASSETS_POST_ERROR = 'ADD_ASSETS_POST_ERROR';
 export const MOD_ASSETS_PUT = 'MOD_ASSETS_PUT';
 export const MOD_ASSETS_PUT_SUCCESS = 'MOD_ASSETS_PUT_SUCCESS';
 export const MOD_ASSETS_PUT_ERROR = 'MOD_ASSETS_PUT_ERROR';
+
+//무주택시작일 수정
+export const HOMELESS_START_DATE_PATCH = 'HOMELESS_START_DATE_PATCH';
+export const HOMELESS_START_DATE_PATCH_SUCCESS =
+    'HOMELESS_START_DATE_PATCH_SUCCESS';
+export const HOMELESS_START_DATE_PATCH_ERROR =
+    'HOMELESS_START_DATE_PATCH_ERROR';
 
 // 청약당첨이력 저장
 export const ADD_CHUNGYAK_POST = 'ADD_CHUNGYAK_POST';
@@ -110,6 +119,8 @@ export const addMem = createPromiseThunk(
     commonInfoApi.addMember
 );
 
+export const addMemDel = () => ({ type: ADD_MEMBER_DELETE });
+
 export const modMem = createPromiseThunk(
     MOD_MEMBER_PUT,
     commonInfoApi.modMember
@@ -133,6 +144,11 @@ export const addAsse = createPromiseThunk(
 export const modAsse = createPromiseThunk(
     MOD_ASSETS_PUT,
     commonInfoApi.modAssets
+);
+
+export const patStart = createPromiseThunk(
+    HOMELESS_START_DATE_PATCH,
+    commonInfoApi.patchStartDate
 );
 
 export const addChung = createPromiseThunk(
