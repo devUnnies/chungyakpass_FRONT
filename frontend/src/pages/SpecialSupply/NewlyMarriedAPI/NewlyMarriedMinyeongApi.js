@@ -288,7 +288,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         }
                                                         readOnly={true}
                                                     />
-                                                    세
                                                     <span>
                                                         {data?.americanAge !==
                                                         '' ? (

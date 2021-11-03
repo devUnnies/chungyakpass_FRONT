@@ -372,11 +372,11 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                             <input
                                                                 className="aptInfoSelect"
                                                                 value={
-                                                                    data?.americanAge
+                                                                    data?.americanAge +
+                                                                    '세'
                                                                 }
                                                                 readOnly={true}
                                                             />
-                                                            세
                                                             <span>
                                                                 {data?.americanAge !==
                                                                 '' ? (
