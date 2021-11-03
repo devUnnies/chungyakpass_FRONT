@@ -39,7 +39,11 @@ const FAQ = () => {
 
     return (
         <div className="faq_container">
-            <div className="faq_title">
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">자주 묻는 질문</span>
+            </div>
+            {/* <div className="faq_title">
                 <h3 className="faq_mainTitle">
                     {' '}
                     FAQ <span className="faq_subTitle">
@@ -47,7 +51,7 @@ const FAQ = () => {
                         | 자주 묻는 질문{' '}
                     </span>{' '}
                 </h3>
-            </div>
+            </div> */}
             {/* <div className="searchBar">
                 <SearchBar
                     keyword={keyword}
