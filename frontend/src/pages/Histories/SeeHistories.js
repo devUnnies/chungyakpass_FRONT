@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Histories.css';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
+import SubButton from '../../components/Button/SubButton';
 import HistoriesTr from './HistoriesTr';
 import AddHistory from './AddHistory';
 import { useSelector } from 'react-redux';
@@ -213,7 +214,7 @@ const SeeHistories = (props) => {
         if (haveAssets === 'y') {
             _history.push('/assets', {
                 ineligibleDate: history.ineligibleDate,
-                pos: -2,
+                pos: -3,
                 members: members,
             });
         } else {
@@ -223,6 +224,20 @@ const SeeHistories = (props) => {
 
     return (
         <div className="historiesInfoContainer">
+            <div className="menuContainer">
+                <div className="oneMenu">
+                    <h4 className="oneMenu">세대구성원 등록</h4>
+                </div>
+
+                <div className="oneMenuSelect">
+                    <h4 className="oneMenuSelect">청약이력 등록</h4>
+                </div>
+
+                <div className="oneMenu">
+                    <h4 className="oneMenu">자산 등록</h4>
+                </div>
+            </div>
+
             <div className="historiesInfoHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">{name}님의 청약 이력 목록</span>
@@ -280,6 +295,22 @@ const SeeHistories = (props) => {
                     handleEditSubmit={handleHistoryEditSubmit}
                 />
             )} */}
+
+            <div className="backButton">
+                <SubButton
+                    type="back"
+                    className="save"
+                    width="80"
+                    height="30"
+                    onClick={() => {
+                        _history.goBack(-1, {
+                            members: members,
+                        });
+                    }}
+                >
+                    목록으로
+                </SubButton>
+            </div>
         </div>
     );
 };
