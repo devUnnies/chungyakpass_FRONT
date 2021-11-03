@@ -422,7 +422,7 @@ const AddAsset = ({
                                             value={logicData.conditionType}
                                             required
                                         >
-                                            <option value="">
+                                            <option value="n">
                                                 {' '}
                                                 해당 없음{' '}
                                             </option>

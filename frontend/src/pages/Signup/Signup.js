@@ -18,8 +18,8 @@ function Signup() {
 
     const [email, setEmail, handleChangeEmail] = useInputState('');
     const [prepassword, setPrepassword, handleChangePrepassword] =
-        useInputState('');
-    const [password, setPassword, handleChangePassword] = useInputState('');
+        useInputState();
+    const [password, setPassword, handleChangePassword] = useInputState();
 
     const [pwMsg, setPwMsg] = useState();
 
@@ -52,12 +52,15 @@ function Signup() {
         (event) => {
             // 이전의 값을 가지고 와서 기본값으로 세팅
             event.preventDefault();
+            let userForm;
 
-            const userForm = { email: email, password: password };
+            if (password && prepassword)
+                userForm = { email: email, password: password };
+            else alert('비밀번호를 모두 입력하지 않으셨습니다 !!!!');
 
-            console.log(userForm);
+            // console.log(userForm);
             // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
-            dispatch(signUp(userForm));
+            if (userForm) dispatch(signUp(userForm));
         },
         [email, password]
     );

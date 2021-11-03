@@ -15,10 +15,11 @@ const MyPage = () => {
                     fontSize="13"
                     type="readCommonInfo"
                     onClick={() => {
-                        history.push('/commonInfo');
+                        // history.push('/commonInfo');
+                        alert('서비스를 개발 중입니다!');
                     }}
                 >
-                    공통정보
+                    기초정보
                     <br />
                     확인
                 </MainButton>
@@ -29,7 +30,8 @@ const MyPage = () => {
                     fontSize="13"
                     type="readJudgeHistory"
                     onClick={() => {
-                        history.push('/judgeHistory');
+                        // history.push('/judgeHistory');
+                        alert('서비스를 개발 중입니다!');
                     }}
                 >
                     자격판단이력

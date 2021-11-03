@@ -73,6 +73,12 @@ function NewlyMarriedKookminAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">
+                    신혼부부 국민주택(공특법 미적용)
+                </span>
+            </div>
             <div className="AptNumForm">
                 <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">

@@ -1,6 +1,6 @@
 .Sitemap_main {
     height: 650px;
-    margin-top: 5%;
+    /* margin-top: 5%; */
 }
 /* 소제목 디자인 적용 */
 .Sitemap_Title {
@@ -22,6 +22,7 @@
 
 /*사이트맵 container*/
 .s_container {
+    margin-top: 3%;
     margin-left: 20%;
     margin-bottom: 15%;
 }

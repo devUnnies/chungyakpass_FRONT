@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { addMem, patHolder } from '../../store/actions/commonInfoAction';
 import MainButton from '../../components/Button/MainButton';
+import SubButton from '../../components/Button/SubButton';
 import MonthAverageIncomeTable from './MonthAverageIncomeTable';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './Member.css';
@@ -121,6 +122,19 @@ const AddMember = () => {
 
     return (
         <div className="addMemberContainer">
+            <div className="menuContainer">
+                <div className="oneMenuSelect">
+                    <h4 className="oneMenuSelect">세대구성원 등록</h4>
+                </div>
+
+                <div className="oneMenu">
+                    <h4 className="oneMenu">청약이력 등록</h4>
+                </div>
+
+                <div className="oneMenu">
+                    <h4 className="oneMenu">자산 등록</h4>
+                </div>
+            </div>
             <div className="addMemberHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">
@@ -357,6 +371,8 @@ const AddMember = () => {
                                     onChange={onInfoChange}
                                     disabled
                                 />
+                            </td>
+                            <td>
                                 <Tooltip
                                     message={
                                         <div className="textTooltip">
@@ -468,6 +484,8 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="incomeUnit">원</span>
+                            </td>
+                            <td>
                                 <Tooltip
                                     message={<MonthAverageIncomeTable />}
                                     width={200}
@@ -554,9 +572,23 @@ const AddMember = () => {
                                     없습니다
                                 </span>
                             </td>
+                            <td>
+                                <Tooltip
+                                    message={
+                                        <div className="textTooltip">
+                                            자산은 자동차, 토지, 주거용 건물, 비
+                                            주거용 건물을 의미합니다.
+                                        </div>
+                                    }
+                                    width={150}
+                                    height={100}
+                                >
+                                    <ExclamationCircleOutlined className="tooltipIcon" />
+                                </Tooltip>
+                            </td>
                         </tr>
                         <tr>
-                            <td colSpan="3">
+                            <td colSpan="5">
                                 <div className="saveButtonContainer">
                                     <MainButton
                                         type="submit"
@@ -574,6 +606,22 @@ const AddMember = () => {
                 </table>
 
                 {/* </form> */}
+            </div>
+
+            <div className="backButton">
+                <SubButton
+                    type="back"
+                    className="save"
+                    width="80"
+                    height="30"
+                    onClick={() => {
+                        history.goBack(-1, {
+                            members: members,
+                        });
+                    }}
+                >
+                    목록으로
+                </SubButton>
             </div>
         </div>
     );
