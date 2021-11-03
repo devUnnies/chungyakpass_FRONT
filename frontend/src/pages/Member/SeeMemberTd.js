@@ -62,56 +62,71 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
     // };
 
     return (
-        <tr className="membersInfoTbodyTr">
-            {/* 이름 */}
-            <td className="membersInfoTbodyTrTd">
-                <span>{item?.name}</span>
-            </td>
+        <>
+            {console.log(JSON.stringify(item))}
+            {item ? (
+                <tr className="membersInfoTbodyTr">
+                    {/* 이름 */}
+                    <td className="membersInfoTbodyTrTd">
+                        <span>{item?.name}</span>
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.birthDay
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.birthDay
+                            .replace('-', '년 ')
+                            .replace('-', '월 ')
+                            .concat('일')}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.foreignerYn === 'y' ? '외국인' : '내국인'}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.foreignerYn === 'y' ? '외국인' : '내국인'}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {relation(item.houseMemberRelationId)}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.relation ? item.relation : null}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.soldierYn === 'y' ? '장기복무중' : ''}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.soldierYn === 'y' ? '장기복무중' : null}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.marriageDate ? item?.marriageDate : null}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.marriageDate ? item?.marriageDate : null}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.homelessStartDate
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.homelessStartDate
+                            ? item?.homelessStartDate
+                                  .replace('-', '년 ')
+                                  .replace('-', '월 ')
+                                  .concat('일')
+                            : null}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">
-                {item?.transferDate
-                    .replace('-', '년 ')
-                    .replace('-', '월 ')
-                    .concat('일')}
-            </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.transferDate
+                            ? item?.transferDate
+                                  .replace('-', '년 ')
+                                  .replace('-', '월 ')
+                                  .concat('일')
+                            : null}
+                    </td>
 
-            <td className="membersInfoTbodyTrTd">{item?.income + '원'}</td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item?.income !== 0
+                            ? item?.income + '원'
+                            : item?.income === 0
+                            ? item?.income + '원'
+                            : null}
+                    </td>
 
-            {/* 삭제 버튼 */}
-            <td onClick={onRemove} className="allInfoTbodyTd">
-                <DeleteFilled className="deleteColor" />
-            </td>
-        </tr>
+                    {/* 삭제 버튼 */}
+                    <td onClick={onRemove} className="allInfoTbodyTd">
+                        <DeleteFilled className="deleteColor" />
+                    </td>
+                </tr>
+            ) : null}
+        </>
     );
 };
 

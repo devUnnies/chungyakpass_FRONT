@@ -6,6 +6,7 @@ import AddAsset from './AddAsset';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { addAsse, patStart } from '../../store/actions/commonInfoAction';
+import SubButton from '../../components/Button/SubButton';
 
 const SeeAssets = () => {
     const [name, setName] = useState();
@@ -233,6 +234,19 @@ const SeeAssets = () => {
 
     return (
         <div className="assetsInfoContainer">
+            <div className="menuContainer">
+                <div className="oneMenu">
+                    <h4 className="oneMenu">세대구성원 등록</h4>
+                </div>
+
+                <div className="oneMenu">
+                    <h4 className="oneMenu">청약이력 등록</h4>
+                </div>
+
+                <div className="oneMenuSelect">
+                    <h4 className="oneMenuSelect">자산 등록</h4>
+                </div>
+            </div>
             <div className="assetsInfoHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">{name}님의 자산 정보 목록</span>
@@ -298,6 +312,22 @@ const SeeAssets = () => {
                     ineligibleDate={ineligibleDate}
                 />
             )} */}
+
+            <div className="backButton">
+                <SubButton
+                    type="back"
+                    className="save"
+                    width="80"
+                    height="30"
+                    onClick={() => {
+                        history.goBack(pos, {
+                            members: members,
+                        });
+                    }}
+                >
+                    목록으로
+                </SubButton>
+            </div>
         </div>
     );
 };
