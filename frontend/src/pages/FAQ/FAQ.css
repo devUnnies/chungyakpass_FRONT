@@ -63,7 +63,7 @@
 
 .faq_container {
     border-radius: var(--radius);
-    height: 900px; /* faq 자리 확보 */
+    height: 1300px; /* faq 자리 확보 */
 }
 
 /* faq 박스 디자인 */

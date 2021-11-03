@@ -201,7 +201,6 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="foreignerInputText">
-                                    {' '}
                                     내국인
                                 </span>
                             </td>
@@ -229,25 +228,25 @@ const AddMember = () => {
                                     <option value="부">부</option>
                                     <option value="자녀_일반">자녀_일반</option>
                                     <option value="자녀_태아">자녀_태아</option>
-                                    <option value="배우자의 모">
+                                    <option value="배우자의모">
                                         배우자의 모
                                     </option>
-                                    <option value="배우자의 부">
+                                    <option value="배우자의부">
                                         배우자의 부
                                     </option>
-                                    <option value="자녀의 배우자">
+                                    <option value="자녀의배우자">
                                         자녀의 배우자
                                     </option>
                                     <option value="조모">조모</option>
                                     <option value="조부">조부</option>
                                     <option value="손자녀">손자녀</option>
-                                    <option value="손자녀의 배우자">
+                                    <option value="손자녀의배우자">
                                         손자녀의 배우자
                                     </option>
-                                    <option value="배우자의 조모">
+                                    <option value="배우자의조모">
                                         배우자의 조모
                                     </option>
-                                    <option value="배우자의 조부">
+                                    <option value="배우자의조부">
                                         배우자의 조부
                                     </option>
                                 </select>
