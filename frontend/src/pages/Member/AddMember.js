@@ -23,7 +23,7 @@ const AddMember = () => {
         homelessStartDate: '',
         relation: '',
         householderYn: '',
-        soldierYn: null,
+        soldierYn: 'n',
         isMarried: null,
         marriedDate: '',
         transferDate: '',

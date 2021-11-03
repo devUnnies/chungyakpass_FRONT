@@ -16,7 +16,7 @@ const AddAsset = ({
         residentialBuilding: null,
         nonResidentialBuilding: null,
         metropolitanBuildingYn: null,
-        exceptionHouseYn: null,
+        exceptionHouseYn: 'n',
         acquistionDate: '',
         dispositionDate: '',
         exclusiveArea: null,

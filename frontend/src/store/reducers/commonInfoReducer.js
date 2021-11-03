@@ -57,6 +57,7 @@ import {
     MEMBER_GET,
     MEMBER_GET_SUCCESS,
     MEMBER_GET_ERROR,
+    ADD_HOUSE_POST_DELETE,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -111,6 +112,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ADD_HOUSE_POST_DELETE:
+            return {
+                ...state,
+                addHouse: reducerUtils.initial(),
+            };
         case ADD_BANKBOOK_POST:
         case ADD_BANKBOOK_POST_SUCCESS:
         case ADD_BANKBOOK_POST_ERROR:
