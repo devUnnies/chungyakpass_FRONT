@@ -41,10 +41,14 @@ const BoardList = (props) => {
     }, [searchField, users]);
 
     return (
-        <>
-            <div className="board_title">
-                <h3 className="board_mainTitle"> 부적격 사례 </h3>
+        <div className="boardContainer">
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">부적격 사례</span>
             </div>
+            {/* <div className="board_title">
+                <h3 className="board_mainTitle"> 부적격 사례 </h3>
+            </div> */}
             <div className="search_box">
                 <select name="searchCate" className="searchCate">
                     <option value selected="selected">
@@ -91,7 +95,7 @@ const BoardList = (props) => {
                       })
                     : ''}
             </CommonTable>
-        </>
+        </div>
     );
 };
 

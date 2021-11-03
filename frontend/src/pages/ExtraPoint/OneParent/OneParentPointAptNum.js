@@ -67,6 +67,10 @@ function OneParentPointAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">한부모 가배점계산기</span>
+            </div>
             <div className="AptNumForm">
                 <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
