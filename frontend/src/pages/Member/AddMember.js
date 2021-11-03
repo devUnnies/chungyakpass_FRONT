@@ -215,7 +215,6 @@ const AddMember = () => {
                                     required
                                 />
                                 <span className="foreignerInputText">
-                                    {' '}
                                     내국인
                                 </span>
                             </td>
