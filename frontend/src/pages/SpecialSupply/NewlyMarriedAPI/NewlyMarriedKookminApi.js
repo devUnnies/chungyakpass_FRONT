@@ -249,7 +249,6 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                 }
                                                 readOnly={true}
                                             />
-                                            세
                                             <span>
                                                 {data?.americanAge !== '' ? (
                                                     <span className="progress">
@@ -343,8 +342,8 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                     ) : null}
 
                                     {/* 혼인 기간 7년 이내 충족 여부 */}
-                                    {data?.age >= 20 ||
-                                    (data?.age < 20 &&
+                                    {data?.americanAge >= 20 ||
+                                    (data?.americanAge < 20 &&
                                         form.supportYn === 'y') ? (
                                         <>
                                             <tr className="special_phase">
