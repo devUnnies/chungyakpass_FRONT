@@ -64,6 +64,10 @@ function MultiChildMinyeongAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">다자녀 민영주택</span>
+            </div>
             <div className="AptNumForm">
                 <div className="container">
                     <form onSubmit={handleSubmit} className="aptNumform">

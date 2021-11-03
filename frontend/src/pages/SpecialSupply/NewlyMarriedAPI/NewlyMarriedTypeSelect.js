@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import MainButton from '../../../components/Button/MainButton';
+import '../SpecialSupply.css';
 
 const NewlyMarriedTypeSelect = () => {
     const history = useHistory();

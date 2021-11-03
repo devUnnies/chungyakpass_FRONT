@@ -1,6 +1,9 @@
-import { post, put, del, patch } from './instance';
+import { post, put, del, patch, get } from './instance';
 
 //공통정보입력 API
+//  - 세대조회 API
+export const getHouse = () => get(`user/house`);
+
 //  - 세대등록 API
 export const addHouse = (info) => post('user/house', info);
 
@@ -31,6 +34,9 @@ export const modBankBook = (info) =>
 export const delBankBook = (bankBookId) => del(`user/bankbook/${bankBookId}`);
 
 // ----------------------------------------------------------------------------
+
+//  - 세대구성원조회 API
+export const getMember = (houseId) => get(`user/house/member/${houseId}`);
 
 //  - 세대구성원등록 API
 export const addMember = (info) => post('user/house/member', info);
