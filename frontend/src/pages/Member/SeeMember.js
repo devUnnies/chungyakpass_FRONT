@@ -8,6 +8,8 @@ import {
     modMem,
     delMem,
     addMemDel,
+    getMem,
+    addHouseDel,
 } from '../../store/actions/commonInfoAction';
 import SubButton from '../../components/Button/SubButton';
 
@@ -68,9 +70,15 @@ const SeeMember = () => {
     };
 
     const handleMembersSubmit = () => {
-        if (window.confirm('배우자분리세대를 등록하시겠습니까?'))
+        if (window.confirm('배우자분리세대를 등록하시겠습니까?')) {
             history.push('/selectHouse');
-        else history.push('/');
+            dispatch(addHouseDel());
+        } else {
+            window.location.replace('/');
+            dispatch(
+                getMem(commonInfoStore.addHouse.data?.houseResponseDto?.id)
+            );
+        }
     };
 
     useEffect(() => {
