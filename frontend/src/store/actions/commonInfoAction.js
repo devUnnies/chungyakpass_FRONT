@@ -18,6 +18,8 @@ export const MOD_HOUSE_PUT_ERROR = 'MOD_HOUSE_PUT_ERROR';
 export const DEL_HOUSE_DELETE = 'DEL_HOUSE_DELETE';
 export const DEL_HOUSE_DELETE_SUCCESS = 'DEL_HOUSE_DELETE_SUCCESS';
 export const DEL_HOUSE_DELETE_ERROR = 'DEL_HOUSE_DELETE_ERROR';
+//분리세대 이동 시에 리덕스에서 삭제
+export const ADD_HOUSE_POST_DELETE = 'ADD_HOUSE_POST_DELETE';
 
 //청약통장 저장
 export const ADD_BANKBOOK_POST = 'ADD_BANKBOOK_POST';
@@ -109,6 +111,8 @@ export const delHouse = createPromiseThunk(
     DEL_HOUSE_DELETE,
     commonInfoApi.delHouse
 );
+
+export const addHouseDel = () => ({ type: ADD_HOUSE_POST_DELETE });
 
 export const addBank = createPromiseThunk(
     ADD_BANKBOOK_POST,
