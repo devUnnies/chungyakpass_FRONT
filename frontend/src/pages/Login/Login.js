@@ -11,6 +11,7 @@ import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/Loading/loading';
+import { getHouse, getMem } from '../../store/actions/commonInfoAction';
 
 function Login(props) {
     const history = useHistory();
@@ -19,6 +20,8 @@ function Login(props) {
 
     const [email, setEmail, handleChangeEmail] = useInputState('');
     const [password, setPassword, handleChangePassword] = useInputState('');
+    const [successUrl, setSuccessUrl] = useState();
+    const commonInfoStore = useSelector((state) => state.commonInfo);
     // 창 가로 사이즈 가져옴
     const windowWidth = useWindowWidth();
 
@@ -42,6 +45,33 @@ function Login(props) {
         setPassword();
     }, []);
 
+    // useEffect(() => {
+    //     const login = authStore.login.data;
+    //     const data = commonInfoStore.getHouse.data;
+    //     if (login?.token) {
+    //         if (data && data?.houseResponseDto) {
+    //             if (data.houseResponseDto.id) {
+    //                 setSuccessUrl('/');
+    //                 dispatch(getMem(data.houseResponseDto.id));
+    //             } else {
+    //                 if (
+    //                     window.confirm(
+    //                         '기초정보(청약통장, 세대, 세대구성원, 청약이력, 자산)가 비어있습니다 !'
+    //                     )
+    //                 ) {
+    //                     setSuccessUrl('/addBankBook');
+    //                 } else return;
+    //             }
+    //         }
+
+    //         if (successUrl) {
+    //             // window.location.replace(successUrl);
+
+    //             history.push(successUrl);
+    //         }
+    //     }
+    // }, [commonInfoStore.getHouse]);
+
     useEffect(() => {
         // 로그인 성공시
         if (authStore.login.data) {
@@ -49,7 +79,10 @@ function Login(props) {
             dispatch(signinWithToken(data.token));
             storage.set('user-token', data.token);
 
-            if (storage.get('user-token')) window.location.replace('/');
+            if (storage.get('user-token')) {
+                // dispatch(getHouse(storage.get('user-token')));
+                window.location.replace('/');
+            }
         }
         // 로그인 실패시
         else if (authStore.login.loading) {
@@ -63,7 +96,7 @@ function Login(props) {
             //     history.push('/');
             // }
         }
-    }, [authStore.login]);
+    }, [authStore.login, storage]);
 
     return (
         <>
