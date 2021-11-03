@@ -2,6 +2,10 @@ import * as commonInfoApi from '../../services/api/commonInfoApi'; // commonInfo
 import { createPromiseThunk } from '../../services/api/asyncUtils';
 
 /* 액션 타입 */
+//세대 조회
+export const HOUSE_GET = 'HOUSE_GET';
+export const HOUSE_GET_SUCCESS = 'HOUSE_GET_SUCCESS';
+export const HOUSE_GET_ERROR = 'HOUSE_GET_ERROR';
 //세대 저장
 export const ADD_HOUSE_POST = 'ADD_HOUSE_POST';
 export const ADD_HOUSE_POST_SUCCESS = 'ADD_HOUSE_POST_SUCCESS';
@@ -27,6 +31,11 @@ export const MOD_BANKBOOK_PUT_ERROR = 'MOD_BANKBOOK_PUT_ERROR';
 export const DEL_BANKBOOK_DELETE = 'DEL_BANKBOOK_DELETE';
 export const DEL_BANKBOOK_DELETE_SUCCESS = 'DEL_BANKBOOK_DELETE_SUCCESS';
 export const DEL_BANKBOOK_DELETE_ERROR = 'DEL_BANKBOOK_DELETE_ERROR';
+
+//세대구성원 조회
+export const MEMBER_GET = 'MEMBER_GET';
+export const MEMBER_GET_SUCCESS = 'MEMBER_GET_SUCCESS';
+export const MEMBER_GET_ERROR = 'MEMBER_GET_ERROR';
 
 //세대구성원 저장
 export const ADD_MEMBER_POST = 'ADD_MEMBER_POST';
@@ -84,6 +93,8 @@ export const MOD_CHUNGYAK_RESTR_PUT_SUCCESS = 'MOD_CHUNGYAK_RESTR_PUT_SUCCESS';
 export const MOD_CHUNGYAK_RESTR_PUT_ERROR = 'MOD_CHUNGYAK_RESTR_PUT_ERROR';
 
 /* Action Creator */
+export const getHouse = createPromiseThunk(HOUSE_GET, commonInfoApi.getHouse);
+
 export const addHouse = createPromiseThunk(
     ADD_HOUSE_POST,
     commonInfoApi.addHouse
@@ -113,6 +124,8 @@ export const delBank = createPromiseThunk(
     DEL_BANKBOOK_DELETE,
     commonInfoApi.delBankBook
 );
+
+export const getMem = createPromiseThunk(MEMBER_GET, commonInfoApi.getMember);
 
 export const addMem = createPromiseThunk(
     ADD_MEMBER_POST,

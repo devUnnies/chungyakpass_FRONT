@@ -15,7 +15,9 @@
     letter-spacing: 7px;
 }
 .typeContainer {
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: 5%;
     margin-bottom: 10%;
 }
@@ -26,7 +28,7 @@
 
 /* 다자녀 민영 아파트 공고번호 페이지 */
 .AptNumForm {
-    margin-top: 5%;
+    margin-top: 3%;
     margin-bottom: 10%;
 }
 .aptNumContainer {
@@ -191,4 +193,8 @@
 }
 .rankRes {
     color: white;
+}
+
+.qulificaitonBox {
+    width: 200px;
 }

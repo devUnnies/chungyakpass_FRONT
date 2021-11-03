@@ -60,6 +60,10 @@ function NewlyMarriagePointAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">신혼부부 가배점계산기</span>
+            </div>
             <div className="AptNumForm">
                 <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">

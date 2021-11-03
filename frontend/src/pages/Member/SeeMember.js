@@ -3,12 +3,13 @@ import { useHistory, useLocation } from 'react-router';
 import Tr from './SeeMemberTr';
 import './Member.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import {
     modMem,
     delMem,
     addMemDel,
 } from '../../store/actions/commonInfoAction';
+import SubButton from '../../components/Button/SubButton';
 
 const SeeMember = () => {
     const history = useHistory();
@@ -66,6 +67,12 @@ const SeeMember = () => {
         dispatch(delMem(id));
     };
 
+    const handleMembersSubmit = () => {
+        if (window.confirm('배우자분리세대를 등록하시겠습니까?'))
+            history.push('/selectHouse');
+        else history.push('/');
+    };
+
     useEffect(() => {
         const member = commonInfoStore.addMem.data;
 
@@ -79,51 +86,91 @@ const SeeMember = () => {
     }, [commonInfoStore.addMem]);
 
     return (
-        <div className="membersInfo">
-            <div className="membersInfoHeaderContainer">
-                <div className="heightBar"></div>
-                <span className="listTitle">
-                    구성원 정보 목록 -{' '}
-                    {houseState === 'my'
-                        ? '신청자 본인 세대'
-                        : '배우자 분리 세대'}
-                </span>
-            </div>
-            <br />
-            <table className="tableContainer">
-                <thead className="membersInfoThead">
-                    <tr className="membersInfoTheadTr">
-                        <th className="membersInfoTheadTrTh"> 이름 </th>
-                        <th className="membersInfoTheadTrTh"> 생년월일 </th>
-                        <th className="membersInfoTheadTrTh"> 국적 </th>
-                        <th className="membersInfoTheadTrTh"> 관계 </th>
-                        <th className="membersInfoTheadTrTh">
-                            {' '}
-                            장기복무 여부{' '}
-                        </th>
-                        <th className="membersInfoTheadTrTh"> 혼인신고일 </th>
-                        <th className="membersInfoTheadTrTh"> 무주택시작일 </th>
-                        <th className="membersInfoTheadTrTh"> 전입신고일 </th>
-                        <th className="membersInfoTheadTrTh"> 월 평균 소득 </th>
-                        <th className="membersInfoTheadTrTh"> 삭제 </th>
-                    </tr>
-                </thead>
-                <tbody className="membersInfoTbody">
-                    {members ? (
-                        <Tr
-                            members={members}
-                            handleEdit={handleEdit}
-                            handleRemove={handleRemove}
-                        />
+        <>
+            <div className="membersInfo">
+                <div className="membersInfoHeaderContainer">
+                    <div className="heightBar"></div>
+                    <span className="listTitle">
+                        구성원 정보 목록 -{' '}
+                        {houseState === 'my'
+                            ? '신청자 본인 세대'
+                            : '배우자 분리 세대'}
+                    </span>
+                </div>
+                <br />
+                <table className="tableContainer">
+                    <thead className="membersInfoThead">
+                        <tr className="membersInfoTheadTr">
+                            <th className="membersInfoTheadTrTh"> 이름 </th>
+                            <th className="membersInfoTheadTrTh"> 생년월일 </th>
+                            <th className="membersInfoTheadTrTh"> 국적 </th>
+                            <th className="membersInfoTheadTrTh"> 관계 </th>
+                            <th className="membersInfoTheadTrTh">
+                                {' '}
+                                장기복무 여부{' '}
+                            </th>
+                            <th className="membersInfoTheadTrTh">
+                                {' '}
+                                혼인신고일{' '}
+                            </th>
+                            <th className="membersInfoTheadTrTh">
+                                {' '}
+                                무주택시작일{' '}
+                            </th>
+                            <th className="membersInfoTheadTrTh">
+                                {' '}
+                                전입신고일{' '}
+                            </th>
+                            <th className="membersInfoTheadTrTh">
+                                {' '}
+                                월 평균 소득{' '}
+                            </th>
+                            <th className="membersInfoTheadTrTh"> 삭제 </th>
+                        </tr>
+                    </thead>
+                    <tbody className="membersInfoTbody">
+                        {members ? (
+                            <Tr
+                                members={members}
+                                handleEdit={handleEdit}
+                                handleRemove={handleRemove}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                    </tbody>
+                </table>
+                <div className="buttonContainer">
+                    <div className="addButtonContainer" onClick={handleAdd}>
+                        <PlusOutlined className="addButton"></PlusOutlined>
+                    </div>
+                    {members !== [] ? (
+                        <div
+                            className="submitButtonContainer"
+                            onClick={handleMembersSubmit}
+                        >
+                            <CaretRightOutlined className="submitButton" />
+                        </div>
                     ) : (
                         <></>
                     )}
-                </tbody>
-            </table>
-            <div className="addButtonContainer" onClick={handleAdd}>
-                <PlusOutlined className="addButton"></PlusOutlined>
+                </div>
+
+                {/* <div className="backButton">
+                    <SubButton
+                        type="back"
+                        className="save"
+                        width="80"
+                        height="30"
+                        onClick={() => {
+                            history.push('/selectHouse');
+                        }}
+                    >
+                        세대등록
+                    </SubButton>
+                </div> */}
             </div>
-        </div>
+        </>
     );
 };
 

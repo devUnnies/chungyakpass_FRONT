@@ -51,6 +51,12 @@ import {
     HOMELESS_START_DATE_PATCH_SUCCESS,
     HOMELESS_START_DATE_PATCH,
     HOMELESS_START_DATE_PATCH_ERROR,
+    HOUSE_GET,
+    HOUSE_GET_SUCCESS,
+    HOUSE_GET_ERROR,
+    MEMBER_GET,
+    MEMBER_GET_SUCCESS,
+    MEMBER_GET_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -58,12 +64,14 @@ import {
 } from '../../services/api/asyncUtils';
 
 const initialState = {
+    getHouse: reducerUtils.initial(),
     addHouse: reducerUtils.initial(),
     modHouse: reducerUtils.initial(),
     delHouse: reducerUtils.initial(),
     addBank: reducerUtils.initial(),
     modBank: reducerUtils.initial(),
     delBank: reducerUtils.initial(),
+    getMem: reducerUtils.initial(),
     addMem: reducerUtils.initial(),
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
@@ -71,14 +79,20 @@ const initialState = {
     addAssets: reducerUtils.initial(),
     patchStartDate: reducerUtils.initial(),
     modAssets: reducerUtils.initial(),
+    getChungyak: reducerUtils.initial(),
     addChungyak: reducerUtils.initial(),
     modChungyak: reducerUtils.initial(),
+    getRestriction: reducerUtils.initial(),
     addRestriction: reducerUtils.initial(),
     modRestriction: reducerUtils.initial(),
 };
 
 export default function commonInfo(state = initialState, action) {
     switch (action.type) {
+        case HOUSE_GET:
+        case HOUSE_GET_SUCCESS:
+        case HOUSE_GET_ERROR:
+            return handleAsyncActions(HOUSE_GET, 'getHouse')(state, action);
         case ADD_HOUSE_POST:
         case ADD_HOUSE_POST_SUCCESS:
         case ADD_HOUSE_POST_ERROR:
@@ -118,6 +132,10 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case MEMBER_GET:
+        case MEMBER_GET_SUCCESS:
+        case MEMBER_GET_ERROR:
+            return handleAsyncActions(MEMBER_GET, 'getMem')(state, action);
         case ADD_MEMBER_POST:
         case ADD_MEMBER_POST_SUCCESS:
         case ADD_MEMBER_POST_ERROR:

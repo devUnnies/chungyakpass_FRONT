@@ -5,6 +5,7 @@ import useInputState from '../../../components/Input/useInputState';
 import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
+import '../SpecialSupply.css';
 
 function NewlyMarriedKookminSpecialAptNum(props) {
     const history = useHistory();
@@ -78,6 +79,12 @@ function NewlyMarriedKookminSpecialAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">
+                    신혼부부 국민주택(공특법 적용)
+                </span>
+            </div>
             <div className="AptNumForm">
                 <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
@@ -99,27 +106,33 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                             required
                         />
                         <br />
-                        <span className="qulificaitonBox">
-                            주택 예외사항 해당 여부
-                        </span>
-                        <input
-                            className="isSupportInput"
-                            type="radio"
-                            name="supportYn"
-                            onChange={handleChangeExceptionHouseTf}
-                            value="y"
-                            checked={exceptionHouseTf === 'y' ? true : false}
-                        />
-                        <span className="InputText">해당함</span>
-                        <input
-                            className="isSupportInput"
-                            type="radio"
-                            name="supportYn"
-                            onChange={handleChangeExceptionHouseTf}
-                            value="n"
-                            checked={exceptionHouseTf === 'n' ? true : false}
-                        />
-                        <span className="InputText">해당하지 않음</span>
+                        <div className="qulificationBox">
+                            <span className="qulificaitonBoxTitle">
+                                주택 예외사항 해당 여부
+                            </span>
+                            <input
+                                className="isSupportInput"
+                                type="radio"
+                                name="supportYn"
+                                onChange={handleChangeExceptionHouseTf}
+                                value="y"
+                                checked={
+                                    exceptionHouseTf === 'y' ? true : false
+                                }
+                            />
+                            <span className="InputText">해당함</span>
+                            <input
+                                className="isSupportInput"
+                                type="radio"
+                                name="supportYn"
+                                onChange={handleChangeExceptionHouseTf}
+                                value="n"
+                                checked={
+                                    exceptionHouseTf === 'n' ? true : false
+                                }
+                            />
+                            <span className="InputText">해당하지 않음</span>
+                        </div>
 
                         <span className="aptNumButton">
                             <MainButton
