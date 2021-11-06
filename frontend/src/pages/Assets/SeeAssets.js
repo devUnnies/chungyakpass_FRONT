@@ -13,7 +13,7 @@ const SeeAssets = () => {
     const [asset, setAsset] = useState();
     const [assets, setAssets] = useState();
     const [memberId, setMemberId] = useState();
-    const [birthDate, setBirthDate] = useState(new Date('1500/01/01'));
+    const [birthDate, setBirthDate] = useState();
     const [startDate, setStartDate] = useState({
         id: 0,
         startDate: birthDate,
@@ -89,7 +89,7 @@ const SeeAssets = () => {
                               metropolitanBuildingYn:
                                   data.metropolitanBuildingYn,
                               exceptionHouseYn: data.exceptionHouseYn,
-                              acquistionDate: data.acquistionDate,
+                              acquisitionDate: data.acquisitionDate,
                               dispositionDate: data.dispositionDate,
                               exclusiveArea: data.exclusiveArea,
                               amount: data.amount,
@@ -135,7 +135,7 @@ const SeeAssets = () => {
                     nonResidentialBuilding: asset.nonResidentialBuilding,
                     metropolitanBuildingYn: asset.metropolitanBuildingYn,
                     exceptionHouseYn: asset.exceptionHouseYn,
-                    acquistionDate: asset.acquistionDate,
+                    acquisitionDate: asset.acquisitionDate,
                     dispositionDate: asset.dispositionDate,
                     exclusiveArea: asset.exclusiveArea,
                     amount: asset.amount,
@@ -153,7 +153,7 @@ const SeeAssets = () => {
                     nonResidentialBuilding: asset.nonResidentialBuilding,
                     metropolitanBuildingYn: asset.metropolitanBuildingYn,
                     exceptionHouseYn: asset.exceptionHouseYn,
-                    acquistionDate: asset.acquistionDate,
+                    acquisitionDate: asset.acquisitionDate,
                     dispositionDate: asset.dispositionDate,
                     exclusiveArea: asset.exclusiveArea,
                     amount: asset.amount,
@@ -182,7 +182,7 @@ const SeeAssets = () => {
             nonResidentialBuilding: item.nonResidentialBuilding,
             metropolitanBuildingYn: item.metropolitanBuildingYn,
             exceptionHouseYn: item.exceptionHouseYn,
-            acquistionDate: item.acquistionDate,
+            acquisitionDate: item.acquisitionDate,
             dispositionDate: item.dispositionDate,
             exclusiveArea: item.exclusiveArea,
             amount: item.amount,
@@ -212,7 +212,10 @@ const SeeAssets = () => {
         // 무주택 시작일만 변경하여 수정 요청
         const userStartDate = {
             memberId: memberId,
-            homelessStartDate: startDate.startDate,
+            homelessStartDate:
+                startDate.startDate === new Date('1500/01/01') && birthDate
+                    ? birthDate
+                    : startDate.startDate,
         };
         dispatch(patStart(userStartDate));
 

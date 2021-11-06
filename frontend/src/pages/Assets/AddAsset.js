@@ -17,7 +17,7 @@ const AddAsset = ({
         nonResidentialBuilding: null,
         metropolitanBuildingYn: null,
         exceptionHouseYn: 'n',
-        acquistionDate: '',
+        acquisitionDate: '',
         dispositionDate: '',
         exclusiveArea: null,
         amount: '',
@@ -124,7 +124,7 @@ const AddAsset = ({
     useEffect(() => {
         // fail msg 수정
         if (
-            new Date(Date.parse(asset.acquistionDate)) >
+            new Date(Date.parse(asset.acquisitionDate)) >
             new Date(Date.parse(asset.dispositionDate))
         ) {
             setFailMsg('!!');
@@ -164,7 +164,7 @@ const AddAsset = ({
                 nonResidentialBuilding: null,
                 metropolitanBuildingYn: 'n',
                 exceptionHouseYn: 'n',
-                acquistionDate: '',
+                acquisitionDate: '',
                 dispositionDate: '',
                 exclusiveArea: null,
                 amount: '',
@@ -493,17 +493,17 @@ const AddAsset = ({
                                 </td>
                                 <td className="addAssetFormTableTbodyTrTd">
                                     <input
-                                        className="assetAcquistionDateInput"
+                                        className="assetAcquisitionDateInput"
                                         type="date"
-                                        name="acquistionDate"
-                                        value={asset.acquistionDate}
+                                        name="acquisitionDate"
+                                        value={asset.acquisitionDate}
                                         onChange={onAssetChange}
                                         required
                                     />
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
                                     {new Date(
-                                        Date.parse(asset.acquistionDate)
+                                        Date.parse(asset.acquisitionDate)
                                     ) >
                                     new Date(
                                         Date.parse(asset.dispositionDate)
@@ -531,7 +531,7 @@ const AddAsset = ({
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
                                     {new Date(
-                                        Date.parse(asset.acquistionDate)
+                                        Date.parse(asset.acquisitionDate)
                                     ) >
                                     new Date(
                                         Date.parse(asset.dispositionDate)
