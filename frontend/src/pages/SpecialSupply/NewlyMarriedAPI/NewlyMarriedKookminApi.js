@@ -87,7 +87,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
         <>
             {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
         공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
-            {data?.error === 'BAD_REQUEST' ? (
+            {data?.error === 'BAD_REQUEST' || data?.error === 'NOT_FOUND' ? (
                 alert(
                     '자격 확인을 진행할 수 없습니다' +
                         '\n' +

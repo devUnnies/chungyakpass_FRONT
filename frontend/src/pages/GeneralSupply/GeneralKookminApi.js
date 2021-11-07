@@ -85,7 +85,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
     return (
         <>
-            {data?.error === 'BAD_REQUEST' ? (
+            {data?.error === 'BAD_REQUEST' || data?.error === 'NOT_FOUND' ? (
                 alert(
                     '자격 확인을 진행할 수 없습니다' +
                         '\n' +
