@@ -283,14 +283,14 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                     <input
                                                         className="generalAptInfoSelect"
                                                         value={
-                                                            data?.meetLivingSurroundAreaTf
+                                                            data?.meetLivingInSurroundAreaTf
                                                                 ? '충족'
                                                                 : '미충족'
                                                         }
                                                         readOnly={true}
                                                     />
                                                     <span>
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         true ? (
                                                             <span className="progress">
                                                                 <CheckCircleOutlined />
@@ -298,7 +298,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
@@ -318,7 +318,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                             </tr>
 
                                             {/* 세대구성원 무주택 판별 */}
-                                            {data?.meetLivingSurroundAreaTf ===
+                                            {data?.meetLivingInSurroundAreaTf ===
                                             true ? (
                                                 <>
                                                     <tr className="special_phase">
@@ -1059,7 +1059,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     {/* 순위 매기기 */}
                                     {/* 1순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
@@ -1085,7 +1085,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
 
                                     {/* 2순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
@@ -1111,7 +1111,8 @@ const MultiChildKookminApi = ({ onSaveData }) => {
 
                                     {/* 탈락 */}
                                     {data?.accountTf === false ||
-                                    data?.meetLivingSurroundAreaTf === false ||
+                                    data?.meetLivingInSurroundAreaTf ===
+                                        false ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     data?.calcMinorChildren < 3 ||

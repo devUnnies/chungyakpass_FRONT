@@ -264,14 +264,14 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                     <input
                                                         className="generalAptInfoSelect"
                                                         value={
-                                                            data?.meetLivingSurroundAreaTf
+                                                            data?.meetLivingInSurroundAreaTf
                                                                 ? '충족'
                                                                 : '미충족'
                                                         }
                                                         readOnly={true}
                                                     />
                                                     <span>
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         true ? (
                                                             <span className="progress">
                                                                 <CheckCircleOutlined />
@@ -279,7 +279,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
@@ -299,7 +299,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             </tr>
 
                                             {/* 만 나이 로직 결과 출력*/}
-                                            {data?.meetLivingSurroundAreaTf ===
+                                            {data?.meetLivingInSurroundAreaTf ===
                                             true ? (
                                                 <>
                                                     <tr className="general_phase">
@@ -1094,7 +1094,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     {/* 순위 매기기 */}
                                     {/* 1순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         form.supportYn === 'y' &&
                                         data?.householderTf === true) ||
@@ -1119,7 +1119,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
                                     {/* 2순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         form.supportYn === 'y' &&
                                         data?.householderTf === true) ||
@@ -1151,7 +1151,8 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
                                     {/* 탈락 */}
                                     {data?.accountTf === false ||
-                                    data?.meetLivingSurroundAreaTf === false ||
+                                    data?.meetLivingInSurroundAreaTf ===
+                                        false ||
                                     (data?.americanAge < 20 &&
                                         (form.supportYn === 'n' ||
                                             data?.householderTf === false)) ||

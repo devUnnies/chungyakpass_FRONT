@@ -340,14 +340,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                             <input
                                                                 className="generalAptInfoSelect"
                                                                 value={
-                                                                    data?.meetLivingSurroundAreaTf
+                                                                    data?.meetLivingInSurroundAreaTf
                                                                         ? '충족'
                                                                         : '미충족'
                                                                 }
                                                                 readOnly={true}
                                                             />
                                                             <span>
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 true ? (
                                                                     <span className="progress">
                                                                         <CheckCircleOutlined />
@@ -355,7 +355,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                 ) : (
                                                                     <></>
                                                                 )}
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
@@ -376,7 +376,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                         </td>
                                                     </tr>
 
-                                                    {data?.meetLivingSurroundAreaTf ===
+                                                    {data?.meetLivingInSurroundAreaTf ===
                                                     true ? (
                                                         <>
                                                             {/* 만 나이 로직 결과 출력*/}
@@ -1091,7 +1091,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                     {getParams !== '' &&
                                     data?.accountTf === true &&
                                     data?.householderTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         form.supportYn === 'y') ||
                                         data?.americanAge >= 20) &&

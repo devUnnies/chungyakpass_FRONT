@@ -287,21 +287,21 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                             <input
                                                                 className="aptInfoSelect"
                                                                 value={
-                                                                    data?.meetLivingSurroundAreaTf
+                                                                    data?.meetLivingInSurroundAreaTf
                                                                         ? '충족'
                                                                         : '미충족'
                                                                 }
                                                                 readOnly={true}
                                                             />
                                                             <span>
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 true ? (
                                                                     <span className="progress">
                                                                         <CheckCircleOutlined />
                                                                     </span>
                                                                 ) : null}
 
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
@@ -311,7 +311,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                         </td>
                                                     </tr>
 
-                                                    {data?.meetLivingSurroundAreaTf ===
+                                                    {data?.meetLivingInSurroundAreaTf ===
                                                     true ? (
                                                         <>
                                                             {/* 만 나이 로직 결과 출력*/}
@@ -1153,7 +1153,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     {/* 1순위 */}
                                     {getParams === 'n' &&
                                     data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
                                         form.supportYn === 'y') ||
@@ -1178,7 +1178,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
 
                                     {/* 2순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
                                         form.supportYn === 'y') ||
@@ -1206,7 +1206,8 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
 
                                     {/* 탈락 */}
                                     {data?.accountTf === false ||
-                                    data?.meetLivingSurroundAreaTf === false ||
+                                    data?.meetLivingInSurroundAreaTf ===
+                                        false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
                                             form.supportYn === 'n')) ||

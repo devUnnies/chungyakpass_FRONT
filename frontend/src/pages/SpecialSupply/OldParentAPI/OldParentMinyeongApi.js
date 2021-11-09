@@ -337,14 +337,14 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                             <input
                                                                 className="generalAptInfoSelect"
                                                                 value={
-                                                                    data?.meetLivingSurroundAreaTf
+                                                                    data?.meetLivingInSurroundAreaTf
                                                                         ? '충족'
                                                                         : '미충족'
                                                                 }
                                                                 readOnly={true}
                                                             />
                                                             <span>
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 true ? (
                                                                     <span className="progress">
                                                                         <CheckCircleOutlined />
@@ -352,7 +352,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                 ) : (
                                                                     <></>
                                                                 )}
-                                                                {data?.meetLivingSurroundAreaTf ===
+                                                                {data?.meetLivingInSurroundAreaTf ===
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
@@ -374,7 +374,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                     </tr>
 
                                                     {/* 만 나이 로직 결과 출력*/}
-                                                    {data?.meetLivingSurroundAreaTf ===
+                                                    {data?.meetLivingInSurroundAreaTf ===
                                                     true ? (
                                                         <>
                                                             <tr className="special_phase">
@@ -1055,7 +1055,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                     {/* 순위 매기기 */}
                                     {data?.accountTf === true &&
                                     data?.householderTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         form.supportYn === 'y') ||
                                         data?.americanAge >= 20) &&

@@ -268,14 +268,14 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                     <input
                                                         className="generalAptInfoSelect"
                                                         value={
-                                                            data?.meetLivingSurroundAreaTf
+                                                            data?.meetLivingInSurroundAreaTf
                                                                 ? '충족'
                                                                 : '미충족'
                                                         }
                                                         readOnly={true}
                                                     />
                                                     <span>
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         true ? (
                                                             <span className="progress">
                                                                 <CheckCircleOutlined />
@@ -283,7 +283,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        {data?.meetLivingSurroundAreaTf ===
+                                                        {data?.meetLivingInSurroundAreaTf ===
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
@@ -303,7 +303,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             </tr>
 
                                             {/* 세대구성원 무주택 판별 */}
-                                            {data?.meetLivingSurroundAreaTf ===
+                                            {data?.meetLivingInSurroundAreaTf ===
                                             true ? (
                                                 <>
                                                     <tr className="special_phase">
@@ -1114,7 +1114,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                     {/* 순위 매기기 */}
                                     {/* 1순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     ((data?.americanAge < 20 &&
@@ -1138,7 +1138,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
                                     {/* 2순위 */}
                                     {data?.accountTf === true &&
-                                    data?.meetLivingSurroundAreaTf === true &&
+                                    data?.meetLivingInSurroundAreaTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     ((data?.americanAge < 20 &&
@@ -1170,7 +1170,8 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
                                     {/* 탈락 */}
                                     {data?.accountTf === false ||
-                                    data?.meetLivingSurroundAreaTf === false ||
+                                    data?.meetLivingInSurroundAreaTf ===
+                                        false ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     (data?.americanAge < 20 &&
