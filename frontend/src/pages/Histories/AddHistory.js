@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import MainButton from '../../components/Button/MainButton';
+import SubButton from '../../components/Button/SubButton';
 import AddLimit from './AddLimit';
 import { useDispatch, useSelector } from 'react-redux';
 import { addChung } from '../../store/actions/commonInfoAction';
 
-const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
+const AddHistory = ({ onSaveData, setAddLimit, setAdd, memberId }) => {
     const [history, setHistory] = useState({
+        houseMemberId: memberId,
         houseName: '',
         supply: '',
         specialSupply: null,
@@ -15,7 +17,7 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
         preliminaryNumber: '',
         winningDate: null,
         raffle: '',
-        cancelYn: null,
+        cancelWinYn: null,
         ineligibleYn: '',
         ineligibleDate: '',
     });
@@ -30,8 +32,8 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(history);
+        // e.preventDefault();
+        // onSaveData(history);
 
         const userForm = {
             houseMemberId: history.houseMemberId,
@@ -43,9 +45,9 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
             result: history.result,
             winningDate: history.winningDate,
             raffle: history.raffle,
-            cancelWinYn: history.cancelYn,
+            cancelWinYn: history.cancelWinYn,
         };
-        dispatch(addChung([userForm]));
+        dispatch(addChung(userForm));
         if (haveLimit) setAddLimit(true);
         setAdd(false);
         setHistory({
@@ -58,7 +60,7 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
             preliminaryNumber: null,
             winningDate: '',
             raffle: '',
-            cancelYn: '',
+            cancelWinYn: '',
             ineligibleYn: '',
             ineligibleDate: '',
         });
@@ -261,11 +263,11 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
                                     <input
                                         className="cancelYnInput"
                                         type="radio"
-                                        name="cancelYn"
+                                        name="cancelWinYn"
                                         onChange={onHistoryChange}
                                         value="y"
                                         checked={
-                                            history.cancelYn === 'y'
+                                            history.cancelWinYn === 'y'
                                                 ? true
                                                 : false
                                         }
@@ -405,6 +407,20 @@ const AddHistory = ({ onSaveData, setAddLimit, setAdd }) => {
                     </tbody>
                 </table>
             </form>
+
+            <div className="backButton">
+                <SubButton
+                    type="back"
+                    className="save"
+                    width="80"
+                    height="30"
+                    onClick={() => {
+                        history.goBack(-1);
+                    }}
+                >
+                    목록으로
+                </SubButton>
+            </div>
         </div>
     );
 };

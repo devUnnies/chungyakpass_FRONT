@@ -13,11 +13,8 @@ const SeeAssets = () => {
     const [asset, setAsset] = useState();
     const [assets, setAssets] = useState();
     const [memberId, setMemberId] = useState();
-    const [birthDate, setBirthDate] = useState(new Date('1500/01/01'));
-    const [startDate, setStartDate] = useState({
-        id: 0,
-        startDate: birthDate,
-    });
+    const [birthDay, setBirthDay] = useState();
+    const [startDate, setStartDate] = useState();
     const [startDates, setStartDates] = useState([startDate]);
     const [selected, setSelected] = useState('');
     const [add, setAdd] = useState(false);
@@ -26,7 +23,7 @@ const SeeAssets = () => {
 
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
-    const members = location.state.members;
+    const houseState = location.state.houseState;
 
     const nextId = useRef(1);
     const history = useHistory();
@@ -60,7 +57,7 @@ const SeeAssets = () => {
         setAdd(!add);
         setStartDate({
             id: 0,
-            startDate: birthDate,
+            startDate: birthDay,
         });
         setStartDates([startDate]);
         setModify(false);
@@ -89,7 +86,7 @@ const SeeAssets = () => {
                               metropolitanBuildingYn:
                                   data.metropolitanBuildingYn,
                               exceptionHouseYn: data.exceptionHouseYn,
-                              acquistionDate: data.acquistionDate,
+                              acquisitionDate: data.acquisitionDate,
                               dispositionDate: data.dispositionDate,
                               exclusiveArea: data.exclusiveArea,
                               amount: data.amount,
@@ -116,10 +113,19 @@ const SeeAssets = () => {
         if (member) {
             setName(member.name);
             setStartDate(member.homelessStartDate);
-            setBirthDate(member.birthDay);
+            setBirthDay(member.birthDay);
             setStartDates([{ id: 0, startDate: startDate }]);
         }
     }, [commonInfoStore.addMem]);
+
+    useEffect(() => {
+        if (birthDay) {
+            setStartDate({
+                id: 0,
+                startDate: birthDay,
+            });
+        }
+    }, [birthDay]);
 
     // asset이 변할 때마다 assets에 추가하기
     useEffect(() => {
@@ -135,7 +141,7 @@ const SeeAssets = () => {
                     nonResidentialBuilding: asset.nonResidentialBuilding,
                     metropolitanBuildingYn: asset.metropolitanBuildingYn,
                     exceptionHouseYn: asset.exceptionHouseYn,
-                    acquistionDate: asset.acquistionDate,
+                    acquisitionDate: asset.acquisitionDate,
                     dispositionDate: asset.dispositionDate,
                     exclusiveArea: asset.exclusiveArea,
                     amount: asset.amount,
@@ -153,7 +159,7 @@ const SeeAssets = () => {
                     nonResidentialBuilding: asset.nonResidentialBuilding,
                     metropolitanBuildingYn: asset.metropolitanBuildingYn,
                     exceptionHouseYn: asset.exceptionHouseYn,
-                    acquistionDate: asset.acquistionDate,
+                    acquisitionDate: asset.acquisitionDate,
                     dispositionDate: asset.dispositionDate,
                     exclusiveArea: asset.exclusiveArea,
                     amount: asset.amount,
@@ -182,7 +188,7 @@ const SeeAssets = () => {
             nonResidentialBuilding: item.nonResidentialBuilding,
             metropolitanBuildingYn: item.metropolitanBuildingYn,
             exceptionHouseYn: item.exceptionHouseYn,
-            acquistionDate: item.acquistionDate,
+            acquisitionDate: item.acquisitionDate,
             dispositionDate: item.dispositionDate,
             exclusiveArea: item.exclusiveArea,
             amount: item.amount,
@@ -206,17 +212,20 @@ const SeeAssets = () => {
 
     // 자산 목록 api로 넘기기
     const handleAssetsSubmit = () => {
-        console.log('자산 목록 !!!! ' + JSON.stringify(assets));
-        dispatch(addAsse(assets));
+        // console.log('자산 목록 !!!! ' + JSON.stringify(assets));
+        // dispatch(addAsse(assets));
 
         // 무주택 시작일만 변경하여 수정 요청
         const userStartDate = {
             memberId: memberId,
-            homelessStartDate: startDate.startDate,
+            homelessStartDate:
+                startDate.startDate === new Date('1500/01/01') && birthDay
+                    ? birthDay
+                    : startDate.startDate,
         };
         dispatch(patStart(userStartDate));
 
-        history.goBack(pos, { members: members });
+        history.goBack(pos);
     };
 
     useEffect(() => {
@@ -296,7 +305,7 @@ const SeeAssets = () => {
                     onSaveData={handleSave}
                     startDates={startDates}
                     setStartDates={setStartDates}
-                    birthDate={birthDate}
+                    birthDay={birthDay}
                     nextId={nextId}
                     ineligibleDate={ineligibleDate}
                 />
@@ -320,8 +329,8 @@ const SeeAssets = () => {
                     width="80"
                     height="30"
                     onClick={() => {
-                        history.goBack(pos, {
-                            members: members,
+                        window.location.replace('/members', {
+                            houseState: houseState,
                         });
                     }}
                 >
