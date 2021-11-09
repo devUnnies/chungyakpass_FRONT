@@ -61,7 +61,7 @@ const OneParentPoint = ({ onSaveData }) => {
 
     return (
         <>
-            {data?.error === 'NOT_FOUND' ? (
+            {data?.error === 'NOT_FOUND' || data?.error === 'BAD_REQUEST' ? (
                 alert(
                     '가/배점을 확인할 수 없습니다.' +
                         '\n' +

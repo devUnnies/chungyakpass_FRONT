@@ -52,8 +52,7 @@ export { default as NewlyMarriedKookminApi } from './SpecialSupply/NewlyMarriedA
 export { default as NewlyMarriedKookminSpecialAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialAptNum';
 export { default as NewlyMarriedKookminSpecialApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialApi';
 // 순위 확인 페이지
-export { default as FirstRank } from './Rank/FirstRank';
-export { default as SecondRank } from './Rank/SecondRank';
+export { default as Rank } from './Rank/Rank';
 // 가배점 페이지
 export { default as MultiChildPointAptNum } from './ExtraPoint/MultiChild/MultiChildPointAptNum';
 export { default as MultiChildPoint } from './ExtraPoint/MultiChild/MultiChildPoint';
