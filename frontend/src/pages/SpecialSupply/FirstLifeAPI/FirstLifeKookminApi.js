@@ -70,16 +70,12 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
 
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.firstLifeKookminRes === '1순위') {
+        if (
+            form?.firstLifeKookminRes === '1순위' ||
+            form?.firstLifeKookminRes === '2순위'
+        ) {
             history.push({
-                pathname: '/firstRank',
-                state: {
-                    form,
-                },
-            });
-        } else if (form?.firstLifeKookminRes === '2순위') {
-            history.push({
-                pathname: '/secondRank',
+                pathname: '/rank',
                 state: {
                     form,
                 },
@@ -96,7 +92,17 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     return (
         <>
             {loading ? ( // 로딩 상태 2s
-                <Loading />
+                <>
+                    <Loading />
+                    <p className="loading_msg">Please wait ...</p>
+                    <p className="loading_msg">
+                        회원님의 정보를 불러와{' '}
+                        <strong className="text_highlight">
+                            특별공급 생애최초 국민주택 유형
+                        </strong>{' '}
+                        자격을 확인하는 중입니다. 잠시만 기다려주세요.
+                    </p>
+                </>
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.

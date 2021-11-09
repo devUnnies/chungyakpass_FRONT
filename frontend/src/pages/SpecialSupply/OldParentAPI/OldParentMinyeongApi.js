@@ -68,7 +68,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     const rankSuccess = async () => {
         if (form?.oldParentMinyeongRes === '1순위') {
             history.push({
-                pathname: '/firstRank',
+                pathname: '/rank',
                 state: {
                     form,
                 },
@@ -87,7 +87,17 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     return (
         <>
             {loading ? ( // 로딩 상태 2s
-                <Loading />
+                <>
+                    <Loading />
+                    <p className="loading_msg">Please wait ...</p>
+                    <p className="loading_msg">
+                        회원님의 정보를 불러와{' '}
+                        <strong className="text_highlight">
+                            특별공급 노부모 민영주택 유형
+                        </strong>{' '}
+                        자격을 확인하는 중입니다. 잠시만 기다려주세요.
+                    </p>
+                </>
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.

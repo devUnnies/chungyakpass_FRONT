@@ -34,8 +34,7 @@ import {
     NewlyMarriedKookminSpecialApi,
     NewlyMarriedMinyeongAptNum,
     NewlyMarriedMinyeongApi,
-    FirstRank,
-    SecondRank,
+    Rank,
     PassbookInfo,
     HousingInfo,
     MemberInfo,
@@ -211,8 +210,7 @@ class App extends Component {
                     />
 
                     {/* 순위 확인 페이지 */}
-                    <Route path="/firstRank" component={FirstRank} />
-                    <Route path="/secondRank" component={SecondRank} />
+                    <Route path="/rank" component={Rank} />
 
                     <Route exact path="/boardView/:no" component={BoardView} />
                     <Route path="/case" component={BoardMain} />
