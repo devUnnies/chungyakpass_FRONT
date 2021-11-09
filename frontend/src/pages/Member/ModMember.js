@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { addMem, patHolder } from '../../store/actions/commonInfoAction';
+import {
+    addMem,
+    modMem,
+    getMem,
+    patHolder,
+} from '../../store/actions/commonInfoAction';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
 import MonthAverageIncomeTable from './MonthAverageIncomeTable';
@@ -9,32 +14,19 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './Member.css';
 import Tooltip from '../../components/Tooltip/Tooltip';
 
-const AddMember = () => {
+const ModMember = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const location = useLocation();
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const houseId = location.state.houseId;
-    const [info, setInfo] = useState({
-        houseId: houseId,
-        name: '',
-        birthDay: '',
-        foreignerYn: '',
-        homelessStartDate: '',
-        relation: '',
-        householderYn: '',
-        soldierYn: 'n',
-        isMarried: null,
-        marriedDate: '',
-        transferDate: '',
-        income: '0',
-    });
+    const [edited, setEdited] = useState(location.state.selectedData);
+    const [info, setInfo] = useState(location.state.selectedData);
     const [haveHistories, setHaveHistories] = useState(null);
     const [haveAssets, setHaveAssets] = useState(null);
     const [failMsg, setFailMsg] = useState(null);
 
     const houseState = location.state.houseState;
-    const members = location.state.members;
 
     const onInfoChange = (e) => {
         const { name, value } = e.target;
@@ -44,24 +36,17 @@ const AddMember = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const onSubmitEdit = (e) => {
         e.preventDefault();
 
-        const userForm = {
-            houseId: info.houseId,
-            relation: info.relation,
-            name: info.name,
-            birthDay: info.birthDay,
-            foreignerYn: info.foreignerYn,
-            soldierYn: info.soldierYn,
-            marriageDate: info.isMarried === 'y' ? info.marriedDate : null,
-            homelessStartDate: info.homelessStartDate,
-            transferDate: info.transferDate,
-            income: info.income,
-        };
-
-        // console.log('제출 버튼 눌렀습니다 !!!!' + JSON.stringify(userForm));
-        dispatch(addMem(userForm));
+        console.log(
+            '저장 !!!!  ' + JSON.stringify(info),
+            houseId,
+            haveAssets,
+            haveHistories
+        );
+        dispatch(modMem(info));
+        // handleEditSubmit(edited);
     };
 
     useEffect(() => {
@@ -80,7 +65,7 @@ const AddMember = () => {
     }, [info.birthDay]);
 
     useEffect(() => {
-        const member = commonInfoStore.addMem.data;
+        const member = commonInfoStore.modMem.data;
         if (member) {
             if (
                 member.status === 400 ||
@@ -92,7 +77,7 @@ const AddMember = () => {
                 // 세대주 등록 !
                 if (info.householderYn === 'y') {
                     const userForm = {
-                        houseId: info.houseId,
+                        houseId: houseId,
                         memberId: member.id,
                     };
                     dispatch(patHolder(userForm));
@@ -102,61 +87,76 @@ const AddMember = () => {
                     history.push('/histories', {
                         haveAssets: haveAssets,
                         memberId: member.id,
-                        pos: -1,
+                        pos: -2,
                     });
                 } else {
                     if (haveAssets === 'y')
                         history.push('/assets', {
                             ineligibleDate: new Date('0000-00-00'),
                             pos: -1,
-                            memberId: member.id,
                         });
-                    else
+                    else {
                         history.push('/members', {
                             houseState: houseState,
                         });
+
+                        if (houseState === 'my')
+                            dispatch(
+                                getMem(
+                                    commonInfoStore.getHouse.data
+                                        ?.houseResponseDto?.id
+                                )
+                            );
+                        else
+                            dispatch(
+                                getMem(
+                                    commonInfoStore.getHouse.data
+                                        ?.spouseHouseResponseDto?.id
+                                )
+                            );
+                    }
                 }
             }
         }
-    }, [commonInfoStore.addMem]);
+    }, [commonInfoStore.modMem]);
 
     return (
-        <div className="addMemberContainer">
+        <div className="modMemberContainer">
             <div className="menuContainer">
                 <div className="oneMenuSelect">
-                    <h4 className="oneMenuSelect">세대구성원 등록</h4>
+                    <h4 className="oneMenuSelect">세대구성원 수정</h4>
                 </div>
 
                 <div className="oneMenu">
-                    <h4 className="oneMenu">청약이력 등록</h4>
+                    <h4 className="oneMenu">청약이력 수정</h4>
                 </div>
 
                 <div className="oneMenu">
-                    <h4 className="oneMenu">자산 등록</h4>
+                    <h4 className="oneMenu">자산 수정</h4>
                 </div>
             </div>
-            <div className="addMemberHeaderContainer">
+            <div className="modMemberHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">
-                    세대구성원 등록 -{' '}
+                    세대구성원 수정 -{' '}
                     {houseState === 'my'
                         ? '신청자 본인 세대'
                         : '배우자 분리 세대'}
                 </span>
             </div>
-            <div className="addMemberFormContainer">
+            <div className="modMemberFormContainer">
                 {/* <form
                     onSubmit={() => handleSubmit}
                     className="addMemberForm"
                     name="addMember"
                 > */}
-                <table className="addMemberFormTable">
-                    <tbody className="addMemberFormTableTbody">
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                <table className="modMemberFormTable">
+                    <tbody className="modMemberFormTableTbody">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">이름</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="nameInput"
                                     name="name"
@@ -165,13 +165,13 @@ const AddMember = () => {
                                     required
                                 />
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">생년월일</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="birthdateInput"
                                     type="date"
@@ -181,13 +181,13 @@ const AddMember = () => {
                                     required
                                 />
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">외국인 여부</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="foreignerInput"
                                     type="radio"
@@ -218,16 +218,16 @@ const AddMember = () => {
                                     내국인
                                 </span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
 
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">
                                     신청자와의 관계
                                 </span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <select
                                     className="relationshipSelect"
                                     name="relation"
@@ -265,13 +265,13 @@ const AddMember = () => {
                                     </option>
                                 </select>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">세대주 여부</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="householderInput"
                                     type="radio"
@@ -309,13 +309,13 @@ const AddMember = () => {
                             </td>
                         </tr>
                         {info.relation === '본인' ? (
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                            <tr className="modMemberFormTableTbodyTr">
+                                <td className="modMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
                                         장기복무 여부
                                     </span>
                                 </td>
-                                <td className="addMemberFormTableTbodyTrTd">
+                                <td className="modMemberFormTableTbodyTrTd">
                                     <input
                                         className="isSoldierInput"
                                         type="radio"
@@ -349,16 +349,16 @@ const AddMember = () => {
                                         아니오{'  '}
                                     </span>
                                 </td>
-                                <td className="addMemberFormTableTbodyTrTdError"></td>
+                                <td className="modMemberFormTableTbodyTrTdError"></td>
                             </tr>
                         ) : null}
 
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">무주택시작일</span>
                                 {` `}
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdTooltip">
+                            <td className="modMemberFormTableTbodyTrTdTooltip">
                                 <input
                                     className="homelessStartDateInput"
                                     type="input"
@@ -393,11 +393,11 @@ const AddMember = () => {
                                 ) : null}
                             </td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">전입신고일</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="transferDateInput"
                                     type="date"
@@ -410,11 +410,11 @@ const AddMember = () => {
                         </tr>
                         {info.relation === '본인' ||
                         info.relation === '배우자' ? (
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                            <tr className="modMemberFormTableTbodyTr">
+                                <td className="modMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">혼인 여부</span>
                                 </td>
-                                <td className="addMemberFormTableTbodyTrTd">
+                                <td className="modMemberFormTableTbodyTrTd">
                                     {' '}
                                     <input
                                         className="isMarriedInput"
@@ -423,6 +423,7 @@ const AddMember = () => {
                                         onChange={onInfoChange}
                                         value="n"
                                         checked={
+                                            !info.marriedDate ||
                                             info.isMarried === 'n'
                                                 ? true
                                                 : false
@@ -439,6 +440,7 @@ const AddMember = () => {
                                         onChange={onInfoChange}
                                         value="y"
                                         checked={
+                                            info.marriedDate ||
                                             info.isMarried === 'y'
                                                 ? true
                                                 : false
@@ -454,11 +456,11 @@ const AddMember = () => {
                         {(info.relation === '본인' ||
                             info.relation === '배우자') &&
                         info.isMarried === 'y' ? (
-                            <tr className="addMemberFormTableTbodyTr">
-                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                            <tr className="modMemberFormTableTbodyTr">
+                                <td className="modMemberFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">혼인신고일</span>
                                 </td>
-                                <td className="addMemberFormTableTbodyTrTd">
+                                <td className="modMemberFormTableTbodyTrTd">
                                     <input
                                         className="marriedDateInput"
                                         type="date"
@@ -469,12 +471,12 @@ const AddMember = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">월 평균 소득</span>
                                 {` `}
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdTooltip">
+                            <td className="modMemberFormTableTbodyTrTdTooltip">
                                 <input
                                     className="incomeInput"
                                     type="number"
@@ -495,11 +497,11 @@ const AddMember = () => {
                                 </Tooltip>
                             </td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">청약이력</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="assetHaveAssetsInput"
                                     type="radio"
@@ -536,11 +538,11 @@ const AddMember = () => {
                                 </span>
                             </td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">자산유무</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="assetHaveAssetsInput"
                                     type="radio"
@@ -590,12 +592,21 @@ const AddMember = () => {
                         <tr>
                             <td colSpan="5">
                                 <div className="saveButtonContainer">
+                                    <SubButton
+                                        type="back"
+                                        className="back"
+                                        onClick={() => {
+                                            history.goBack(-1);
+                                        }}
+                                    >
+                                        목록으로
+                                    </SubButton>
                                     <MainButton
                                         type="submit"
                                         className="save"
                                         width="80"
                                         height="30"
-                                        onClick={handleSubmit}
+                                        onClick={onSubmitEdit}
                                     >
                                         저장
                                     </MainButton>
@@ -607,22 +618,8 @@ const AddMember = () => {
 
                 {/* </form> */}
             </div>
-
-            <div className="backButton">
-                <SubButton
-                    type="back"
-                    className="save"
-                    width="80"
-                    height="30"
-                    onClick={() => {
-                        history.goBack(-1);
-                    }}
-                >
-                    목록으로
-                </SubButton>
-            </div>
         </div>
     );
 };
 
-export default AddMember;
+export default ModMember;

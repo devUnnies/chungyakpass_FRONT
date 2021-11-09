@@ -58,6 +58,10 @@ import {
     MEMBER_GET_SUCCESS,
     MEMBER_GET_ERROR,
     ADD_HOUSE_POST_DELETE,
+    MOD_MEMBER_DELETE,
+    CHUNGYAK_GET,
+    CHUNGYAK_GET_SUCCESS,
+    CHUNGYAK_GET_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -83,7 +87,6 @@ const initialState = {
     getChungyak: reducerUtils.initial(),
     addChungyak: reducerUtils.initial(),
     modChungyak: reducerUtils.initial(),
-    getRestriction: reducerUtils.initial(),
     addRestriction: reducerUtils.initial(),
     modRestriction: reducerUtils.initial(),
 };
@@ -155,6 +158,11 @@ export default function commonInfo(state = initialState, action) {
         case MOD_MEMBER_PUT_SUCCESS:
         case MOD_MEMBER_PUT_ERROR:
             return handleAsyncActions(MOD_MEMBER_PUT, 'modMem')(state, action);
+        case MOD_MEMBER_DELETE:
+            return {
+                ...state,
+                modMem: reducerUtils.initial(),
+            };
         case DEL_MEMBER_DELETE:
         case DEL_MEMBER_DELETE_SUCCESS:
         case DEL_MEMBER_DELETE_ERROR:
@@ -190,6 +198,13 @@ export default function commonInfo(state = initialState, action) {
                 HOMELESS_START_DATE_PATCH,
                 'patchStartDate'
             )(state, action);
+        case CHUNGYAK_GET:
+        case CHUNGYAK_GET_SUCCESS:
+        case CHUNGYAK_GET_ERROR:
+            return handleAsyncActions(CHUNGYAK_GET, 'getChungyak')(
+                state,
+                action
+            );
         case ADD_CHUNGYAK_POST:
         case ADD_CHUNGYAK_POST_SUCCESS:
         case ADD_CHUNGYAK_POST_ERROR:
