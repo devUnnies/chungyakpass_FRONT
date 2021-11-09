@@ -8,8 +8,10 @@ import {
     modMem,
     delMem,
     addMemDel,
+    modMemDel,
     getMem,
     addHouseDel,
+    getHouse,
 } from '../../store/actions/commonInfoAction';
 import SubButton from '../../components/Button/SubButton';
 
@@ -21,32 +23,44 @@ const SeeMember = () => {
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const houseState = location.state.houseState;
     const membersPrev = location.state.members;
-    const houseId = commonInfoStore.addHouse.data?.id;
+    const [houseId, setHouseId] = useState();
     const [members, setMembers] = useState([]);
     const [selected, setSelected] = useState('');
 
     useEffect(() => {
-        // if (membersPrev !== []) setMembers(membersPrev);
-        console.log(JSON.stringify(members));
-    }, [members]);
+        dispatch(getHouse());
+        const getData = commonInfoStore.getHouse.data;
+        const addData = commonInfoStore.addHouse.data;
+
+        if (getData) {
+            if (houseState === 'my') {
+                setHouseId(getData.houseResponseDto.id);
+            } else {
+                setHouseId(getData.spouseHouseResponseDto.id);
+            }
+        } else if (addData) {
+            setHouseId(addData.id);
+        }
+    }, []);
 
     const handleAdd = () => {
-        // console.log('추가 버튼을 눌렀습니다 !!!');
+        // console.log(houseId);
         dispatch(addMemDel());
 
         history.push('/addMember', {
             houseState: houseState,
             houseId: houseId,
-            members: members,
         });
     };
 
     const handleEdit = (item) => {
+        dispatch(modMemDel());
+
         // 선택한 데이터 재정의
         const selectedData = {
             id: item.id,
             name: item.name,
-            birthDate: item.birthDate,
+            birthDay: item.birthDay,
             account: item.account,
             foreignerYn: item.foreignerYn,
             relation: item.relation,
@@ -61,7 +75,13 @@ const SeeMember = () => {
         // console.log(selectedData);
         // 선택한 데이터로 바꾸기
         setSelected(selectedData);
-        dispatch(modMem(selectedData));
+        history.push('/modMember', {
+            houseState: houseState,
+            houseId: houseId,
+            selectedData: selectedData,
+            houseId: houseId,
+        });
+        // dispatch(modMem(selectedData));
     };
 
     const handleRemove = (id) => {
@@ -82,16 +102,20 @@ const SeeMember = () => {
     };
 
     useEffect(() => {
-        const member = commonInfoStore.addMem.data;
+        const data = commonInfoStore.addHouse.data;
 
-        if (member && membersPrev) {
-            if (members === []) {
-                setMembers([member]);
-            } else {
-                setMembers([...membersPrev, member]);
-            }
+        if (data) {
+            dispatch(getMem(data.id));
         }
-    }, [commonInfoStore.addMem]);
+    }, []);
+
+    useEffect(() => {
+        const data = commonInfoStore.getMem.data;
+
+        if (data) {
+            setMembers(data);
+        }
+    }, [commonInfoStore.getMem]);
 
     return (
         <>
@@ -133,6 +157,7 @@ const SeeMember = () => {
                                 {' '}
                                 월 평균 소득{' '}
                             </th>
+                            <th className="membersInfoTheadTrTh"> 수정 </th>
                             <th className="membersInfoTheadTrTh"> 삭제 </th>
                         </tr>
                     </thead>
