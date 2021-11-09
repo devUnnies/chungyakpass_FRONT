@@ -28,6 +28,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
 
     const data = multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
+    // 로딩 상태 적용
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
@@ -90,12 +91,12 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
 
     return (
         <>
-            {loading ? (
+            {loading ? ( // 로딩 상태 2s
                 <Loading />
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
+                        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
                     {data?.error === 'BAD_REQUEST' ||
                     data?.error === 'NOT_FOUND' ? (
                         alert(
