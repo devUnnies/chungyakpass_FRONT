@@ -21,7 +21,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
     const oldParentKookminStore = useSelector(
         (state) => state.oldParentKookmin
     ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
     const [oldParentKookminType, setOldParentKookminType] = useState();
@@ -36,7 +36,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({
@@ -303,7 +303,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                             {data?.householderTf === true ? (
                                                 <>
                                                     {/* 인근지역 거주 여부 */}
-                                                    <tr className="general_phase">
+                                                    <tr className="special_phase">
                                                         <td className="qulificaiton">
                                                             <span className="qulificaitonBox">
                                                                 신청한 아파트
@@ -336,9 +336,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                 </span>
                                                             </span>
                                                         </td>
-                                                        <td className="general_result">
+                                                        <td className="special_result">
                                                             <input
-                                                                className="generalAptInfoSelect"
+                                                                className="aptInfoSelect"
                                                                 value={
                                                                     data?.meetLivingInSurroundAreaTf
                                                                         ? '충족'

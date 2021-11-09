@@ -36,7 +36,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({

@@ -84,6 +84,16 @@ function NewlyMarriedKookminAptNum(props) {
                         />
                         <br />
 
+                        <input
+                            type="text"
+                            placeholder="주택형"
+                            value={housingType}
+                            onChange={handleChangeHousingType}
+                            className="aptNumInput"
+                            required
+                        />
+                        <br />
+
                         <span className="aptNumButton">
                             <MainButton
                                 type="button"

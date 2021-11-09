@@ -36,7 +36,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({
@@ -255,7 +255,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     {data?.accountTf === true ? (
                                         <>
                                             {/* 인근지역 거주 여부 */}
-                                            <tr className="general_phase">
+                                            <tr className="special_phase">
                                                 <td className="qulificaiton">
                                                     <span className="qulificaitonBox">
                                                         신청한 아파트 청약
@@ -279,9 +279,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                         </span>
                                                     </span>
                                                 </td>
-                                                <td className="general_result">
+                                                <td className="special_result">
                                                     <input
-                                                        className="generalAptInfoSelect"
+                                                        className="aptInfoSelect"
                                                         value={
                                                             data?.meetLivingInSurroundAreaTf
                                                                 ? '충족'

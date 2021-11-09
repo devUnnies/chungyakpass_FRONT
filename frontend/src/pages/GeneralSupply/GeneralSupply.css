@@ -77,10 +77,10 @@
     padding-bottom: 5%;
 }
 /* input 값 간격 조정 */
-.general_result_input {
+/* .general_result_input {
     padding-bottom: 5%;
     margin-left: 4%;
-}
+} */
 
 /* input text box 테두리 보이지 않도록. */
 .generalAptInfoSelect {

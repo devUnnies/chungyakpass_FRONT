@@ -19,19 +19,19 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
     const generalKookminStore = useSelector((state) => state.generalKookmin); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [notificationNumber, setNotificationNumber] = useState();
     const [housingType, setHousingType] = useState();
     const history = useHistory();
 
-    const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 민영 로직 접근 변수
+    const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 국민 로직 접근 변수
     // 입력 값 오류에 의한 error 발생 시 처리 코드
 
     // 로딩 상태 적용
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({
@@ -306,7 +306,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             {data?.meetLivingInSurroundAreaTf ===
                                             true ? (
                                                 <>
-                                                    <tr className="special_phase">
+                                                    <tr className="general_phase">
                                                         <td className="qulificaiton">
                                                             <span className="qulificaitonBox">
                                                                 전세대구성원의
@@ -393,7 +393,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                 </span>
                                                             </span>
                                                         </td>
-                                                        <td className="special_result">
+                                                        <td className="general_result">
                                                             <input
                                                                 className="generalAptInfoSelect"
                                                                 value={
@@ -746,7 +746,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                             data?.americanAge >=
                                                                 30 ? (
                                                                 <>
-                                                                    <tr className="special_phase">
+                                                                    <tr className="general_phase">
                                                                         <td className="qulificaiton">
                                                                             <span className="qulificaitonBox">
                                                                                 전세대원의
@@ -755,9 +755,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 여부
                                                                             </span>
                                                                         </td>
-                                                                        <td className="special_result">
+                                                                        <td className="general_result">
                                                                             <input
-                                                                                className="aptInfoSelect"
+                                                                                className="generalAptInfoSelect"
                                                                                 value={
                                                                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
                                                                                     true

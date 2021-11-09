@@ -23,7 +23,7 @@ function Rank({ history }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const GreetingMessage1st =

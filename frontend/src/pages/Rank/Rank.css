@@ -1,6 +1,5 @@
 /* rank css 적용 */
-.FirstRankMain,
-.SecondRankMain {
+.RankMain {
     margin-top: 10%;
 }
 .greetingMessage {
@@ -64,4 +63,7 @@
 .table-row1 {
     word-spacing: 10px;
     width: 5%;
+}
+.table_li {
+    padding: 5px;
 }

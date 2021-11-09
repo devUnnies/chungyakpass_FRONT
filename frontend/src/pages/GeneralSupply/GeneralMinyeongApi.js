@@ -30,7 +30,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({
@@ -658,7 +658,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                     {data?.restrictedAreaTf ===
                                                                     true ? (
                                                                         <>
-                                                                            <tr className="special_phase">
+                                                                            <tr className="general_phase">
                                                                                 <td className="qulificaiton">
                                                                                     <span className="qulificaitonBox">
                                                                                         전세대원의
@@ -667,9 +667,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                         여부
                                                                                     </span>
                                                                                 </td>
-                                                                                <td className="special_result">
+                                                                                <td className="general_result">
                                                                                     <input
-                                                                                        className="aptInfoSelect"
+                                                                                        className="generalAptInfoSelect"
                                                                                         value={
                                                                                             data?.meetAllHouseMemberRewinningRestrictionTf ===
                                                                                             true
