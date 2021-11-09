@@ -75,7 +75,7 @@ const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.cancelYn === 'n' ? (
+                        {item.history.cancelWinYn === 'n' ? (
                             <span>
                                 유지
                                 <br />

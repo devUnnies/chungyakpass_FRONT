@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Member.css';
-import { DeleteFilled } from '@ant-design/icons';
+import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 
 const Td = ({ item, assets, handleEdit, handleRemove }) => {
@@ -10,6 +10,11 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
     const [isLimitShow, setIsLimitShow] = useState(false);
 
     let text = '';
+
+    const onEdit = () => {
+        // console.log(JSON.stringify(item));
+        handleEdit(item);
+    };
 
     const onRemove = () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -119,7 +124,10 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
                             ? item?.income + '원'
                             : null}
                     </td>
-
+                    {/* 수정 버튼 */}
+                    <td onClick={onEdit} className="modifyContainer">
+                        <EditFilled className="modifyColor" />
+                    </td>
                     {/* 삭제 버튼 */}
                     <td onClick={onRemove} className="allInfoTbodyTd">
                         <DeleteFilled className="deleteColor" />

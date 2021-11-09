@@ -1,23 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './House.css';
 import MainButton from '../../components/Button/MainButton';
 import NextButton from '../../components/Button/NextButton';
 import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHouse } from '../../store/actions/commonInfoAction';
 
 const SelectHouse = () => {
     const [house, setHouse] = useState();
+    const [checked, setChecked] = useState({
+        my: false,
+        spouse: false,
+    });
+    const [url, setUrl] = useState('/addHouse');
+
+    const dispatch = useDispatch();
 
     const history = useHistory();
+    const commonInfoStore = useSelector((state) => state.commonInfo);
 
     const onChange = (e) => {
         setHouse(e.target.value);
     };
 
+    useEffect(() => {
+        dispatch(getHouse());
+    }, []);
+
+    useEffect(() => {
+        const data = commonInfoStore.getHouse.data;
+
+        // console.log(JSON.stringify(data));
+        if (data) {
+            if (data.houseResponseDto) {
+                setChecked({ ...checked, my: true });
+                setHouse('my');
+                setUrl('/members', { houseState: house });
+            } else if (data.spouseResponseDto) {
+                setChecked({ ...checked, spouse: true });
+                setHouse('spouse');
+                setUrl('/members', { houseState: house });
+            } else if (data.houseResponseDto && data.spouseHouseResponseDto) {
+                setChecked({ my: false, spouse: false });
+                setUrl('/members', { houseState: house });
+            }
+        }
+    }, [commonInfoStore.getHouse]);
+
     const handleSubmit = (e) => {
         // e.preventDefault();
 
         // 해당 하우스 값 세대 등록 페이지로 전달하기
-        history.push('/addHouse', { houseState: house });
+        history.push(url, { houseState: house });
     };
 
     return (
@@ -40,6 +74,7 @@ const SelectHouse = () => {
                                     value="my"
                                     checked={house === 'my' ? true : false}
                                     required
+                                    disabled={checked.my}
                                 />
 
                                 <span> 본인 세대</span>
@@ -55,6 +90,7 @@ const SelectHouse = () => {
                                     value="spouse"
                                     checked={house === 'spouse' ? true : false}
                                     required
+                                    disabled={checked.spouse}
                                 />
 
                                 <span> 배우자 분리 세대</span>

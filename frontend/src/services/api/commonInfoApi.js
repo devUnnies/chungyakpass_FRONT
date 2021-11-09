@@ -43,10 +43,10 @@ export const addMember = (info) => post('user/house/member', info);
 
 //  - 세대구성원수정 API
 export const modMember = (info) =>
-    put(`user/house/member/${info.memberId}`, {
-        relation: info.relationship,
+    put(`user/house/member/${info.id}`, {
+        relation: info.relation,
         name: info.name,
-        birthDay: info.birthDate,
+        birthDay: info.birthDay,
         foreignerYn: info.foreignerYn,
         soldierYn: info.soldierYn,
         marriageDate: info.marriageDate,
@@ -68,15 +68,15 @@ export const patchHolder = (info) =>
 
 // ----------------------------------------------------------------------------
 
+//  - 세대구성원자산조회 API
+// export const getAssets = (memberId) => get(``)
+
 //  - 세대구성원자산등록 API
-export const addAssets = (info) =>
-    post(`user/house/member/property`, { houseMemberPropertyDtoList: info });
+export const addAssets = (info) => post(`user/house/member/property`, info);
 
 //  - 세대구성원자산수정 API
 export const modAssets = (info) =>
-    put(`user/house/member/property/${info.propertyId}`, {
-        houseMemberPropertyUpdateDtoList: info.assets,
-    });
+    put(`user/house/member/property/${info.propertyId}`, info.assets);
 
 //  - 세대구성원무주택시작일수정 API
 export const patchStartDate = (info) =>
@@ -85,9 +85,12 @@ export const patchStartDate = (info) =>
     });
 // ----------------------------------------------------------------------------
 
+//  -　세대구성원청약신청및제한사항 조회 API
+export const getChungyak = (memberId) =>
+    get(`user/house/member/chungyak/${memberId}`);
+
 //  - 세대구성원청약신청이력등록 API
-export const addChungyak = (info) =>
-    post(`user/house/member/chungyak`, { houseMemberChungyakDtoList: info });
+export const addChungyak = (info) => post(`user/house/member/chungyak`, info);
 
 //  - 세대구성원청약신청이력수정 API
 export const modChungyak = (info) =>
@@ -101,9 +104,7 @@ export const modChungyak = (info) =>
 
 //  - 세대구성원청약제한사항등록 API
 export const addRestriction = (info) =>
-    post(`user/house/member/chungyak/restriction`, {
-        houseMemberChungyakRestrictionDtoList: info,
-    });
+    post(`user/house/member/chungyak/restriction`, info);
 
 export const modRestriction = (info) =>
     put(`user/house/member/chungyak/restriction/${info.restrictionId}`, {

@@ -7,7 +7,7 @@ const AddAsset = ({
     setStartDates,
     nextId,
     ineligibleDate,
-    birthDate,
+    birthDay,
 }) => {
     const [asset, setAsset] = useState({
         property: '',
@@ -17,7 +17,7 @@ const AddAsset = ({
         nonResidentialBuilding: null,
         metropolitanBuildingYn: null,
         exceptionHouseYn: 'n',
-        acquistionDate: '',
+        acquisitionDate: '',
         dispositionDate: '',
         exclusiveArea: null,
         amount: '',
@@ -80,7 +80,7 @@ const AddAsset = ({
             return;
         } else if (asset.property === '자동차') {
             setIsNoStruct(true);
-            setStartDate(birthDate);
+            setStartDate(birthDay);
 
             return;
         }
@@ -124,7 +124,7 @@ const AddAsset = ({
     useEffect(() => {
         // fail msg 수정
         if (
-            new Date(Date.parse(asset.acquistionDate)) >
+            new Date(Date.parse(asset.acquisitionDate)) >
             new Date(Date.parse(asset.dispositionDate))
         ) {
             setFailMsg('!!');
@@ -164,12 +164,12 @@ const AddAsset = ({
                 nonResidentialBuilding: null,
                 metropolitanBuildingYn: 'n',
                 exceptionHouseYn: 'n',
-                acquistionDate: '',
+                acquisitionDate: '',
                 dispositionDate: '',
                 exclusiveArea: null,
                 amount: '',
                 taxBaseDate: '',
-                startDate: birthDate,
+                startDate: birthDay,
             });
         } else {
             alert(
@@ -493,17 +493,17 @@ const AddAsset = ({
                                 </td>
                                 <td className="addAssetFormTableTbodyTrTd">
                                     <input
-                                        className="assetAcquistionDateInput"
+                                        className="assetAcquisitionDateInput"
                                         type="date"
-                                        name="acquistionDate"
-                                        value={asset.acquistionDate}
+                                        name="acquisitionDate"
+                                        value={asset.acquisitionDate}
                                         onChange={onAssetChange}
                                         required
                                     />
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
                                     {new Date(
-                                        Date.parse(asset.acquistionDate)
+                                        Date.parse(asset.acquisitionDate)
                                     ) >
                                     new Date(
                                         Date.parse(asset.dispositionDate)
@@ -531,7 +531,7 @@ const AddAsset = ({
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
                                     {new Date(
-                                        Date.parse(asset.acquistionDate)
+                                        Date.parse(asset.acquisitionDate)
                                     ) >
                                     new Date(
                                         Date.parse(asset.dispositionDate)
