@@ -17,7 +17,7 @@ import './MultiChildPoint.css';
 const MultiChildPoint = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-    const multiChildAptNumStore = useSelector((state) => state.multiChildPoint); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    const multiChildPointStore = useSelector((state) => state.multiChildPoint); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const [loading, setLoading] = useState(false);
     const [notificationNumber, setNotificationNumber] = useState();
     const [multiChildHouseholdType, setMultiChildHouseholdType] = useState();
@@ -26,7 +26,7 @@ const MultiChildPoint = ({ onSaveData }) => {
     const getParams = location.state.multiChildHouseholdType; // notificationNumber props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 multiChildHouseholdType console로 찍기.
 
-    const data = multiChildAptNumStore?.postMultiChildPointAptNum?.data; // 다자녀 가점 로직 접근 변수
+    const data = multiChildPointStore?.postMultiChildPointAptNum?.data; // 다자녀 가점 로직 접근 변수
     const multiChildPointSum =
         data?.numberOfChild +
         data?.numberOfChildUnder6Year +
@@ -54,15 +54,15 @@ const MultiChildPoint = ({ onSaveData }) => {
     };
 
     useEffect(() => {
-        if (multiChildAptNumStore?.postMultiChildPointAptNum?.data) {
-            const data = multiChildAptNumStore.postMultiChildPointAptNum.data;
+        if (multiChildPointStore?.postMultiChildPointAptNum?.data) {
+            const data = multiChildPointStore.postMultiChildPointAptNum.data;
             console.log(JSON.stringify(data));
         }
-    }, [multiChildAptNumStore?.postMultiChildPointAptNum]);
+    }, [multiChildPointStore?.postMultiChildPointAptNum]);
 
     return (
         <>
-            {data?.error === 'NOT_FOUND' ? (
+            {data?.error === 'NOT_FOUND' || data?.error === 'BAD_REQUEST' ? (
                 alert(
                     '가/배점을 확인할 수 없습니다.' +
                         '\n' +
