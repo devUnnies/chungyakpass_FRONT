@@ -7,5 +7,4 @@ export const postNewlyMarriedKookminSpecialAptNum = (info) =>
     post('verification/special/kookmin/public/newlymarried', {
         notificationNumber: info.notificationNumber,
         housingType: info.housingType,
-        exceptionHouseTf: info.exceptionHouseTf,
     });

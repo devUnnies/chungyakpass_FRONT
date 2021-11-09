@@ -7,5 +7,4 @@ export const postNewlyMarriedMinyeongAptNum = (info) =>
     post('verification/special/minyeong/newlymarried', {
         notificationNumber: info.notificationNumber,
         housingType: info.housingType,
-        exceptionHouseTf: info.exceptionHouseTf,
     });
