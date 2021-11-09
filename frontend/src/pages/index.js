@@ -13,6 +13,7 @@ export { default as AddBankbook } from './Bankbook/AddBankbook';
 export { default as SelectHouse } from './House/SelectHouse';
 export { default as AddHouse } from './House/AddHouse';
 export { default as AddMember } from './Member/AddMember';
+export { default as ModMember } from './Member/ModMember';
 export { default as SeeMember } from './Member/SeeMember';
 export { default as SeeHistories } from './Histories/SeeHistories';
 export { default as AddHistory } from './Histories/AddHistory';
