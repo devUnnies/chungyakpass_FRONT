@@ -67,6 +67,8 @@ import {
     AddMember,
     SeeAssets,
     SeeHistories,
+    ModMember,
+    AddHistory,
 } from '../pages';
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
@@ -91,7 +93,9 @@ class App extends Component {
                     <Route path="/addHouse" component={AddHouse} />
                     <Route path="/members" component={SeeMember} />
                     <Route path="/addMember" component={AddMember} />
+                    <Route path="/modMember" component={ModMember} />
                     <Route path="/histories" component={SeeHistories} />
+                    <Route path="/addHistory" component={AddHistory} />
                     <Route path="/assets" component={SeeAssets} />
 
                     <Route

@@ -4,9 +4,10 @@ import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 import HistoriesTr from './HistoriesTr';
 import AddHistory from './AddHistory';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddLimit from './AddLimit';
 import { useHistory, useLocation } from 'react-router';
+import { addChung, getChung } from '../../store/actions/commonInfoAction';
 
 const SeeHistories = (props) => {
     const [name, setName] = useState();
@@ -22,16 +23,24 @@ const SeeHistories = (props) => {
 
     const nextId = useRef(0);
     const location = useLocation();
-    const members = location.state.members;
+    const memberId = location.state.memberId;
     const haveAssets = location.state.haveAssets;
+    const pos = location.state.pos;
+
+    console.log('멤버 아이디 !!!  ' + memberId);
 
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const _history = useHistory();
+    const dispatch = useDispatch();
 
     // 추가버튼 누르면 추가화면이 아래에 뜨게
     const handleAdd = () => {
-        setAdd(!add);
-        setModify(false);
+        // setAdd(!add);
+        // setModify(false);
+        _history.push('/addHistory', {
+            pos: -1,
+            onSaveData: handleHistorySave,
+        });
     };
 
     // 추가 혹은 수정한 값 저장하는 함수
@@ -51,13 +60,13 @@ const SeeHistories = (props) => {
                               houseName: data.houseName,
                               supply: data.supply,
                               specialSupply: data.specialSupply,
-                              houseType: data.houseType,
+                              housingType: data.housingType,
                               ranking: data.ranking,
                               result: data.result,
                               preliminaryNumber: data.preliminaryNumber,
                               winningDate: data.winningDate,
                               raffle: data.raffle,
-                              cancelYn: data.cancelYn,
+                              cancelWinYn: data.cancelWinYn,
                               ineligibleYn: data.ineligibleYn,
                               ineligibleDate: data.ineligibleDate,
                           }
@@ -111,6 +120,20 @@ const SeeHistories = (props) => {
         console.log(JSON.stringify(limit));
     };
 
+    useEffect(() => {
+        if (memberId) dispatch(getChung(memberId));
+    }, []);
+
+    useEffect(() => {
+        const temp = commonInfoStore.getChungyak.data;
+        if (temp) {
+            temp?.map((content, i) => {
+                setHistory(content);
+                setLimit(content.houseMemberChungyakRestrictionReadDto);
+            });
+        }
+    }, [commonInfoStore.getChungyak]);
+
     // asset이 변할 때마다 assets에 추가하기
     useEffect(() => {
         if (data && history)
@@ -123,17 +146,7 @@ const SeeHistories = (props) => {
     }, [history]);
 
     useEffect(() => {
-        // if (limits && limit) setLimits([...limits, limit]);
-        // else if (limit) setLimits([limit]);
-
         if (data && limit) {
-            // setData(
-            //     data.map((content, i) => {
-            //         console.log(content);
-            //         return { ...content, limit: limit };
-            //     })
-            // );
-            // setData((info) => info.filter((item) => item.id !== nextId));
             const temp = setData((info) =>
                 info.filter((item) => item.id !== nextId.current)
             );
@@ -158,13 +171,16 @@ const SeeHistories = (props) => {
 
     useEffect(() => {
         const data = commonInfoStore.addMem.data;
+        const modData = commonInfoStore.modMem.data;
 
         if (data) {
             setName(data.name);
+        } else if (modData) {
+            setName(modData.name);
         }
-    }, [commonInfoStore.addMem]);
+    }, [commonInfoStore.addMem, commonInfoStore.modMem]);
 
-    // asset 삭제하기
+    // history 삭제하기
     const handleRemove = (id) => {
         console.log(JSON.stringify(data), id);
         setData((info) => info.filter((item) => item.id !== id));
@@ -181,13 +197,13 @@ const SeeHistories = (props) => {
             houseName: item.houseName,
             supply: item.supply,
             specialSupply: item.specialSupply,
-            houseType: item.houseType,
+            housingType: item.housingType,
             ranking: item.ranking,
             result: item.result,
             preliminaryNumber: item.preliminaryNumber,
             winningDate: item.winningDate,
             raffle: item.raffle,
-            cancelYn: item.cancelYn,
+            cancelWinYn: item.cancelWinYn,
             ineligibleYn: item.ineligibleYn,
             ineligibleDate: item.ineligibleDate,
         };
@@ -215,7 +231,6 @@ const SeeHistories = (props) => {
             _history.push('/assets', {
                 ineligibleDate: history.ineligibleDate,
                 pos: -3,
-                members: members,
             });
         } else {
             _history.goBack(-1);
@@ -280,13 +295,14 @@ const SeeHistories = (props) => {
                 )}
             </div>
 
-            {add && (
+            {/* {add && (
                 <AddHistory
                     onSaveData={handleHistorySave}
                     setAddLimit={setAddLimit}
                     setAdd={setAdd}
+                    memberId={memberId}
                 />
-            )}
+            )} */}
             {addLimit && <AddLimit onSaveData={handleLimitSave} />}
             {/* {modify && (
                 <ModifyHistory
@@ -303,9 +319,7 @@ const SeeHistories = (props) => {
                     width="80"
                     height="30"
                     onClick={() => {
-                        _history.goBack(-1, {
-                            members: members,
-                        });
+                        _history.goBack(pos);
                     }}
                 >
                     목록으로
