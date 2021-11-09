@@ -20,11 +20,6 @@ function NewlyMarriedKookminAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
-    const [
-        exceptionHouseTf,
-        setExceptionHouseTf,
-        handleChangeExceptionHouseTf,
-    ] = useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -35,7 +30,6 @@ function NewlyMarriedKookminAptNum(props) {
             postNewlyMarriedKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                exceptionHouseTf: exceptionHouseTf,
             })
         );
     };
@@ -45,7 +39,6 @@ function NewlyMarriedKookminAptNum(props) {
             postNewlyMarriedKookminAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                exceptionHouseTf: exceptionHouseTf,
             })
         ); // api 연결 요청.
 
@@ -57,7 +50,6 @@ function NewlyMarriedKookminAptNum(props) {
             state: {
                 notificationNumber,
                 housingType,
-                exceptionHouseTf,
             },
         });
     };
@@ -91,36 +83,6 @@ function NewlyMarriedKookminAptNum(props) {
                             required
                         />
                         <br />
-                        <input
-                            type="text"
-                            placeholder="주택형"
-                            value={housingType}
-                            onChange={handleChangeHousingType}
-                            className="aptNumInput"
-                            required
-                        />
-                        <br />
-                        <span className="qulificaitonBox">
-                            주택 예외사항 해당 여부
-                        </span>
-                        <input
-                            className="isSupportInput"
-                            type="radio"
-                            name="supportYn"
-                            onChange={handleChangeExceptionHouseTf}
-                            value="y"
-                            checked={exceptionHouseTf === 'y' ? true : false}
-                        />
-                        <span className="InputText">해당함</span>
-                        <input
-                            className="isSupportInput"
-                            type="radio"
-                            name="supportYn"
-                            onChange={handleChangeExceptionHouseTf}
-                            value="n"
-                            checked={exceptionHouseTf === 'n' ? true : false}
-                        />
-                        <span className="InputText">해당하지 않음</span>
 
                         <span className="aptNumButton">
                             <MainButton

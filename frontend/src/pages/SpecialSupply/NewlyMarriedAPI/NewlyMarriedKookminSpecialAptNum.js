@@ -21,10 +21,11 @@ function NewlyMarriedKookminSpecialAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
+
     const [
-        exceptionHouseTf,
-        setExceptionHouseTf,
-        handleChangeExceptionHouseTf,
+        preNewlyMarriedYn,
+        setPreNewlyMarriedYn,
+        handleChangePreNewlyMarriedYn,
     ] = useInputState('');
 
     const handleSubmit = (event) => {
@@ -36,7 +37,7 @@ function NewlyMarriedKookminSpecialAptNum(props) {
             postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                exceptionHouseTf: exceptionHouseTf,
+                preNewlyMarriedYn: preNewlyMarriedYn,
             })
         );
     };
@@ -46,7 +47,7 @@ function NewlyMarriedKookminSpecialAptNum(props) {
             postNewlyMarriedKookminSpecialAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
-                exceptionHouseTf: exceptionHouseTf,
+                preNewlyMarriedYn: preNewlyMarriedYn,
             })
         ); // api 연결 요청.
 
@@ -59,7 +60,7 @@ function NewlyMarriedKookminSpecialAptNum(props) {
             state: {
                 notificationNumber,
                 housingType,
-                exceptionHouseTf,
+                preNewlyMarriedYn,
             },
         });
     };
@@ -108,16 +109,16 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                         <br />
                         <div className="qulificationBox">
                             <span className="qulificaitonBoxTitle">
-                                주택 예외사항 해당 여부
+                                예비 신혼부부 해당 여부
                             </span>
                             <input
                                 className="isSupportInput"
                                 type="radio"
                                 name="supportYn"
-                                onChange={handleChangeExceptionHouseTf}
+                                onChange={handleChangePreNewlyMarriedYn}
                                 value="y"
                                 checked={
-                                    exceptionHouseTf === 'y' ? true : false
+                                    preNewlyMarriedYn === 'y' ? true : false
                                 }
                             />
                             <span className="InputText">해당함</span>
@@ -125,10 +126,10 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                                 className="isSupportInput"
                                 type="radio"
                                 name="supportYn"
-                                onChange={handleChangeExceptionHouseTf}
+                                onChange={handleChangePreNewlyMarriedYn}
                                 value="n"
                                 checked={
-                                    exceptionHouseTf === 'n' ? true : false
+                                    preNewlyMarriedYn === 'n' ? true : false
                                 }
                             />
                             <span className="InputText">해당하지 않음</span>
