@@ -53,6 +53,8 @@ export const DEL_MEMBER_DELETE_SUCCESS = 'DEL_MEMBER_DELETE_SUCCESS';
 export const DEL_MEMBER_DELETE_ERROR = 'DEL_MEMBER_DELETE_ERROR';
 //저장 후 리덕스에서 삭제
 export const ADD_MEMBER_DELETE = 'ADD_MEMBER_DELETE';
+//저장 후 리덕스에서 삭제
+export const MOD_MEMBER_DELETE = 'MOD_MEMBER_DELETE';
 
 //세대주 지정
 export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
@@ -74,6 +76,11 @@ export const HOMELESS_START_DATE_PATCH_SUCCESS =
     'HOMELESS_START_DATE_PATCH_SUCCESS';
 export const HOMELESS_START_DATE_PATCH_ERROR =
     'HOMELESS_START_DATE_PATCH_ERROR';
+
+// 청약당첨이력 조회
+export const CHUNGYAK_GET = 'CHUNGYAK_GET';
+export const CHUNGYAK_GET_SUCCESS = 'CHUNGYAK_GET_SUCCESS';
+export const CHUNGYAK_GET_ERROR = 'CHUNGYAK_GET_ERROR';
 
 // 청약당첨이력 저장
 export const ADD_CHUNGYAK_POST = 'ADD_CHUNGYAK_POST';
@@ -143,6 +150,8 @@ export const modMem = createPromiseThunk(
     commonInfoApi.modMember
 );
 
+export const modMemDel = () => ({ type: MOD_MEMBER_DELETE });
+
 export const delMem = createPromiseThunk(
     DEL_MEMBER_DELETE,
     commonInfoApi.delMember
@@ -166,6 +175,11 @@ export const modAsse = createPromiseThunk(
 export const patStart = createPromiseThunk(
     HOMELESS_START_DATE_PATCH,
     commonInfoApi.patchStartDate
+);
+
+export const getChung = createPromiseThunk(
+    CHUNGYAK_GET,
+    commonInfoApi.getChungyak
 );
 
 export const addChung = createPromiseThunk(
