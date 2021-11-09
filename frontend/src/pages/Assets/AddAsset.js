@@ -7,7 +7,7 @@ const AddAsset = ({
     setStartDates,
     nextId,
     ineligibleDate,
-    birthDate,
+    birthDay,
 }) => {
     const [asset, setAsset] = useState({
         property: '',
@@ -80,7 +80,7 @@ const AddAsset = ({
             return;
         } else if (asset.property === '자동차') {
             setIsNoStruct(true);
-            setStartDate(birthDate);
+            setStartDate(birthDay);
 
             return;
         }
@@ -169,7 +169,7 @@ const AddAsset = ({
                 exclusiveArea: null,
                 amount: '',
                 taxBaseDate: '',
-                startDate: birthDate,
+                startDate: birthDay,
             });
         } else {
             alert(
