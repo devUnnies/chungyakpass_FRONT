@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
+import { HomeOutlined } from '@ant-design/icons';
 import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
-import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
 function FirstLifeKookminAptNum(props) {
@@ -71,20 +71,41 @@ function FirstLifeKookminAptNum(props) {
 
     return (
         <>
-            <div className="AptNumForm">
-                <div className="container">
-                    <form onSubmit={handleSubmit} className="aptNumform">
+            <div className="historiesInfoHeaderContainer">
+                <span className="apt_title">
+                    <span className="apt_titleIcon">
+                        <HomeOutlined />
+                    </span>
+                    <strong className="apt_mainTitle">특별공급 </strong>
+                    <span className="apt_subTitle">| 생애최초 국민주택</span>
+                </span>
+            </div>
+
+            <div className="specialAptNumForm">
+                <div className="specialAptNumContainer">
+                    <form onSubmit={handleSubmit} className="specialAptNumform">
                         <input
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             required
                         />
                         <br />
+
+                        <input
+                            type="text"
+                            placeholder="주택형"
+                            value={housingType}
+                            onChange={handleChangeHousingType}
+                            className="specialAptNumInput"
+                            required
+                        />
+                        <br />
+
                         <select
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             name="firstLifeKookminType"
                             value={firstLifeKookminType}
                             onChange={handleChangeFirstLifeKookminType}
@@ -96,23 +117,33 @@ function FirstLifeKookminAptNum(props) {
                             <option value="공공주택특별법 미적용">
                                 공공주택 특별법 미적용
                             </option>
-                            {/* <option value="그외 국민주택">
+                            <option value="그외 국민주택">
                                 그 외 국민주택
-                            </option> */}
+                            </option>
                         </select>
 
-                        <span className="aptNumButton">
-                            <MainButton
-                                type="button"
-                                onClick={onClick}
-                                width="100"
-                                height="35"
-                                fontSize="13"
-                                margin="5"
-                            >
-                                다음
-                            </MainButton>
-                        </span>
+                        <div className="buttonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={onClick}
+                                >
+                                    다음
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>

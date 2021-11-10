@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
+import { HomeOutlined } from '@ant-design/icons';
 import { postNewlyMarriedMinyeongAptNum } from '../../../store/actions/newlyMarriedMinyeongAction';
-import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 
 function NewlyMarriedMinyeongAptNum(props) {
@@ -64,15 +64,25 @@ function NewlyMarriedMinyeongAptNum(props) {
 
     return (
         <>
-            <div className="AptNumForm">
-                <div className="container">
-                    <form onSubmit={handleSubmit} className="aptNumform">
+            <div className="historiesInfoHeaderContainer">
+                <span className="apt_title">
+                    <span className="apt_titleIcon">
+                        <HomeOutlined />
+                    </span>
+                    <strong className="apt_mainTitle">특별공급 </strong>
+                    <span className="apt_subTitle">| 신혼부부 민영주택</span>
+                </span>
+            </div>
+
+            <div className="specialAptNumForm">
+                <div className="specialAptNumContainer">
+                    <form onSubmit={handleSubmit} className="specialAptNumform">
                         <input
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             required
                         />
                         <br />
@@ -81,23 +91,33 @@ function NewlyMarriedMinyeongAptNum(props) {
                             placeholder="주택형"
                             value={housingType}
                             onChange={handleChangeHousingType}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             required
                         />
                         <br />
 
-                        <span className="aptNumButton">
-                            <MainButton
-                                type="button"
-                                onClick={onClick}
-                                width="100"
-                                height="35"
-                                fontSize="13"
-                                margin="5"
-                            >
-                                다음
-                            </MainButton>
-                        </span>
+                        <div className="buttonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={onClick}
+                                >
+                                    다음
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -93,11 +93,11 @@ const data = {
                                     name: '다자녀',
                                     link: specialMultiChildTypeSelect,
                                 },
-                                // {
-                                //     idx: 2,
-                                //     name: '생애최초',
-                                //     link: specialFirstLifeTypeSelect,
-                                // },
+                                {
+                                    idx: 2,
+                                    name: '생애최초',
+                                    link: specialFirstLifeTypeSelect,
+                                },
                                 {
                                     idx: 3,
                                     name: '노부모',
@@ -114,18 +114,18 @@ const data = {
             name: '가배점계산기',
             link: '',
             subcategory: [
-                // {
-                //     idx: 0,
-                //     name: '일반공급',
-                //     link: '',
-                //     subcategory: [
-                //         {
-                //             idx: 0,
-                //             name: '민영주택',
-                //             link: pointGeneralMinyeoung,
-                //         },
-                //     ],
-                // },
+                {
+                    idx: 0,
+                    name: '일반공급',
+                    link: '',
+                    subcategory: [
+                        {
+                            idx: 0,
+                            name: '민영주택',
+                            link: pointGeneralMinyeoung,
+                        },
+                    ],
+                },
                 {
                     idx: 1,
                     name: '특별공급',
@@ -141,11 +141,11 @@ const data = {
                             name: '다자녀',
                             link: pointMultiChildAptNum,
                         },
-                        // {
-                        //     idx: 2,
-                        //     name: '노부모',
-                        //     link: pointOldParentAptNum,
-                        // },
+                        {
+                            idx: 2,
+                            name: '노부모',
+                            link: pointOldParentAptNum,
+                        },
                         {
                             idx: 3,
                             name: '한부모',

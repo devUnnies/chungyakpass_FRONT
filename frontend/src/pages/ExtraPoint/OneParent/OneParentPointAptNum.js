@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
+import { HomeOutlined } from '@ant-design/icons';
 import { postOneParentPointAptNum } from '../../../store/actions/pointSpecialOneParentAction';
-import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 import './OneParentPoint.css';
 
@@ -68,31 +68,48 @@ function OneParentPointAptNum(props) {
     return (
         <>
             <div className="historiesInfoHeaderContainer">
-                <div className="heightBar"></div>
-                <span className="listTitle">한부모 가배점계산기</span>
+                <span className="apt_title">
+                    <span className="apt_titleIcon">
+                        <HomeOutlined />
+                    </span>
+                    <strong className="apt_mainTitle">특별공급 </strong>
+                    <span className="apt_subTitle"> | 한부모 </span>
+                </span>
             </div>
-            <div className="AptNumForm">
-                <div className="aptNumContainer">
-                    <form onSubmit={handleSubmit} className="aptNumform">
+
+            <div className="specialAptNumForm">
+                <div className="specialAptNumContainer">
+                    <form onSubmit={handleSubmit} className="specialAptNumForm">
                         <input
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                         />
 
-                        <span className="aptNumButton">
-                            <MainButton
-                                type="button"
-                                onClick={onClick}
-                                width="100"
-                                height="35"
-                                fontSize="15"
-                            >
-                                다음
-                            </MainButton>
-                        </span>
+                        <div className="buttonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={onClick}
+                                >
+                                    다음
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>

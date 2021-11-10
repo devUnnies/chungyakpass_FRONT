@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
+import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
-import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 import '../SpecialSupply.css';
 
@@ -81,20 +81,30 @@ function NewlyMarriedKookminSpecialAptNum(props) {
     return (
         <>
             <div className="historiesInfoHeaderContainer">
-                <div className="heightBar"></div>
-                <span className="listTitle">
-                    신혼부부 국민주택(공특법 적용)
+                <span className="apt_title">
+                    <span className="apt_titleIcon">
+                        <HomeOutlined />
+                    </span>
+                    <strong className="apt_mainTitle">특별공급 </strong>
+                    <span className="apt_subTitle">| 신혼부부 국민주택</span>
                 </span>
             </div>
-            <div className="AptNumForm">
-                <div className="aptNumContainer">
-                    <form onSubmit={handleSubmit} className="aptNumform">
+
+            <div className="specialAptNumForm">
+                <div className="specialAptNumContainer">
+                    <form onSubmit={handleSubmit} className="specialAptNumform">
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            공공주택 특별법 적용
+                        </div>
                         <input
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             required
                         />
                         <br />
@@ -103,49 +113,62 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                             placeholder="주택형"
                             value={housingType}
                             onChange={handleChangeHousingType}
-                            className="aptNumInput"
+                            className="specialAptNumInput"
                             required
                         />
                         <br />
-                        <div className="qulificationBox">
+                        <div className="paramSelect">
                             <span className="qulificaitonBoxTitle">
-                                예비 신혼부부 해당 여부
+                                <strong>예비 신혼부부 여부</strong>
                             </span>
                             <input
-                                className="isSupportInput"
+                                className="paramSelectInput"
                                 type="radio"
-                                name="supportYn"
+                                name="preNewlyMarriedYn"
                                 onChange={handleChangePreNewlyMarriedYn}
                                 value="y"
                                 checked={
                                     preNewlyMarriedYn === 'y' ? true : false
                                 }
                             />
-                            <span className="InputText">해당함</span>
+                            <span className="selectInputText">해당</span>
                             <input
-                                className="isSupportInput"
+                                className="paramSelectInput"
                                 type="radio"
-                                name="supportYn"
+                                name="preNewlyMarriedYn"
                                 onChange={handleChangePreNewlyMarriedYn}
                                 value="n"
                                 checked={
                                     preNewlyMarriedYn === 'n' ? true : false
                                 }
                             />
-                            <span className="InputText">해당하지 않음</span>
+                            <span className="selectInputText">
+                                해당하지 않음
+                            </span>
                         </div>
 
-                        <span className="aptNumButton">
-                            <MainButton
-                                type="button"
-                                onClick={onClick}
-                                width="100"
-                                height="35"
-                                fontSize="15"
-                            >
-                                다음
-                            </MainButton>
-                        </span>
+                        <div className="buttonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={onClick}
+                                >
+                                    다음
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>

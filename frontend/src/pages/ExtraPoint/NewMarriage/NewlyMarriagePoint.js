@@ -9,7 +9,6 @@ import {
     InfoCircleOutlined,
     PauseCircleOutlined,
 } from '@ant-design/icons';
-import MainButton from '../../../components/Button/MainButton';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import './NewlyMarriagePoint.css';

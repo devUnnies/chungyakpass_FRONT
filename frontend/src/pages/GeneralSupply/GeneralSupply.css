@@ -1,34 +1,87 @@
-/* 일반민영 아파트 공고번호 페이지 */
-.AptNumForm {
-    margin-left: 40%;
-    margin-top: 10%;
+/* 아파트 공고번호 페이지 */
+.historiesInfoHeaderContainer {
+    margin-left: 38%;
+}
+.apt_titleIcon {
+    font-size: 15pt;
+    font-weight: bolder;
+    color: #2a4476;
+    margin-right: 10px;
+}
+.apt_title {
+    margin-left: 1%;
+    font-size: 15pt;
+    color: #2a4476;
+    letter-spacing: 2px;
+}
+.apt_subTitle {
+    font-size: 12pt;
+    color: black;
+    letter-spacing: 1px;
+}
+.generalAptNumForm {
     margin-bottom: 10%;
 }
-.aptNumContainer {
+.generalAptNumContainer {
     text-align: center;
-    width: 20%;
-    height: 10%;
+    margin-top: 2%;
+    margin-left: 38%;
+    width: 15%;
 }
-.aptNumInput {
-    width: 180%;
-    height: 25%;
-    margin: 5%;
+.generalAptNumInput {
+    width: 140%;
+    height: 18%;
+    margin: 3%;
     padding: 5%;
 
     border: 1px solid black;
     border-radius: 5px;
     font-size: 10pt;
 }
-.aptNumContainer {
-    text-align: center;
-    margin-left: 3%;
-    width: 15%;
-    height: 15%;
+/* 이전, 다음 버튼 디자인 및 위치 조정 */
+.buttonContainer {
+    width: 300px;
+    margin-left: 40%;
 }
-.aptNumButton {
-    float: center;
-    margin-top: -100%;
-    margin-left: 100%;
+.buttonPosition {
+    margin-left: 5px;
+}
+.aptBackButton {
+    margin-top: 10%;
+
+    border: none;
+    font-family: 'Gothic A1', sans-serif;
+    font-size: var(--button-font-size, 14px);
+    color: var(--button-color, #2a4476);
+    background: var(--button-bg-color, rgba(0, 0, 0, 0));
+    cursor: pointer;
+}
+.aptBackButton:active,
+.aptBackButton:hover,
+.aptBackButton:focus {
+    color: var(--button-color, #e3e3e3);
+}
+.aptNextButton {
+    margin-top: 10%;
+    width: 90px;
+    height: 35px;
+
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: var(--button-font-size, 14px);
+    border-radius: var(--button-radius, 30px);
+    color: var(--button-color, #ffffff);
+    background: var(--button-bg-color, #2a4476);
+    cursor: pointer;
+    flex: none;
+    flex-grow: 0;
+    margin: 10px;
+}
+
+.aptNextButton:active,
+.aptNextButton:hover,
+.aptNextButton:focus {
+    background: var(--button-hover-bg-color, #8097c2);
 }
 
 /* general_title */
