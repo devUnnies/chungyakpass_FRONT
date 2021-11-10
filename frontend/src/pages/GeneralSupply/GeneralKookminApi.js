@@ -8,6 +8,7 @@ import {
     CloseCircleOutlined,
     InfoCircleOutlined,
     PauseCircleOutlined,
+    HomeOutlined,
 } from '@ant-design/icons';
 import MainButton from '../../components/Button/MainButton';
 import './GeneralSupply.css';
@@ -115,14 +116,18 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                         ) + history.push('/')
                     ) : (
                         <>
-                            <div className="general_title">
-                                <h3 className="general_mainTitle">
-                                    일반공급
-                                    <span className="general_subTitle">
-                                        {' '}
-                                        | 국민주택{' '}
+                            <div className="historiesInfoHeaderContainer">
+                                <span className="apt_title">
+                                    <span className="apt_titleIcon">
+                                        <HomeOutlined />
                                     </span>
-                                </h3>
+                                    <strong className="apt_mainTitle">
+                                        일반공급{' '}
+                                    </strong>
+                                    <span className="apt_subTitle">
+                                        | 국민주택
+                                    </span>
+                                </span>
                             </div>
 
                             {/* 자격확인 테이블 */}

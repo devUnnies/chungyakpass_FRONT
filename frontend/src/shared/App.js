@@ -6,7 +6,6 @@ import {
     Signup,
     AllowLogin,
     PersonalInfo,
-    GeneralMinyeong,
     GeneralMinyeongApi,
     GeneralMinyeongAptNum,
     GeneralKookminApi,
@@ -24,7 +23,6 @@ import {
     FirstLifeTypeSelect,
     FirstLifeKookminAptNum,
     FirstLifeKookminApi,
-    FirstLifeKookminSpecialLawApi,
     FirstLifeMinyeongAptNum,
     FirstLifeMinyeongApi,
     NewlyMarriedTypeSelect,
@@ -50,15 +48,14 @@ import {
     Sitemap,
     FAQ,
     MyPage,
-    GeneralMinyeoungPoint,
     MultiChildPointAptNum,
     MultiChildPoint,
+    OldParentPointPost,
     OldParentPoint,
     OneParentPointAptNum,
     OneParentPoint,
     NewlyMarriagePointAptNum,
     NewlyMarriagePoint,
-    NewMarriagePoint,
     AddBankbook,
     SelectHouse,
     AddHouse,
@@ -72,6 +69,8 @@ import {
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
 import Footer from './footer/footer';
+import GeneralMinyeoungPoint from '../pages/ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
+import GeneralMinyeoungPointPost from '../pages/ExtraPoint/GeneralMinyeoung/GeneralMinyeongPointPost';
 
 class App extends Component {
     render() {
@@ -219,6 +218,11 @@ class App extends Component {
                     {/* 가배점 계산기 */}
                     <Route
                         exact
+                        path="/point/generalMinyeoungPost"
+                        component={GeneralMinyeoungPointPost}
+                    />
+                    <Route
+                        exact
                         path="/point/generalMinyeoung"
                         component={GeneralMinyeoungPoint}
                     />
@@ -251,6 +255,11 @@ class App extends Component {
                         exact
                         path="/point/newlyMarriage"
                         component={NewlyMarriagePoint}
+                    />
+                    <Route
+                        exact
+                        path="/point/oldParentPost"
+                        component={OldParentPointPost}
                     />
                     <Route
                         exact

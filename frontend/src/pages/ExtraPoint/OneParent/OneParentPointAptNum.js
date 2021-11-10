@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { HomeOutlined } from '@ant-design/icons';
+import { CalculatorFilled } from '@ant-design/icons';
 import { postOneParentPointAptNum } from '../../../store/actions/pointSpecialOneParentAction';
 import { useHistory } from 'react-router-dom';
 import './OneParentPoint.css';
@@ -70,7 +70,7 @@ function OneParentPointAptNum(props) {
             <div className="historiesInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
-                        <HomeOutlined />
+                        <CalculatorFilled />
                     </span>
                     <strong className="apt_mainTitle">특별공급 </strong>
                     <span className="apt_subTitle"> | 한부모 </span>

@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
-import { HomeOutlined } from '@ant-design/icons';
 import useInputState from '../../../components/Input/useInputState';
-import { postGeneralMinyeongPoint } from '../../../store/actions/pointGeneralMinyeongAction';
+import { CalculatorFilled } from '@ant-design/icons';
+import { postSpecialOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
 import { useHistory } from 'react-router-dom';
-import './GeneralMinyeongPoint.css';
+import './OldParentPoint.css';
 
-function GeneralMinyeongPoint(props) {
+function OldParentPointPost(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const generalMinyeongPointStore = useSelector(
-        (state) => state.generalMinyeongPoint
-    );
+    const oldParentPointStore = useSelector((state) => state.oldParentPoint);
 
     const [houseMemberId, setHouseMemberId, handleChangeHouseMemberId] =
         useInputState('');
@@ -40,11 +38,11 @@ function GeneralMinyeongPoint(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postGeneralMinyeongPoint({
+            postSpecialOldParentPoint({
                 houseMemberId: houseMemberId,
                 parentsDeathYn: parentsDeathYn,
                 divorceYn: divorceYn,
-                sameResidentRegistrationYn: isameResidentRegistrationYn,
+                sameResidentRegistrationYn: sameResidentRegistrationYn,
                 stayOverYn: stayOverYn,
                 nowStayOverYn: nowStayOverYn,
             })
@@ -59,24 +57,23 @@ function GeneralMinyeongPoint(props) {
             stayOverYn == '' &&
             nowStayOverYn == ''
         ) {
-            alert('아파트 분양정보 입력칸이 비어있습니다.');
+            alert('필수 입력 값 중 비어있는 값이 존재합니다.');
         } else {
             dispatch(
-                postGeneralMinyeongPoint({
+                postSpecialOldParentPoint({
                     houseMemberId: houseMemberId,
                     parentsDeathYn: parentsDeathYn,
                     divorceYn: divorceYn,
-                    sameResidentRegistrationYn: isameResidentRegistrationYn,
+                    sameResidentRegistrationYn: sameResidentRegistrationYn,
                     stayOverYn: stayOverYn,
                     nowStayOverYn: nowStayOverYn,
                 })
             ); // api 연결 요청.
 
-            const data =
-                generalMinyeongPointStore?.postGeneralMinyeongPoint?.data;
+            const data = oldParentPointStore?.postSpecialOldParentPoint?.data;
             console.log(JSON.stringify(data));
             history.push({
-                pathname: '/point/generalMinyeoung',
+                pathname: '/point/oldParent',
                 state: {
                     houseMemberId,
                     parentsDeathYn,
@@ -90,28 +87,27 @@ function GeneralMinyeongPoint(props) {
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 일반공급 민영 가배점 페이지로 이동.
-        if (generalMinyeongPointStore?.postGeneralMinyeongPoint) {
-            const data =
-                generalMinyeongPointStore.postGeneralMinyeongPoint.data;
+        // 아파트 공고번호, 주택형 post 성공시 노부모 가배점 페이지로 이동.
+        if (oldParentPointStore?.postSpecialOldParentPoint) {
+            const data = oldParentPointStore.postSpecialOldParentPoint.data;
         }
-    }, [generalMinyeongPointStore?.postGeneralMinyeongPoint]);
+    }, [oldParentPointStore?.postSpecialOldParentPoint]);
 
     return (
         <>
             <div className="historiesInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
-                        <HomeOutlined />
+                        <CalculatorFilled />
                     </span>
-                    <strong className="apt_mainTitle">일반공급 </strong>
-                    <span className="apt_subTitle"> | 민영주택</span>
+                    <strong className="apt_mainTitle">특별공급 </strong>
+                    <span className="apt_subTitle"> | 노부모부양 </span>
                 </span>
             </div>
 
-            <div className="generalAptNumForm">
-                <div className="generalAptNumContainer">
-                    <form onSubmit={handleSubmit} className="generalAptNumForm">
+            <div className="specialAptNumForm">
+                <div className="specialAptNumContainer">
+                    <form onSubmit={handleSubmit} className="specialAptNumForm">
                         <div className="paramSelect">
                             <span className="qulificaitonBoxTitle">
                                 부모 사망 여부
@@ -289,4 +285,4 @@ function GeneralMinyeongPoint(props) {
     );
 }
 
-export default GeneralMinyeongPoint;
+export default OldParentPointPost;
