@@ -5,9 +5,13 @@ import TopButton from '../../components/TopButton/TopButton';
 function PersonalRules() {
     return (
         <>
-            <div className="personalRuleTitle">
-                <h2 className="personalRuleTitleText">개인정보처리방침</h2>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">개인정보처리방침</span>
             </div>
+            {/* <div className="personalRuleTitle">
+                <h2 className="personalRuleTitleText">개인정보처리방침</h2>
+            </div> */}
             <div className="personalRulesContainer">
                 <p className="personalRulesText">
                     청약패스('chungyakpass.com'이하 '청약패스')은(는) 「개인정보

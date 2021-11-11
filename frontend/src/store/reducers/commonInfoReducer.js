@@ -47,6 +47,21 @@ import {
     MOD_CHUNGYAK_RESTR_PUT,
     MOD_CHUNGYAK_RESTR_PUT_SUCCESS,
     MOD_CHUNGYAK_RESTR_PUT_ERROR,
+    ADD_MEMBER_DELETE,
+    HOMELESS_START_DATE_PATCH_SUCCESS,
+    HOMELESS_START_DATE_PATCH,
+    HOMELESS_START_DATE_PATCH_ERROR,
+    HOUSE_GET,
+    HOUSE_GET_SUCCESS,
+    HOUSE_GET_ERROR,
+    MEMBER_GET,
+    MEMBER_GET_SUCCESS,
+    MEMBER_GET_ERROR,
+    ADD_HOUSE_POST_DELETE,
+    MOD_MEMBER_DELETE,
+    CHUNGYAK_GET,
+    CHUNGYAK_GET_SUCCESS,
+    CHUNGYAK_GET_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -54,18 +69,22 @@ import {
 } from '../../services/api/asyncUtils';
 
 const initialState = {
+    getHouse: reducerUtils.initial(),
     addHouse: reducerUtils.initial(),
     modHouse: reducerUtils.initial(),
     delHouse: reducerUtils.initial(),
     addBank: reducerUtils.initial(),
     modBank: reducerUtils.initial(),
     delBank: reducerUtils.initial(),
+    getMem: reducerUtils.initial(),
     addMem: reducerUtils.initial(),
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
     addAssets: reducerUtils.initial(),
+    patchStartDate: reducerUtils.initial(),
     modAssets: reducerUtils.initial(),
+    getChungyak: reducerUtils.initial(),
     addChungyak: reducerUtils.initial(),
     modChungyak: reducerUtils.initial(),
     addRestriction: reducerUtils.initial(),
@@ -74,6 +93,10 @@ const initialState = {
 
 export default function commonInfo(state = initialState, action) {
     switch (action.type) {
+        case HOUSE_GET:
+        case HOUSE_GET_SUCCESS:
+        case HOUSE_GET_ERROR:
+            return handleAsyncActions(HOUSE_GET, 'getHouse')(state, action);
         case ADD_HOUSE_POST:
         case ADD_HOUSE_POST_SUCCESS:
         case ADD_HOUSE_POST_ERROR:
@@ -92,6 +115,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ADD_HOUSE_POST_DELETE:
+            return {
+                ...state,
+                addHouse: reducerUtils.initial(),
+            };
         case ADD_BANKBOOK_POST:
         case ADD_BANKBOOK_POST_SUCCESS:
         case ADD_BANKBOOK_POST_ERROR:
@@ -113,14 +141,28 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case MEMBER_GET:
+        case MEMBER_GET_SUCCESS:
+        case MEMBER_GET_ERROR:
+            return handleAsyncActions(MEMBER_GET, 'getMem')(state, action);
         case ADD_MEMBER_POST:
         case ADD_MEMBER_POST_SUCCESS:
         case ADD_MEMBER_POST_ERROR:
             return handleAsyncActions(ADD_MEMBER_POST, 'addMem')(state, action);
+        case ADD_MEMBER_DELETE:
+            return {
+                ...state,
+                addMem: reducerUtils.initial(),
+            };
         case MOD_MEMBER_PUT:
         case MOD_MEMBER_PUT_SUCCESS:
         case MOD_MEMBER_PUT_ERROR:
             return handleAsyncActions(MOD_MEMBER_PUT, 'modMem')(state, action);
+        case MOD_MEMBER_DELETE:
+            return {
+                ...state,
+                modMem: reducerUtils.initial(),
+            };
         case DEL_MEMBER_DELETE:
         case DEL_MEMBER_DELETE_SUCCESS:
         case DEL_MEMBER_DELETE_ERROR:
@@ -146,6 +188,20 @@ export default function commonInfo(state = initialState, action) {
         case MOD_ASSETS_PUT_SUCCESS:
         case MOD_ASSETS_PUT_ERROR:
             return handleAsyncActions(MOD_ASSETS_PUT, 'modAssets')(
+                state,
+                action
+            );
+        case HOMELESS_START_DATE_PATCH:
+        case HOMELESS_START_DATE_PATCH_SUCCESS:
+        case HOMELESS_START_DATE_PATCH_ERROR:
+            return handleAsyncActions(
+                HOMELESS_START_DATE_PATCH,
+                'patchStartDate'
+            )(state, action);
+        case CHUNGYAK_GET:
+        case CHUNGYAK_GET_SUCCESS:
+        case CHUNGYAK_GET_ERROR:
+            return handleAsyncActions(CHUNGYAK_GET, 'getChungyak')(
                 state,
                 action
             );

@@ -6,26 +6,58 @@ import storage from '../../services/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/actions/authAction';
 import { signoutWithToken } from '../../store/actions/tokenAction';
+import { getHouse, getMem } from '../../store/actions/commonInfoAction';
+
+const blockUrl = '/addBankBook';
+
+let generalKookminAptNum = blockUrl;
+let generalMinyeongAptNum = blockUrl;
+let specialNewlyMarriedTypeSelect = blockUrl;
+let specialMultiChildTypeSelect = blockUrl;
+let specialFirstLifeTypeSelect = blockUrl;
+let specialOldParentTypeSelect = blockUrl;
+let pointGeneralMinyeoung = blockUrl;
+let pointNewlyMarriageAptNum = blockUrl;
+let pointMultiChildAptNum = blockUrl;
+let pointOldParentAptNum = blockUrl;
+let pointOneParentAptNum = blockUrl;
 
 const data = {
     category: [
         {
             idx: 0,
-            name: '청약자격확인',
-            link: '/addHouseHolder',
+            name: '기초정보등록',
+            link: '/addBankbook',
             subcategory: [
                 {
                     idx: 0,
-                    name: '공통정보입력',
-                    link: '/addHouseHolder',
+                    name: '통장정보등록',
+                    link: '/addBankbook',
                 },
                 {
                     idx: 1,
-                    name: '한눈에보기',
-                    link: '/atAGlance',
+                    name: '세대등록',
+                    link: '/selectHouse',
                 },
+            ],
+        },
+        {
+            idx: 1,
+            name: '청약자격확인',
+            link: '',
+            subcategory: [
+                // {
+                //     idx: 0,
+                //     name: '공통정보입력',
+                //     link: '/addHouseHolder',
+                // },
+                // {
+                //     idx: 1,
+                //     name: '한눈에보기',
+                //     link: '/atAGlance',
+                // },
                 {
-                    idx: 2,
+                    idx: 0,
                     name: '유형별',
                     link: '',
                     subcategory: [
@@ -37,12 +69,12 @@ const data = {
                                 {
                                     idx: 0,
                                     name: '국민주택',
-                                    link: '/generalKookminAptNum',
+                                    link: generalKookminAptNum,
                                 },
                                 {
                                     idx: 1,
                                     name: '민영주택',
-                                    link: '/generalMinyeongAptNum',
+                                    link: generalMinyeongAptNum,
                                 },
                             ],
                         },
@@ -54,22 +86,22 @@ const data = {
                                 {
                                     idx: 0,
                                     name: '신혼부부',
-                                    link: '',
+                                    link: specialNewlyMarriedTypeSelect,
                                 },
                                 {
                                     idx: 1,
                                     name: '다자녀',
-                                    link: '/specialMultiChildTypeSelect',
+                                    link: specialMultiChildTypeSelect,
                                 },
-                                {
-                                    idx: 2,
-                                    name: '생애최초',
-                                    link: '',
-                                },
+                                // {
+                                //     idx: 2,
+                                //     name: '생애최초',
+                                //     link: specialFirstLifeTypeSelect,
+                                // },
                                 {
                                     idx: 3,
                                     name: '노부모',
-                                    link: '/specialOldParentTypeSelect',
+                                    link: specialOldParentTypeSelect,
                                 },
                             ],
                         },
@@ -78,22 +110,22 @@ const data = {
             ],
         },
         {
-            idx: 1,
+            idx: 2,
             name: '가배점계산기',
             link: '',
             subcategory: [
-                {
-                    idx: 0,
-                    name: '일반공급',
-                    link: '',
-                    subcategory: [
-                        {
-                            idx: 0,
-                            name: '민영주택',
-                            link: '/point/generalMinyeoung',
-                        },
-                    ],
-                },
+                // {
+                //     idx: 0,
+                //     name: '일반공급',
+                //     link: '',
+                //     subcategory: [
+                //         {
+                //             idx: 0,
+                //             name: '민영주택',
+                //             link: pointGeneralMinyeoung,
+                //         },
+                //     ],
+                // },
                 {
                     idx: 1,
                     name: '특별공급',
@@ -102,36 +134,36 @@ const data = {
                         {
                             idx: 0,
                             name: '신혼부부',
-                            link: '/point/newMarriage',
+                            link: pointNewlyMarriageAptNum,
                         },
                         {
                             idx: 1,
                             name: '다자녀',
-                            link: '/point/multiChildAptNum',
+                            link: pointMultiChildAptNum,
                         },
-                        {
-                            idx: 2,
-                            name: '노부모',
-                            link: '/point/oldParent',
-                        },
+                        // {
+                        //     idx: 2,
+                        //     name: '노부모',
+                        //     link: pointOldParentAptNum,
+                        // },
                         {
                             idx: 3,
                             name: '한부모',
-                            link: '/point/oneParent',
+                            link: pointOneParentAptNum,
                         },
                     ],
                 },
             ],
         },
         {
-            idx: 2,
+            idx: 3,
             name: '부적격사례',
             link: '/case',
             subcategory: [],
         },
         {
-            idx: 3,
-            name: 'FAQ',
+            idx: 4,
+            name: '자주묻는질문',
             link: '/FAQ',
             subcategory: [],
         },
@@ -172,7 +204,7 @@ function Logout() {
         dispatch(logOut());
         dispatch(signoutWithToken());
         storage.remove('user-token');
-        history.push('/');
+        window.location.replace('/');
     };
 
     return (
@@ -220,6 +252,83 @@ function Logo() {
 
 function Nav(props) {
     const tok = props === null ? null : props.token;
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+    const history = useHistory();
+
+    useEffect(() => {
+        const data2 = commonInfoStore.getMem.data;
+        const data3 = commonInfoStore.getHouse.data;
+        console.log(data3);
+        if (data3) {
+            generalKookminAptNum = '/generalKookminAptNum';
+            generalMinyeongAptNum = '/generalMinyeongAptNum';
+            specialNewlyMarriedTypeSelect = '/specialNewlyMarriedTypeSelect';
+            specialMultiChildTypeSelect = '/specialMultiChildTypeSelect';
+            specialFirstLifeTypeSelect = '/specialFirstLifeTypeSelect';
+            specialOldParentTypeSelect = '/specialOldParentTypeSelect';
+            pointGeneralMinyeoung = '/point/generalMinyeoung';
+            pointNewlyMarriageAptNum = '/point/newlyMarriageAptNum';
+            pointMultiChildAptNum = '/point/multiChildAptNum';
+            pointOldParentAptNum = '/point/oldParentAptNum';
+            pointOneParentAptNum = '/point/oneParentAptNum';
+
+            data.category.map((content, i) => {
+                if (content.name === '청약자격확인') {
+                    content.subcategory.map((content2, j) => {
+                        content2.subcategory.map((content3, k) => {
+                            if (content3.name === '일반공급') {
+                                content3.subcategory.map((content4, l) => {
+                                    if (content4.name === '국민주택')
+                                        content4.link = generalKookminAptNum;
+                                    else content4.link = generalMinyeongAptNum;
+                                });
+                            } else if (content3.name === '특별공급') {
+                                content3.subcategory.map((content4, l) => {
+                                    if (content4.name === '신혼부부')
+                                        content4.link =
+                                            specialNewlyMarriedTypeSelect;
+                                    else if (content4.name === '다자녀')
+                                        content4.link =
+                                            specialMultiChildTypeSelect;
+                                    else if (content4.name === '생애최초')
+                                        content4.link =
+                                            specialFirstLifeTypeSelect;
+                                    else if (content4.name === '노부모')
+                                        content4.link =
+                                            specialOldParentTypeSelect;
+                                });
+                            }
+                        });
+                    });
+                } else if (content.name === '가배점계산기') {
+                    content.subcategory.map((content2, j) => {
+                        content2.subcategory.map((content3, k) => {
+                            if (content3.name === '민영주택')
+                                content3.link = pointGeneralMinyeoung;
+                            else if (content3.name === '신혼부부')
+                                content3.link = pointNewlyMarriageAptNum;
+                            else if (content3.name === '다자녀')
+                                content3.link = pointMultiChildAptNum;
+                            else if (content3.name === '한부모')
+                                content3.link = pointOneParentAptNum;
+                            else if (content3.name === '노부모')
+                                content3.link = pointOldParentAptNum;
+                        });
+                    });
+                }
+            });
+        }
+
+        if (commonInfoStore.getHouse.loading) {
+            window.confirm('아직 기초정보가 등록되어있지 않습니다 !');
+            // if (window.confirm('아직 기초정보가 등록되어있지 않습니다 !')) {
+            //     history.push('/addBankBook');
+            // }
+        }
+        // } else {
+        //     // alert('아직 기초정보가 등록되어있지 않습니다 !');
+        // }
+    }, [commonInfoStore.getMem]);
 
     return (
         <div className="nav">
@@ -255,7 +364,7 @@ function Nav(props) {
                                                     </NavLink>
                                                     <ul
                                                         className={
-                                                            i === 0
+                                                            i === 1
                                                                 ? 'nav-subsubItems'
                                                                 : 'nav-subsubItemsSecond'
                                                         }
@@ -343,8 +452,24 @@ function Nav(props) {
 }
 
 const Header = (props) => {
+    const dispatch = useDispatch();
     const tokenStore = useSelector((state) => state.token);
     const tok = storage.get('user-token');
+
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+    // const authStore = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        dispatch(getHouse());
+    }, []);
+
+    useEffect(() => {
+        const data = commonInfoStore.getHouse.data;
+        if (data && data.houseResponseDto) {
+            dispatch(getMem(data.houseResponseDto.id));
+        }
+    }, [commonInfoStore.getHouse]);
+
     return (
         <div className="header">
             {tok || tokenStore.token ? <Logout /> : <Login />}

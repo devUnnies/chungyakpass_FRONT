@@ -5,6 +5,7 @@ import useInputState from '../../../components/Input/useInputState';
 import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
 import MainButton from '../../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
+import '../SpecialSupply.css';
 
 function MultiChildKookminAptNum(props) {
     const history = useHistory();
@@ -41,33 +42,25 @@ function MultiChildKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        if (
-            notificationNumber == '' ||
-            housingType == '' ||
-            multiChildKookminType == ''
-        ) {
-            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
-        } else {
-            dispatch(
-                postMultiChildKookminAptNum({
-                    notificationNumber: notificationNumber,
-                    housingType: housingType,
-                    multiChildKookminType: multiChildKookminType,
-                })
-            ); // api 연결 요청.
+        dispatch(
+            postMultiChildKookminAptNum({
+                notificationNumber: notificationNumber,
+                housingType: housingType,
+                multiChildKookminType: multiChildKookminType,
+            })
+        ); // api 연결 요청.
 
-            const data =
-                multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data;
-            console.log(JSON.stringify(data));
-            history.push({
-                pathname: '/specialMultiChildKookmin',
-                state: {
-                    notificationNumber,
-                    housingType,
-                    multiChildKookminType,
-                },
-            });
-        }
+        const data =
+            multiChildKookminAptNumStore?.postMultiChildKookminAptNum?.data;
+        console.log(JSON.stringify(data));
+        history.push({
+            pathname: '/specialMultiChildKookmin',
+            state: {
+                notificationNumber,
+                housingType,
+                multiChildKookminType,
+            },
+        });
     };
 
     useEffect(() => {
@@ -80,6 +73,10 @@ function MultiChildKookminAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">다자녀 국민주택</span>
+            </div>
             <div className="AptNumForm">
                 <div className="aptNumContainer">
                     <form onSubmit={handleSubmit} className="aptNumform">
@@ -89,6 +86,7 @@ function MultiChildKookminAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <input
@@ -97,6 +95,7 @@ function MultiChildKookminAptNum(props) {
                             value={housingType}
                             onChange={handleChangeHousingType}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <select

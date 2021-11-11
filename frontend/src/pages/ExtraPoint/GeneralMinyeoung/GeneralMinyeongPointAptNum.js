@@ -14,14 +14,25 @@ function GeneralMinyeongPoint(props) {
         (state) => state.generalMinyeongPoint
     );
 
-    const [houseMemberId, setHouseMemberId, handleChangeNotificationNumber] =
+    const [houseMemberId, setHouseMemberId, handleChangeHouseMemberId] =
         useInputState('');
 
+    const [parentsDeathYn, setParentsDeathYn, handleChangeParentsDeathYn] =
+        useInputState('');
+
+    const [divorceYn, setDivorceYn, handleChangeDivorceYn] = useInputState('');
+
     const [
-        multiChildHouseholdType,
-        setMultiChildHouseholdType,
-        handleChangeMultiChildHouseholdType,
+        sameResidentRegistrationYn,
+        setSameResidentRegistrationYn,
+        handleChangeSameResidentRegistrationYn,
     ] = useInputState('');
+
+    const [stayOverYn, setStayOverYn, handleChangeStayOverYn] =
+        useInputState('');
+
+    const [nowStayOverYn, setNowStayOverYn, handleChangeNowStayOverYn] =
+        useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -41,7 +52,13 @@ function GeneralMinyeongPoint(props) {
     };
 
     const onClick = async () => {
-        if (notificationNumber == '') {
+        if (
+            parentsDeathYn == '' &&
+            divorceYn == '' &&
+            sameResidentRegistrationYn == '' &&
+            stayOverYn == '' &&
+            nowStayOverYn == ''
+        ) {
             alert('아파트 분양정보 입력칸이 비어있습니다.');
         } else {
             dispatch(
@@ -73,7 +90,7 @@ function GeneralMinyeongPoint(props) {
     };
 
     useEffect(() => {
-        // 아파트 공고번호, 주택형 post 성공시 다자녀 민영 자격확인 페이지로 이동.
+        // 아파트 공고번호, 주택형 post 성공시 일반공급 민영 가배점 페이지로 이동.
         if (generalMinyeongPointStore?.postGeneralMinyeongPoint) {
             const data =
                 generalMinyeongPointStore.postGeneralMinyeongPoint.data;
@@ -85,23 +102,127 @@ function GeneralMinyeongPoint(props) {
             <div className="AptNumForm">
                 <div className="container">
                     <form onSubmit={handleSubmit} className="aptNumform">
+                        <span className="qulificaitonBox">부모 사망 여부</span>
                         <input
-                            type="number"
-                            placeholder="아파트 공고번호"
-                            value={notificationNumber}
-                            onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeParentsDeathYn}
+                            value="y"
+                            checked={parentsDeathYn === 'y' ? true : false}
                         />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeParentsDeathYn}
+                            value="n"
+                            checked={parentsDeathYn === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
+
                         <br />
-                        <select
-                            className="aptNumInput"
-                            name="GeneralMinyeongPointPointType"
-                            value={multiChildHouseholdType}
-                            onChange={handleChangeMultiChildHouseholdType}
-                        >
-                            <option value="3세대이상">3세대 이상</option>
-                            <option value="한부모가족">한부모가족</option>
-                        </select>
+
+                        <span className="qulificaitonBox">이혼 여부</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeDivorceYn}
+                            value="y"
+                            checked={divorceYn === 'y' ? true : false}
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeDivorceYn}
+                            value="n"
+                            checked={divorceYn === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
+
+                        <br />
+
+                        <span className="qulificaitonBox">
+                            동일 주소지 거주 여부
+                        </span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeSameResidentRegistrationYn}
+                            value="y"
+                            checked={
+                                sameResidentRegistrationYn === 'y'
+                                    ? true
+                                    : false
+                            }
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeSameResidentRegistrationYn}
+                            value="n"
+                            checked={
+                                sameResidentRegistrationYn === 'n'
+                                    ? true
+                                    : false
+                            }
+                        />
+                        <span className="InputText">해당하지 않음</span>
+
+                        <br />
+
+                        <span className="qulificaitonBox">
+                            해외 혹은 요양시설 체류 여부
+                        </span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeStayOverYn}
+                            value="y"
+                            checked={stayOverYn === 'y' ? true : false}
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeStayOverYn}
+                            value="n"
+                            checked={stayOverYn === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
+
+                        <br />
+
+                        <span className="qulificaitonBox">
+                            현재 해외 체류 여부
+                        </span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeNowStayOverYn}
+                            value="y"
+                            checked={nowStayOverYn === 'y' ? true : false}
+                        />
+                        <span className="InputText">해당함</span>
+                        <input
+                            className="isSupportInput"
+                            type="radio"
+                            name="supportYn"
+                            onChange={handleChangeNowStayOverYn}
+                            value="n"
+                            checked={nowStayOverYn === 'n' ? true : false}
+                        />
+                        <span className="InputText">해당하지 않음</span>
 
                         <span className="aptNumButton">
                             <MainButton

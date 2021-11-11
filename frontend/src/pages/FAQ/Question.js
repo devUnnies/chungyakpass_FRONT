@@ -8,14 +8,12 @@ const Question = ({ name, info }) => {
     return (
         <article className="question">
             <div className="faq_Q">
-                <a
-                    href="
-                    #faq_A"
+                <div
                     onClick={() => setExpanded(!expanded)}
                     className="question_name"
                 >
                     Q. {name}
-                </a>
+                </div>
                 <button className="btn" onClick={() => setExpanded(!expanded)}>
                     {expanded ? <AiOutlineMinus /> : <AiOutlinePlus />}
                 </button>

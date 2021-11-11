@@ -1,8 +1,13 @@
 import axios from 'axios';
-import { post } from './instance';
+import { post, get } from './instance';
+
+export const getGeneralMinyeongPoint = (info) =>
+    get('point/genereal/minyeoung', {
+        houseMemberId: info.houseMemberId,
+    });
 
 // 일반 민영 가점 api
-export const postGeneralMinyeongAptNum = (info) =>
+export const postGeneralMinyeongPoint = (info) =>
     post('point/genereal/minyeoung', {
         houseMemberId: info.houseMemberId,
         parentsDeathYn: info.parentsDeathYn,

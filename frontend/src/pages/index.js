@@ -8,14 +8,17 @@ export { default as AllowLogin } from './AllowLogin/AllowLogin';
 export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
 export { default as Sitemap } from './Sitemap/Sitemap';
-// 공통입력정보
-export { default as PassbookInfo } from './PassbookInput/PassbookInfo';
-export { default as HousingInfo } from './HousingInput/HousingInfo';
-export { default as MemberInfo } from './MemberInput/MemberInfo';
-export { default as MemberHousingInfo } from './MemberHousingInput/MemberHousingInfo';
-export { default as AddHouseHolder } from './AddHouseHolder/AddHouseHolder';
-export { default as Board } from './AddMember/Board';
-export { default as Post } from './AddMember/Post';
+// 바뀐 공통입력정보
+export { default as AddBankbook } from './Bankbook/AddBankbook';
+export { default as SelectHouse } from './House/SelectHouse';
+export { default as AddHouse } from './House/AddHouse';
+export { default as AddMember } from './Member/AddMember';
+export { default as ModMember } from './Member/ModMember';
+export { default as SeeMember } from './Member/SeeMember';
+export { default as SeeHistories } from './Histories/SeeHistories';
+export { default as AddHistory } from './Histories/AddHistory';
+export { default as SeeAssets } from './Assets/SeeAssets';
+// 끝 ---
 export { default as AtAGlance } from './AtAGlance/AtAGlance';
 export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
@@ -36,13 +39,26 @@ export { default as OldParentMinyeongApi } from './SpecialSupply/OldParentAPI/Ol
 export { default as OldParentMinyeongAptNum } from './SpecialSupply/OldParentAPI/OldParentMinyeongAptNum';
 export { default as OldParentKookminApi } from './SpecialSupply/OldParentAPI/OldParentKookminApi';
 export { default as OldParentKookminAptNum } from './SpecialSupply/OldParentAPI/OldParentKookminAptNum';
+export { default as FirstLifeTypeSelect } from './SpecialSupply/FirstLifeAPI/FirstLifeTypeSelect';
+export { default as FirstLifeMinyeongAptNum } from './SpecialSupply/FirstLifeAPI/FirstLifeMinyeongAptNum';
+export { default as FirstLifeMinyeongApi } from './SpecialSupply/FirstLifeAPI/FirstLifeMinyeongApi';
+export { default as FirstLifeKookminAptNum } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminAptNum';
+export { default as FirstLifeKookminApi } from './SpecialSupply/FirstLifeAPI/FirstLifeKookminApi';
+export { default as NewlyMarriedTypeSelect } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedTypeSelect';
+export { default as NewlyMarriedMinyeongAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedMinyeongAptNum';
+export { default as NewlyMarriedMinyeongApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedMinyeongApi';
+export { default as NewlyMarriedKookminAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminAptNum';
+export { default as NewlyMarriedKookminApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminApi';
+export { default as NewlyMarriedKookminSpecialAptNum } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialAptNum';
+export { default as NewlyMarriedKookminSpecialApi } from './SpecialSupply/NewlyMarriedAPI/NewlyMarriedKookminSpecialApi';
 // 순위 확인 페이지
-export { default as FirstRank } from './Rank/FirstRank';
-export { default as SecondRank } from './Rank/SecondRank';
+export { default as Rank } from './Rank/Rank';
 // 가배점 페이지
 export { default as MultiChildPointAptNum } from './ExtraPoint/MultiChild/MultiChildPointAptNum';
 export { default as MultiChildPoint } from './ExtraPoint/MultiChild/MultiChildPoint';
-export { default as NewMarriagePoint } from './ExtraPoint/NewMarriage/NewMarriagePoint';
+export { default as NewlyMarriagePointAptNum } from './ExtraPoint/NewMarriage/NewlyMarriagePointAptNum';
+export { default as NewlyMarriagePoint } from './ExtraPoint/NewMarriage/NewlyMarriagePoint';
 export { default as OldParentPoint } from './ExtraPoint/OldParent/OldParentPoint';
 export { default as GeneralMinyeoungPoint } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
+export { default as OneParentPointAptNum } from './ExtraPoint/OneParent/OneParentPointAptNum';
 export { default as OneParentPoint } from './ExtraPoint/OneParent/OneParentPoint';

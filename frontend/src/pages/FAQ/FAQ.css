@@ -35,7 +35,7 @@
 
 /* faq 박스 위치 배치*/
 .faq_container .info {
-    margin-top: 17%;
+    margin-top: 20%;
 }
 
 /* faq_title */
@@ -63,7 +63,7 @@
 
 .faq_container {
     border-radius: var(--radius);
-    height: 900px; /* faq 자리 확보 */
+    height: 1300px; /* faq 자리 확보 */
 }
 
 /* faq 박스 디자인 */

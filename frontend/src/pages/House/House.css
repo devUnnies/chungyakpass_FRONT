@@ -1,0 +1,132 @@
+.selectHouseContainer {
+    margin-top: -3%;
+    margin-bottom: 4.5%;
+}
+
+.selectHouseHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.selectHouseHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.selectHouseHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.selectHouseFormTable {
+    width: 500px;
+    margin-top: 3%;
+    margin-left: 36%;
+}
+
+.selectHouseFormTableTrTd {
+    padding-bottom: 10px;
+}
+
+.selectHouseForm .saveButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10%;
+    margin-right: 15%;
+    margin-bottom: 5%;
+}
+
+/* add house !! */
+.addHouseView {
+    margin-top: -3%;
+    margin-bottom: 4.5%;
+}
+
+.addHouseHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addAddressTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+.findAddressButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 38%;
+    width: 475px;
+}
+
+.popupDomContainer {
+    margin-top: 10px;
+}
+
+.addHouseContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    margin-top: 2%;
+    margin-left: 28%;
+}
+
+.addressFormContainer {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.addressFormTable {
+    width: 600px;
+}
+
+.addressFormLabel {
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.addressFormInputPostcode {
+    width: 80px;
+    justify-content: left;
+    align-items: center;
+}
+
+.addressFormInputAddress {
+    width: 400px;
+    justify-content: left;
+    align-items: center;
+}
+
+.popupPostCodeView {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.submitButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}

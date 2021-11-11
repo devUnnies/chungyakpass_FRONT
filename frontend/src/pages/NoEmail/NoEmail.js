@@ -1,12 +1,17 @@
 import { React } from 'react';
 import './NoEmail.css';
+import TopButton from '../../components/TopButton/TopButton';
 
 function NoEmail() {
     return (
         <>
-            <div className="noEmail_Title">
-                <h2 className="e_title">이메일 무단수집 거부</h2>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">이메일 무단수집거부</span>
             </div>
+            {/* <div className="noEmail_Title">
+                <h2 className="e_title">이메일 무단수집 거부</h2>
+            </div> */}
 
             <div className="e_container">
                 <div className="e_containerBox">
@@ -63,6 +68,7 @@ function NoEmail() {
                     창을 통하여 신고하기 바랍니다.
                 </div>
             </div>
+            <TopButton />
         </>
     );
 }

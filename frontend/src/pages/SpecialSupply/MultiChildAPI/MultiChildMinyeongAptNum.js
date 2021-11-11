@@ -35,27 +35,23 @@ function MultiChildMinyeongAptNum(props) {
     };
 
     const onClick = async () => {
-        if (notificationNumber == '' || housingType == '') {
-            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
-        } else {
-            dispatch(
-                postMultiChildMinyeongAptNum({
-                    notificationNumber: notificationNumber,
-                    housingType: housingType,
-                })
-            ); // api 연결 요청.
+        dispatch(
+            postMultiChildMinyeongAptNum({
+                notificationNumber: notificationNumber,
+                housingType: housingType,
+            })
+        ); // api 연결 요청.
 
-            const data =
-                multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
-            console.log(JSON.stringify(data));
-            history.push({
-                pathname: '/specialMultiChildMinyeong',
-                props: {
-                    notificationNumber,
-                    housingType,
-                },
-            });
-        }
+        const data =
+            multiChildMinyeongAptNumStore.postMultiChildMinyeongAptNum.data;
+        console.log(JSON.stringify(data));
+        history.push({
+            pathname: '/specialMultiChildMinyeong',
+            props: {
+                notificationNumber,
+                housingType,
+            },
+        });
     };
 
     useEffect(() => {
@@ -68,6 +64,10 @@ function MultiChildMinyeongAptNum(props) {
 
     return (
         <>
+            <div className="historiesInfoHeaderContainer">
+                <div className="heightBar"></div>
+                <span className="listTitle">다자녀 민영주택</span>
+            </div>
             <div className="AptNumForm">
                 <div className="container">
                     <form onSubmit={handleSubmit} className="aptNumform">
@@ -77,6 +77,7 @@ function MultiChildMinyeongAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <input
@@ -85,6 +86,7 @@ function MultiChildMinyeongAptNum(props) {
                             value={housingType}
                             onChange={handleChangeHousingType}
                             className="aptNumInput"
+                            required
                         />
                         <br />
 

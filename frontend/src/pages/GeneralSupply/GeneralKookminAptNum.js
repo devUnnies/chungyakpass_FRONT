@@ -39,27 +39,22 @@ function GeneralKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        if (notificationNumber == '' || housingType == '') {
-            alert('아파트 분양정보 혹은 주택형 입력칸이 비어있습니다.');
-        } else {
-            dispatch(
-                postGeneralKookminAptNum({
-                    notificationNumber: notificationNumber,
-                    housingType: housingType,
-                })
-            ); // api 연결 요청.
+        dispatch(
+            postGeneralKookminAptNum({
+                notificationNumber: notificationNumber,
+                housingType: housingType,
+            })
+        ); // api 연결 요청.
 
-            const data =
-                generalKookminAptNumStore.postGeneralKookminAptNum.data;
-            console.log(JSON.stringify(data));
-            history.push({
-                pathname: '/generalKookmin',
-                props: {
-                    notificationNumber,
-                    housingType,
-                },
-            });
-        }
+        const data = generalKookminAptNumStore.postGeneralKookminAptNum.data;
+        // console.log(JSON.stringify(data));
+        history.push({
+            pathname: '/generalKookmin',
+            props: {
+                notificationNumber,
+                housingType,
+            },
+        });
     };
 
     useEffect(() => {
@@ -81,6 +76,7 @@ function GeneralKookminAptNum(props) {
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
                             className="aptNumInput"
+                            required
                         />
                         <br />
                         <input
@@ -89,6 +85,7 @@ function GeneralKookminAptNum(props) {
                             value={housingType}
                             onChange={handleChangeHousingType}
                             className="aptNumInput"
+                            required
                         />
                         <br />
 
