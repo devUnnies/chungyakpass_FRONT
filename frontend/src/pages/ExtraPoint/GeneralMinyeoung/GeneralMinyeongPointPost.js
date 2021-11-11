@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
-import { CalculatorFilled } from '@ant-design/icons';
+import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import useInputState from '../../../components/Input/useInputState';
 import { postGeneralMinyeongPoint } from '../../../store/actions/pointGeneralMinyeongAction';
 import { useHistory } from 'react-router-dom';
@@ -102,7 +102,7 @@ function GeneralMinyeongPointPost(props) {
             <div className="historiesInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
-                        <CalculatorFilled />
+                        <CalculatorOutlined />
                     </span>
                     <strong className="apt_mainTitle">일반공급 </strong>
                     <span className="apt_subTitle"> | 민영주택</span>

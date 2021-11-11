@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { CalculatorFilled } from '@ant-design/icons';
+import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import { postSpecialOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
 import { useHistory } from 'react-router-dom';
 import './OldParentPoint.css';
@@ -98,7 +98,7 @@ function OldParentPointPost(props) {
             <div className="historiesInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
-                        <CalculatorFilled />
+                        <CalculatorOutlined />
                     </span>
                     <strong className="apt_mainTitle">특별공급 </strong>
                     <span className="apt_subTitle"> | 노부모부양 </span>

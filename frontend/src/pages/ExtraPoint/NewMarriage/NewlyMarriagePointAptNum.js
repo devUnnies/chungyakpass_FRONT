@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { CalculatorFilled } from '@ant-design/icons';
+import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import { postNewlyMarriagePointAptNum } from '../../../store/actions/pointSpecialNewlyMarriageAction';
 import { useHistory } from 'react-router-dom';
 import './NewlyMarriagePoint.css';
@@ -63,16 +63,23 @@ function NewlyMarriagePointAptNum(props) {
             <div className="historiesInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
-                        <CalculatorFilled />
+                        <CalculatorOutlined />
                     </span>
                     <strong className="apt_mainTitle">특별공급 </strong>
-                    <span className="apt_subTitle"> | 신혼부부 </span>
+                    <span className="apt_subTitle"> | 신혼부부 유형</span>
                 </span>
             </div>
 
             <div className="specialAptNumForm">
                 <div className="specialAptNumContainer">
                     <form onSubmit={handleSubmit} className="specialAptNumForm">
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             type="number"
                             placeholder="아파트 공고번호"

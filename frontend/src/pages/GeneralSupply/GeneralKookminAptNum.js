@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../components/Input/Input';
 import useInputState from '../../components/Input/useInputState';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import {
     postGeneralKookminAptNum,
     RES_GENERAL_KOOKMIN_APTNUM_POST_ERROR,
@@ -80,6 +80,13 @@ function GeneralKookminAptNum(props) {
             <div className="generalAptNumForm">
                 <div className="generalAptNumContainer">
                     <form onSubmit={handleSubmit} className="generalAptNumform">
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             type="number"
                             placeholder="아파트 공고번호"

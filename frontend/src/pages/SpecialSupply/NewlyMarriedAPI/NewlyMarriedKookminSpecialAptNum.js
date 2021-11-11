@@ -99,6 +99,13 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                             </span>
                             공공주택 특별법 적용
                         </div>
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             type="number"
                             placeholder="아파트 공고번호"

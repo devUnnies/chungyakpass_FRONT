@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../components/Input/Input';
 import useInputState from '../../components/Input/useInputState';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
 import { useHistory } from 'react-router-dom';
 import './GeneralSupply.css';
@@ -52,16 +52,6 @@ function GeneralMinyeongAptNum(props) {
                 housingType,
             },
         });
-
-        // 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-        // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
-        if (
-            generalMinyeongAptNumStore?.postGeneralMinyeongAptNum?.data
-                ?.error === 'BAD_REQUEST'
-        ) {
-            alert(data?.code + '\n' + data?.message);
-            history.push('/');
-        }
     };
 
     useEffect(() => {
@@ -87,6 +77,13 @@ function GeneralMinyeongAptNum(props) {
             <div className="generalAptNumForm">
                 <div className="generalAptNumContainer">
                     <form onSubmit={handleSubmit} className="generalAptNumform">
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             type="number"
                             placeholder="아파트 공고번호"

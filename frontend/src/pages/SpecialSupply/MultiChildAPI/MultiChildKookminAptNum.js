@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
 import { useHistory } from 'react-router-dom';
 import '../SpecialSupply.css';
@@ -86,6 +86,13 @@ function MultiChildKookminAptNum(props) {
             <div className="specialAptNumForm">
                 <div className="specialAptNumContainer">
                     <form onSubmit={handleSubmit} className="specialAptNumform">
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             className="specialAptNumInput"
                             type="number"

@@ -55,7 +55,9 @@ function Rank({ history }) {
                     <Loading />
                     <p className="loading_msg1">Please wait ...</p>
                     <p className="loading_msg2">
-                        순위 확인 로딩 중입니다. 잠시만 기다려주세요.
+                        순위 확인 로딩 중입니다.
+                        <br />
+                        잠시만 기다려주세요.
                     </p>
                 </>
             ) : (

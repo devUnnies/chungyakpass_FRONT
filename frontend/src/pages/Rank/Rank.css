@@ -1,13 +1,18 @@
 /* rank css 적용 */
 .loading_msg1 {
     margin-top: -10%;
+    margin-left: 5%;
+
     text-align: center;
     font-size: 18pt;
     font-family: 'Gothic A1', sans-serif;
 }
 .loading_msg2 {
+    margin-bottom: 5%;
+    margin-left: 5%;
+
     text-align: center;
-    font-size: 15pt;
+    font-size: 12pt;
     font-family: 'Gothic A1', sans-serif;
 }
 .RankMain {

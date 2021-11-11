@@ -94,13 +94,14 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             {loading ? ( // 로딩 상태 2s
                 <>
                     <Loading />
-                    <p className="loading_msg">Please wait ...</p>
-                    <p className="loading_msg">
-                        회원님의 정보를 불러와{' '}
+                    <p className="loading_msg1">Please wait ...</p>
+                    <p className="loading_msg2">
+                        회원님의{' '}
                         <strong className="text_highlight">
                             특별공급 다자녀 국민주택 유형
                         </strong>{' '}
-                        자격을 확인하는 중입니다. 잠시만 기다려주세요.
+                        자격 확인 중입니다. <br />
+                        잠시만 기다려주세요.
                     </p>
                 </>
             ) : (
@@ -114,7 +115,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 '\n' +
                                 '사유: ' +
                                 data?.message
-                        ) + history.push('/')
+                        ) + history.goBack(-1)
                     ) : (
                         <>
                             <div className="special_title">
