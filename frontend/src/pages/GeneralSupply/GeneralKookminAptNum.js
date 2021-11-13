@@ -62,6 +62,13 @@ function GeneralKookminAptNum(props) {
         }
     };
 
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
+        }
+    };
+
     useEffect(() => {
         // 아파트 공고번호, 주택형 post 성공시 일반 민영 자격확인 페이지로 이동.
         if (generalKookminAptNumStore.postGeneralKookminAptNum) {
@@ -84,7 +91,11 @@ function GeneralKookminAptNum(props) {
 
             <div className="generalAptNumForm">
                 <div className="generalAptNumContainer">
-                    <form onSubmit={handleSubmit} className="generalAptNumform">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="generalAptNumform"
+                    >
                         <div className="apt_subPlusTitle">
                             <span className="checkRedIcon">
                                 <CheckOutlined />
