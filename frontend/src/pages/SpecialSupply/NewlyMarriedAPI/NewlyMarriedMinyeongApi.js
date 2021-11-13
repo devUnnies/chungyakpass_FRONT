@@ -105,15 +105,28 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-                        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
+                    공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
                     {data?.error === 'BAD_REQUEST' ||
                     data?.error === 'NOT_FOUND' ? (
-                        alert(
-                            '자격 확인을 진행할 수 없습니다' +
-                                '\n' +
-                                '사유: ' +
-                                data?.message
-                        ) + history.goBack(-1)
+                        <>
+                            {/* 아파트 공고번호 입력 오류일 경우 해당 공급 종류의 aptNum페이지로 이동. */}
+                            {data?.code === 'NOT_FOUND_APT'
+                                ? alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) +
+                                  history.push(
+                                      'specialNewlyMarriedMinyeongAptNum'
+                                  )
+                                : alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) + history.goBack(-1)}
+                        </>
                     ) : (
                         <>
                             <div className="special_title">
@@ -129,7 +142,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                 className="specialSupply_form"
                                 onSubmit={handleSubmit}
                             >
-                                <table className="specialMultiChildKookmin_table">
+                                <table className="special_table">
                                     <p
                                         className="foreignWarning"
                                         style={{ color: 'red' }}
@@ -143,8 +156,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                         <>
                                             {/* 규제지역 판단. (규제지역 로직 결과값)*/}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
@@ -204,8 +217,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                         <>
                                             {/* 청약통장 조건 충족 여부 */}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
@@ -259,8 +272,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                         <>
                                             {/* 인근 지역 거주 여부 판단 */}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
@@ -315,8 +328,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                 <>
                                                     {/* 만 나이 로직 결과 출력*/}
                                                     <tr className="special_phase">
-                                                        <td className="qulificaiton">
-                                                            <span className="qulificaitonBox">
+                                                        <td className="qualification">
+                                                            <span className="qualificationBox">
                                                                 나이
                                                             </span>
                                                         </td>
@@ -351,8 +364,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         <>
                                                             {/* 세대주 여부 판단 */}
                                                             <tr className="special_phase">
-                                                                <td className="qulificaiton">
-                                                                    <span className="qulificaitonBox">
+                                                                <td className="qualification">
+                                                                    <span className="qualificationBox">
                                                                         세대주
                                                                         여부
                                                                     </span>
@@ -406,8 +419,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                 <>
                                                                     {/* 미성년자인 경우 형제, 자매 부양 판별 */}
                                                                     <tr className="special_phase">
-                                                                        <td className="qulificaiton">
-                                                                            <span className="qulificaitonBox">
+                                                                        <td className="qualification">
+                                                                            <span className="qualificationBox">
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -517,8 +530,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                     'y') ? (
                                                                 <>
                                                                     <tr className="special_phase">
-                                                                        <td className="qulificaiton">
-                                                                            <span className="qulificaitonBox">
+                                                                        <td className="qualification">
+                                                                            <span className="qualificationBox">
                                                                                 혼인
                                                                                 기간
                                                                                 7년
@@ -560,8 +573,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                     true ? (
                                                                         <>
                                                                             <tr className="special_phase">
-                                                                                <td className="qulificaiton">
-                                                                                    <span className="qulificaitonBox">
+                                                                                <td className="qualification">
+                                                                                    <span className="qualificationBox">
                                                                                         전세대구성원의
                                                                                         무주택
                                                                                         여부
@@ -681,8 +694,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                             true ? (
                                                                                 <>
                                                                                     <tr className="special_phase">
-                                                                                        <td className="qulificaiton">
-                                                                                            <span className="qulificaitonBox">
+                                                                                        <td className="qualification">
+                                                                                            <span className="qualificationBox">
                                                                                                 월평균
                                                                                                 소득
                                                                                                 기준
@@ -765,8 +778,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                     true ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
-                                                                                                <td className="qulificaiton">
-                                                                                                    <span className="qulificaitonBox">
+                                                                                                <td className="qualification">
+                                                                                                    <span className="qualificationBox">
                                                                                                         전세대원의
                                                                                                         재당첨
                                                                                                         제한
@@ -846,8 +859,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                 false)) ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
-                                                                                                <td className="qulificaiton">
-                                                                                                    <span className="qulificaitonBox">
+                                                                                                <td className="qualification">
+                                                                                                    <span className="qualificationBox">
                                                                                                         청약통장
                                                                                                         가입기간
                                                                                                         충족
@@ -935,8 +948,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                 <>
                                                                                                     {/* 예치 금액 충족 여부 */}
                                                                                                     <tr className="special_phase">
-                                                                                                        <td className="qulificaiton">
-                                                                                                            <span className="qulificaitonBox">
+                                                                                                        <td className="qualification">
+                                                                                                            <span className="qualificationBox">
                                                                                                                 예치
                                                                                                                 금액
                                                                                                                 충족
@@ -1063,8 +1076,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                     true ? (
                                                                                                         <>
                                                                                                             <tr className="special_phase">
-                                                                                                                <td className="qulificaiton">
-                                                                                                                    <span className="qulificaitonBox">
+                                                                                                                <td className="qualification">
+                                                                                                                    <span className="qualificationBox">
                                                                                                                         주택
                                                                                                                         처분일에
                                                                                                                         의한
@@ -1125,8 +1138,8 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                             false ? (
                                                                                                                 <>
                                                                                                                     <tr className="special_phase">
-                                                                                                                        <td className="qulificaiton">
-                                                                                                                            <span className="qulificaitonBox">
+                                                                                                                        <td className="qualification">
+                                                                                                                            <span className="qualificationBox">
                                                                                                                                 미성년
                                                                                                                                 자녀(태아
                                                                                                                                 포함)

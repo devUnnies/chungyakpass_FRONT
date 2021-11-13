@@ -103,15 +103,28 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-                        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
+                    공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
                     {data?.error === 'BAD_REQUEST' ||
                     data?.error === 'NOT_FOUND' ? (
-                        alert(
-                            '자격 확인을 진행할 수 없습니다' +
-                                '\n' +
-                                '사유: ' +
-                                data?.message
-                        ) + history.goBack(-1)
+                        <>
+                            {/* 아파트 공고번호 입력 오류일 경우 해당 공급 종류의 aptNum페이지로 이동. */}
+                            {data?.code === 'NOT_FOUND_APT'
+                                ? alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) +
+                                  history.push(
+                                      'specialMultiChildMinyeongAptNum'
+                                  )
+                                : alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) + history.goBack(-1)}
+                        </>
                     ) : (
                         <>
                             <div className="special_title">
@@ -127,13 +140,13 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 className="specialSupply_form"
                                 onSubmit={handleSubmit}
                             >
-                                <table className="specialMultiChildMinyeong_table">
+                                <table className="special_table">
                                     {data !== null ? (
                                         <>
                                             {/* 규제지역 판단. (규제지역 로직 결과값 넣기.)*/}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
@@ -193,8 +206,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         <>
                                             {/* 청약통장 조건 충족 여부 */}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
@@ -249,8 +262,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         <>
                                             {/* 인근지역 거주 여부 */}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
@@ -308,8 +321,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                             true ? (
                                                 <>
                                                     <tr className="special_phase">
-                                                        <td className="qulificaiton">
-                                                            <span className="qulificaitonBox">
+                                                        <td className="qualification">
+                                                            <span className="qualificationBox">
                                                                 전세대구성원의
                                                                 무주택 여부
                                                             </span>
@@ -444,8 +457,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                     true ? (
                                                         <>
                                                             <tr className="special_phase">
-                                                                <td className="qulificaiton">
-                                                                    <span className="qulificaitonBox">
+                                                                <td className="qualification">
+                                                                    <span className="qualificationBox">
                                                                         3명
                                                                         이상의
                                                                         미성년
@@ -509,8 +522,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                 <>
                                                                     {/* 만 나이 로직 결과 출력*/}
                                                                     <tr className="special_phase">
-                                                                        <td className="qulificaiton">
-                                                                            <span className="qulificaitonBox">
+                                                                        <td className="qualification">
+                                                                            <span className="qualificationBox">
                                                                                 나이
                                                                             </span>
                                                                         </td>
@@ -548,8 +561,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                         <>
                                                                             {/* 미성년자인 경우 세대주 판별 */}
                                                                             <tr className="special_phase">
-                                                                                <td className="qulificaiton">
-                                                                                    <span className="qulificaitonBox">
+                                                                                <td className="qualification">
+                                                                                    <span className="qualificationBox">
                                                                                         세대주
                                                                                         여부
                                                                                     </span>
@@ -604,8 +617,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                             true ? (
                                                                                 <>
                                                                                     <tr className="special_phase">
-                                                                                        <td className="qulificaiton">
-                                                                                            <span className="qulificaitonBox">
+                                                                                        <td className="qualification">
+                                                                                            <span className="qualificationBox">
                                                                                                 형제,
                                                                                                 자매
                                                                                                 부양
@@ -720,8 +733,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                             {/* 순위 판별 시작 */}
                                                                             {/* 주거전용 85㎡ 기준 충족*/}
                                                                             <tr className="special_phase">
-                                                                                <td className="qulificaiton">
-                                                                                    <span className="qulificaitonBox">
+                                                                                <td className="qualification">
+                                                                                    <span className="qualificationBox">
                                                                                         주거전용
                                                                                         85㎡
                                                                                         초과공공건설임대주택,
@@ -775,8 +788,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                     true ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
-                                                                                                <td className="qulificaiton">
-                                                                                                    <span className="qulificaitonBox">
+                                                                                                <td className="qualification">
+                                                                                                    <span className="qualificationBox">
                                                                                                         전세대원의
                                                                                                         재당첨
                                                                                                         제한
@@ -846,8 +859,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                     {/* 위 조건이 만족하면서 2주택 미만 여부를 만족해야함. */}
                                                                                                     {/* 2주택 이상 소유 시 2순위 */}
                                                                                                     <tr className="special_phase">
-                                                                                                        <td className="qulificaiton">
-                                                                                                            <span className="qulificaitonBox">
+                                                                                                        <td className="qualification">
+                                                                                                            <span className="qualificationBox">
                                                                                                                 2주택
                                                                                                                 미만
                                                                                                                 소유
@@ -933,8 +946,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                             false ? (
                                                                                             <>
                                                                                                 <tr className="special_phase">
-                                                                                                    <td className="qulificaiton">
-                                                                                                        <span className="qulificaitonBox">
+                                                                                                    <td className="qualification">
+                                                                                                        <span className="qualificationBox">
                                                                                                             청약통장
                                                                                                             가입기간
                                                                                                             충족
@@ -1022,8 +1035,8 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 true ? (
                                                                                                     <>
                                                                                                         <tr className="special_phase">
-                                                                                                            <td className="qulificaiton">
-                                                                                                                <span className="qulificaitonBox">
+                                                                                                            <td className="qualification">
+                                                                                                                <span className="qualificationBox">
                                                                                                                     예치
                                                                                                                     금액
                                                                                                                     충족

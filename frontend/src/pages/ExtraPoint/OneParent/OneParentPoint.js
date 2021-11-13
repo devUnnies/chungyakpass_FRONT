@@ -86,14 +86,24 @@ const OneParentPoint = ({ onSaveData }) => {
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
                     공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
-                    {data?.error === 'NOT_FOUND' ||
-                    data?.error === 'BAD_REQUEST' ? (
-                        alert(
-                            '가/배점을 확인할 수 없습니다.' +
-                                '\n' +
-                                '사유: ' +
-                                data?.message
-                        ) + history.goBack(-1)
+                    {data?.error === 'BAD_REQUEST' ||
+                    data?.error === 'NOT_FOUND' ? (
+                        <>
+                            {/* 아파트 공고번호 입력 오류일 경우 해당 공급 종류의 aptNum페이지로 이동. */}
+                            {data?.code === 'NOT_FOUND_APT'
+                                ? alert(
+                                      '가배점을 확인할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) + history.push('/point/oneParentAptNum')
+                                : alert(
+                                      '가배점을 확인할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) + history.goBack(-1)}
+                        </>
                     ) : (
                         <>
                             <div className="point_title">
@@ -113,8 +123,8 @@ const OneParentPoint = ({ onSaveData }) => {
                                 <table className="multiChildPoint_table">
                                     {/* 자녀 나이 가점 결과 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 자녀 나이 가점 결과
                                             </span>
                                             <span className="info_tooltip"></span>
@@ -153,8 +163,8 @@ const OneParentPoint = ({ onSaveData }) => {
 
                                     {/* 만 19세 미만 자녀수 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 만 19세 미만 자녀수 가점 결과
                                             </span>
                                             <span className="info_tooltip">
@@ -196,8 +206,8 @@ const OneParentPoint = ({ onSaveData }) => {
 
                                     {/* 청약통장 납입 횟수 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 청약통장 납입 횟수 가점 결과
                                             </span>
                                         </td>
@@ -237,8 +247,8 @@ const OneParentPoint = ({ onSaveData }) => {
 
                                     {/* 해당지역 연속 거주기간 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 해당지역 연속 거주기간 가점 결과
                                             </span>
                                             <span className="info_tooltip">
@@ -292,8 +302,8 @@ const OneParentPoint = ({ onSaveData }) => {
 
                                     {/* 소득 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 소득 가점 결과
                                             </span>
                                             <span className="info_tooltip">

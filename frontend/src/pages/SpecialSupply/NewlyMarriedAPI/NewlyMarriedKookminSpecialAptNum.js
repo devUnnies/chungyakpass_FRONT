@@ -144,7 +144,7 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                         />
                         <br />
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 <strong>예비 신혼부부 여부</strong>
                             </span>
                             <input

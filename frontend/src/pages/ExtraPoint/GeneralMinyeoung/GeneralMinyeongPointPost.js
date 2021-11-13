@@ -113,7 +113,7 @@ function GeneralMinyeongPointPost(props) {
                 <div className="generalAptNumContainer">
                     <form onSubmit={handleSubmit} className="generalAptNumForm">
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 부모 사망 여부
                             </span>
                             <input
@@ -140,7 +140,7 @@ function GeneralMinyeongPointPost(props) {
 
                         <br />
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 이혼 여부
                             </span>
                             <input
@@ -167,7 +167,7 @@ function GeneralMinyeongPointPost(props) {
 
                         <br />
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 동일 주소지 거주 여부
                             </span>
                             <input
@@ -207,7 +207,7 @@ function GeneralMinyeongPointPost(props) {
                         <br />
 
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 해외 혹은 요양시설 체류 여부
                             </span>
                             <input
@@ -235,7 +235,7 @@ function GeneralMinyeongPointPost(props) {
                         <br />
 
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 현재 해외 체류 여부
                             </span>
                             <input

@@ -166,7 +166,7 @@ function FirstLifeKookminAptNum(props) {
                         </select>
 
                         <div className="paramSelect">
-                            <span className="qulificaitonBoxTitle">
+                            <span className="qualificationBoxTitle">
                                 <strong>일반공급 1순위 당첨 이력</strong>
                             </span>
                             <input

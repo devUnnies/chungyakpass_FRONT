@@ -216,31 +216,24 @@
     font-size: 15pt;
     font-family: 'Gothic A1', sans-serif;
 }
+
+/* 특별공급 리스트 테이블 */
+.special_table {
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+}
 .special_phase {
     position: relative;
     margin-top: 10%;
 }
-/* 특별공급 다자녀 민영, 특별공급 노부모 국민, 민영*/
-.specialMultiChildMinyeong_table,
-.specialOldParentMinyeong_table,
-.specialOldParentKookmin_table {
-    margin-top: 5%;
-    margin-left: 20%;
-
-    width: 60%;
-}
-/* 특별공급 다자녀 국민 */
-.specialMultiChildKookmin_table {
-    margin-top: 5%;
-    margin-left: 20%;
-
-    width: 55%;
-}
 
 /* 조건간 간격 조정 */
-.qulificaiton,
+.qualification,
+span.qualificationBox,
 .special_result {
     padding-bottom: 5%;
+    font-size: 14pt;
 }
 .special_result_input {
     padding-bottom: 5%;
@@ -332,6 +325,6 @@
     color: white;
 }
 
-.qulificaitonBox {
+.qualificationBox {
     width: 200px;
 }

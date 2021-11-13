@@ -126,12 +126,12 @@
 }
 
 /* 조건간 간격 조정 */
-.qulificaiton,
+.qualification,
 .point_result {
     padding-bottom: 5%;
     margin-right: 10px;
 }
-.qulificaitonBox {
+.qualificationBox {
     font-size: 12pt;
 }
 

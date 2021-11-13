@@ -110,8 +110,8 @@ const GeneralMinyeoungPoint = ({ onSaveData }) => {
                                 <table className="generalMinyeongPoint_table">
                                     {/* 무주택 기간 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 무주택 기간 가점 결과
                                             </span>
                                             <span className="info_tooltip">
@@ -159,8 +159,8 @@ const GeneralMinyeoungPoint = ({ onSaveData }) => {
 
                                     {/* 청약통장 가입기간 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 청약통장 가입기간 가점 결과
                                             </span>
                                         </td>
@@ -200,8 +200,8 @@ const GeneralMinyeoungPoint = ({ onSaveData }) => {
 
                                     {/* 부양 가족 */}
                                     <tr className="point_phase">
-                                        <td className="qulificaiton">
-                                            <span className="qulificaitonBox">
+                                        <td className="qualification">
+                                            <span className="qualificationBox">
                                                 부양 가족 가점 결과
                                             </span>
                                             <span className="info_tooltip">
