@@ -179,9 +179,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                         '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    값 입력 필요
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -238,12 +235,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    청약 통장
-                                                                    조건 미충족
-                                                                    시 부적격
-                                                                    발생.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -304,13 +295,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    인근지역
-                                                                    혹은
-                                                                    해당지역
-                                                                    거주 미충족
-                                                                    시 탈락
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -449,17 +433,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            전
-                                                                            세대
-                                                                            구성원이
-                                                                            무주택이
-                                                                            아닐
-                                                                            시
-                                                                            청약
-                                                                            자격
-                                                                            미달.
-                                                                        </span>
                                                                     </span>
                                                                 ) : null}
                                                             </span>
@@ -479,6 +452,27 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                         자녀 수
                                                                         충족
                                                                         여부
+                                                                    </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                *
+                                                                                다자녀
+                                                                                특별공급
+                                                                                대상자
+                                                                            </p>
+                                                                            입주자모집공고일
+                                                                            현재
+                                                                            미성년인
+                                                                            자녀
+                                                                            3명
+                                                                            이상을
+                                                                            둔
+                                                                            자(태아,
+                                                                            입양자녀
+                                                                            포함)
+                                                                        </span>
                                                                     </span>
                                                                 </td>
                                                                 <td className="special_result">
@@ -504,19 +498,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                         3 ? (
                                                                             <span className="pause_tooltip">
                                                                                 <CloseCircleOutlined />
-                                                                                <span class="pause-tooltip-text">
-                                                                                    3명
-                                                                                    이상의
-                                                                                    미성년
-                                                                                    자녀
-                                                                                    수를
-                                                                                    충족하는
-                                                                                    경우에만
-                                                                                    해당
-                                                                                    청약
-                                                                                    진행
-                                                                                    가능.
-                                                                                </span>
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -555,11 +536,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                 '' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            나이
-                                                                                            입력
-                                                                                            필요.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -576,6 +552,20 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                     <span className="qulificaitonBox">
                                                                                         세대주
                                                                                         여부
+                                                                                    </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                미성년자의
+                                                                                                경우
+                                                                                            </p>
+                                                                                            반드시
+                                                                                            세대주인
+                                                                                            경우에만
+                                                                                            청약
+                                                                                            가능.
+                                                                                        </span>
                                                                                     </span>
                                                                                 </td>
                                                                                 <td className="special_result">
@@ -602,18 +592,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    만
-                                                                                                    19세
-                                                                                                    미만
-                                                                                                    미성년자는
-                                                                                                    세대주일
-                                                                                                    경우에만
-                                                                                                    해당
-                                                                                                    청약
-                                                                                                    진행
-                                                                                                    가능.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -632,6 +610,42 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 자매
                                                                                                 부양
                                                                                                 여부
+                                                                                            </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined />
+                                                                                                <span class="tooltip-text">
+                                                                                                    <p>
+                                                                                                        미성년자의
+                                                                                                        경우
+                                                                                                    </p>
+                                                                                                    자녀
+                                                                                                    양육
+                                                                                                    혹은
+                                                                                                    형제,
+                                                                                                    자매를
+                                                                                                    부양(직계존속의
+                                                                                                    사망,
+                                                                                                    실종선고
+                                                                                                    및
+                                                                                                    행방불명
+                                                                                                    등으로
+                                                                                                    인한)해야
+                                                                                                    함.{' '}
+                                                                                                    <br />
+                                                                                                    (단,
+                                                                                                    자녀
+                                                                                                    및
+                                                                                                    형제,
+                                                                                                    자매는
+                                                                                                    세대주인
+                                                                                                    미성년자와
+                                                                                                    같은
+                                                                                                    세대별
+                                                                                                    주민등록표등본에
+                                                                                                    등재되어
+                                                                                                    있어야
+                                                                                                    함.)
+                                                                                                </span>
                                                                                             </span>
                                                                                         </td>
                                                                                         <td className="special_result">
@@ -684,20 +698,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 'n' ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            만
-                                                                                                            19세
-                                                                                                            미만
-                                                                                                            미성년자의
-                                                                                                            경우
-                                                                                                            형제
-                                                                                                            자매
-                                                                                                            부양하는
-                                                                                                            경우에만
-                                                                                                            청약
-                                                                                                            신청
-                                                                                                            가능.
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -782,6 +782,33 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                         제한
                                                                                                         여부
                                                                                                     </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                민영주택의
+                                                                                                                경우
+                                                                                                            </p>
+                                                                                                            <strong>
+                                                                                                                규제지역
+                                                                                                            </strong>
+
+                                                                                                            인
+                                                                                                            경우에만,
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            적용됨.{' '}
+                                                                                                            <br />
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            있을
+                                                                                                            경우
+                                                                                                            청약을
+                                                                                                            진행할
+                                                                                                            수
+                                                                                                            없음.
+                                                                                                        </span>
+                                                                                                    </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
                                                                                                     <input
@@ -807,13 +834,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                         false ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                    제당첨
-                                                                                                                    제한
-                                                                                                                    있을
-                                                                                                                    경우
-                                                                                                                    탈락.
-                                                                                                                </span>
                                                                                                             </span>
                                                                                                         ) : null}
                                                                                                     </span>
@@ -832,6 +852,33 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                                 미만
                                                                                                                 소유
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    <p>
+                                                                                                                        <strong>
+                                                                                                                            1순위
+                                                                                                                            제한자
+                                                                                                                        </strong>
+                                                                                                                    </p>
+                                                                                                                    규제지역(투기과열지구
+                                                                                                                    및
+                                                                                                                    청약과열지역)
+                                                                                                                    내
+                                                                                                                    민영
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,
+                                                                                                                    <br />
+                                                                                                                    2주택
+                                                                                                                    미만
+                                                                                                                    소유일
+                                                                                                                    경우
+                                                                                                                    청약
+                                                                                                                    진행
+                                                                                                                    가능.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">

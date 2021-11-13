@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Confetti from 'react-confetti';
 import './Rank.css';
-import MainButton from '../../components/Button/MainButton';
 import NormalRequiredDocuments from '../SubmitDocuments/NormalRequiredDocuments';
 import { useLocation } from 'react-router';
 import Loading from '../../components/Loading/loading';
@@ -27,7 +26,7 @@ function Rank({ history }) {
     }, []);
 
     const GreetingMessage1st =
-        '모든 자격 조건을 충족하셨습니다. \r 1순위 축하드립니다!'; // 1순위일 경우 출력 결과
+        '모든 자격 조건을 충족하셨습니다. 1순위 축하드립니다!'; // 1순위일 경우 출력 결과
     const GreetingMessage2nd = '2순위 축하드립니다!'; // 2순위일 경우 출력 결과
 
     const location = useLocation(); // 각 공급별 결과 props 불러오기
@@ -78,6 +77,7 @@ function Rank({ history }) {
                             <>
                                 <div className="greetingMessage">
                                     {GreetingMessage1st}
+                                    <Confetti />
                                 </div>
                             </>
                         ) : null}
@@ -96,7 +96,6 @@ function Rank({ history }) {
                                 </div>
                             </>
                         ) : null}
-                        <Confetti />
 
                         {/* 제출 서류확인 테이블 */}
                         {/* 일반 공급 서류제출 */}

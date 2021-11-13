@@ -208,9 +208,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                             </p>
                                                             주택청약종합저축
                                                             혹은 청약예금,
-                                                            청약부금(85제곱미터이하)인
-                                                            경우에만 청약통장
-                                                            조건 만족.
+                                                            청약부금(85제곱미터
+                                                            이하)인 경우에만
+                                                            청약통장 조건 만족.
                                                         </span>
                                                     </span>
                                                 </td>
@@ -237,12 +237,6 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    청약 통장
-                                                                    조건 미충족
-                                                                    시 부적격
-                                                                    발생.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -260,6 +254,14 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                 <td className="qulificaiton">
                                                     <span className="qulificaitonBox">
                                                         세대주 여부
+                                                    </span>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span class="tooltip-text">
+                                                            노부모부양
+                                                            특별공급은 세대주인
+                                                            경우에만 청약 가능.
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td className="special_result">
@@ -357,15 +359,6 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            인근지역
-                                                                            혹은
-                                                                            해당지역
-                                                                            거주
-                                                                            미충족
-                                                                            시
-                                                                            탈락
-                                                                        </span>
                                                                     </span>
                                                                 ) : (
                                                                     <></>
@@ -429,6 +422,42 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                 자매
                                                                                 부양
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    자녀
+                                                                                    양육
+                                                                                    혹은
+                                                                                    형제,
+                                                                                    자매를
+                                                                                    부양(직계존속의
+                                                                                    사망,
+                                                                                    실종선고
+                                                                                    및
+                                                                                    행방불명
+                                                                                    등으로
+                                                                                    인한)해야
+                                                                                    함.{' '}
+                                                                                    <br />
+                                                                                    (단,
+                                                                                    자녀
+                                                                                    및
+                                                                                    형제,
+                                                                                    자매는
+                                                                                    세대주인
+                                                                                    미성년자와
+                                                                                    같은
+                                                                                    세대별
+                                                                                    주민등록표등본에
+                                                                                    등재되어
+                                                                                    있어야
+                                                                                    함.)
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -670,6 +699,34 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                         부양
                                                                                         여부
                                                                                     </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                *
+                                                                                                노부모부양
+                                                                                                대상자
+                                                                                            </p>
+                                                                                            일반공급
+                                                                                            1순위에
+                                                                                            해당하는
+                                                                                            자로서
+                                                                                            만65세
+                                                                                            이상의
+                                                                                            직계존속(배우자의
+                                                                                            직계존속
+                                                                                            포함)을
+                                                                                            3년
+                                                                                            이상
+                                                                                            계속하여
+                                                                                            부양(같은
+                                                                                            세대별
+                                                                                            주민등록표등본에
+                                                                                            등재)하고
+                                                                                            있는
+                                                                                            무주택세대주
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </td>
                                                                                 <td className="special_result">
                                                                                     <input
@@ -728,6 +785,35 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                         전무
                                                                                                         여부
                                                                                                     </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            규제지역(투기과열지구
+                                                                                                            및
+                                                                                                            청약과열지역)
+                                                                                                            내
+                                                                                                            민영
+                                                                                                            주택에
+                                                                                                            청약하는
+                                                                                                            경우,
+                                                                                                            <br />
+                                                                                                            과거
+                                                                                                            5년
+                                                                                                            이내에
+                                                                                                            다른
+                                                                                                            주택에
+                                                                                                            당첨된
+                                                                                                            자가
+                                                                                                            속해있는
+                                                                                                            무주택
+                                                                                                            세대구성원인
+                                                                                                            경우
+                                                                                                            청약을
+                                                                                                            진행할
+                                                                                                            수
+                                                                                                            없음.
+                                                                                                        </span>
+                                                                                                    </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
                                                                                                     <input
@@ -769,6 +855,33 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                                 재당첨
                                                                                                                 제한
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    <p>
+                                                                                                                        민영주택의
+                                                                                                                        경우
+                                                                                                                    </p>
+                                                                                                                    <strong>
+                                                                                                                        규제지역
+                                                                                                                    </strong>
+
+                                                                                                                    인
+                                                                                                                    경우에만,
+                                                                                                                    재당첨
+                                                                                                                    제한이
+                                                                                                                    적용됨.{' '}
+                                                                                                                    <br />
+                                                                                                                    재당첨
+                                                                                                                    제한이
+                                                                                                                    있을
+                                                                                                                    경우
+                                                                                                                    청약을
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">

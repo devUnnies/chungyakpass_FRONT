@@ -227,12 +227,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    청약 통장
-                                                                    조건 미충족
-                                                                    시 부적격
-                                                                    발생.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -293,13 +287,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    인근지역
-                                                                    혹은
-                                                                    해당지역
-                                                                    거주 미충족
-                                                                    시 탈락
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -420,17 +407,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            전
-                                                                            세대
-                                                                            구성원이
-                                                                            무주택이
-                                                                            아닐
-                                                                            시
-                                                                            청약
-                                                                            자격
-                                                                            미달.
-                                                                        </span>
                                                                     </span>
                                                                 ) : null}
                                                             </span>
@@ -470,11 +446,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                         'null' ? (
                                                                             <span className="pause_tooltip">
                                                                                 <CloseCircleOutlined />
-                                                                                <span class="pause-tooltip-text">
-                                                                                    나이
-                                                                                    입력
-                                                                                    필요.
-                                                                                </span>
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -491,6 +462,20 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                             <span className="qulificaitonBox">
                                                                                 세대주
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    반드시
+                                                                                    세대주인
+                                                                                    경우에만
+                                                                                    청약
+                                                                                    가능.
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="general_result">
@@ -517,19 +502,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 false ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            만
-                                                                                            19세
-                                                                                            미만
-                                                                                            미성년자는
-                                                                                            세대주일
-                                                                                            경우에만
-                                                                                            해당
-                                                                                            청약이
-                                                                                            신청
-                                                                                            진행
-                                                                                            가능.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -548,6 +520,42 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                         자매
                                                                                         부양
                                                                                         여부
+                                                                                    </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                미성년자의
+                                                                                                경우
+                                                                                            </p>
+                                                                                            자녀
+                                                                                            양육
+                                                                                            혹은
+                                                                                            형제,
+                                                                                            자매를
+                                                                                            부양(직계존속의
+                                                                                            사망,
+                                                                                            실종선고
+                                                                                            및
+                                                                                            행방불명
+                                                                                            등으로
+                                                                                            인한)해야
+                                                                                            함.{' '}
+                                                                                            <br />
+                                                                                            (단,
+                                                                                            자녀
+                                                                                            및
+                                                                                            형제,
+                                                                                            자매는
+                                                                                            세대주인
+                                                                                            미성년자와
+                                                                                            같은
+                                                                                            세대별
+                                                                                            주민등록표등본에
+                                                                                            등재되어
+                                                                                            있어야
+                                                                                            함.)
+                                                                                        </span>
                                                                                     </span>
                                                                                 </td>
                                                                                 <td className="general_result">
@@ -600,22 +608,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                         'n' ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    만
-                                                                                                    19세
-                                                                                                    미만
-                                                                                                    미성년자는
-                                                                                                    세대주이면서
-                                                                                                    부양할
-                                                                                                    가족이
-                                                                                                    있는
-                                                                                                    경우에만
-                                                                                                    해당
-                                                                                                    청약이
-                                                                                                    신청
-                                                                                                    진행
-                                                                                                    가능.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -717,14 +709,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="tooltip-text">
-                                                                                            생계
-                                                                                            유지
-                                                                                            기준
-                                                                                            소득
-                                                                                            확인
-                                                                                            필요.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -760,6 +744,23 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 제한
                                                                                 여부
                                                                             </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        국민주택의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    재당첨
+                                                                                    제한이
+                                                                                    있을
+                                                                                    경우
+                                                                                    청약을
+                                                                                    진행할
+                                                                                    수
+                                                                                    없음.
+                                                                                </span>
+                                                                            </span>
                                                                         </td>
                                                                         <td className="general_result">
                                                                             <input
@@ -785,13 +786,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 false ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            제당첨
-                                                                                            제한
-                                                                                            있을
-                                                                                            경우
-                                                                                            탈락.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -813,6 +807,27 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                     <span className="qulificaitonBox">
                                                                                                         세대주
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                <strong>
+                                                                                                                    1순위
+                                                                                                                    제한자
+                                                                                                                </strong>
+                                                                                                            </p>
+                                                                                                            규제지역(투기과열지구
+                                                                                                            및
+                                                                                                            청약과열지역)
+                                                                                                            내
+                                                                                                            국민
+                                                                                                            주택에
+                                                                                                            청약하는
+                                                                                                            경우,
+                                                                                                            세대주가
+                                                                                                            아닌자
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="general_result">
@@ -861,6 +876,36 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                         당첨이력
                                                                                                         전무
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                <strong>
+                                                                                                                    1순위
+                                                                                                                    제한자
+                                                                                                                </strong>
+                                                                                                            </p>
+                                                                                                            규제지역(투기과열지구
+                                                                                                            및
+                                                                                                            청약과열지역)
+                                                                                                            내
+                                                                                                            국민
+                                                                                                            주택에
+                                                                                                            청약하는
+                                                                                                            경우,
+                                                                                                            <br />
+                                                                                                            과거
+                                                                                                            5년
+                                                                                                            이내에
+                                                                                                            다른
+                                                                                                            주택에
+                                                                                                            당첨된
+                                                                                                            자가
+                                                                                                            속해있는
+                                                                                                            무주택
+                                                                                                            세대구성원
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="general_result">
@@ -953,9 +998,19 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                                 </td>
                                                                                                                 <td>
                                                                                                                     12개월
+                                                                                                                    <br />
+                                                                                                                    (필요한
+                                                                                                                    경우,
+                                                                                                                    24개월까지
+                                                                                                                    연장가능)
                                                                                                                 </td>
                                                                                                                 <td>
                                                                                                                     6개월
+                                                                                                                    <br />
+                                                                                                                    (필요한
+                                                                                                                    경우,
+                                                                                                                    12개월까지
+                                                                                                                    연장가능)
                                                                                                                 </td>
                                                                                                             </tr>
                                                                                                         </table>
@@ -1029,6 +1084,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                                             규제지역
                                                                                                                         </td>
                                                                                                                         <td>
+                                                                                                                            위축지역
+                                                                                                                        </td>
+                                                                                                                        <td>
                                                                                                                             수도권
                                                                                                                         </td>
                                                                                                                         <td>
@@ -1045,15 +1103,45 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                                             이상
                                                                                                                         </td>
                                                                                                                         <td>
+                                                                                                                            1회
+                                                                                                                            이상
+                                                                                                                        </td>
+                                                                                                                        <td>
                                                                                                                             12회
                                                                                                                             이상
+                                                                                                                            <br />
+                                                                                                                            (필요한
+                                                                                                                            경우,
+                                                                                                                            24회까지
+                                                                                                                            연장가능)
                                                                                                                         </td>
                                                                                                                         <td>
                                                                                                                             6회
                                                                                                                             이상
+                                                                                                                            <br />
+                                                                                                                            (필요한
+                                                                                                                            경우,
+                                                                                                                            12회까지
+                                                                                                                            연장가능)
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </table>
+
+                                                                                                                *
+                                                                                                                단,
+                                                                                                                월납입금을
+                                                                                                                연체하여
+                                                                                                                납입한
+                                                                                                                경우
+                                                                                                                주택
+                                                                                                                공급에
+                                                                                                                관한
+                                                                                                                규칙
+                                                                                                                제10조제3항에
+                                                                                                                따라
+                                                                                                                순위
+                                                                                                                발생일이
+                                                                                                                순연됨.
                                                                                                             </span>
                                                                                                         </span>
                                                                                                     </td>

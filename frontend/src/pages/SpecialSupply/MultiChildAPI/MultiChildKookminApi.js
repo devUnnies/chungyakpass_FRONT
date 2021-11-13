@@ -176,12 +176,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                         {getParams === '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    국민주택
-                                                                    유형을
-                                                                    선택하지
-                                                                    않았습니다.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -237,12 +231,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    청약 통장
-                                                                    조건 미충족
-                                                                    시 부적격
-                                                                    발생.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -303,13 +291,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    인근지역
-                                                                    혹은
-                                                                    해당지역
-                                                                    거주 미충족
-                                                                    시 탈락
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -430,17 +411,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            전
-                                                                            세대
-                                                                            구성원이
-                                                                            무주택이
-                                                                            아닐
-                                                                            시
-                                                                            청약
-                                                                            자격
-                                                                            미달.
-                                                                        </span>
                                                                     </span>
                                                                 ) : null}
                                                             </span>
@@ -460,6 +430,27 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                         자녀 수
                                                                         충족
                                                                         여부
+                                                                    </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                *
+                                                                                다자녀
+                                                                                특별공급
+                                                                                대상자
+                                                                            </p>
+                                                                            입주자모집공고일
+                                                                            현재
+                                                                            미성년인
+                                                                            자녀
+                                                                            3명
+                                                                            이상을
+                                                                            둔
+                                                                            자(태아,
+                                                                            입양자녀
+                                                                            포함)
+                                                                        </span>
                                                                     </span>
                                                                 </td>
                                                                 <td className="special_result">
@@ -485,19 +476,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                         3 ? (
                                                                             <span className="pause_tooltip">
                                                                                 <CloseCircleOutlined />
-                                                                                <span class="pause-tooltip-text">
-                                                                                    3명
-                                                                                    이상의
-                                                                                    미성년
-                                                                                    자녀
-                                                                                    수를
-                                                                                    충족하는
-                                                                                    경우에만
-                                                                                    해당
-                                                                                    청약
-                                                                                    진행
-                                                                                    가능.
-                                                                                </span>
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -520,6 +498,105 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         기준
                                                                                         충족
                                                                                         여부
+                                                                                    </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                *
+                                                                                                다자녀
+                                                                                                월평균
+                                                                                                기준
+                                                                                                소득
+                                                                                            </p>
+                                                                                            <ul>
+                                                                                                <li>
+                                                                                                    공공주택
+                                                                                                    특별법
+                                                                                                    적용
+                                                                                                    국민주택
+                                                                                                </li>
+                                                                                                해당
+                                                                                                세대의
+                                                                                                월평균
+                                                                                                소득이
+                                                                                                전년도
+                                                                                                도시근로자
+                                                                                                가구당
+                                                                                                월평균
+                                                                                                소득의
+                                                                                                120퍼센트
+                                                                                                이하인
+                                                                                                분
+                                                                                            </ul>
+                                                                                            <ul>
+                                                                                                <li>
+                                                                                                    공공주택
+                                                                                                    특별법
+                                                                                                    미적용
+                                                                                                    국민주택
+                                                                                                </li>
+                                                                                                <strong>
+                                                                                                    「주택공급에
+                                                                                                    관한
+                                                                                                    규칙」
+                                                                                                    제18조
+                                                                                                    각호
+                                                                                                    어느
+                                                                                                    하나에
+                                                                                                    해당하는
+                                                                                                    사업주체가
+                                                                                                    공급하는
+                                                                                                    주택
+                                                                                                </strong>
+                                                                                                <br />
+                                                                                                해당
+                                                                                                세대의
+                                                                                                월평균
+                                                                                                소득이
+                                                                                                전년도
+                                                                                                도시근로자
+                                                                                                가구당
+                                                                                                월평균
+                                                                                                소득의
+                                                                                                120퍼센트
+                                                                                                이하인
+                                                                                                분
+                                                                                            </ul>
+
+                                                                                            <p>
+                                                                                                <strong>
+                                                                                                    ※
+                                                                                                    주택공급에
+                                                                                                    관한
+                                                                                                    규칙
+                                                                                                    제18조
+                                                                                                </strong>
+
+                                                                                                <ul>
+                                                                                                    1.
+                                                                                                    국가,
+                                                                                                    지방자치단체,
+                                                                                                    한국토지주택공사
+                                                                                                    또는
+                                                                                                    지방공사
+                                                                                                </ul>
+                                                                                                <ul>
+                                                                                                    2.
+                                                                                                    제1호에
+                                                                                                    해당하는
+                                                                                                    자가
+                                                                                                    단독
+                                                                                                    또는
+                                                                                                    공동으로
+                                                                                                    총지분의
+                                                                                                    50퍼센트를
+                                                                                                    초과하여
+                                                                                                    출자한
+                                                                                                    부동산투자회사
+                                                                                                </ul>
+                                                                                            </p>
+                                                                                        </span>
                                                                                     </span>
                                                                                 </td>
                                                                                 <td className="special_result">
@@ -545,11 +622,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    월평균
-                                                                                                    소득
-                                                                                                    미충족
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -570,6 +642,39 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     기준
                                                                                                     충족
                                                                                                     여부
+                                                                                                </span>
+                                                                                                <span className="info_tooltip">
+                                                                                                    <InfoCircleOutlined />
+                                                                                                    <span class="tooltip-text">
+                                                                                                        <p>
+                                                                                                            *
+                                                                                                            공공주택
+                                                                                                            특별법이
+                                                                                                            적용되는
+                                                                                                            국민주택의
+                                                                                                            경우에만
+                                                                                                            해당
+                                                                                                        </p>
+                                                                                                        세부
+                                                                                                        자산
+                                                                                                        보유
+                                                                                                        기준에
+                                                                                                        대한
+                                                                                                        자격
+                                                                                                        조건은
+                                                                                                        회원님이
+                                                                                                        입력하신
+                                                                                                        기초
+                                                                                                        정보에
+                                                                                                        따라,{' '}
+                                                                                                        <br />
+                                                                                                        자산
+                                                                                                        정보를
+                                                                                                        계산하여
+                                                                                                        충족
+                                                                                                        여부를
+                                                                                                        판단해드립니다.
+                                                                                                    </span>
                                                                                                 </span>
                                                                                             </td>
                                                                                             <td className="special_result">
@@ -597,11 +702,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     false ? (
                                                                                                         <span className="pause_tooltip">
                                                                                                             <CloseCircleOutlined />
-                                                                                                            <span class="pause-tooltip-text">
-                                                                                                                자산
-                                                                                                                기준
-                                                                                                                미충족
-                                                                                                            </span>
                                                                                                         </span>
                                                                                                     ) : null}
                                                                                                 </span>
@@ -656,11 +756,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         '' ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    나이
-                                                                                                    입력
-                                                                                                    필요.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -676,6 +771,20 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                             <span className="qulificaitonBox">
                                                                                                 세대주
                                                                                                 여부
+                                                                                            </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined />
+                                                                                                <span class="tooltip-text">
+                                                                                                    <p>
+                                                                                                        미성년자의
+                                                                                                        경우
+                                                                                                    </p>
+                                                                                                    반드시
+                                                                                                    세대주인
+                                                                                                    경우에만
+                                                                                                    청약
+                                                                                                    가능.
+                                                                                                </span>
                                                                                             </span>
                                                                                         </td>
                                                                                         <td className="special_result">
@@ -701,18 +810,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                 false ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            만
-                                                                                                            19세
-                                                                                                            미만
-                                                                                                            미성년자는
-                                                                                                            세대주일
-                                                                                                            경우에만
-                                                                                                            해당
-                                                                                                            청약
-                                                                                                            진행
-                                                                                                            가능.
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -731,6 +828,42 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                         자매
                                                                                                         부양
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                미성년자의
+                                                                                                                경우
+                                                                                                            </p>
+                                                                                                            자녀
+                                                                                                            양육
+                                                                                                            혹은
+                                                                                                            형제,
+                                                                                                            자매를
+                                                                                                            부양(직계존속의
+                                                                                                            사망,
+                                                                                                            실종선고
+                                                                                                            및
+                                                                                                            행방불명
+                                                                                                            등으로
+                                                                                                            인한)해야
+                                                                                                            함.{' '}
+                                                                                                            <br />
+                                                                                                            (단,
+                                                                                                            자녀
+                                                                                                            및
+                                                                                                            형제,
+                                                                                                            자매는
+                                                                                                            세대주인
+                                                                                                            미성년자와
+                                                                                                            같은
+                                                                                                            세대별
+                                                                                                            주민등록표등본에
+                                                                                                            등재되어
+                                                                                                            있어야
+                                                                                                            함.)
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
@@ -783,20 +916,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                         'n' ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                    만
-                                                                                                                    19세
-                                                                                                                    미만
-                                                                                                                    미성년자의
-                                                                                                                    경우
-                                                                                                                    형제
-                                                                                                                    자매
-                                                                                                                    부양하는
-                                                                                                                    경우에만
-                                                                                                                    청약
-                                                                                                                    신청
-                                                                                                                    가능.
-                                                                                                                </span>
                                                                                                             </span>
                                                                                                         ) : null}
                                                                                                     </span>
@@ -825,6 +944,23 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                 제한
                                                                                                 여부
                                                                                             </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined />
+                                                                                                <span class="tooltip-text">
+                                                                                                    <p>
+                                                                                                        국민주택의
+                                                                                                        경우
+                                                                                                    </p>
+                                                                                                    재당첨
+                                                                                                    제한이
+                                                                                                    있을
+                                                                                                    경우
+                                                                                                    청약을
+                                                                                                    진행할
+                                                                                                    수
+                                                                                                    없음.
+                                                                                                </span>
+                                                                                            </span>
                                                                                         </td>
                                                                                         <td className="special_result">
                                                                                             <input
@@ -850,13 +986,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                 false ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            제당첨
-                                                                                                            제한
-                                                                                                            있을
-                                                                                                            경우
-                                                                                                            탈락.
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -880,48 +1009,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
                                                                                                         <span class="tooltip-text">
-                                                                                                            <table
-                                                                                                                border="1"
-                                                                                                                className="tootipeTable"
-                                                                                                            >
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        규제지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        위축
-                                                                                                                        지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        수도권
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        수도권
-                                                                                                                        외
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        가입
-                                                                                                                        기간
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        24개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        1개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        12개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        6개월
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
+                                                                                                            주택별
+                                                                                                            청약가능한
+                                                                                                            청약통장에
+                                                                                                            가입한지
+                                                                                                            6개월이
+                                                                                                            경과하여야
+                                                                                                            함.
                                                                                                         </span>
                                                                                                     </span>
                                                                                                 </td>
@@ -970,43 +1064,15 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
                                                                                                                 <span class="tooltip-text">
-                                                                                                                    <table
-                                                                                                                        border="1"
-                                                                                                                        className="tootipeTable"
-                                                                                                                    >
-                                                                                                                        <tr>
-                                                                                                                            <td>
-                                                                                                                                지역
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                규제지역
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                수도권
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                수도권
-                                                                                                                                외
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr>
-                                                                                                                            <td>
-                                                                                                                                납입횟수
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                24회
-                                                                                                                                이상
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                12회
-                                                                                                                                이상
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                6회
-                                                                                                                                이상
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
+                                                                                                                    매월
+                                                                                                                    약정납입일에
+                                                                                                                    월
+                                                                                                                    납입금
+                                                                                                                    6회
+                                                                                                                    이상
+                                                                                                                    납부된
+                                                                                                                    상태여야
+                                                                                                                    함.
                                                                                                                 </span>
                                                                                                             </span>
                                                                                                         </td>

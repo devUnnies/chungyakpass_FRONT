@@ -153,7 +153,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         <InfoCircleOutlined />
                                                         <span class="tooltip-text">
                                                             <p>
-                                                                규제
+                                                                * 규제
                                                                 지역('투기과열지구'
                                                                 혹은
                                                                 '청약과열지역')
@@ -190,9 +190,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    값 입력 필요
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -215,13 +212,13 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         <InfoCircleOutlined />
                                                         <span class="tooltip-text">
                                                             <p>
-                                                                ※ 국민 주택의
+                                                                ※ 민영 주택의
                                                                 경우
                                                             </p>
                                                             주택청약종합저축
-                                                            혹은 청약 저축인
-                                                            경우에만 청약통장
-                                                            조건 만족.
+                                                            혹은 청약 예금, 청약
+                                                            부금인 경우에만
+                                                            청약통장 조건 만족.
                                                         </span>
                                                     </span>
                                                 </td>
@@ -248,12 +245,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    청약 통장
-                                                                    조건 미충족
-                                                                    시 부적격
-                                                                    발생.
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -270,7 +261,25 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qulificaiton">
                                                     <span className="qulificaitonBox">
-                                                        인근지역 거주 여부
+                                                        신청한 아파트 청약
+                                                        지역의 인근지역 혹은
+                                                        해당지역 거주 여부
+                                                    </span>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span class="tooltip-text">
+                                                            <p>
+                                                                ※ 인근지역의
+                                                                경우
+                                                            </p>
+                                                            1순위 조건 충족자는
+                                                            맞지만 해당 지역에
+                                                            거주하는 자에게 우선
+                                                            공급하므로 {'\n'}{' '}
+                                                            청약 공급 우선
+                                                            순위에서 밀릴 수
+                                                            있음을 주의바랍니다.
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td className="special_result">
@@ -332,11 +341,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                 '' ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            나이
-                                                                            입력
-                                                                            필요.
-                                                                        </span>
                                                                     </span>
                                                                 ) : null}
                                                             </span>
@@ -351,6 +355,20 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                     <span className="qulificaitonBox">
                                                                         세대주
                                                                         여부
+                                                                    </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                미성년자의
+                                                                                경우
+                                                                            </p>
+                                                                            반드시
+                                                                            세대주인
+                                                                            경우에만
+                                                                            청약
+                                                                            가능.
+                                                                        </span>
                                                                     </span>
                                                                 </td>
                                                                 <td className="special_result">
@@ -394,6 +412,42 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                 자매
                                                                                 부양
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    자녀
+                                                                                    양육
+                                                                                    혹은
+                                                                                    형제,
+                                                                                    자매를
+                                                                                    부양(직계존속의
+                                                                                    사망,
+                                                                                    실종선고
+                                                                                    및
+                                                                                    행방불명
+                                                                                    등으로
+                                                                                    인한)해야
+                                                                                    함.{' '}
+                                                                                    <br />
+                                                                                    (단,
+                                                                                    자녀
+                                                                                    및
+                                                                                    형제,
+                                                                                    자매는
+                                                                                    세대주인
+                                                                                    미성년자와
+                                                                                    같은
+                                                                                    세대별
+                                                                                    주민등록표등본에
+                                                                                    등재되어
+                                                                                    있어야
+                                                                                    함.)
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -446,20 +500,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            만
-                                                                                            19세
-                                                                                            미만
-                                                                                            미성년자의
-                                                                                            경우
-                                                                                            형제
-                                                                                            자매
-                                                                                            부양하는
-                                                                                            경우에만
-                                                                                            청약
-                                                                                            신청
-                                                                                            가능.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -509,16 +549,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                 false ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            혼인
-                                                                                            기간이
-                                                                                            7년
-                                                                                            이내인
-                                                                                            신혼부부만
-                                                                                            청약
-                                                                                            신청
-                                                                                            가능.
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -640,17 +670,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    전
-                                                                                                    세대
-                                                                                                    구성원이
-                                                                                                    무주택이
-                                                                                                    아닐
-                                                                                                    시
-                                                                                                    청약
-                                                                                                    자격
-                                                                                                    미달.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -669,6 +688,41 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                 기준
                                                                                                 충족
                                                                                                 여부
+                                                                                            </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined />
+                                                                                                <span class="tooltip-text">
+                                                                                                    <p>
+                                                                                                        신혼부부
+                                                                                                        소득기준
+                                                                                                    </p>
+                                                                                                    해당
+                                                                                                    세대의
+                                                                                                    월평균
+                                                                                                    소득이
+                                                                                                    전년도
+                                                                                                    도시근로자
+                                                                                                    가구당
+                                                                                                    월평균
+                                                                                                    소득의
+                                                                                                    140퍼센트
+                                                                                                    이하.{' '}
+                                                                                                    <br />
+                                                                                                    (맞벌이인
+                                                                                                    경우,
+                                                                                                    160퍼센트
+                                                                                                    이하.{' '}
+                                                                                                    <br />
+                                                                                                    단,
+                                                                                                    부부
+                                                                                                    중
+                                                                                                    한
+                                                                                                    사람의
+                                                                                                    소득은
+                                                                                                    140퍼센트
+                                                                                                    이하여야
+                                                                                                    함.)
+                                                                                                </span>
                                                                                             </span>
                                                                                         </td>
                                                                                         <td className="special_result">
@@ -699,11 +753,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                     false ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            월평균
-                                                                                                            소득
-                                                                                                            미충족
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -722,6 +771,33 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                         재당첨
                                                                                                         제한
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                민영주택의
+                                                                                                                경우
+                                                                                                            </p>
+                                                                                                            <strong>
+                                                                                                                규제지역
+                                                                                                            </strong>
+
+                                                                                                            인
+                                                                                                            경우에만,
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            적용됨.{' '}
+                                                                                                            <br />
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            있을
+                                                                                                            경우
+                                                                                                            청약을
+                                                                                                            진행할
+                                                                                                            수
+                                                                                                            없음.
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
@@ -748,13 +824,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                         false ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <PauseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                    제당첨
-                                                                                                                    제한
-                                                                                                                    있을
-                                                                                                                    경우
-                                                                                                                    탈락.
-                                                                                                                </span>
                                                                                                             </span>
                                                                                                         ) : null}
                                                                                                     </span>
@@ -1073,7 +1142,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                                                             <input
                                                                                                                                 className="aptInfoSelect"
                                                                                                                                 value={
-                                                                                                                                    data?.meetNumberOfPaymentsTf
+                                                                                                                                    data?.hasMinorChildren
                                                                                                                                         ? '충족'
                                                                                                                                         : '미충족'
                                                                                                                                 }

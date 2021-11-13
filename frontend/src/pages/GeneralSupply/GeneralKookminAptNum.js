@@ -39,22 +39,27 @@ function GeneralKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        dispatch(
-            postGeneralKookminAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-            })
-        ); // api 연결 요청.
+        if (notificationNumber === '' || housingType === '') {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else {
+            dispatch(
+                postGeneralKookminAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                })
+            ); // api 연결 요청.
 
-        const data = generalKookminAptNumStore.postGeneralKookminAptNum.data;
-        // console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/generalKookmin',
-            props: {
-                notificationNumber,
-                housingType,
-            },
-        });
+            const data =
+                generalKookminAptNumStore.postGeneralKookminAptNum.data;
+            // console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/generalKookmin',
+                props: {
+                    notificationNumber,
+                    housingType,
+                },
+            });
+        }
     };
 
     useEffect(() => {

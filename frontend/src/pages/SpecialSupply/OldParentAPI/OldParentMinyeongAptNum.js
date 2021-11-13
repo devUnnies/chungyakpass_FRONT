@@ -36,23 +36,27 @@ function OldParentMinyeongAptNum(props) {
     };
 
     const onClick = async () => {
-        dispatch(
-            postOldParentMinyeongAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-            })
-        ); // api 연결 요청.
+        if (notificationNumber === '' || housingType === '') {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else {
+            dispatch(
+                postOldParentMinyeongAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                })
+            ); // api 연결 요청.
 
-        const data =
-            oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
-        console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/specialOldParentMinyeong',
-            props: {
-                notificationNumber,
-                housingType,
-            },
-        });
+            const data =
+                oldParentMinyeongAptNumStore.postOldParentMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/specialOldParentMinyeong',
+                props: {
+                    notificationNumber,
+                    housingType,
+                },
+            });
+        }
     };
 
     useEffect(() => {

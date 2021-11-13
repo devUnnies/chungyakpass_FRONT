@@ -151,8 +151,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                         <span class="tooltip-text">
                                                             선택한 국민 주택
                                                             유형에 따라 자격
-                                                            확인 조건이 달라질
-                                                            수 있습니다.
+                                                            조건이 다릅니다.
                                                         </span>
                                                     </span>
                                                 </td>
@@ -339,13 +338,6 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    인근지역
-                                                                    혹은
-                                                                    해당지역
-                                                                    거주 미충족
-                                                                    시 탈락
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -401,6 +393,20 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                         세대주
                                                                         여부
                                                                     </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                미성년자의
+                                                                                경우
+                                                                            </p>
+                                                                            반드시
+                                                                            세대주인
+                                                                            경우에만
+                                                                            청약
+                                                                            가능.
+                                                                        </span>
+                                                                    </span>
                                                                 </td>
                                                                 <td className="special_result">
                                                                     <input
@@ -442,6 +448,42 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                 자매
                                                                                 부양
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    자녀
+                                                                                    양육
+                                                                                    혹은
+                                                                                    형제,
+                                                                                    자매를
+                                                                                    부양(직계존속의
+                                                                                    사망,
+                                                                                    실종선고
+                                                                                    및
+                                                                                    행방불명
+                                                                                    등으로
+                                                                                    인한)해야
+                                                                                    함.{' '}
+                                                                                    <br />
+                                                                                    (단,
+                                                                                    자녀
+                                                                                    및
+                                                                                    형제,
+                                                                                    자매는
+                                                                                    세대주인
+                                                                                    미성년자와
+                                                                                    같은
+                                                                                    세대별
+                                                                                    주민등록표등본에
+                                                                                    등재되어
+                                                                                    있어야
+                                                                                    함.)
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -518,6 +560,38 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                         생애최초
                                                                         대상자
                                                                         여부
+                                                                    </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                *
+                                                                                생애최초
+                                                                                대상자
+                                                                            </p>
+                                                                            입주자모집공고일
+                                                                            현재
+                                                                            혼인
+                                                                            중이거나
+                                                                            미혼인
+                                                                            자녀{' '}
+                                                                            <br />
+                                                                            (입양을
+                                                                            포함,
+                                                                            혼인
+                                                                            중이
+                                                                            아닌
+                                                                            경우에는
+                                                                            동일한
+                                                                            주민등록표
+                                                                            등본에
+                                                                            올라
+                                                                            있는
+                                                                            자녀를
+                                                                            말함)가
+                                                                            있는
+                                                                            분
+                                                                        </span>
                                                                     </span>
                                                                 </td>
                                                                 <td className="special_result">
@@ -702,13 +776,42 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                         충족
                                                                                         여부
                                                                                     </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                *
+                                                                                                생애최초
+                                                                                                월평균
+                                                                                                기준
+                                                                                                소득
+                                                                                            </p>
+                                                                                            해당
+                                                                                            세대의
+                                                                                            월평균
+                                                                                            소득이
+                                                                                            전년도
+                                                                                            도시근로자
+                                                                                            가구당
+                                                                                            월평균
+                                                                                            소득의
+                                                                                            100%이하인
+                                                                                            분
+                                                                                            <br />
+                                                                                            (21.2.2.
+                                                                                            공급승인신청분부터
+                                                                                            ‘130%
+                                                                                            이하인
+                                                                                            분’)
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </td>
                                                                                 <td className="special_result">
                                                                                     <input
                                                                                         className="aptInfoSelect"
                                                                                         value={
-                                                                                            data?.meetMonthlyAverageIncomePriority ||
-                                                                                            data?.meetMonthlyAverageIncomeGeneral
+                                                                                            data?.meetMonthlyAverageIncomePriorityTf ||
+                                                                                            data?.meetMonthlyAverageIncomeGeneralTf
                                                                                                 ? '충족'
                                                                                                 : '미충족'
                                                                                         }
@@ -717,25 +820,20 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                         }
                                                                                     />
                                                                                     <span>
-                                                                                        {data?.meetMonthlyAverageIncomePriority ===
+                                                                                        {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                             true ||
-                                                                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                             true ? (
                                                                                             <span className="progress">
                                                                                                 <CheckCircleOutlined />
                                                                                             </span>
                                                                                         ) : null}
-                                                                                        {data?.meetMonthlyAverageIncomePriority ===
+                                                                                        {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                             false &&
-                                                                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                             false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    월평균
-                                                                                                    소득
-                                                                                                    미충족
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -754,6 +852,39 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                 기준
                                                                                                 충족
                                                                                                 여부
+                                                                                            </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined />
+                                                                                                <span class="tooltip-text">
+                                                                                                    <p>
+                                                                                                        *
+                                                                                                        공공주택
+                                                                                                        특별법이
+                                                                                                        적용되는
+                                                                                                        국민주택의
+                                                                                                        경우에만
+                                                                                                        해당
+                                                                                                    </p>
+                                                                                                    세부
+                                                                                                    자산
+                                                                                                    보유
+                                                                                                    기준에
+                                                                                                    대한
+                                                                                                    자격
+                                                                                                    조건은
+                                                                                                    회원님이
+                                                                                                    입력하신
+                                                                                                    기초
+                                                                                                    정보에
+                                                                                                    따라,{' '}
+                                                                                                    <br />
+                                                                                                    자산
+                                                                                                    정보를
+                                                                                                    계산하여
+                                                                                                    충족
+                                                                                                    여부를
+                                                                                                    판단해드립니다.
+                                                                                                </span>
                                                                                             </span>
                                                                                         </td>
                                                                                         <td className="special_result">
@@ -781,11 +912,6 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                 false ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            자산
-                                                                                                            기준
-                                                                                                            미충족
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -795,9 +921,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                             ) : null}
 
                                                                             {/* 규제 지역인 경우에만 보이도록 */}
-                                                                            {(data?.meetMonthlyAverageIncomePriority ===
+                                                                            {(data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                 true ||
-                                                                                data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                     true) &&
                                                                             (getParams !==
                                                                                 '공공주택특별법 적용' ||
@@ -818,6 +944,22 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                             <span className="qulificaitonBox">
                                                                                                                 세대주
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    국민
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,{' '}
+                                                                                                                    <br />
+                                                                                                                    세대주가
+                                                                                                                    아닌자는
+                                                                                                                    청약
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
@@ -867,6 +1009,31 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                                 당첨이력
                                                                                                                 전무
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    국민
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,
+                                                                                                                    <br />
+                                                                                                                    과거
+                                                                                                                    5년
+                                                                                                                    이내에
+                                                                                                                    다른
+                                                                                                                    주택에
+                                                                                                                    당첨된
+                                                                                                                    자가
+                                                                                                                    속해있는
+                                                                                                                    무주택
+                                                                                                                    세대구성원의
+                                                                                                                    경우
+                                                                                                                    청약
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
@@ -920,6 +1087,23 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                         제한
                                                                                                         여부
                                                                                                     </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                국민주택의
+                                                                                                                경우
+                                                                                                            </p>
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            있을
+                                                                                                            경우
+                                                                                                            청약을
+                                                                                                            진행할
+                                                                                                            수
+                                                                                                            없음.
+                                                                                                        </span>
+                                                                                                    </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
                                                                                                     <input
@@ -945,13 +1129,6 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                         false ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                    제당첨
-                                                                                                                    제한
-                                                                                                                    있을
-                                                                                                                    경우
-                                                                                                                    탈락.
-                                                                                                                </span>
                                                                                                             </span>
                                                                                                         ) : null}
                                                                                                     </span>
@@ -973,6 +1150,20 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
                                                                                                                 <span class="tooltip-text">
+                                                                                                                    <p>
+                                                                                                                        주택별
+                                                                                                                        청약
+                                                                                                                        가능한
+                                                                                                                        청약통장에
+                                                                                                                        가입한지
+                                                                                                                        24개월(지역
+                                                                                                                        및
+                                                                                                                        주택에
+                                                                                                                        따라
+                                                                                                                        6~24개월)이
+                                                                                                                        경과하여야
+                                                                                                                        함.
+                                                                                                                    </p>
                                                                                                                     <table
                                                                                                                         border="1"
                                                                                                                         className="tootipeTable"
@@ -1164,9 +1355,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
-                                    (data?.meetMonthlyAverageIncomePriority ===
+                                    (data?.meetMonthlyAverageIncomePriorityTf ===
                                         true ||
-                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                             true) &&
                                     ((getParams === '공공주택특별법 적용' &&
                                         data?.meetPropertyTf === true) ||

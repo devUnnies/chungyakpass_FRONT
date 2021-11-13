@@ -272,6 +272,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                     <span className="qulificaitonBox">
                                                         세대주 여부
                                                     </span>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span class="tooltip-text">
+                                                            노부모부양
+                                                            특별공급은 세대주인
+                                                            경우에만 청약 가능.
+                                                        </span>
+                                                    </span>
                                                 </td>
                                                 <td className="special_result">
                                                     <input
@@ -360,15 +368,6 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            인근지역
-                                                                            혹은
-                                                                            해당지역
-                                                                            거주
-                                                                            미충족
-                                                                            시
-                                                                            탈락
-                                                                        </span>
                                                                     </span>
                                                                 ) : (
                                                                     <></>
@@ -427,6 +426,42 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                 자매
                                                                                 부양
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    자녀
+                                                                                    양육
+                                                                                    혹은
+                                                                                    형제,
+                                                                                    자매를
+                                                                                    부양(직계존속의
+                                                                                    사망,
+                                                                                    실종선고
+                                                                                    및
+                                                                                    행방불명
+                                                                                    등으로
+                                                                                    인한)해야
+                                                                                    함.{' '}
+                                                                                    <br />
+                                                                                    (단,
+                                                                                    자녀
+                                                                                    및
+                                                                                    형제,
+                                                                                    자매는
+                                                                                    세대주인
+                                                                                    미성년자와
+                                                                                    같은
+                                                                                    세대별
+                                                                                    주민등록표등본에
+                                                                                    등재되어
+                                                                                    있어야
+                                                                                    함.)
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -643,6 +678,34 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                         부양
                                                                                         여부
                                                                                     </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                *
+                                                                                                노부모부양
+                                                                                                대상자
+                                                                                            </p>
+                                                                                            일반공급
+                                                                                            1순위에
+                                                                                            해당하는
+                                                                                            자로서
+                                                                                            만65세
+                                                                                            이상의
+                                                                                            직계존속(배우자의
+                                                                                            직계존속
+                                                                                            포함)을
+                                                                                            3년
+                                                                                            이상
+                                                                                            계속하여
+                                                                                            부양(같은
+                                                                                            세대별
+                                                                                            주민등록표등본에
+                                                                                            등재)하고
+                                                                                            있는
+                                                                                            무주택세대주
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </td>
                                                                                 <td className="special_result">
                                                                                     <input
@@ -687,6 +750,105 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                         기준
                                                                                                         충족
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined />
+                                                                                                        <span class="tooltip-text">
+                                                                                                            <p>
+                                                                                                                *
+                                                                                                                노부모부양
+                                                                                                                월평균
+                                                                                                                기준
+                                                                                                                소득
+                                                                                                            </p>
+                                                                                                            <ul>
+                                                                                                                <li>
+                                                                                                                    공공주택
+                                                                                                                    특별법
+                                                                                                                    적용
+                                                                                                                    국민주택
+                                                                                                                </li>
+                                                                                                                해당
+                                                                                                                세대의
+                                                                                                                월평균
+                                                                                                                소득이
+                                                                                                                전년도
+                                                                                                                도시근로자
+                                                                                                                가구당
+                                                                                                                월평균
+                                                                                                                소득의
+                                                                                                                120퍼센트
+                                                                                                                이하인
+                                                                                                                분
+                                                                                                            </ul>
+                                                                                                            <ul>
+                                                                                                                <li>
+                                                                                                                    공공주택
+                                                                                                                    특별법
+                                                                                                                    미적용
+                                                                                                                    국민주택
+                                                                                                                </li>
+                                                                                                                <strong>
+                                                                                                                    「주택공급에
+                                                                                                                    관한
+                                                                                                                    규칙」
+                                                                                                                    제18조
+                                                                                                                    각호
+                                                                                                                    어느
+                                                                                                                    하나에
+                                                                                                                    해당하는
+                                                                                                                    사업주체가
+                                                                                                                    공급하는
+                                                                                                                    주택
+                                                                                                                </strong>
+                                                                                                                <br />
+                                                                                                                해당
+                                                                                                                세대의
+                                                                                                                월평균
+                                                                                                                소득이
+                                                                                                                전년도
+                                                                                                                도시근로자
+                                                                                                                가구당
+                                                                                                                월평균
+                                                                                                                소득의
+                                                                                                                120퍼센트
+                                                                                                                이하인
+                                                                                                                분
+                                                                                                            </ul>
+
+                                                                                                            <p>
+                                                                                                                <strong>
+                                                                                                                    ※
+                                                                                                                    주택공급에
+                                                                                                                    관한
+                                                                                                                    규칙
+                                                                                                                    제18조
+                                                                                                                </strong>
+
+                                                                                                                <ul>
+                                                                                                                    1.
+                                                                                                                    국가,
+                                                                                                                    지방자치단체,
+                                                                                                                    한국토지주택공사
+                                                                                                                    또는
+                                                                                                                    지방공사
+                                                                                                                </ul>
+                                                                                                                <ul>
+                                                                                                                    2.
+                                                                                                                    제1호에
+                                                                                                                    해당하는
+                                                                                                                    자가
+                                                                                                                    단독
+                                                                                                                    또는
+                                                                                                                    공동으로
+                                                                                                                    총지분의
+                                                                                                                    50퍼센트를
+                                                                                                                    초과하여
+                                                                                                                    출자한
+                                                                                                                    부동산투자회사
+                                                                                                                </ul>
+                                                                                                            </p>
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
@@ -734,6 +896,39 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                             기준
                                                                                                             충족
                                                                                                             여부
+                                                                                                        </span>
+                                                                                                        <span className="info_tooltip">
+                                                                                                            <InfoCircleOutlined />
+                                                                                                            <span class="tooltip-text">
+                                                                                                                <p>
+                                                                                                                    *
+                                                                                                                    공공주택
+                                                                                                                    특별법이
+                                                                                                                    적용되는
+                                                                                                                    국민주택의
+                                                                                                                    경우에만
+                                                                                                                    해당
+                                                                                                                </p>
+                                                                                                                세부
+                                                                                                                자산
+                                                                                                                보유
+                                                                                                                기준에
+                                                                                                                대한
+                                                                                                                자격
+                                                                                                                조건은
+                                                                                                                회원님이
+                                                                                                                입력하신
+                                                                                                                기초
+                                                                                                                정보에
+                                                                                                                따라,{' '}
+                                                                                                                <br />
+                                                                                                                자산
+                                                                                                                정보를
+                                                                                                                계산하여
+                                                                                                                충족
+                                                                                                                여부를
+                                                                                                                판단해드립니다.
+                                                                                                            </span>
                                                                                                         </span>
                                                                                                     </td>
                                                                                                     <td className="special_result">
@@ -805,6 +1000,35 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                 전무
                                                                                                                 여부
                                                                                                             </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    규제지역(투기과열지구
+                                                                                                                    및
+                                                                                                                    청약과열지역)
+                                                                                                                    내
+                                                                                                                    국민
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,
+                                                                                                                    <br />
+                                                                                                                    과거
+                                                                                                                    5년
+                                                                                                                    이내에
+                                                                                                                    다른
+                                                                                                                    주택에
+                                                                                                                    당첨된
+                                                                                                                    자가
+                                                                                                                    속해있는
+                                                                                                                    무주택
+                                                                                                                    세대구성원인
+                                                                                                                    경우
+                                                                                                                    청약을
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
+                                                                                                            </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
                                                                                                             <input
@@ -852,6 +1076,23 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                 재당첨
                                                                                                                 제한
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    <p>
+                                                                                                                        국민주택의
+                                                                                                                        경우
+                                                                                                                    </p>
+                                                                                                                    재당첨
+                                                                                                                    제한이
+                                                                                                                    있을
+                                                                                                                    경우
+                                                                                                                    청약을
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">

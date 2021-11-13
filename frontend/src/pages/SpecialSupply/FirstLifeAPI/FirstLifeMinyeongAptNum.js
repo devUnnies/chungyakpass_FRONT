@@ -48,22 +48,31 @@ function FirstLifeMinyeongAptNum(props) {
 
     // alert('일반공급 1순위인 경우에만 생애최초 자격확인이 가능합니다. ');
     const onClick = async () => {
-        dispatch(
-            postFirstInLifeMinyeongAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-            })
-        ); // api 연결 요청.
+        if (notificationNumber === '' || housingType === '') {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else if (form.firstRankHistoryYn === 'n') {
+            alert(
+                '일반공급 1순위 당첨 이력이 존재하는 경우에만 생애최초 자격확인이 가능합니다.'
+            );
+        } else {
+            dispatch(
+                postFirstInLifeMinyeongAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                })
+            ); // api 연결 요청.
 
-        const data = firstLifeMinyeongStore.postFirstInLifeMinyeongAptNum.data;
-        console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/specialFirstLifeMinyeong',
-            props: {
-                notificationNumber,
-                housingType,
-            },
-        });
+            const data =
+                firstLifeMinyeongStore.postFirstInLifeMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/specialFirstLifeMinyeong',
+                props: {
+                    notificationNumber,
+                    housingType,
+                },
+            });
+        }
     };
 
     useEffect(() => {

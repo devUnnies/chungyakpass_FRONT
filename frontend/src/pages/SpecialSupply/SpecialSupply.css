@@ -3,26 +3,57 @@
     text-align: center;
 }
 .specialType_mainTitle {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
     font-size: 20pt;
-    font-weight: bold;
     letter-spacing: 10px;
 }
 .specialType_subTitle {
-    font-size: 15pt;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12pt;
     font-weight: normal;
     margin-top: 10px;
-    letter-spacing: 7px;
+    letter-spacing: 5px;
+}
+/* aptNum 공고 확인 메세지 */
+.typeInfo {
+    margin-top: 3%;
+    margin-bottom: 3%;
+    margin-left: 35%;
+    text-align: left;
+}
+.typeInfoIcon1 {
+    margin-left: 4%;
+    margin-right: 5px;
+    color: red;
+    font-size: 12pt;
+    font-weight: bold;
+}
+.typeInfos1 {
+    margin-bottom: 2%;
+    font-size: 13pt;
+    font-weight: 600;
+}
+.typeInfoIcon {
+    margin-left: 4%;
+    margin-right: 5px;
+    font-size: 10pt;
+    color: #2a4476;
+}
+.typeInfos {
+    margin-bottom: 1%;
+    font-size: 10pt;
+}
+.typeInfo_li {
+    margin-top: 1%;
+    margin-left: 6%;
 }
 .typeContainer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 3%;
+    margin-top: 2%;
     margin-bottom: 5%;
-}
-.gubun {
-    width: 150px;
-    margin-top: 20px;
 }
 
 /* 아파트 공고번호 페이지 */

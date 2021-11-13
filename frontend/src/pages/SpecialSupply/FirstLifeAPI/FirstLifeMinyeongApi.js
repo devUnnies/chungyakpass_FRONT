@@ -300,13 +300,6 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    인근지역
-                                                                    혹은
-                                                                    해당지역
-                                                                    거주 미충족
-                                                                    시 탈락
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -362,6 +355,20 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                         세대주
                                                                         여부
                                                                     </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                미성년자의
+                                                                                경우
+                                                                            </p>
+                                                                            반드시
+                                                                            세대주인
+                                                                            경우에만
+                                                                            청약
+                                                                            가능.
+                                                                        </span>
+                                                                    </span>
                                                                 </td>
                                                                 <td className="special_result">
                                                                     <input
@@ -403,6 +410,42 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                 자매
                                                                                 부양
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined />
+                                                                                <span class="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    자녀
+                                                                                    양육
+                                                                                    혹은
+                                                                                    형제,
+                                                                                    자매를
+                                                                                    부양(직계존속의
+                                                                                    사망,
+                                                                                    실종선고
+                                                                                    및
+                                                                                    행방불명
+                                                                                    등으로
+                                                                                    인한)해야
+                                                                                    함.{' '}
+                                                                                    <br />
+                                                                                    (단,
+                                                                                    자녀
+                                                                                    및
+                                                                                    형제,
+                                                                                    자매는
+                                                                                    세대주인
+                                                                                    미성년자와
+                                                                                    같은
+                                                                                    세대별
+                                                                                    주민등록표등본에
+                                                                                    등재되어
+                                                                                    있어야
+                                                                                    함.)
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -479,6 +522,38 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                         생애최초
                                                                         대상자
                                                                         여부
+                                                                    </span>
+                                                                    <span className="info_tooltip">
+                                                                        <InfoCircleOutlined />
+                                                                        <span class="tooltip-text">
+                                                                            <p>
+                                                                                *
+                                                                                생애최초
+                                                                                대상자
+                                                                            </p>
+                                                                            입주자모집공고일
+                                                                            현재
+                                                                            혼인
+                                                                            중이거나
+                                                                            미혼인
+                                                                            자녀{' '}
+                                                                            <br />
+                                                                            (입양을
+                                                                            포함,
+                                                                            혼인
+                                                                            중이
+                                                                            아닌
+                                                                            경우에는
+                                                                            동일한
+                                                                            주민등록표
+                                                                            등본에
+                                                                            올라
+                                                                            있는
+                                                                            자녀를
+                                                                            말함)가
+                                                                            있는
+                                                                            분
+                                                                        </span>
                                                                     </span>
                                                                 </td>
                                                                 <td className="special_result">
@@ -663,13 +738,41 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                         충족
                                                                                         여부
                                                                                     </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined />
+                                                                                        <span class="tooltip-text">
+                                                                                            <p>
+                                                                                                *
+                                                                                                생애최초
+                                                                                                월평균
+                                                                                                기준
+                                                                                                소득
+                                                                                            </p>
+                                                                                            해당
+                                                                                            세대의
+                                                                                            월평균
+                                                                                            소득이
+                                                                                            전년도
+                                                                                            도시근로자
+                                                                                            가구당
+                                                                                            월평균
+                                                                                            소득의
+                                                                                            130%이하인
+                                                                                            분
+                                                                                            (21.2.2.
+                                                                                            공급승인신청분부터
+                                                                                            ‘160%
+                                                                                            이하인
+                                                                                            분’)
+                                                                                        </span>
+                                                                                    </span>
                                                                                 </td>
                                                                                 <td className="special_result">
                                                                                     <input
                                                                                         className="aptInfoSelect"
                                                                                         value={
-                                                                                            data?.meetMonthlyAverageIncomePriority ||
-                                                                                            data?.meetMonthlyAverageIncomeGeneral
+                                                                                            data?.meetMonthlyAverageIncomePriorityTf ||
+                                                                                            data?.meetMonthlyAverageIncomeGeneralTf
                                                                                                 ? '충족'
                                                                                                 : '미충족'
                                                                                         }
@@ -678,25 +781,20 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                         }
                                                                                     />
                                                                                     <span>
-                                                                                        {data?.meetMonthlyAverageIncomePriority ===
+                                                                                        {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                             true ||
-                                                                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                             true ? (
                                                                                             <span className="progress">
                                                                                                 <CheckCircleOutlined />
                                                                                             </span>
                                                                                         ) : null}
-                                                                                        {data?.meetMonthlyAverageIncomePriority ===
+                                                                                        {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                             false &&
-                                                                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                             false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    월평균
-                                                                                                    소득
-                                                                                                    미충족
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -704,9 +802,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                             </tr>
 
                                                                             {/* 규제 지역인 경우에만 보이도록 */}
-                                                                            {data?.meetMonthlyAverageIncomePriority ===
+                                                                            {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                 true ||
-                                                                            data?.meetMonthlyAverageIncomeGeneral ===
+                                                                            data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                 true ? (
                                                                                 <>
                                                                                     {data?.restrictedAreaTf ===
@@ -721,6 +819,25 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             <span className="qulificaitonBox">
                                                                                                                 세대주
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    규제지역(투기과열지구
+                                                                                                                    및
+                                                                                                                    청약과열지역)
+                                                                                                                    내
+                                                                                                                    민영
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,
+                                                                                                                    세대주가
+                                                                                                                    아닌자는
+                                                                                                                    청약을
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
@@ -771,6 +888,35 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                 전무
                                                                                                                 여부
                                                                                                             </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined />
+                                                                                                                <span class="tooltip-text">
+                                                                                                                    규제지역(투기과열지구
+                                                                                                                    및
+                                                                                                                    청약과열지역)
+                                                                                                                    내
+                                                                                                                    민영
+                                                                                                                    주택에
+                                                                                                                    청약하는
+                                                                                                                    경우,
+                                                                                                                    <br />
+                                                                                                                    과거
+                                                                                                                    5년
+                                                                                                                    이내에
+                                                                                                                    다른
+                                                                                                                    주택에
+                                                                                                                    당첨된
+                                                                                                                    자가
+                                                                                                                    속해있는
+                                                                                                                    무주택
+                                                                                                                    세대구성원인
+                                                                                                                    경우
+                                                                                                                    청약을
+                                                                                                                    진행할
+                                                                                                                    수
+                                                                                                                    없음.
+                                                                                                                </span>
+                                                                                                            </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
                                                                                                             <input
@@ -813,6 +959,33 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                         제한
                                                                                                                         여부
                                                                                                                     </span>
+                                                                                                                    <span className="info_tooltip">
+                                                                                                                        <InfoCircleOutlined />
+                                                                                                                        <span class="tooltip-text">
+                                                                                                                            <p>
+                                                                                                                                민영주택의
+                                                                                                                                경우
+                                                                                                                            </p>
+                                                                                                                            <strong>
+                                                                                                                                규제지역
+                                                                                                                            </strong>
+
+                                                                                                                            인
+                                                                                                                            경우에만,
+                                                                                                                            재당첨
+                                                                                                                            제한이
+                                                                                                                            적용됨.{' '}
+                                                                                                                            <br />
+                                                                                                                            재당첨
+                                                                                                                            제한이
+                                                                                                                            있을
+                                                                                                                            경우
+                                                                                                                            청약을
+                                                                                                                            진행할
+                                                                                                                            수
+                                                                                                                            없음.
+                                                                                                                        </span>
+                                                                                                                    </span>
                                                                                                                 </td>
                                                                                                                 <td className="special_result">
                                                                                                                     <input
@@ -838,13 +1011,6 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                         false ? (
                                                                                                                             <span className="pause_tooltip">
                                                                                                                                 <CloseCircleOutlined />
-                                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                                    제당첨
-                                                                                                                                    제한
-                                                                                                                                    있을
-                                                                                                                                    경우
-                                                                                                                                    탈락.
-                                                                                                                                </span>
                                                                                                                             </span>
                                                                                                                         ) : null}
                                                                                                                     </span>
@@ -880,6 +1046,17 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
                                                                                                         <span class="tooltip-text">
+                                                                                                            주택별
+                                                                                                            청약
+                                                                                                            가능한
+                                                                                                            청약통장에
+                                                                                                            가입한지
+                                                                                                            24개월(지역
+                                                                                                            및
+                                                                                                            주택에
+                                                                                                            따라
+                                                                                                            6~24개월)이
+                                                                                                            경과
                                                                                                             <table
                                                                                                                 border="1"
                                                                                                                 className="tootipeTable"
@@ -998,55 +1175,10 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                                 300만원
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                250만원
+                                                                                                                                200만원
                                                                                                                             </td>
                                                                                                                             <td>
                                                                                                                                 200만원
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr>
-                                                                                                                            <td>
-                                                                                                                                102㎡
-                                                                                                                                이하
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                600만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                400만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                300만원
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr>
-                                                                                                                            <td>
-                                                                                                                                135㎡
-                                                                                                                                이하
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                1000만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                700만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                400만원
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr>
-                                                                                                                            <td>
-                                                                                                                                모든
-                                                                                                                                면적
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                1500만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                1000만원
-                                                                                                                            </td>
-                                                                                                                            <td>
-                                                                                                                                500만원
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
@@ -1111,9 +1243,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
-                                    (data?.meetMonthlyAverageIncomePriority ===
+                                    (data?.meetMonthlyAverageIncomePriorityTf ===
                                         true ||
-                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                             true) &&
                                     ((data?.restrictedAreaTf === true &&
                                         data?.householderTf === true &&

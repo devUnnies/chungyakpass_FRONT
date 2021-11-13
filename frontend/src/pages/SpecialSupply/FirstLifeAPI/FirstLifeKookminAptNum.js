@@ -13,6 +13,18 @@ function FirstLifeKookminAptNum(props) {
         (state) => state.firstInLifeKookmin
     );
 
+    const [form, setForm] = useState({
+        name: '',
+        firstRankHistoryYn: '',
+    });
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setForm({
+            ...form,
+            [name]: value,
+        });
+    };
+
     const [
         notificationNumber,
         setNotificationNumber,
@@ -41,24 +53,37 @@ function FirstLifeKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        dispatch(
-            postFirstInLifeKookminAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-                firstLifeKookminType: firstLifeKookminType,
-            })
-        ); // api 연결 요청.
+        if (
+            notificationNumber === '' ||
+            housingType === '' ||
+            firstLifeKookminType === ''
+        ) {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else if (form.firstRankHistoryYn === 'n') {
+            alert(
+                '일반공급 1순위 당첨 이력이 존재하는 경우에만 생애최초 자격확인이 가능합니다.'
+            );
+        } else {
+            dispatch(
+                postFirstInLifeKookminAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                    firstLifeKookminType: firstLifeKookminType,
+                })
+            ); // api 연결 요청.
 
-        const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
-        console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/specialFirstLifeKookmin',
-            props: {
-                notificationNumber,
-                housingType,
-                firstLifeKookminType,
-            },
-        });
+            const data =
+                firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/specialFirstLifeKookmin',
+                props: {
+                    notificationNumber,
+                    housingType,
+                    firstLifeKookminType,
+                },
+            });
+        }
     };
 
     useEffect(() => {
@@ -128,6 +153,38 @@ function FirstLifeKookminAptNum(props) {
                                 그 외 국민주택
                             </option>
                         </select>
+
+                        <div className="paramSelect">
+                            <span className="qulificaitonBoxTitle">
+                                <strong>일반공급 1순위 당첨 이력</strong>
+                            </span>
+                            <input
+                                className="paramSelectInput"
+                                type="radio"
+                                name="firstRankHistoryYn"
+                                onChange={onChange}
+                                value="y"
+                                checked={
+                                    form.firstRankHistoryYn === 'y'
+                                        ? true
+                                        : false
+                                }
+                            />
+                            <span className="selectInputText">존재</span>
+                            <input
+                                className="paramSelectInput"
+                                type="radio"
+                                name="firstRankHistoryYn"
+                                onChange={onChange}
+                                value="n"
+                                checked={
+                                    form.firstRankHistoryYn === 'n'
+                                        ? true
+                                        : false
+                                }
+                            />
+                            <span className="selectInputText">미존재</span>
+                        </div>
 
                         <div className="buttonContainer">
                             <span className="buttonPosition">

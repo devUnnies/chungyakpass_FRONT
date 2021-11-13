@@ -41,25 +41,33 @@ function OldParentKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        dispatch(
-            postOldParentKookminAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-                oldParentKookminType: oldParentKookminType,
-            })
-        ); // api 연결 요청.
+        if (
+            notificationNumber === '' ||
+            housingType === '' ||
+            oldParentKookminType === ''
+        ) {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else {
+            dispatch(
+                postOldParentKookminAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                    oldParentKookminType: oldParentKookminType,
+                })
+            ); // api 연결 요청.
 
-        const data =
-            oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
-        console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/specialOldParentKookmin',
-            state: {
-                notificationNumber,
-                housingType,
-                oldParentKookminType,
-            },
-        });
+            const data =
+                oldParentKookminAptNumStore.postOldParentKookminAptNum.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/specialOldParentKookmin',
+                state: {
+                    notificationNumber,
+                    housingType,
+                    oldParentKookminType,
+                },
+            });
+        }
     };
 
     useEffect(() => {
