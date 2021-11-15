@@ -43,12 +43,14 @@ function NewlyMarriedKookminSpecialAptNum(props) {
     };
 
     const onClick = async () => {
-        if (
-            notificationNumber === '' ||
-            housingType === '' ||
-            preNewlyMarriedYn === ''
-        ) {
+        if (notificationNumber === '' || housingType === '') {
             alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else if (preNewlyMarriedYn === '') {
+            alert(
+                '필수 입력칸이 비어 있습니다.' +
+                    '\n' +
+                    '예비신혼부부 여부 확인 후 항목 체크 부탁드립니다.'
+            );
         } else {
             dispatch(
                 postNewlyMarriedKookminSpecialAptNum({

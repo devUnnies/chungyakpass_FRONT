@@ -130,7 +130,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text"></span>
+                                                <span className="tooltip-text"></span>
                                             </span>
                                         </td>
                                         <td className="point_result">
@@ -162,7 +162,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text"></span>
+                                                <span className="tooltip-text"></span>
                                             </span>
                                         </td>
                                         <td className="point_result">
@@ -224,7 +224,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -265,7 +265,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -282,7 +282,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>만 19세부터 계산.</p>
                                                     수도권은 서울 인천 경기
                                                     합산하여 계산.
@@ -314,7 +314,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -331,7 +331,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>만19세부터 계산.</p>
                                                     신청자 본인과 배우자중 짧은
                                                     기간으로 산정하여 계산.
@@ -363,7 +363,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -404,7 +404,7 @@ const MultiChildPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedKookminAptNum } from '../../../store/actions/multiChildKookminAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -129,12 +130,12 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 신혼부부 국민주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 신혼부부 국민주택
+                                </span>
                             </div>
 
                             <form
@@ -157,11 +158,14 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 국민 주택의
                                                                 경우
@@ -212,14 +216,17 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
-                                                            <p>
+                                                        <span className="tooltip-text">
+                                                            {/* <p>
                                                                 ※ 인근지역의
                                                                 경우
                                                             </p>
@@ -229,7 +236,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                             공급하므로 {'\n'}{' '}
                                                             청약 공급 우선
                                                             순위에서 밀릴 수
-                                                            있음을 주의바랍니다.
+                                                            있음을 주의바랍니다. */}
                                                         </span>
                                                     </span>
                                                 </td>
@@ -271,6 +278,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 나이
                                                             </span>
                                                         </td>
@@ -308,6 +318,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         세대주
                                                                         여부
                                                                     </span>
@@ -349,6 +362,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -356,7 +372,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -462,6 +478,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         혼인
                                                                         기간 7년
                                                                         이내
@@ -504,13 +523,16 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대구성원의
                                                                                 무주택
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         <div>
                                                                                             ※
@@ -625,6 +647,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         월평균
                                                                                         소득
                                                                                         기준
@@ -633,7 +658,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 신혼부부
                                                                                                 소득기준
@@ -710,6 +735,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 전세대원의
                                                                                                 재당첨
                                                                                                 제한
@@ -717,7 +745,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                             </span>
                                                                                             <span className="info_tooltip">
                                                                                                 <InfoCircleOutlined />
-                                                                                                <span class="tooltip-text">
+                                                                                                <span className="tooltip-text">
                                                                                                     <p>
                                                                                                         국민주택의
                                                                                                         경우
@@ -770,6 +798,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         청약통장
                                                                                                         가입기간
                                                                                                         충족
@@ -777,7 +808,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <table
                                                                                                                 border="1"
                                                                                                                 className="tootipeTable"
@@ -859,6 +890,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 건설지역
                                                                                                                 별
                                                                                                                 납입횟수
@@ -867,7 +901,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <table
                                                                                                                         border="1"
                                                                                                                         className="tootipeTable"
@@ -944,6 +978,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                             <tr className="special_phase">
                                                                                                                 <td className="qualification">
                                                                                                                     <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
                                                                                                                         주택
                                                                                                                         처분일에
                                                                                                                         의한
@@ -953,7 +990,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
                                                                                                                         <InfoCircleOutlined />
-                                                                                                                        <span class="tooltip-text">
+                                                                                                                        <span className="tooltip-text">
                                                                                                                             혼인신고일
                                                                                                                             이후
                                                                                                                             주택의
@@ -1006,6 +1043,9 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                                     <tr className="special_phase">
                                                                                                                         <td className="qualification">
                                                                                                                             <span className="qualificationBox">
+                                                                                                                                <span className="qualificationIcon">
+                                                                                                                                    <CaretRightOutlined />
+                                                                                                                                </span>
                                                                                                                                 미성년
                                                                                                                                 자녀(태아
                                                                                                                                 포함)
@@ -1014,7 +1054,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                                                             </span>
                                                                                                                             <span className="info_tooltip">
                                                                                                                                 <InfoCircleOutlined />
-                                                                                                                                <span class="tooltip-text"></span>
+                                                                                                                                <span className="tooltip-text"></span>
                                                                                                                             </span>
                                                                                                                         </td>
                                                                                                                         <td className="special_result">
@@ -1121,7 +1161,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                         false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
-                                            form.supportYn === 'n')) ||
+                                            form.supportYn !== 'y')) ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     data?.meetMarriagePeriodIn7yearsTf ===
@@ -1140,7 +1180,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 {/* 1, 2순위 */}
                                 {form.newlyMarriedKookminRes === '1순위' ||
                                 form.newlyMarriedKookminRes === '2순위' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="submit"
@@ -1156,7 +1196,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
 
                                 {/* 탈락 */}
                                 {form.newlyMarriedKookminRes === '탈락' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

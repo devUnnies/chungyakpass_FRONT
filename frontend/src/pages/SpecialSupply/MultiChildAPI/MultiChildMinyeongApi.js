@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -128,12 +129,12 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 다자녀 민영주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 다자녀 민영주택
+                                </span>
                             </div>
 
                             <form
@@ -147,13 +148,16 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -208,11 +212,14 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 민영주택의
                                                                 경우
@@ -264,13 +271,16 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -323,12 +333,15 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 전세대구성원의
                                                                 무주택 여부
                                                             </span>
                                                             <span className="info_tooltip">
                                                                 <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         <div>
                                                                             ※
@@ -459,6 +472,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         3명
                                                                         이상의
                                                                         미성년
@@ -468,7 +484,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 *
                                                                                 다자녀
@@ -524,6 +540,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 나이
                                                                             </span>
                                                                         </td>
@@ -563,12 +582,15 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         세대주
                                                                                         여부
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 미성년자의
                                                                                                 경우
@@ -619,6 +641,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 형제,
                                                                                                 자매
                                                                                                 부양
@@ -626,7 +651,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                             </span>
                                                                                             <span className="info_tooltip">
                                                                                                 <InfoCircleOutlined />
-                                                                                                <span class="tooltip-text">
+                                                                                                <span className="tooltip-text">
                                                                                                     <p>
                                                                                                         미성년자의
                                                                                                         경우
@@ -735,6 +760,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         주거전용
                                                                                         85㎡
                                                                                         초과공공건설임대주택,
@@ -790,6 +818,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         전세대원의
                                                                                                         재당첨
                                                                                                         제한
@@ -797,7 +828,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 민영주택의
                                                                                                                 경우
@@ -861,6 +892,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 2주택
                                                                                                                 미만
                                                                                                                 소유
@@ -868,16 +902,14 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         <strong>
                                                                                                                             1순위
                                                                                                                             제한자
                                                                                                                         </strong>
                                                                                                                     </p>
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     민영
                                                                                                                     주택에
@@ -948,6 +980,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 <tr className="special_phase">
                                                                                                     <td className="qualification">
                                                                                                         <span className="qualificationBox">
+                                                                                                            <span className="qualificationIcon">
+                                                                                                                <CaretRightOutlined />
+                                                                                                            </span>
                                                                                                             청약통장
                                                                                                             가입기간
                                                                                                             충족
@@ -955,7 +990,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                         </span>
                                                                                                         <span className="info_tooltip">
                                                                                                             <InfoCircleOutlined />
-                                                                                                            <span class="tooltip-text">
+                                                                                                            <span className="tooltip-text">
                                                                                                                 <table
                                                                                                                     border="1"
                                                                                                                     className="tootipeTable"
@@ -1037,6 +1072,9 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                         <tr className="special_phase">
                                                                                                             <td className="qualification">
                                                                                                                 <span className="qualificationBox">
+                                                                                                                    <span className="qualificationIcon">
+                                                                                                                        <CaretRightOutlined />
+                                                                                                                    </span>
                                                                                                                     예치
                                                                                                                     금액
                                                                                                                     충족
@@ -1044,7 +1082,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                                 </span>
                                                                                                                 <span className="info_tooltip">
                                                                                                                     <InfoCircleOutlined />
-                                                                                                                    <span class="tooltip-text">
+                                                                                                                    <span className="tooltip-text">
                                                                                                                         <table
                                                                                                                             border="1"
                                                                                                                             className="tootipeTable"
@@ -1238,7 +1276,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         false ||
                                     data?.calcMinorChildren < 3 ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn === 'n' ||
+                                        (form.supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1251,7 +1289,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 {/* 1, 2순위 */}
                                 {form.multiChildMinyeongRes === '1순위' ||
                                 form.multiChildMinyeongRes === '2순위' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="button"
@@ -1267,7 +1305,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
 
                                 {/* 탈락 */}
                                 {form.multiChildMinyeongRes === '탈락' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

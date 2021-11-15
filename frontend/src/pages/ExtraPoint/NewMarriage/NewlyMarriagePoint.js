@@ -128,7 +128,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     만 19세 미만 미성년
                                                     자녀(태아 포함)
                                                 </span>
@@ -169,7 +169,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     신혼부부, 예비 신혼부부만
                                                     적용함.
                                                 </span>
@@ -200,7 +200,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -241,7 +241,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -258,7 +258,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         청약 신청하는 아파트
                                                         공고번호와 거주지 비교
@@ -296,7 +296,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -313,7 +313,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         가구당 월 평균 소득액
                                                         산정 기준
@@ -360,7 +360,7 @@ const NewlyMarriagePoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>

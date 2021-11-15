@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -125,12 +126,12 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 노부모부양 민영주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 노부모부양 민영주택
+                                </span>
                             </div>
 
                             <form
@@ -144,13 +145,16 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -189,7 +193,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                         '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
+                                                                <span className="pause-tooltip-text">
                                                                     값 입력 필요
                                                                 </span>
                                                             </span>
@@ -208,11 +212,14 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 민영주택의
                                                                 경우
@@ -264,11 +271,14 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         세대주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             노부모부양
                                                             특별공급은 세대주인
                                                             경우에만 청약 가능.
@@ -297,7 +307,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                         false ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
+                                                                <span className="pause-tooltip-text">
                                                                     만 19세 미만
                                                                     미성년자는
                                                                     세대주일
@@ -317,6 +327,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 신청한 아파트
                                                                 청약 지역의
                                                                 인근지역 혹은
@@ -325,7 +338,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                             </span>
                                                             <span className="info_tooltip">
                                                                 <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         ※
                                                                         인근지역의
@@ -385,6 +398,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         나이
                                                                     </span>
                                                                 </td>
@@ -411,7 +427,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                         '' ? (
                                                                             <span className="pause_tooltip">
                                                                                 <CloseCircleOutlined />
-                                                                                <span class="pause-tooltip-text">
+                                                                                <span className="pause-tooltip-text">
                                                                                     나이
                                                                                     입력
                                                                                     필요.
@@ -429,6 +445,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -436,7 +455,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -521,7 +540,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
+                                                                                        <span className="pause-tooltip-text">
                                                                                             만
                                                                                             19세
                                                                                             미만
@@ -554,13 +573,16 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대구성원의
                                                                                 무주택
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         <div>
                                                                                             ※
@@ -680,7 +702,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                 false ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
+                                                                                        <span className="pause-tooltip-text">
                                                                                             전
                                                                                             세대
                                                                                             구성원이
@@ -704,6 +726,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         3년
                                                                                         이상
                                                                                         노부모
@@ -712,7 +737,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 *
                                                                                                 노부모부양
@@ -762,7 +787,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
+                                                                                                <span className="pause-tooltip-text">
                                                                                                     3년
                                                                                                     이상
                                                                                                     노부모
@@ -787,6 +812,10 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
+
                                                                                                         전
                                                                                                         세대원의
                                                                                                         5년
@@ -798,10 +827,8 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
-                                                                                                            규제지역(투기과열지구
-                                                                                                            및
-                                                                                                            청약과열지역)
+                                                                                                        <span className="tooltip-text">
+                                                                                                            규제지역
                                                                                                             내
                                                                                                             민영
                                                                                                             주택에
@@ -862,6 +889,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 전세대원의
                                                                                                                 재당첨
                                                                                                                 제한
@@ -869,7 +899,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         민영주택의
                                                                                                                         경우
@@ -919,7 +949,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                                 false ? (
                                                                                                                     <span className="pause_tooltip">
                                                                                                                         <CloseCircleOutlined />
-                                                                                                                        <span class="pause-tooltip-text">
+                                                                                                                        <span className="pause-tooltip-text">
                                                                                                                             제당첨
                                                                                                                             제한
                                                                                                                             있을
@@ -949,6 +979,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         청약통장
                                                                                                         가입기간
                                                                                                         충족
@@ -956,7 +989,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <table
                                                                                                                 border="1"
                                                                                                                 className="tootipeTable"
@@ -1038,6 +1071,9 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 예치
                                                                                                                 금액
                                                                                                                 충족
@@ -1045,7 +1081,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <table
                                                                                                                         border="1"
                                                                                                                         className="tootipeTable"
@@ -1202,7 +1238,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
 
                                 {/* 순위에 따른 페이지 이동 */}
                                 {form.oldParentMinyeongRes === '1순위' ? (
-                                    <div className="oldParentRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="button"
@@ -1215,7 +1251,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                         </MainButton>
                                     </div>
                                 ) : (
-                                    <div className="oldParentRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

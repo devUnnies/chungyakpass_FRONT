@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -130,12 +131,12 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 다자녀 국민주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 다자녀 국민주택
+                                </span>
                             </div>
 
                             <form
@@ -158,11 +159,14 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 국민 주택 유형
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             선택한 국민 주택
                                                             유형에 따라 자격
                                                             확인 조건이 달라질
@@ -172,7 +176,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                 </td>
                                                 <td className="special_result">
                                                     <input
-                                                        className="aptInfoSelect"
+                                                        className="typeInfoSelect"
                                                         value={getParams}
                                                         readOnly={true}
                                                     />
@@ -203,11 +207,14 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 국민 주택의
                                                                 경우
@@ -258,13 +265,16 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -317,12 +327,15 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 전세대구성원의
                                                                 무주택 여부
                                                             </span>
                                                             <span className="info_tooltip">
                                                                 <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         <div>
                                                                             ※
@@ -435,6 +448,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         3명
                                                                         이상의
                                                                         미성년
@@ -444,7 +460,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 *
                                                                                 다자녀
@@ -504,6 +520,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         월평균
                                                                                         소득
                                                                                         기준
@@ -512,7 +531,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 *
                                                                                                 다자녀
@@ -649,6 +668,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                         <tr className="special_phase">
                                                                                             <td className="qualification">
                                                                                                 <span className="qualificationBox">
+                                                                                                    <span className="qualificationIcon">
+                                                                                                        <CaretRightOutlined />
+                                                                                                    </span>
                                                                                                     자산
                                                                                                     기준
                                                                                                     충족
@@ -656,7 +678,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                 </span>
                                                                                                 <span className="info_tooltip">
                                                                                                     <InfoCircleOutlined />
-                                                                                                    <span class="tooltip-text">
+                                                                                                    <span className="tooltip-text">
                                                                                                         <p>
                                                                                                             *
                                                                                                             공공주택
@@ -741,6 +763,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         나이
                                                                                     </span>
                                                                                 </td>
@@ -780,12 +805,15 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 세대주
                                                                                                 여부
                                                                                             </span>
                                                                                             <span className="info_tooltip">
                                                                                                 <InfoCircleOutlined />
-                                                                                                <span class="tooltip-text">
+                                                                                                <span className="tooltip-text">
                                                                                                     <p>
                                                                                                         미성년자의
                                                                                                         경우
@@ -835,6 +863,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         형제,
                                                                                                         자매
                                                                                                         부양
@@ -842,7 +873,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 미성년자의
                                                                                                                 경우
@@ -950,6 +981,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 전세대원의
                                                                                                 재당첨
                                                                                                 제한
@@ -957,7 +991,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                             </span>
                                                                                             <span className="info_tooltip">
                                                                                                 <InfoCircleOutlined />
-                                                                                                <span class="tooltip-text">
+                                                                                                <span className="tooltip-text">
                                                                                                     <p>
                                                                                                         국민주택의
                                                                                                         경우
@@ -1012,6 +1046,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         청약통장
                                                                                                         가입기간
                                                                                                         충족
@@ -1019,7 +1056,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             주택별
                                                                                                             청약가능한
                                                                                                             청약통장에
@@ -1066,6 +1103,9 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 건설지역
                                                                                                                 별
                                                                                                                 납입횟수
@@ -1074,7 +1114,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     매월
                                                                                                                     약정납입일에
                                                                                                                     월
@@ -1195,7 +1235,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                         false ||
                                     data?.calcMinorChildren < 3 ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn === 'n' ||
+                                        (form.supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (getParams === '공공주택특별법 적용' &&
                                         (data?.meetMonthlyAverageIncomeTf ===
@@ -1214,7 +1254,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 {/* 1, 2순위 */}
                                 {form.multiChildKookminRes === '1순위' ||
                                 form.multiChildKookminRes === '2순위' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="submit"
@@ -1230,7 +1270,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
 
                                 {/*탈락 */}
                                 {form.multiChildKookminRes === '탈락' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

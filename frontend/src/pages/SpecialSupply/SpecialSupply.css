@@ -167,41 +167,7 @@
 .aptNextButton:focus {
     background: var(--button-hover-bg-color, #8097c2);
 }
-
-/* special_title */
-.special_title {
-    margin-left: 20%;
-    margin-top: 5%;
-
-    border-left: 5px solid #2a4476;
-    padding: 2px;
-    font-weight: bold;
-}
-.special_mainTitle {
-    margin-left: 13px;
-    font-size: 18pt;
-    color: #000;
-    letter-spacing: 1px;
-}
-.special_subTitle {
-    color: hsl(209, 28%, 39%);
-    font-size: 10pt;
-    line-height: 1.5em;
-    letter-spacing: 2px;
-    margin-left: 5px;
-}
-/*container 공간 확보*/
-.specialSupply_form {
-    margin-bottom: 80px;
-}
-/*불러오기 버튼 위치 조정*/
-.loadButton {
-    float: right;
-    margin-right: 20%;
-    font-size: 10pt;
-}
-
-/*특별공급 자격확인 테이블*/
+/* loading_msg */
 .loading_msg1 {
     margin-top: -10%;
     margin-left: 5%;
@@ -217,11 +183,42 @@
     font-family: 'Gothic A1', sans-serif;
 }
 
+/* special_title */
+.special_title {
+    margin-left: 21%;
+}
+.special_mainTitle {
+    color: #000;
+    font-size: 18pt;
+    letter-spacing: 2px;
+}
+.special_subTitle {
+    font-size: 15pt;
+}
+.special_subPlusTitle {
+    margin-top: 1%;
+    text-align: left;
+    font-size: 12pt;
+    color: black;
+    letter-spacing: 2px;
+}
+
+/*container 공간 확보*/
+.specialSupply_form {
+    margin-bottom: 80px;
+}
+/*불러오기 버튼 위치 조정*/
+.loadButton {
+    float: right;
+    margin-right: 20%;
+    font-size: 10pt;
+}
+
 /* 특별공급 리스트 테이블 */
 .special_table {
     margin-top: 5%;
-    margin-left: 25%;
-    width: 50%;
+    margin-left: 21%;
+    width: 60%;
 }
 .special_phase {
     position: relative;
@@ -232,25 +229,43 @@
 .qualification,
 span.qualificationBox,
 .special_result {
-    padding-bottom: 5%;
+    padding-bottom: 6%;
     font-size: 14pt;
+}
+.special_phase td.qualification {
+    width: 70%;
 }
 .special_result_input {
     padding-bottom: 5%;
     margin-left: 20%;
 }
+.qualificationIcon {
+    margin-right: 1%;
+
+    color: #2a4476;
+    font-size: 12pt;
+}
 
 /* input text box 테두리 보이지 않도록. */
-.aptInfoSelect {
+input.aptInfoSelect {
+    margin-right: 5%;
+    margin-left: 25%;
+
     border: 0;
-    width: 150px;
+    width: 90px;
     text-align: right;
-    margin-right: 30px;
+}
+.typeInfoSelect {
+    border: 0;
+    width: 180px;
+    margin-left: -10%;
+    margin-right: 4%;
+
+    text-align: right;
 }
 .InputText {
-    margin-right: 15px;
     margin-left: 3px;
-    margin-right: 15px;
+    margin-right: 5px;
 }
 
 /*적격 진행*/
@@ -262,8 +277,9 @@ span.qualificationBox,
 /*자격 조건 상세 말풍선*/
 .info_tooltip {
     margin: 10px;
-    display: inline-block;
+
     color: #2a4476;
+    font-size: 12pt;
 }
 /* 툴팁 테이블 디자인 */
 .tootipeTable {
@@ -308,23 +324,12 @@ span.qualificationBox,
 }
 
 /* rank 버튼 위치 조정 */
-.multiChildRankButton,
-.firstLifeRankButton {
+.specialRankButton {
     float: right;
-    margin-right: 24%;
-
-    font-size: 10pt;
-}
-.oldParentRankButton {
-    float: right;
-    margin-right: 24%;
+    margin-right: 22.5%;
 
     font-size: 10pt;
 }
 .rankRes {
     color: white;
-}
-
-.qualificationBox {
-    width: 200px;
 }

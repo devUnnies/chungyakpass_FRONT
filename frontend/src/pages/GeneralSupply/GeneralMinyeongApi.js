@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -14,6 +16,7 @@ import './GeneralSupply.css';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/Loading/loading';
+import Tooltip from '../../components/Tooltip/Tooltip';
 
 const GeneralMinyeongApi = ({ onSaveData, location }) => {
     const [getList, setGetList] = useState();
@@ -124,13 +127,18 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                     ) : (
                         <>
                             <div className="general_title">
-                                <h3 className="general_mainTitle">
-                                    일반공급
-                                    <span className="general_subTitle">
-                                        {' '}
-                                        | 민영주택{' '}
+                                <strong className="general_mainTitle">
+                                    일반공급{' '}
+                                </strong>
+                                <span className="general_subTitle">
+                                    | 민영주택
+                                </span>
+                                <div className="general_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
                                     </span>
-                                </h3>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             {/* 자격확인 테이블 */}
@@ -145,13 +153,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <Tooltip className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -164,7 +175,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             주택 시장 안정화
                                                             등을 위해 지정하여
                                                             관리하는 지역.
-                                                        </span>
+                                                        </Tooltip>
                                                     </span>
                                                 </td>
                                                 <td className="general_result">
@@ -202,11 +213,14 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 민영주택의
                                                                 경우
@@ -258,13 +272,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -317,6 +334,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                     <tr className="general_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 나이
                                                             </span>
                                                         </td>
@@ -354,12 +374,15 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             <tr className="general_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         세대주
                                                                         여부
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 미성년자의
                                                                                 경우
@@ -410,6 +433,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                     <tr className="general_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -417,7 +443,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -455,7 +481,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                         <td className="general_result">
                                                                             <span className="general_result_input">
                                                                                 <input
-                                                                                    className="isSupportInput"
                                                                                     type="radio"
                                                                                     name="supportYn"
                                                                                     onChange={
@@ -473,7 +498,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                     예
                                                                                 </span>
                                                                                 <input
-                                                                                    className="isSupportInput"
                                                                                     type="radio"
                                                                                     name="supportYn"
                                                                                     onChange={
@@ -520,6 +544,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             <tr className="general_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         소득이
                                                                         있으면서
                                                                         독립적으로
@@ -529,7 +556,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 미혼
                                                                                 20대
@@ -626,12 +653,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             <tr className="general_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         주거전용
                                                                         85㎡
                                                                         초과공공건설임대주택,
                                                                         수도권에
                                                                         지정된
-                                                                        공공주택지구에서
+                                                                        공공주택지구에서{' '}
+                                                                        <br />
                                                                         공급하는
                                                                         민영주택에
                                                                         청약하는가?
@@ -681,6 +712,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                             <tr className="general_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         전세대원의
                                                                                         재당첨
                                                                                         제한
@@ -688,7 +722,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                     </span>{' '}
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 민영주택의
                                                                                                 경우
@@ -752,6 +786,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                     <tr className="general_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 2주택
                                                                                                 미만
                                                                                                 소유
@@ -762,7 +799,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                             <input
                                                                                                 className="generalAptInfoSelect"
                                                                                                 value={
-                                                                                                    data?.meetHouseHavingLessThan2Apt
+                                                                                                    data?.meetHouseHavingLessThan2AptTf
                                                                                                         ? '충족'
                                                                                                         : '미충족'
                                                                                                 }
@@ -771,7 +808,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                 }
                                                                                             />
                                                                                             <span>
-                                                                                                {data?.meetHouseHavingLessThan2Apt ===
+                                                                                                {data?.meetHouseHavingLessThan2AptTf ===
                                                                                                 true ? (
                                                                                                     <span
                                                                                                         className="progress"
@@ -782,7 +819,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                         <CheckCircleOutlined />
                                                                                                     </span>
                                                                                                 ) : null}
-                                                                                                {data?.meetHouseHavingLessThan2Apt ===
+                                                                                                {data?.meetHouseHavingLessThan2AptTf ===
                                                                                                 false ? (
                                                                                                     <span className="secondRankTootip">
                                                                                                         <PauseCircleOutlined />
@@ -794,7 +831,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
                                                                                     {/* 규제 지역인 경우에만 보이도록 */}
                                                                                     {/* 세대주 여부 (미성년자 제외) */}
-                                                                                    {data?.meetHouseHavingLessThan2Apt ===
+                                                                                    {data?.meetHouseHavingLessThan2AptTf ===
                                                                                     true ? (
                                                                                         <>
                                                                                             {data?.americanAge >=
@@ -803,21 +840,22 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                     <tr className="general_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 세대주
                                                                                                                 여부
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         <strong>
                                                                                                                             1순위
                                                                                                                             제한자
                                                                                                                         </strong>
                                                                                                                     </p>
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     국민
                                                                                                                     주택에
@@ -866,6 +904,10 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                     <tr className="general_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
+
                                                                                                                 전
                                                                                                                 세대원의
                                                                                                                 5년
@@ -877,16 +919,14 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         <strong>
                                                                                                                             1순위
                                                                                                                             제한자
                                                                                                                         </strong>
                                                                                                                     </p>
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     국민
                                                                                                                     주택에
@@ -963,13 +1003,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 <tr className="general_phase">
                                                                                     <td className="qualification">
                                                                                         <span className="qualificationBox">
+                                                                                            <span className="qualificationIcon">
+                                                                                                <CaretRightOutlined />
+                                                                                            </span>
                                                                                             청약통장
                                                                                             가입기간
                                                                                             충족여부
                                                                                         </span>
                                                                                         <span className="info_tooltip">
                                                                                             <InfoCircleOutlined />
-                                                                                            <span class="tooltip-text">
+                                                                                            <span className="tooltip-text">
                                                                                                 <table
                                                                                                     border="1"
                                                                                                     className="tootipeTable"
@@ -1006,17 +1049,19 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                                             12개월{' '}
                                                                                                             <br />
                                                                                                             (필요한
-                                                                                                            경우,
+                                                                                                            경우,{' '}
+                                                                                                            <br />
                                                                                                             24개월까지
-                                                                                                            연장가능)
+                                                                                                            연장)
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             6개월{' '}
                                                                                                             <br />
                                                                                                             (필요한
-                                                                                                            경우,
+                                                                                                            경우,{' '}
+                                                                                                            <br />
                                                                                                             12개월까지
-                                                                                                            연장가능)
+                                                                                                            연장)
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
@@ -1059,12 +1104,15 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                         <tr className="general_phase">
                                                                                             <td className="qualification">
                                                                                                 <span className="qualificationBox">
+                                                                                                    <span className="qualificationIcon">
+                                                                                                        <CaretRightOutlined />
+                                                                                                    </span>
                                                                                                     예치금액
                                                                                                     충족여부
                                                                                                 </span>
                                                                                                 <span className="info_tooltip">
                                                                                                     <InfoCircleOutlined />
-                                                                                                    <span class="tooltip-text">
+                                                                                                    <span className="tooltip-text">
                                                                                                         <div color="red">
                                                                                                             청약부금
                                                                                                             가입자는
@@ -1222,7 +1270,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     ((data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             true &&
-                                        data?.meetHouseHavingLessThan2Apt ===
+                                        data?.meetHouseHavingLessThan2AptTf ===
                                             true &&
                                         data?.householderTf === true &&
                                         data?.meetAllHouseMemberNotWinningIn5yearsTf ===
@@ -1251,7 +1299,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                             data?.meetAllHouseMemberNotWinningIn5yearsTf ===
                                                 false ||
                                             data?.priorityApt === false ||
-                                            data?.meetHouseHavingLessThan2Apt ===
+                                            data?.meetHouseHavingLessThan2AptTf ===
                                                 false ||
                                             data?.meetBankbookJoinPeriodTf ===
                                                 false ||
@@ -1270,11 +1318,11 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     data?.meetLivingInSurroundAreaTf ===
                                         false ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn === 'n' ||
+                                        (form.supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (data?.americanAge >= 20 &&
                                         data?.americanAge < 30 &&
-                                        form.lifeYn === 'n') ||
+                                        form.lifeYn !== 'y') ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             false)

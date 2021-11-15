@@ -152,7 +152,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                                 {data?.numberOfMinors === '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -169,7 +169,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     만 19세 미만 미성년
                                                     자녀(태아 포함)
                                                 </span>
@@ -236,7 +236,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -253,7 +253,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         청약 신청하는 아파트
                                                         공고번호와 거주지 비교
@@ -291,7 +291,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -308,7 +308,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         가구당 월 평균 소득액
                                                         산정 기준
@@ -355,7 +355,7 @@ const OneParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>

@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postGeneralKookminAptNum } from '../../store/actions/generalKookminAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
     PauseCircleOutlined,
-    HomeOutlined,
 } from '@ant-design/icons';
 import MainButton from '../../components/Button/MainButton';
 import './GeneralSupply.css';
@@ -127,18 +128,19 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                         </>
                     ) : (
                         <>
-                            <div className="historiesInfoHeaderContainer">
-                                <span className="apt_title">
-                                    <span className="apt_titleIcon">
-                                        <HomeOutlined />
-                                    </span>
-                                    <strong className="apt_mainTitle">
-                                        일반공급{' '}
-                                    </strong>
-                                    <span className="apt_subTitle">
-                                        | 국민주택
-                                    </span>
+                            <div className="general_title">
+                                <strong className="general_mainTitle">
+                                    일반공급{' '}
+                                </strong>
+                                <span className="general_subTitle">
+                                    | 국민주택
                                 </span>
+                                <div className="general_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             {/* 자격확인 테이블 */}
@@ -154,13 +156,16 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -211,11 +216,14 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 국민 주택의
                                                                 경우
@@ -266,13 +274,16 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             <tr className="general_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -325,12 +336,15 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                     <tr className="general_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 전세대구성원의
                                                                 무주택 여부
                                                             </span>
                                                             <span className="info_tooltip">
                                                                 <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         <div>
                                                                             ※
@@ -443,6 +457,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                             <tr className="general_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         나이
                                                                     </span>
                                                                 </td>
@@ -483,12 +500,15 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                     <tr className="general_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 세대주
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -539,6 +559,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                             <tr className="general_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         형제,
                                                                                         자매
                                                                                         부양
@@ -546,7 +569,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 미성년자의
                                                                                                 경우
@@ -651,6 +674,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                     <tr className="general_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 소득이
                                                                                 있으면서
                                                                                 독립적으로
@@ -660,7 +686,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미혼
                                                                                         20대
@@ -762,6 +788,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                     <tr className="general_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대원의
                                                                                 재당첨
                                                                                 제한
@@ -769,7 +798,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         국민주택의
                                                                                         경우
@@ -828,12 +857,15 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                             <tr className="general_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         세대주
                                                                                                         여부
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 <strong>
                                                                                                                     1순위
@@ -891,6 +923,10 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                             <tr className="general_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
+
                                                                                                         전
                                                                                                         세대원의
                                                                                                         5년
@@ -902,7 +938,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 <strong>
                                                                                                                     1순위
@@ -980,13 +1016,16 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                         <tr className="general_phase">
                                                                                             <td className="qualification">
                                                                                                 <span className="qualificationBox">
+                                                                                                    <span className="qualificationIcon">
+                                                                                                        <CaretRightOutlined />
+                                                                                                    </span>
                                                                                                     청약통장
                                                                                                     가입기간
                                                                                                     충족여부
                                                                                                 </span>
                                                                                                 <span className="info_tooltip">
                                                                                                     <InfoCircleOutlined />
-                                                                                                    <span class="tooltip-text">
+                                                                                                    <span className="tooltip-text">
                                                                                                         <table
                                                                                                             border="1"
                                                                                                             className="tootipeTable"
@@ -1086,6 +1125,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                 <tr className="general_phase">
                                                                                                     <td className="qualification">
                                                                                                         <span className="qualificationBox">
+                                                                                                            <span className="qualificationIcon">
+                                                                                                                <CaretRightOutlined />
+                                                                                                            </span>
                                                                                                             건설지역
                                                                                                             별
                                                                                                             납입횟수
@@ -1094,7 +1136,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                                         </span>
                                                                                                         <span className="info_tooltip">
                                                                                                             <InfoCircleOutlined />
-                                                                                                            <span class="tooltip-text">
+                                                                                                            <span className="tooltip-text">
                                                                                                                 <table
                                                                                                                     border="1"
                                                                                                                     className="tootipeTable"
@@ -1265,9 +1307,9 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                             data?.americanAge < 30 &&
                                             form.lifeYn === 'y') ||
                                         data?.americanAge >= 30) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
+                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
+                                            true &&
                                         ((data?.americanAge >= 20 &&
                                             data?.householderTf === false) ||
                                             data?.meetAllHouseMemberNotWinningIn5yearsTf ===
@@ -1292,11 +1334,12 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn === 'n' ||
+                                        (form.supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (data?.americanAge >= 20 &&
                                         data?.americanAge < 30 &&
-                                        form.lifeYn === 'n' &&
+                                        form.lifeYn !== 'y') ||
+                                    (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             false)
                                         ? (form.generalKookminRes = '탈락')

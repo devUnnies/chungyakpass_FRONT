@@ -113,7 +113,7 @@ const OldParentPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>만19세부터 계산.</p>
                                                     신청자 본인과 배우자중 짧은
                                                     기간으로 산정하여 계산.
@@ -145,7 +145,7 @@ const OldParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -186,7 +186,7 @@ const OldParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>
@@ -203,7 +203,7 @@ const OldParentPoint = ({ onSaveData }) => {
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         <strong>
                                                             부양 가족 계산
@@ -262,7 +262,7 @@ const OldParentPoint = ({ onSaveData }) => {
                                                 '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
-                                                        <span class="pause-tooltip-text"></span>
+                                                        <span className="pause-tooltip-text"></span>
                                                     </span>
                                                 ) : (
                                                     <></>

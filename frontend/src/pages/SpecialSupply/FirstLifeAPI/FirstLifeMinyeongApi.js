@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postFirstInLifeMinyeongAptNum } from '../../../store/actions/firstInLifeMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -127,12 +128,12 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 생애최초 민영주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 생애최초 민영주택
+                                </span>
                             </div>
 
                             <form
@@ -155,13 +156,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -212,11 +216,14 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 국민주택의
                                                                 경우
@@ -267,13 +274,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -326,6 +336,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 나이
                                                             </span>
                                                         </td>
@@ -363,12 +376,15 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         세대주
                                                                         여부
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 미성년자의
                                                                                 경우
@@ -417,6 +433,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -424,7 +443,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -530,13 +549,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         생애최초
                                                                         대상자
                                                                         여부
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 *
                                                                                 생애최초
@@ -604,13 +626,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대구성원의
                                                                                 무주택
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         <div>
                                                                                             ※
@@ -743,6 +768,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         월평균
                                                                                         소득
                                                                                         기준
@@ -751,7 +779,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 *
                                                                                                 생애최초
@@ -828,15 +856,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 세대주
                                                                                                                 여부
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                <span className="tooltip-text">
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     민영
                                                                                                                     주택에
@@ -890,6 +919,10 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
+
                                                                                                                 전
                                                                                                                 세대원의
                                                                                                                 5년
@@ -901,10 +934,8 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                <span className="tooltip-text">
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     민영
                                                                                                                     주택에
@@ -965,6 +996,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             <tr className="special_phase">
                                                                                                                 <td className="qualification">
                                                                                                                     <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
                                                                                                                         전세대원의
                                                                                                                         재당첨
                                                                                                                         제한
@@ -972,7 +1006,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
                                                                                                                         <InfoCircleOutlined />
-                                                                                                                        <span class="tooltip-text">
+                                                                                                                        <span className="tooltip-text">
                                                                                                                             <p>
                                                                                                                                 민영주택의
                                                                                                                                 경우
@@ -1049,6 +1083,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         청약통장
                                                                                                         가입기간
                                                                                                         충족
@@ -1056,7 +1093,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             주택별
                                                                                                             청약
                                                                                                             가능한
@@ -1149,6 +1186,9 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 예치
                                                                                                                 금액
                                                                                                                 충족
@@ -1156,7 +1196,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <table
                                                                                                                         border="1"
                                                                                                                         className="tootipeTable"
@@ -1274,7 +1314,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1순위 */}
                                 {form.firstLifeMinyeongRes === '1순위' ? (
-                                    <div className="firstLifeRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="submit"
@@ -1290,7 +1330,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
 
                                 {/* 탈락 */}
                                 {form.firstLifeMinyeongRes === '탈락' ? (
-                                    <div className="firstLifeRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

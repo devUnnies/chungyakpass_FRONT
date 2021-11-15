@@ -5,6 +5,7 @@ import useInputState from '../../../components/Input/useInputState';
 import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
 import { useHistory } from 'react-router-dom';
+import '../SpecialSupply.css';
 
 function FirstLifeKookminAptNum(props) {
     const history = useHistory();
@@ -99,7 +100,7 @@ function FirstLifeKookminAptNum(props) {
             const data =
                 firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
         }
-    }, [firstLifeKookminStore.postFirstInLifeKookminAptNum]);
+    }, [firstLifeKookminStore?.postFirstInLifeKookminAptNum]);
 
     return (
         <>
@@ -146,7 +147,6 @@ function FirstLifeKookminAptNum(props) {
                             required="required"
                         />
                         <br />
-
                         <select
                             className="specialAptNumInput"
                             name="firstLifeKookminType"

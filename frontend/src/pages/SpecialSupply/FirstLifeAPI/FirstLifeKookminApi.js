@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
-    PauseCircleOutlined,
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
@@ -30,7 +30,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     const getParams = location?.state?.firstLifeKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
 
-    const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
+    const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 생애최초 국민 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -127,12 +127,12 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 생애최초 국민주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 생애최초 국민주택
+                                </span>
                             </div>
 
                             <form
@@ -155,11 +155,14 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 국민 주택 유형
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             선택한 국민 주택
                                                             유형에 따라 자격
                                                             조건이 다릅니다.
@@ -168,7 +171,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                 </td>
                                                 <td className="special_result">
                                                     <input
-                                                        className="aptInfoSelect"
+                                                        className="typeInfoSelect"
                                                         value={getParams}
                                                         readOnly={true}
                                                     />
@@ -193,13 +196,16 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         선택한 아파트가
                                                         투기과열지구 또는
                                                         청약과열지역인가?
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -250,11 +256,14 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         청약통장 조건 충족 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 국민주택의
                                                                 경우
@@ -305,13 +314,16 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         신청한 아파트 청약
                                                         지역의 인근지역 혹은
                                                         해당지역 거주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 ※ 인근지역의
                                                                 경우
@@ -364,6 +376,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 나이
                                                             </span>
                                                         </td>
@@ -401,12 +416,15 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         세대주
                                                                         여부
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 미성년자의
                                                                                 경우
@@ -455,6 +473,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -462,7 +483,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -568,13 +589,16 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         생애최초
                                                                         대상자
                                                                         여부
                                                                     </span>
                                                                     <span className="info_tooltip">
                                                                         <InfoCircleOutlined />
-                                                                        <span class="tooltip-text">
+                                                                        <span className="tooltip-text">
                                                                             <p>
                                                                                 *
                                                                                 생애최초
@@ -642,13 +666,16 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대구성원의
                                                                                 무주택
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         <div>
                                                                                             ※
@@ -781,6 +808,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         월평균
                                                                                         소득
                                                                                         기준
@@ -789,7 +819,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 *
                                                                                                 생애최초
@@ -859,6 +889,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
                                                                                             <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 자산
                                                                                                 기준
                                                                                                 충족
@@ -866,7 +899,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                             </span>
                                                                                             <span className="info_tooltip">
                                                                                                 <InfoCircleOutlined />
-                                                                                                <span class="tooltip-text">
+                                                                                                <span className="tooltip-text">
                                                                                                     <p>
                                                                                                         *
                                                                                                         공공주택
@@ -953,12 +986,15 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 세대주
                                                                                                                 여부
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     국민
                                                                                                                     주택에
                                                                                                                     청약하는
@@ -1012,6 +1048,10 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
+
                                                                                                                 전
                                                                                                                 세대원의
                                                                                                                 5년
@@ -1023,7 +1063,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     국민
                                                                                                                     주택에
                                                                                                                     청약하는
@@ -1093,6 +1133,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         전세대원의
                                                                                                         재당첨
                                                                                                         제한
@@ -1100,7 +1143,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 국민주택의
                                                                                                                 경우
@@ -1153,6 +1196,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 청약통장
                                                                                                                 가입기간
                                                                                                                 충족
@@ -1160,7 +1206,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         주택별
                                                                                                                         청약
@@ -1224,7 +1270,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                             <input
                                                                                                                 className="aptInfoSelect"
                                                                                                                 value={
-                                                                                                                    data?.meetBankJoinPeriodTf
+                                                                                                                    data?.meetBankbookJoinPeriodTf
                                                                                                                         ? '충족'
                                                                                                                         : '미충족'
                                                                                                                 }
@@ -1233,13 +1279,13 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                                 }
                                                                                                             />
                                                                                                             <span>
-                                                                                                                {data?.meetBankJoinPeriodTf ===
+                                                                                                                {data?.meetBankbookJoinPeriodTf ===
                                                                                                                 true ? (
                                                                                                                     <span className="progress">
                                                                                                                         <CheckCircleOutlined />
                                                                                                                     </span>
                                                                                                                 ) : null}
-                                                                                                                {data?.meetBankJoinPeriodTf ===
+                                                                                                                {data?.meetBankbookJoinPeriodTf ===
                                                                                                                 false ? (
                                                                                                                     <span className="pause_tooltip">
                                                                                                                         <CloseCircleOutlined />
@@ -1250,12 +1296,15 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                     </tr>
 
                                                                                                     {/* 건설지역 별 납입횟수 충족 여부 */}
-                                                                                                    {data?.meetBankJoinPeriodTf ===
+                                                                                                    {data?.meetBankbookJoinPeriodTf ===
                                                                                                     true ? (
                                                                                                         <>
                                                                                                             <tr className="special_phase">
                                                                                                                 <td className="qualification">
                                                                                                                     <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
                                                                                                                         건설지역
                                                                                                                         별
                                                                                                                         납입횟수
@@ -1264,7 +1313,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
                                                                                                                         <InfoCircleOutlined />
-                                                                                                                        <span class="tooltip-text">
+                                                                                                                        <span className="tooltip-text">
                                                                                                                             <table
                                                                                                                                 border="1"
                                                                                                                                 className="tootipeTable"
@@ -1389,7 +1438,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1순위 */}
                                 {form.firstLifeKookminRes === '1순위' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="submit"
@@ -1405,7 +1454,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
 
                                 {/* 탈락 */}
                                 {form.firstLifeKookminRes === '탈락' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

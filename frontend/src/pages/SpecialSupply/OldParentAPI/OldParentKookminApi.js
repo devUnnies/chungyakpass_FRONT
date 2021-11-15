@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction'; // oldParentApi 만든 후 변경하기.
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -128,12 +129,12 @@ const OldParentKookminApi = ({ onSaveData }) => {
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 노부모부양 국민주택
-                                    </span>
-                                </h3>
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 노부모부양 국민주택
+                                </span>
                             </div>
 
                             <form
@@ -145,11 +146,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                     <tr className="special_phase">
                                         <td className="qualification">
                                             <span className="qualificationBox">
+                                                <span className="qualificationIcon">
+                                                    <CaretRightOutlined />
+                                                </span>
                                                 선택한 국민 주택 유형
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     선택한 국민 주택 유형에 따라
                                                     자격 확인 조건이 달라질 수
                                                     있습니다.
@@ -158,7 +162,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                         </td>
                                         <td className="special_result">
                                             <input
-                                                className="aptInfoSelect"
+                                                className="typeInfoSelect"
                                                 value={getParams}
                                                 readOnly={true}
                                             />
@@ -183,12 +187,15 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                     <tr className="special_phase">
                                         <td className="qualification">
                                             <span className="qualificationBox">
+                                                <span className="qualificationIcon">
+                                                    <CaretRightOutlined />
+                                                </span>
                                                 선택한 아파트가 투기과열지구
                                                 또는 청약과열지역인가?
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>
                                                         규제 지역('투기과열지구'
                                                         혹은 '청약과열지역') ?
@@ -234,11 +241,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                     <tr className="special_phase">
                                         <td className="qualification">
                                             <span className="qualificationBox">
+                                                <span className="qualificationIcon">
+                                                    <CaretRightOutlined />
+                                                </span>
                                                 청약통장 조건 충족 여부
                                             </span>
                                             <span className="info_tooltip">
                                                 <InfoCircleOutlined />
-                                                <span class="tooltip-text">
+                                                <span className="tooltip-text">
                                                     <p>※ 국민주택의 경우</p>
                                                     주택청약종합저축 혹은
                                                     청약저축인 경우에만 청약통장
@@ -281,11 +291,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                             <tr className="special_phase">
                                                 <td className="qualification">
                                                     <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         세대주 여부
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             노부모부양
                                                             특별공급은 세대주인
                                                             경우에만 청약 가능.
@@ -326,6 +339,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                     <tr className="special_phase">
                                                         <td className="qualification">
                                                             <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 신청한 아파트
                                                                 청약 지역의
                                                                 인근지역 혹은
@@ -334,7 +350,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                             </span>
                                                             <span className="info_tooltip">
                                                                 <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         ※
                                                                         인근지역의
@@ -394,6 +410,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
                                                                     <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         나이
                                                                     </span>
                                                                 </td>
@@ -433,6 +452,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 형제,
                                                                                 자매
                                                                                 부양
@@ -440,7 +462,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
                                                                                         경우
@@ -544,13 +566,16 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                     <tr className="special_phase">
                                                                         <td className="qualification">
                                                                             <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 전세대구성원의
                                                                                 무주택
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
                                                                                 <InfoCircleOutlined />
-                                                                                <span class="tooltip-text">
+                                                                                <span className="tooltip-text">
                                                                                     <p>
                                                                                         <div>
                                                                                             ※
@@ -683,6 +708,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
                                                                                     <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         3년
                                                                                         이상
                                                                                         노부모
@@ -691,7 +719,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                     </span>
                                                                                     <span className="info_tooltip">
                                                                                         <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 *
                                                                                                 노부모부양
@@ -756,6 +784,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         월평균
                                                                                                         소득
                                                                                                         기준
@@ -764,7 +795,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span class="tooltip-text">
+                                                                                                        <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 *
                                                                                                                 노부모부양
@@ -885,7 +916,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                         false ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
+                                                                                                                <span className="pause-tooltip-text">
                                                                                                                     월평균
                                                                                                                     소득
                                                                                                                     미충족
@@ -903,6 +934,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                 <tr className="special_phase">
                                                                                                     <td className="qualification">
                                                                                                         <span className="qualificationBox">
+                                                                                                            <span className="qualificationIcon">
+                                                                                                                <CaretRightOutlined />
+                                                                                                            </span>
                                                                                                             자산
                                                                                                             기준
                                                                                                             충족
@@ -910,7 +944,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                         </span>
                                                                                                         <span className="info_tooltip">
                                                                                                             <InfoCircleOutlined />
-                                                                                                            <span class="tooltip-text">
+                                                                                                            <span className="tooltip-text">
                                                                                                                 <p>
                                                                                                                     *
                                                                                                                     공공주택
@@ -967,7 +1001,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                             false ? (
                                                                                                                 <span className="pause_tooltip">
                                                                                                                     <CloseCircleOutlined />
-                                                                                                                    <span class="pause-tooltip-text">
+                                                                                                                    <span className="pause-tooltip-text">
                                                                                                                         자산
                                                                                                                         기준
                                                                                                                         미충족
@@ -1002,6 +1036,10 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
+
                                                                                                                 전
                                                                                                                 세대원의
                                                                                                                 5년
@@ -1013,10 +1051,8 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
-                                                                                                                    규제지역(투기과열지구
-                                                                                                                    및
-                                                                                                                    청약과열지역)
+                                                                                                                <span className="tooltip-text">
+                                                                                                                    규제지역
                                                                                                                     내
                                                                                                                     국민
                                                                                                                     주택에
@@ -1083,6 +1119,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 전세대원의
                                                                                                                 재당첨
                                                                                                                 제한
@@ -1090,7 +1129,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
-                                                                                                                <span class="tooltip-text">
+                                                                                                                <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         국민주택의
                                                                                                                         경우
@@ -1130,7 +1169,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                 false ? (
                                                                                                                     <span className="pause_tooltip">
                                                                                                                         <CloseCircleOutlined />
-                                                                                                                        <span class="pause-tooltip-text">
+                                                                                                                        <span className="pause-tooltip-text">
                                                                                                                             제당첨
                                                                                                                             제한
                                                                                                                             있을
@@ -1150,6 +1189,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                             <tr className="special_phase">
                                                                                                                 <td className="qualification">
                                                                                                                     <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
                                                                                                                         청약통장
                                                                                                                         가입기간
                                                                                                                         충족
@@ -1157,7 +1199,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
                                                                                                                         <InfoCircleOutlined />
-                                                                                                                        <span class="tooltip-text">
+                                                                                                                        <span className="tooltip-text">
                                                                                                                             <table
                                                                                                                                 border="1"
                                                                                                                                 className="tootipeTable"
@@ -1239,6 +1281,9 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                     <tr className="special_phase">
                                                                                                                         <td className="qualification">
                                                                                                                             <span className="qualificationBox">
+                                                                                                                                <span className="qualificationIcon">
+                                                                                                                                    <CaretRightOutlined />
+                                                                                                                                </span>
                                                                                                                                 건설지역
                                                                                                                                 별
                                                                                                                                 납입횟수
@@ -1247,7 +1292,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                                                             </span>
                                                                                                                             <span className="info_tooltip">
                                                                                                                                 <InfoCircleOutlined />
-                                                                                                                                <span class="tooltip-text">
+                                                                                                                                <span className="tooltip-text">
                                                                                                                                     <table
                                                                                                                                         border="1"
                                                                                                                                         className="tootipeTable"
@@ -1341,6 +1386,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
 
                                 <div className="rankRes">
                                     {/* 순위 매기기 */}
+                                    {/* 1순위 */}
                                     {getParams !== '' &&
                                     data?.accountTf === true &&
                                     data?.householderTf === true &&
@@ -1375,7 +1421,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
 
                                 {/* 순위에 따른 페이지 이동 */}
                                 {form.oldParentKookminRes === '1순위' ? (
-                                    <div className="oldParentRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="button"
@@ -1388,7 +1434,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                         </MainButton>
                                     </div>
                                 ) : (
-                                    <div className="oldParentRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"
