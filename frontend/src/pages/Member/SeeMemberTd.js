@@ -4,13 +4,6 @@ import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 
 const Td = ({ item, assets, handleEdit, handleRemove }) => {
-    const [isMemberShow, setIsMemberShow] = useState(false);
-    const [isAssetShow, setIsAssetShow] = useState(false);
-    const [isHistoryShow, setIsHistoryShow] = useState(false);
-    const [isLimitShow, setIsLimitShow] = useState(false);
-
-    let text = '';
-
     const onEdit = () => {
         // console.log(JSON.stringify(item));
         handleEdit(item);

@@ -3,233 +3,101 @@ import './Histories.css';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 import HistoriesTr from './HistoriesTr';
-import AddHistory from './AddHistory';
 import { useDispatch, useSelector } from 'react-redux';
-import AddLimit from './AddLimit';
 import { useHistory, useLocation } from 'react-router';
-import { addChung, getChung } from '../../store/actions/commonInfoAction';
+import {
+    addChungDel,
+    delChung,
+    getChung,
+    modChungDel,
+    modRestrDel,
+} from '../../store/actions/commonInfoAction';
 
-const SeeHistories = (props) => {
-    const [name, setName] = useState();
-    const [data, setData] = useState();
-    const [history, setHistory] = useState();
-    const [histories, setHistories] = useState();
-    const [limit, setLimit] = useState();
-    const [limits, setLimits] = useState();
-    const [selected, setSelected] = useState('');
-    const [add, setAdd] = useState(false);
-    const [addLimit, setAddLimit] = useState(false);
-    const [modify, setModify] = useState(false);
-
-    const nextId = useRef(0);
+const SeeHistories = () => {
+    const _history = useHistory();
+    const dispatch = useDispatch();
     const location = useLocation();
+
+    // 이름 띄워주기 위한
+    const [name, setName] = useState();
+    const [history, setHistory] = useState();
+
     const memberId = location.state.memberId;
     const haveAssets = location.state.haveAssets;
     const pos = location.state.pos;
-
-    console.log('멤버 아이디 !!!  ' + memberId);
+    let ineligibleDate = location.state.ineligibleDate
+        ? location.state.ineligibleDate
+        : '';
 
     const commonInfoStore = useSelector((state) => state.commonInfo);
-    const _history = useHistory();
-    const dispatch = useDispatch();
 
-    // 추가버튼 누르면 추가화면이 아래에 뜨게
+    // 추가버튼을 누르면 추가화면으로 이동
     const handleAdd = () => {
-        // setAdd(!add);
-        // setModify(false);
+        dispatch(addChungDel());
+
         _history.push('/addHistory', {
             pos: -1,
-            onSaveData: handleHistorySave,
+            ineligibleDate: ineligibleDate,
+            memberId: memberId,
         });
     };
 
-    // 추가 혹은 수정한 값 저장하는 함수
-    const handleHistorySave = (data) => {
-        // 데이터 수정하기
-        if (data.id) {
-            // console.log(data.id + '!!!!!');
-            // 받아온 데이터 id 가 있을 경우
-            setHistory(data);
-            setHistories(
-                history.map((row) =>
-                    data.id === row.id
-                        ? {
-                              // 가져온 id 가 기존 table id가 같으면
-                              // 가져온 데이터 변경
-                              id: data.id,
-                              houseName: data.houseName,
-                              supply: data.supply,
-                              specialSupply: data.specialSupply,
-                              housingType: data.housingType,
-                              ranking: data.ranking,
-                              result: data.result,
-                              preliminaryNumber: data.preliminaryNumber,
-                              winningDate: data.winningDate,
-                              raffle: data.raffle,
-                              cancelWinYn: data.cancelWinYn,
-                              ineligibleYn: data.ineligibleYn,
-                              ineligibleDate: data.ineligibleDate,
-                          }
-                        : row
-                )
-            );
-        } else {
-            // console.log(JSON.stringify(data));
-            // 기존의 데이터 추가하기
-            setHistory(data);
-            nextId.current += 1;
-        }
+    // 수정버튼을 누르면 !!
+    // history
+    const handleHistoryEdit = (item) => {
+        dispatch(modChungDel());
 
-        setAdd(false);
+        _history.push('/modHistory', {
+            pos: 0,
+            history: item,
+            memberId: memberId,
+            ineligible: {
+                isIneligible: ineligibleDate ? true : false,
+                data: ineligibleDate,
+            },
+        });
+    };
+    // limit
+
+    // history 삭제하기
+    const handleRemove = (id) => {
+        console.log('지웁니다 ~!!! ' + JSON.stringify(history[id]));
+        setHistory((info) => info.filter((item) => item.id !== id));
+        dispatch(delChung(id));
     };
 
-    // 추가 혹은 수정한 값 저장하는 함수
-    const handleLimitSave = (data) => {
-        // 데이터 수정하기
-        if (data.id) {
-            // console.log(data.id + '!!!!!');
-            // 받아온 데이터 id 가 있을 경우
-            setLimit(data);
-            setLimits(
-                limit.map((row) =>
-                    data.id === row.id
-                        ? {
-                              // 가져온 id 가 기존 table id가 같으면
-                              // 가져온 데이터 변경
-                              reWinningRestrictedDate:
-                                  data.reWinningRestrictedDate,
-                              specialSupplyRestrictedYn:
-                                  data.specialSupplyRestrictedYn,
-                              unqualifiedSubscriberRestrictedDate:
-                                  data.unqualifiedSubscriberRestrictedDate,
-                              requlatedAreaFirstPriorityRestrictedDate:
-                                  data.requlatedAreaFirstPriorityRestrictedDate,
-                              additionalPointSystemRestrictedDate:
-                                  data.additionalPointSystemRestrictedDate,
-                          }
-                        : row
-                )
-            );
-        } else {
-            // console.log(JSON.stringify(data));
-            // 기존의 데이터 추가하기
-            setLimit(data);
-        }
-
-        setAddLimit(false);
-        console.log(JSON.stringify(limit));
-    };
-
+    // 초기에 memberId가 있으면 memberId로 청약 이력을 조회함
     useEffect(() => {
         if (memberId) dispatch(getChung(memberId));
     }, []);
 
+    // 청약 이력이 존재한다면
     useEffect(() => {
         const temp = commonInfoStore.getChungyak.data;
         if (temp) {
-            temp?.map((content, i) => {
-                setHistory(content);
-                setLimit(content.houseMemberChungyakRestrictionReadDto);
-            });
+            setHistory(temp);
         }
     }, [commonInfoStore.getChungyak]);
 
-    // asset이 변할 때마다 assets에 추가하기
-    useEffect(() => {
-        if (data && history)
-            setData([
-                ...data,
-                { history: history, limit: null, id: nextId.current },
-            ]);
-        else if (history)
-            setData([{ history: history, limit: null, id: nextId.current }]);
-    }, [history]);
-
-    useEffect(() => {
-        if (data && limit) {
-            const temp = setData((info) =>
-                info.filter((item) => item.id !== nextId.current)
-            );
-
-            console.log(JSON.stringify(temp));
-            if (temp) {
-                setData([
-                    ...temp,
-                    { history: history, limit: limit, id: nextId.current },
-                ]);
-            } else {
-                setData([
-                    { history: history, limit: limit, id: nextId.current },
-                ]);
-            }
-        }
-    }, [limit]);
-
-    useEffect(() => {
-        console.log(JSON.stringify(data), nextId);
-    }, [data]);
-
+    // 새로 추가된 멤버일 때, 수정하려는 멤버일 때의 데이터를 가져와서
     useEffect(() => {
         const data = commonInfoStore.addMem.data;
         const modData = commonInfoStore.modMem.data;
 
-        if (data) {
-            setName(data.name);
-        } else if (modData) {
+        // 이름을 변경해준다
+        if (modData) {
             setName(modData.name);
+        } else if (data) {
+            setName(data.name);
         }
     }, [commonInfoStore.addMem, commonInfoStore.modMem]);
 
-    // history 삭제하기
-    const handleRemove = (id) => {
-        console.log(JSON.stringify(data), id);
-        setData((info) => info.filter((item) => item.id !== id));
-
-        nextId.current -= 1;
-    };
-
-    // 수정하기
-    const handleEdit = (item) => {
-        setAdd(false);
-        setModify(!modify);
-        const selectedData = {
-            id: item.id,
-            houseName: item.houseName,
-            supply: item.supply,
-            specialSupply: item.specialSupply,
-            housingType: item.housingType,
-            ranking: item.ranking,
-            result: item.result,
-            preliminaryNumber: item.preliminaryNumber,
-            winningDate: item.winningDate,
-            raffle: item.raffle,
-            cancelWinYn: item.cancelWinYn,
-            ineligibleYn: item.ineligibleYn,
-            ineligibleDate: item.ineligibleDate,
-        };
-        // console.log(selectedData);
-        setSelected(selectedData);
-    };
-
-    // 수정 취소하기
-    const handleCancel = () => {
-        setModify(false);
-    };
-
-    // 수정한 값 저장하고 수정 화면 닫기
-    const handleHistoryEditSubmit = (item) => {
-        // console.log(item);
-        handleHistorySave(item);
-        setModify(false);
-    };
-
+    // 다음 버튼을 누르면 자산으로 갈지 구성원 목록으로 갈지 정한다
     const handleHistoriesSubmit = () => {
-        console.log('이력 목록 !!!! ' + JSON.stringify(histories));
-        console.log('자산 있늬 ??? ?' + JSON.stringify(haveAssets));
         // 자산 목록 !!! 으로 !!! 넘겨야 함 !!!!
         if (haveAssets === 'y') {
             _history.push('/assets', {
-                ineligibleDate: history.ineligibleDate,
+                ineligibleDate: ineligibleDate,
                 pos: -3,
             });
         } else {
@@ -262,18 +130,21 @@ const SeeHistories = (props) => {
                 <thead className="historiesInfoThead">
                     <tr className="historiesInfoTheadTr">
                         <th className="historiesInfoTheadTrTh"> 청약이력 </th>
+                        <th className="historiesInfoTheadTrTh"> 수정 </th>
                         <th className="historiesInfoTheadTrTh">
                             {' '}
                             청약제한사항{' '}
                         </th>
+                        <th className="historiesInfoTheadTrTh"> 수정 </th>
                         <th className="historiesInfoTheadTrTh"> 삭제 </th>
                     </tr>
                 </thead>
-                {histories !== [] ? (
+                {history ? (
                     <HistoriesTr
-                        data={data}
+                        data={history}
                         handleRemove={handleRemove}
-                        handleEdit={handleEdit}
+                        handleHistoryEdit={handleHistoryEdit}
+                        // handleLimitEdit={handleLimitEdit}
                     />
                 ) : null}
             </table>
@@ -283,7 +154,7 @@ const SeeHistories = (props) => {
                     <PlusOutlined className="addButton"></PlusOutlined>
                 </div>
 
-                {histories !== [] ? (
+                {history ? (
                     <div
                         className="submitButtonContainer"
                         onClick={handleHistoriesSubmit}
@@ -294,23 +165,6 @@ const SeeHistories = (props) => {
                     <></>
                 )}
             </div>
-
-            {/* {add && (
-                <AddHistory
-                    onSaveData={handleHistorySave}
-                    setAddLimit={setAddLimit}
-                    setAdd={setAdd}
-                    memberId={memberId}
-                />
-            )} */}
-            {addLimit && <AddLimit onSaveData={handleLimitSave} />}
-            {/* {modify && (
-                <ModifyHistory
-                    selectedData={selected}
-                    handleCancel={handleCancel}
-                    handleEditSubmit={handleHistoryEditSubmit}
-                />
-            )} */}
 
             <div className="backButton">
                 <SubButton
