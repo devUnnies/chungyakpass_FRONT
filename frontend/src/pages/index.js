@@ -17,6 +17,9 @@ export { default as ModMember } from './Member/ModMember';
 export { default as SeeMember } from './Member/SeeMember';
 export { default as SeeHistories } from './Histories/SeeHistories';
 export { default as AddHistory } from './Histories/AddHistory';
+export { default as ModHistory } from './Histories/ModHistory';
+export { default as AddLimit } from './Histories/AddLimit';
+export { default as ModLimit } from './Histories/ModLimit';
 export { default as SeeAssets } from './Assets/SeeAssets';
 // 끝 ---
 export { default as AtAGlance } from './AtAGlance/AtAGlance';
