@@ -78,7 +78,7 @@ function MultiChildPointAptNum(props) {
 
     return (
         <>
-            <div className="historiesInfoHeaderContainer">
+            <div className="numberssInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
                         <CalculatorOutlined />
