@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Confetti from 'react-confetti';
 import './Rank.css';
-import MainButton from '../../components/Button/MainButton';
 import NormalRequiredDocuments from '../SubmitDocuments/NormalRequiredDocuments';
 import { useLocation } from 'react-router';
 import Loading from '../../components/Loading/loading';
@@ -23,11 +22,11 @@ function Rank({ history }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const GreetingMessage1st =
-        '모든 자격 조건을 충족하셨습니다. \n 1순위 축하드립니다!'; // 1순위일 경우 출력 결과
+        '모든 자격 조건을 충족하셨습니다. 1순위 축하드립니다!'; // 1순위일 경우 출력 결과
     const GreetingMessage2nd = '2순위 축하드립니다!'; // 2순위일 경우 출력 결과
 
     const location = useLocation(); // 각 공급별 결과 props 불러오기
@@ -53,9 +52,11 @@ function Rank({ history }) {
             {loading ? ( // 로딩 상태 2s
                 <>
                     <Loading />
-                    <p className="loading_msg">Please wait ...</p>
-                    <p className="loading_msg">
-                        순위 확인 로딩 중입니다. 잠시만 기다려주세요.
+                    <p className="loading_msg1">Please wait ...</p>
+                    <p className="loading_msg2">
+                        순위 확인 로딩 중입니다.
+                        <br />
+                        잠시만 기다려주세요.
                     </p>
                 </>
             ) : (
@@ -76,6 +77,7 @@ function Rank({ history }) {
                             <>
                                 <div className="greetingMessage">
                                     {GreetingMessage1st}
+                                    <Confetti />
                                 </div>
                             </>
                         ) : null}
@@ -94,7 +96,6 @@ function Rank({ history }) {
                                 </div>
                             </>
                         ) : null}
-                        <Confetti />
 
                         {/* 제출 서류확인 테이블 */}
                         {/* 일반 공급 서류제출 */}
@@ -105,23 +106,27 @@ function Rank({ history }) {
                             <NormalRequiredDocuments />
                         ) : null}
 
-                        <div className="goButton">
-                            <MainButton
-                                onClick={goBack}
-                                width="80"
-                                height="30"
-                                fontWeight="bold"
-                            >
-                                뒤로가기
-                            </MainButton>
-                            <MainButton
-                                onClick={goHome}
-                                width="80"
-                                height="30"
-                                fontWeight="bold"
-                            >
-                                홈으로
-                            </MainButton>
+                        <div className="rankButtonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={goHome}
+                                >
+                                    홈으로
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </>

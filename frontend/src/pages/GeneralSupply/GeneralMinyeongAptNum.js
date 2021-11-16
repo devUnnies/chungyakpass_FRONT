@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../components/Input/Input';
 import useInputState from '../../components/Input/useInputState';
+import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
-import MainButton from '../../components/Button/MainButton';
 import { useHistory } from 'react-router-dom';
 import './GeneralSupply.css';
 
@@ -36,31 +36,33 @@ function GeneralMinyeongAptNum(props) {
     };
 
     const onClick = async () => {
-        dispatch(
-            postGeneralMinyeongAptNum({
-                notificationNumber: notificationNumber,
-                housingType: housingType,
-            })
-        ); // api 연결 요청.
+        if (notificationNumber === '' || housingType === '') {
+            alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
+        } else {
+            dispatch(
+                postGeneralMinyeongAptNum({
+                    notificationNumber: notificationNumber,
+                    housingType: housingType,
+                })
+            ); // api 연결 요청.
 
-        const data = generalMinyeongAptNumStore.postGeneralMinyeongAptNum.data;
-        console.log(JSON.stringify(data));
-        history.push({
-            pathname: '/generalMinyeong',
-            props: {
-                notificationNumber,
-                housingType,
-            },
-        });
+            const data =
+                generalMinyeongAptNumStore.postGeneralMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+            history.push({
+                pathname: '/generalMinyeong',
+                props: {
+                    notificationNumber,
+                    housingType,
+                },
+            });
+        }
+    };
 
-        // 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-        // 공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기.
-        if (
-            generalMinyeongAptNumStore?.postGeneralMinyeongAptNum?.data
-                ?.error === 'BAD_REQUEST'
-        ) {
-            alert(data?.code + '\n' + data?.message);
-            history.push('/');
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
         }
     };
 
@@ -74,15 +76,36 @@ function GeneralMinyeongAptNum(props) {
 
     return (
         <>
-            <div className="AptNumForm">
-                <div className="aptNumContainer">
-                    <form onSubmit={handleSubmit} className="aptNumform">
+            <div className="historiesInfoHeaderContainer">
+                <span className="apt_title">
+                    <span className="apt_titleIcon">
+                        <HomeOutlined />
+                    </span>
+                    <strong className="apt_mainTitle">일반공급 </strong>
+                    <span className="apt_subTitle"> | 민영주택</span>
+                </span>
+            </div>
+
+            <div className="generalAptNumForm">
+                <div className="generalAptNumContainer">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="generalAptNumform"
+                    >
+                        <div className="apt_subPlusTitle">
+                            <span className="checkRedIcon">
+                                <CheckOutlined />
+                            </span>
+                            아파트 분양 정보 입력
+                        </div>
+
                         <input
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="aptNumInput"
+                            className="generalAptNumInput"
                             required
                         />
                         <br />
@@ -91,22 +114,33 @@ function GeneralMinyeongAptNum(props) {
                             placeholder="주택형"
                             value={housingType}
                             onChange={handleChangeHousingType}
-                            className="aptNumInput"
+                            className="generalAptNumInput"
                             required
                         />
                         <br />
 
-                        <span className="aptNumButton">
-                            <MainButton
-                                type="button"
-                                onClick={onClick}
-                                width="100"
-                                height="35"
-                                fontSize="15"
-                            >
-                                다음
-                            </MainButton>
-                        </span>
+                        <div className="buttonContainer">
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptBackButton"
+                                    type="back"
+                                    onClick={() => {
+                                        history.goBack(-1);
+                                    }}
+                                >
+                                    이전
+                                </button>
+                            </span>
+                            <span className="buttonPosition">
+                                <button
+                                    className="aptNextButton"
+                                    type="button"
+                                    onClick={onClick}
+                                >
+                                    다음
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>
