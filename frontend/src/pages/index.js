@@ -54,11 +54,13 @@ export { default as NewlyMarriedKookminSpecialApi } from './SpecialSupply/NewlyM
 // 순위 확인 페이지
 export { default as Rank } from './Rank/Rank';
 // 가배점 페이지
+export { default as GeneralMinyeongPointPost } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeongPointPost';
+export { default as GeneralMinyeongPoint } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
 export { default as MultiChildPointAptNum } from './ExtraPoint/MultiChild/MultiChildPointAptNum';
 export { default as MultiChildPoint } from './ExtraPoint/MultiChild/MultiChildPoint';
 export { default as NewlyMarriagePointAptNum } from './ExtraPoint/NewMarriage/NewlyMarriagePointAptNum';
 export { default as NewlyMarriagePoint } from './ExtraPoint/NewMarriage/NewlyMarriagePoint';
+export { default as OldParentPointPost } from './ExtraPoint/OldParent/OldParentPointPost';
 export { default as OldParentPoint } from './ExtraPoint/OldParent/OldParentPoint';
-export { default as GeneralMinyeoungPoint } from './ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
 export { default as OneParentPointAptNum } from './ExtraPoint/OneParent/OneParentPointAptNum';
 export { default as OneParentPoint } from './ExtraPoint/OneParent/OneParentPoint';

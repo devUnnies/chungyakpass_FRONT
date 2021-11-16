@@ -1,5 +1,5 @@
 import {
-    // 노부모 민영 아파트 분양정보 보내기
+    // 생애최초 국민 아파트 분양정보 보내기
     RES_FIRSTINLIFE_KOOKMIN_APTNUM_POST,
     RES_FIRSTINLIFE_KOOKMIN_APTNUM_POST_SUCCESS,
     RES_FIRSTINLIFE_KOOKMIN_APTNUM_POST_ERROR,
