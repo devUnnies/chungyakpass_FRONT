@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
 import { Link } from 'react-router-dom';
 import {
+    CaretRightOutlined,
+    CheckOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
     InfoCircleOutlined,
@@ -14,6 +16,7 @@ import '../SpecialSupply.css';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -29,15 +32,32 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const location = useLocation(); // aptNum 페이지의 props 불러오기
     const getParams = location.state.preNewlyMarriedYn; // 국민주택 유형 props 가져오기
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data =
         newlyMarriedKookminSpecialStore?.postNewlyMarriedKookminSpecialAptNum
             ?.data; // 신혼부부 국민 로직 접근 변수
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     // 로딩 상태 적용
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1200);
     }, []);
 
     const [form, setForm] = useState({
@@ -99,43 +119,67 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
             {loading ? ( // 로딩 상태 2s
                 <>
                     <Loading />
-                    <p className="loading_msg">Please wait ...</p>
-                    <p className="loading_msg">
-                        회원님의 정보를 불러와{' '}
+                    <p className="loading_msg1">Please wait ...</p>
+                    <p className="loading_msg2">
+                        회원님의{' '}
                         <strong className="text_highlight">
                             특별공급 신혼부부 국민주택 유형
                         </strong>{' '}
-                        자격을 확인하는 중입니다. 잠시만 기다려주세요.
+                        자격 확인 중입니다. <br />
+                        잠시만 기다려주세요.
                     </p>
                 </>
             ) : (
                 <>
                     {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
-                        공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
+                    공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
                     {data?.error === 'BAD_REQUEST' ||
                     data?.error === 'NOT_FOUND' ? (
-                        alert(
-                            '자격 확인을 진행할 수 없습니다' +
-                                '\n' +
-                                '사유: ' +
-                                data?.message
-                        ) + history.push('/')
+                        <>
+                            {/* 아파트 공고번호 입력 오류일 경우 해당 공급 종류의 aptNum페이지로 이동. */}
+                            {data?.code === 'NOT_FOUND_APT'
+                                ? alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) +
+                                  history.push(
+                                      'specialNewlyMarriedKookminSpecialAptNum'
+                                  )
+                                : alert(
+                                      '자격 확인을 진행할 수 없습니다' +
+                                          '\n' +
+                                          '사유: ' +
+                                          data?.message
+                                  ) + history.goBack(-1)}
+                        </>
                     ) : (
                         <>
                             <div className="special_title">
-                                <h3 className="special_mainTitle">
-                                    특별공급
-                                    <span className="special_subTitle">
-                                        | 신혼부부 국민주택 공공주택 특별법 적용
+                                <strong className="special_mainTitle">
+                                    특별공급{' '}
+                                </strong>
+                                <span className="special_subTitle">
+                                    | 신혼부부 국민주택
+                                </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
                                     </span>
-                                </h3>
+                                    공공주택 특별법 적용 <br />
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form
                                 className="specialSupply_form"
                                 onSubmit={handleSubmit}
                             >
-                                <table className="specialMultiChildKookmin_table">
+                                <table className="special_table">
                                     <p
                                         className="foreignWarning"
                                         style={{ color: 'red' }}
@@ -149,13 +193,18 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                         <>
                                             {/* 예비 신혼부부 여부 */}
                                             <tr className="special_phase">
-                                                <td className="qulificaiton">
-                                                    <span className="qulificaitonBox">
+                                                <td className="qualification">
+                                                    <span className="qualificationBox">
+                                                        <span className="qualificationIcon">
+                                                            <CaretRightOutlined />
+                                                        </span>
                                                         예비 신혼부부 해당 여부
                                                     </span>
                                                     <span className="info_tooltip">
-                                                        <InfoCircleOutlined />
-                                                        <span class="tooltip-text">
+                                                        <InfoCircleOutlined
+                                                            onClick={onClickBtn}
+                                                        />
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 예비 신혼부부의
                                                                 경우
@@ -169,7 +218,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                 </td>
                                                 <td className="special_result">
                                                     <input
-                                                        className="aptInfoSelect"
+                                                        className="typeInfoSelect"
                                                         value={
                                                             getParams === 'y'
                                                                 ? '예비신혼부부'
@@ -188,11 +237,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                         {getParams === '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
-                                                                <span class="pause-tooltip-text">
-                                                                    입력값 없을
-                                                                    경우 자격
-                                                                    진행 불가
-                                                                </span>
                                                             </span>
                                                         ) : (
                                                             <></>
@@ -209,14 +253,21 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                 <>
                                                     {/* 청약통장 조건 충족 여부 */}
                                                     <tr className="special_phase">
-                                                        <td className="qulificaiton">
-                                                            <span className="qulificaitonBox">
+                                                        <td className="qualification">
+                                                            <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
                                                                 청약통장 조건
                                                                 충족 여부
                                                             </span>
                                                             <span className="info_tooltip">
-                                                                <InfoCircleOutlined />
-                                                                <span class="tooltip-text">
+                                                                <InfoCircleOutlined
+                                                                    onClick={
+                                                                        onClickBtn
+                                                                    }
+                                                                />
+                                                                <span className="tooltip-text">
                                                                     <p>
                                                                         ※ 국민
                                                                         주택의
@@ -254,15 +305,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 false ? (
                                                                     <span className="pause_tooltip">
                                                                         <CloseCircleOutlined />
-                                                                        <span class="pause-tooltip-text">
-                                                                            청약
-                                                                            통장
-                                                                            조건
-                                                                            미충족
-                                                                            시
-                                                                            부적격
-                                                                            발생.
-                                                                        </span>
                                                                     </span>
                                                                 ) : (
                                                                     <></>
@@ -277,10 +319,43 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                 <>
                                                     {/* 인근 지역 거주 여부 판단 */}
                                                     <tr className="special_phase">
-                                                        <td className="qulificaiton">
-                                                            <span className="qulificaitonBox">
-                                                                인근지역 거주
+                                                        <td className="qualification">
+                                                            <span className="qualificationBox">
+                                                                <span className="qualificationIcon">
+                                                                    <CaretRightOutlined />
+                                                                </span>
+                                                                신청한 아파트
+                                                                청약 지역의
+                                                                인근지역 혹은
+                                                                해당지역 거주
                                                                 여부
+                                                            </span>
+                                                            <span className="info_tooltip">
+                                                                <InfoCircleOutlined
+                                                                    onClick={
+                                                                        onClickBtn
+                                                                    }
+                                                                />
+                                                                <span className="tooltip-text">
+                                                                    <p>
+                                                                        ※
+                                                                        인근지역의
+                                                                        경우
+                                                                    </p>
+                                                                    1순위 조건
+                                                                    충족자는
+                                                                    맞지만 해당
+                                                                    지역에
+                                                                    거주하는
+                                                                    자에게 우선
+                                                                    공급하므로{' '}
+                                                                    {'\n'} 청약
+                                                                    공급 우선
+                                                                    순위에서
+                                                                    밀릴 수
+                                                                    있음을
+                                                                    주의바랍니다.
+                                                                </span>
                                                             </span>
                                                         </td>
                                                         <td className="special_result">
@@ -316,8 +391,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                         <>
                                                             {/* 만 나이 로직 결과 출력*/}
                                                             <tr className="special_phase">
-                                                                <td className="qulificaiton">
-                                                                    <span className="qulificaitonBox">
+                                                                <td className="qualification">
+                                                                    <span className="qualificationBox">
+                                                                        <span className="qualificationIcon">
+                                                                            <CaretRightOutlined />
+                                                                        </span>
                                                                         나이
                                                                     </span>
                                                                 </td>
@@ -344,11 +422,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                         '' ? (
                                                                             <span className="pause_tooltip">
                                                                                 <CloseCircleOutlined />
-                                                                                <span class="pause-tooltip-text">
-                                                                                    나이
-                                                                                    입력
-                                                                                    필요.
-                                                                                </span>
                                                                             </span>
                                                                         ) : null}
                                                                     </span>
@@ -361,10 +434,31 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 <>
                                                                     {/* 세대주 여부 판단 */}
                                                                     <tr className="special_phase">
-                                                                        <td className="qulificaiton">
-                                                                            <span className="qulificaitonBox">
+                                                                        <td className="qualification">
+                                                                            <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 세대주
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined
+                                                                                    onClick={
+                                                                                        onClickBtn
+                                                                                    }
+                                                                                />
+                                                                                <span className="tooltip-text">
+                                                                                    <p>
+                                                                                        미성년자의
+                                                                                        경우
+                                                                                    </p>
+                                                                                    반드시
+                                                                                    세대주인
+                                                                                    경우에만
+                                                                                    청약
+                                                                                    가능.
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -402,12 +496,55 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                         <>
                                                                             {/* 미성년자인 경우 형제, 자매 부양 판별 */}
                                                                             <tr className="special_phase">
-                                                                                <td className="qulificaiton">
-                                                                                    <span className="qulificaitonBox">
+                                                                                <td className="qualification">
+                                                                                    <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         형제,
                                                                                         자매
                                                                                         부양
                                                                                         여부
+                                                                                    </span>
+                                                                                    <span className="info_tooltip">
+                                                                                        <InfoCircleOutlined
+                                                                                            onClick={
+                                                                                                onClickBtn
+                                                                                            }
+                                                                                        />
+                                                                                        <span className="tooltip-text">
+                                                                                            <p>
+                                                                                                미성년자의
+                                                                                                경우
+                                                                                            </p>
+                                                                                            자녀
+                                                                                            양육
+                                                                                            혹은
+                                                                                            형제,
+                                                                                            자매를
+                                                                                            부양(직계존속의
+                                                                                            사망,
+                                                                                            실종선고
+                                                                                            및
+                                                                                            행방불명
+                                                                                            등으로
+                                                                                            인한)해야
+                                                                                            함.{' '}
+                                                                                            <br />
+                                                                                            (단,
+                                                                                            자녀
+                                                                                            및
+                                                                                            형제,
+                                                                                            자매는
+                                                                                            세대주인
+                                                                                            미성년자와
+                                                                                            같은
+                                                                                            세대별
+                                                                                            주민등록표등본에
+                                                                                            등재되어
+                                                                                            있어야
+                                                                                            함.)
+                                                                                        </span>
                                                                                     </span>
                                                                                 </td>
                                                                                 <td className="special_result">
@@ -460,20 +597,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         'n' ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    만
-                                                                                                    19세
-                                                                                                    미만
-                                                                                                    미성년자의
-                                                                                                    경우
-                                                                                                    형제
-                                                                                                    자매
-                                                                                                    부양하는
-                                                                                                    경우에만
-                                                                                                    청약
-                                                                                                    신청
-                                                                                                    가능.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -484,8 +607,10 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 </>
                                                             ) : null}
 
-                                                            {data?.age >= 20 ||
-                                                            (data?.age < 20 &&
+                                                            {data?.americanAge >=
+                                                                20 ||
+                                                            (data?.americanAge <
+                                                                20 &&
                                                                 form.supportYn ===
                                                                     'y' &&
                                                                 data?.householderTf ===
@@ -493,13 +618,47 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 <>
                                                                     {/* 신혼부부 공공주택적용 국민주택 대상자 여부 */}
                                                                     <tr className="special_phase">
-                                                                        <td className="qulificaiton">
-                                                                            <span className="qulificaitonBox">
+                                                                        <td className="qualification">
+                                                                            <span className="qualificationBox">
+                                                                                <span className="qualificationIcon">
+                                                                                    <CaretRightOutlined />
+                                                                                </span>
                                                                                 신혼부부
                                                                                 공공주택적용
                                                                                 국민주택
                                                                                 대상자
                                                                                 여부
+                                                                            </span>
+                                                                            <span className="info_tooltip">
+                                                                                <InfoCircleOutlined
+                                                                                    onClick={
+                                                                                        onClickBtn
+                                                                                    }
+                                                                                />
+                                                                                <span className="tooltip-text">
+                                                                                    <li>
+                                                                                        혼인기간이
+                                                                                        7년
+                                                                                        이내
+                                                                                        신혼부부
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        만
+                                                                                        6세
+                                                                                        이하의
+                                                                                        자녀(태아
+                                                                                        포함)를
+                                                                                        둔
+                                                                                        한부모
+                                                                                        가족
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        예비신혼부부일
+                                                                                        경우
+                                                                                        대상자에
+                                                                                        해당.
+                                                                                    </li>
+                                                                                </span>
                                                                             </span>
                                                                         </td>
                                                                         <td className="special_result">
@@ -525,30 +684,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                 false ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
-                                                                                        <span class="pause-tooltip-text">
-                                                                                            <ul>
-                                                                                                혼인기간이
-                                                                                                7년
-                                                                                                이내
-                                                                                                신혼부부
-                                                                                            </ul>
-                                                                                            <ul>
-                                                                                                만
-                                                                                                6세
-                                                                                                이하의
-                                                                                                자녀(태아
-                                                                                                포함)를
-                                                                                                둔
-                                                                                                한부모
-                                                                                                가족
-                                                                                            </ul>
-                                                                                            <ul>
-                                                                                                예비신혼부부일
-                                                                                                경우
-                                                                                                대상자에
-                                                                                                해당.
-                                                                                            </ul>
-                                                                                        </span>
                                                                                     </span>
                                                                                 ) : null}
                                                                             </span>
@@ -560,15 +695,22 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                     true ? (
                                                                         <>
                                                                             <tr className="special_phase">
-                                                                                <td className="qulificaiton">
-                                                                                    <span className="qulificaitonBox">
+                                                                                <td className="qualification">
+                                                                                    <span className="qualificationBox">
+                                                                                        <span className="qualificationIcon">
+                                                                                            <CaretRightOutlined />
+                                                                                        </span>
                                                                                         전세대구성원의
                                                                                         무주택
                                                                                         여부
                                                                                     </span>
                                                                                     <span className="info_tooltip">
-                                                                                        <InfoCircleOutlined />
-                                                                                        <span class="tooltip-text">
+                                                                                        <InfoCircleOutlined
+                                                                                            onClick={
+                                                                                                onClickBtn
+                                                                                            }
+                                                                                        />
+                                                                                        <span className="tooltip-text">
                                                                                             <p>
                                                                                                 <div>
                                                                                                     ※
@@ -583,10 +725,10 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                     본인
                                                                                                     기준
                                                                                                     만
-                                                                                                    30세부터
-                                                                                                    하되,
-                                                                                                    그
-                                                                                                    전에
+                                                                                                    30세부터,
+                                                                                                    <br />
+                                                                                                    30세
+                                                                                                    이전에
                                                                                                     혼인한
                                                                                                     경우
                                                                                                     혼인신고일을
@@ -670,17 +812,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         false ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
-                                                                                                <span class="pause-tooltip-text">
-                                                                                                    전
-                                                                                                    세대
-                                                                                                    구성원이
-                                                                                                    무주택이
-                                                                                                    아닐
-                                                                                                    시
-                                                                                                    청약
-                                                                                                    자격
-                                                                                                    미달.
-                                                                                                </span>
                                                                                             </span>
                                                                                         ) : null}
                                                                                     </span>
@@ -692,13 +823,55 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                             true ? (
                                                                                 <>
                                                                                     <tr className="special_phase">
-                                                                                        <td className="qulificaiton">
-                                                                                            <span className="qulificaitonBox">
+                                                                                        <td className="qualification">
+                                                                                            <span className="qualificationBox">
+                                                                                                <span className="qualificationIcon">
+                                                                                                    <CaretRightOutlined />
+                                                                                                </span>
                                                                                                 월평균
                                                                                                 소득
                                                                                                 기준
                                                                                                 충족
                                                                                                 여부
+                                                                                            </span>
+                                                                                            <span className="info_tooltip">
+                                                                                                <InfoCircleOutlined
+                                                                                                    onClick={
+                                                                                                        onClickBtn
+                                                                                                    }
+                                                                                                />
+                                                                                                <span className="tooltip-text">
+                                                                                                    <p>
+                                                                                                        *
+                                                                                                        신혼부부
+                                                                                                        소득기준
+                                                                                                    </p>
+                                                                                                    해당
+                                                                                                    세대의
+                                                                                                    월평균
+                                                                                                    소득이
+                                                                                                    전년도
+                                                                                                    도시근로자
+                                                                                                    가구당
+                                                                                                    월평균
+                                                                                                    소득의
+                                                                                                    130퍼센트
+                                                                                                    이하.{' '}
+                                                                                                    <br />
+                                                                                                    (맞벌이인
+                                                                                                    경우,
+                                                                                                    140퍼센트.{' '}
+                                                                                                    <br />
+                                                                                                    단,
+                                                                                                    부부
+                                                                                                    중
+                                                                                                    한
+                                                                                                    사람의
+                                                                                                    소득은
+                                                                                                    130퍼센트
+                                                                                                    이하여야
+                                                                                                    함.)
+                                                                                                </span>
                                                                                             </span>
                                                                                         </td>
                                                                                         <td className="special_result">
@@ -715,25 +888,20 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                 }
                                                                                             />
                                                                                             <span>
-                                                                                                {data?.meetMonthlyAverageIncomePriority ===
+                                                                                                {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                                     true ||
-                                                                                                data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                                data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                                     true ? (
                                                                                                     <span className="progress">
                                                                                                         <CheckCircleOutlined />
                                                                                                     </span>
                                                                                                 ) : null}
-                                                                                                {data?.meetMonthlyAverageIncomePriority ===
+                                                                                                {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                                     false &&
-                                                                                                data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                                data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                                     false ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
-                                                                                                        <span class="pause-tooltip-text">
-                                                                                                            월평균
-                                                                                                            소득
-                                                                                                            미충족
-                                                                                                        </span>
                                                                                                     </span>
                                                                                                 ) : null}
                                                                                             </span>
@@ -741,18 +909,42 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                     </tr>
 
                                                                                     {/* 청약통장 가입기간 충족 여부 */}
-                                                                                    {data?.meetMonthlyAverageIncomePriority ===
+                                                                                    {data?.meetMonthlyAverageIncomePriorityTf ===
                                                                                         true ||
-                                                                                    data?.meetMonthlyAverageIncomeGeneral ===
+                                                                                    data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                         true ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
-                                                                                                <td className="qulificaiton">
-                                                                                                    <span className="qulificaitonBox">
+                                                                                                <td className="qualification">
+                                                                                                    <span className="qualificationBox">
+                                                                                                        <span className="qualificationIcon">
+                                                                                                            <CaretRightOutlined />
+                                                                                                        </span>
                                                                                                         전세대원의
                                                                                                         재당첨
                                                                                                         제한
                                                                                                         여부
+                                                                                                    </span>
+                                                                                                    <span className="info_tooltip">
+                                                                                                        <InfoCircleOutlined
+                                                                                                            onClick={
+                                                                                                                onClickBtn
+                                                                                                            }
+                                                                                                        />
+                                                                                                        <span className="tooltip-text">
+                                                                                                            <p>
+                                                                                                                국민주택의
+                                                                                                                경우
+                                                                                                            </p>
+                                                                                                            재당첨
+                                                                                                            제한이
+                                                                                                            있을
+                                                                                                            경우
+                                                                                                            청약을
+                                                                                                            진행할
+                                                                                                            수
+                                                                                                            없음.
+                                                                                                        </span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
@@ -779,13 +971,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                         false ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
-                                                                                                                <span class="pause-tooltip-text">
-                                                                                                                    제당첨
-                                                                                                                    제한
-                                                                                                                    있을
-                                                                                                                    경우
-                                                                                                                    탈락.
-                                                                                                                </span>
                                                                                                             </span>
                                                                                                         ) : null}
                                                                                                     </span>
@@ -796,12 +981,52 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                             true ? (
                                                                                                 <>
                                                                                                     <tr className="special_phase">
-                                                                                                        <td className="qulificaiton">
-                                                                                                            <span className="qulificaitonBox">
+                                                                                                        <td className="qualification">
+                                                                                                            <span className="qualificationBox">
+                                                                                                                <span className="qualificationIcon">
+                                                                                                                    <CaretRightOutlined />
+                                                                                                                </span>
                                                                                                                 자산
                                                                                                                 기준
                                                                                                                 충족
                                                                                                                 여부
+                                                                                                            </span>
+                                                                                                            <span className="info_tooltip">
+                                                                                                                <InfoCircleOutlined
+                                                                                                                    onClick={
+                                                                                                                        onClickBtn
+                                                                                                                    }
+                                                                                                                />
+                                                                                                                <span className="tooltip-text">
+                                                                                                                    <p>
+                                                                                                                        *
+                                                                                                                        공공주택
+                                                                                                                        특별법이
+                                                                                                                        적용되는
+                                                                                                                        국민주택의
+                                                                                                                        경우에만
+                                                                                                                        해당
+                                                                                                                    </p>
+                                                                                                                    세부
+                                                                                                                    자산
+                                                                                                                    보유
+                                                                                                                    기준에
+                                                                                                                    대한
+                                                                                                                    자격
+                                                                                                                    조건은
+                                                                                                                    회원님이
+                                                                                                                    입력하신
+                                                                                                                    기초
+                                                                                                                    정보에
+                                                                                                                    따라,{' '}
+                                                                                                                    <br />
+                                                                                                                    자산
+                                                                                                                    정보를
+                                                                                                                    계산하여
+                                                                                                                    충족
+                                                                                                                    여부를
+                                                                                                                    판단해드립니다.
+                                                                                                                </span>
                                                                                                             </span>
                                                                                                         </td>
                                                                                                         <td className="special_result">
@@ -828,13 +1053,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                 false ? (
                                                                                                                     <span className="pause_tooltip">
                                                                                                                         <CloseCircleOutlined />
-                                                                                                                        <span class="pause-tooltip-text">
-                                                                                                                            자산
-                                                                                                                            기준
-                                                                                                                            미충족
-                                                                                                                            시
-                                                                                                                            탈락
-                                                                                                                        </span>
                                                                                                                     </span>
                                                                                                                 ) : null}
                                                                                                             </span>
@@ -842,19 +1060,26 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                     </tr>
 
                                                                                                     {data?.meetPropertyTf ===
-                                                                                                    false ? (
+                                                                                                    true ? (
                                                                                                         <>
                                                                                                             <tr className="special_phase">
-                                                                                                                <td className="qulificaiton">
-                                                                                                                    <span className="qulificaitonBox">
+                                                                                                                <td className="qualification">
+                                                                                                                    <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
                                                                                                                         청약통장
                                                                                                                         가입기간
                                                                                                                         충족
                                                                                                                         여부
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
-                                                                                                                        <InfoCircleOutlined />
-                                                                                                                        <span class="tooltip-text">
+                                                                                                                        <InfoCircleOutlined
+                                                                                                                            onClick={
+                                                                                                                                onClickBtn
+                                                                                                                            }
+                                                                                                                        />
+                                                                                                                        <span className="tooltip-text">
                                                                                                                             <table
                                                                                                                                 border="1"
                                                                                                                                 className="tootipeTable"
@@ -904,7 +1129,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                     <input
                                                                                                                         className="aptInfoSelect"
                                                                                                                         value={
-                                                                                                                            data?.meetBankJbookoinPeriodTf
+                                                                                                                            data?.meetBankbookJoinPeriodTf
                                                                                                                                 ? '충족'
                                                                                                                                 : '미충족'
                                                                                                                         }
@@ -913,13 +1138,13 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                         }
                                                                                                                     />
                                                                                                                     <span>
-                                                                                                                        {data?.meetBankJbookoinPeriodTf ===
+                                                                                                                        {data?.meetBankbookJoinPeriodTf ===
                                                                                                                         true ? (
                                                                                                                             <span className="progress">
                                                                                                                                 <CheckCircleOutlined />
                                                                                                                             </span>
                                                                                                                         ) : null}
-                                                                                                                        {data?.meetBankJbookoinPeriodTf ===
+                                                                                                                        {data?.meetBankbookJoinPeriodTf ===
                                                                                                                         false ? (
                                                                                                                             <span className="secondRankTootip">
                                                                                                                                 <PauseCircleOutlined />
@@ -934,8 +1159,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                             true ? (
                                                                                                                 <>
                                                                                                                     <tr className="special_phase">
-                                                                                                                        <td className="qulificaiton">
-                                                                                                                            <span className="qulificaitonBox">
+                                                                                                                        <td className="qualification">
+                                                                                                                            <span className="qualificationBox">
+                                                                                                                                <span className="qualificationIcon">
+                                                                                                                                    <CaretRightOutlined />
+                                                                                                                                </span>
                                                                                                                                 건설지역
                                                                                                                                 별
                                                                                                                                 납입횟수
@@ -943,8 +1171,12 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                 여부
                                                                                                                             </span>
                                                                                                                             <span className="info_tooltip">
-                                                                                                                                <InfoCircleOutlined />
-                                                                                                                                <span class="tooltip-text">
+                                                                                                                                <InfoCircleOutlined
+                                                                                                                                    onClick={
+                                                                                                                                        onClickBtn
+                                                                                                                                    }
+                                                                                                                                />
+                                                                                                                                <span className="tooltip-text">
                                                                                                                                     <table
                                                                                                                                         border="1"
                                                                                                                                         className="tootipeTable"
@@ -1019,8 +1251,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                     true ? (
                                                                                                                         <>
                                                                                                                             <tr className="special_phase">
-                                                                                                                                <td className="qulificaiton">
-                                                                                                                                    <span className="qulificaitonBox">
+                                                                                                                                <td className="qualification">
+                                                                                                                                    <span className="qualificationBox">
+                                                                                                                                        <span className="qualificationIcon">
+                                                                                                                                            <CaretRightOutlined />
+                                                                                                                                        </span>
                                                                                                                                         주택
                                                                                                                                         처분일에
                                                                                                                                         의한
@@ -1029,8 +1264,12 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                         여부
                                                                                                                                     </span>
                                                                                                                                     <span className="info_tooltip">
-                                                                                                                                        <InfoCircleOutlined />
-                                                                                                                                        <span class="tooltip-text">
+                                                                                                                                        <InfoCircleOutlined
+                                                                                                                                            onClick={
+                                                                                                                                                onClickBtn
+                                                                                                                                            }
+                                                                                                                                        />
+                                                                                                                                        <span className="tooltip-text">
                                                                                                                                             혼인신고일
                                                                                                                                             이후
                                                                                                                                             주택의
@@ -1081,8 +1320,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                             false ? (
                                                                                                                                 <>
                                                                                                                                     <tr className="special_phase">
-                                                                                                                                        <td className="qulificaiton">
-                                                                                                                                            <span className="qulificaitonBox">
+                                                                                                                                        <td className="qualification">
+                                                                                                                                            <span className="qualificationBox">
+                                                                                                                                                <span className="qualificationIcon">
+                                                                                                                                                    <CaretRightOutlined />
+                                                                                                                                                </span>
                                                                                                                                                 미성년
                                                                                                                                                 자녀(태아
                                                                                                                                                 포함)
@@ -1090,15 +1332,37 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                                 여부
                                                                                                                                             </span>
                                                                                                                                             <span className="info_tooltip">
-                                                                                                                                                <InfoCircleOutlined />
-                                                                                                                                                <span class="tooltip-text"></span>
+                                                                                                                                                <InfoCircleOutlined
+                                                                                                                                                    onClick={
+                                                                                                                                                        onClickBtn
+                                                                                                                                                    }
+                                                                                                                                                />
+                                                                                                                                                <span className="tooltip-text">
+                                                                                                                                                    <p>
+                                                                                                                                                        미성년
+                                                                                                                                                        자녀란?
+                                                                                                                                                    </p>{' '}
+                                                                                                                                                    입주자모집공고일
+                                                                                                                                                    현재
+                                                                                                                                                    신청자의
+                                                                                                                                                    주민등록등본이나
+                                                                                                                                                    가족관계증명서로
+                                                                                                                                                    확인되는
+                                                                                                                                                    미성년
+                                                                                                                                                    자녀.{' '}
+                                                                                                                                                    <br />
+                                                                                                                                                    예비
+                                                                                                                                                    신혼부부도
+                                                                                                                                                    동일하게
+                                                                                                                                                    적용.
+                                                                                                                                                </span>
                                                                                                                                             </span>
                                                                                                                                         </td>
                                                                                                                                         <td className="special_result">
                                                                                                                                             <input
                                                                                                                                                 className="aptInfoSelect"
                                                                                                                                                 value={
-                                                                                                                                                    data?.meetNumberOfPaymentsTf
+                                                                                                                                                    data?.hasMinorChildren
                                                                                                                                                         ? '충족'
                                                                                                                                                         : '미충족'
                                                                                                                                                 }
@@ -1161,9 +1425,9 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
-                                    (data?.meetMonthlyAverageIncomePriority ===
+                                    (data?.meetMonthlyAverageIncomePriorityTf ===
                                         true ||
-                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                             true) &&
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
                                         true &&
@@ -1171,7 +1435,8 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetBankbookJoinPeriodTf === true &&
                                     data?.meetNumberOfPaymentsTf === true &&
                                     data?.secondChungyak === false &&
-                                    data?.hasMinorChildren === true
+                                    data?.hasMinorChildren === true &&
+                                    getParams === 'n'
                                         ? (form.newlyMarriedKookminSpecialRes =
                                               '1순위')
                                         : null}
@@ -1186,9 +1451,9 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
-                                    (data?.meetMonthlyAverageIncomePriority ===
+                                    (data?.meetMonthlyAverageIncomePriorityTf ===
                                         true ||
-                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                             true) &&
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
                                         true &&
@@ -1210,13 +1475,13 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                         false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
-                                            form.supportYn === 'n')) ||
+                                            form.supportYn !== 'y')) ||
                                     data?.meetRecipientTf === false ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
-                                    (data?.meetMonthlyAverageIncomePriority ===
+                                    (data?.meetMonthlyAverageIncomePriorityTf ===
                                         false &&
-                                        data?.meetMonthlyAverageIncomeGeneral ===
+                                        data?.meetMonthlyAverageIncomeGeneralTf ===
                                             false) ||
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
                                         false ||
@@ -1234,7 +1499,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     '1순위' ||
                                 form.newlyMarriedKookminSpecialRes ===
                                     '2순위' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={rankSuccess}
                                             type="submit"
@@ -1251,7 +1516,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                 {/*탈락 */}
                                 {form.newlyMarriedKookminSpecialRes ===
                                 '탈락' ? (
-                                    <div className="multiChildRankButton">
+                                    <div className="specialRankButton">
                                         <MainButton
                                             onClick={fail}
                                             type="button"

@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
     oldParentKookmin,
     oldParentPoint,
     firstInLifeMinyeong,
+    firstInLifeKookmin,
     newlyMarriedKookmin,
     newlyMarriedKookminSpecial,
     newlyMarriedMinyeong,

@@ -16,10 +16,10 @@ let specialNewlyMarriedTypeSelect = blockUrl;
 let specialMultiChildTypeSelect = blockUrl;
 let specialFirstLifeTypeSelect = blockUrl;
 let specialOldParentTypeSelect = blockUrl;
-let pointGeneralMinyeoung = blockUrl;
+let pointGeneralMinyeoungPost = blockUrl;
 let pointNewlyMarriageAptNum = blockUrl;
 let pointMultiChildAptNum = blockUrl;
-let pointOldParentAptNum = blockUrl;
+let pointOldParentPost = blockUrl;
 let pointOneParentAptNum = blockUrl;
 
 const data = {
@@ -93,11 +93,11 @@ const data = {
                                     name: '다자녀',
                                     link: specialMultiChildTypeSelect,
                                 },
-                                // {
-                                //     idx: 2,
-                                //     name: '생애최초',
-                                //     link: specialFirstLifeTypeSelect,
-                                // },
+                                {
+                                    idx: 2,
+                                    name: '생애최초',
+                                    link: specialFirstLifeTypeSelect,
+                                },
                                 {
                                     idx: 3,
                                     name: '노부모',
@@ -114,18 +114,18 @@ const data = {
             name: '가배점계산기',
             link: '',
             subcategory: [
-                // {
-                //     idx: 0,
-                //     name: '일반공급',
-                //     link: '',
-                //     subcategory: [
-                //         {
-                //             idx: 0,
-                //             name: '민영주택',
-                //             link: pointGeneralMinyeoung,
-                //         },
-                //     ],
-                // },
+                {
+                    idx: 0,
+                    name: '일반공급',
+                    link: '',
+                    subcategory: [
+                        {
+                            idx: 0,
+                            name: '민영주택',
+                            link: pointGeneralMinyeoungPost,
+                        },
+                    ],
+                },
                 {
                     idx: 1,
                     name: '특별공급',
@@ -141,11 +141,11 @@ const data = {
                             name: '다자녀',
                             link: pointMultiChildAptNum,
                         },
-                        // {
-                        //     idx: 2,
-                        //     name: '노부모',
-                        //     link: pointOldParentAptNum,
-                        // },
+                        {
+                            idx: 2,
+                            name: '노부모',
+                            link: pointOldParentPost,
+                        },
                         {
                             idx: 3,
                             name: '한부모',
@@ -266,10 +266,10 @@ function Nav(props) {
             specialMultiChildTypeSelect = '/specialMultiChildTypeSelect';
             specialFirstLifeTypeSelect = '/specialFirstLifeTypeSelect';
             specialOldParentTypeSelect = '/specialOldParentTypeSelect';
-            pointGeneralMinyeoung = '/point/generalMinyeoung';
+            pointGeneralMinyeoungPost = '/point/generalMinyeoungPost';
             pointNewlyMarriageAptNum = '/point/newlyMarriageAptNum';
             pointMultiChildAptNum = '/point/multiChildAptNum';
-            pointOldParentAptNum = '/point/oldParentAptNum';
+            pointOldParentPost = '/point/oldParentPost';
             pointOneParentAptNum = '/point/oneParentAptNum';
 
             data.category.map((content, i) => {
@@ -304,7 +304,7 @@ function Nav(props) {
                     content.subcategory.map((content2, j) => {
                         content2.subcategory.map((content3, k) => {
                             if (content3.name === '민영주택')
-                                content3.link = pointGeneralMinyeoung;
+                                content3.link = pointGeneralMinyeoungPost;
                             else if (content3.name === '신혼부부')
                                 content3.link = pointNewlyMarriageAptNum;
                             else if (content3.name === '다자녀')
@@ -312,7 +312,7 @@ function Nav(props) {
                             else if (content3.name === '한부모')
                                 content3.link = pointOneParentAptNum;
                             else if (content3.name === '노부모')
-                                content3.link = pointOldParentAptNum;
+                                content3.link = pointOldParentPost;
                         });
                     });
                 }
