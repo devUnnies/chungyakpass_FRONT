@@ -9,7 +9,7 @@ function Sitemap() {
     return (
         <>
             <div className="Sitemap_main">
-                <div className="historiesInfoHeaderContainer">
+                <div className="numbersInfoHeaderContainer">
                     <div className="heightBar"></div>
                     <span className="listTitle">사이트맵</span>
                 </div>
