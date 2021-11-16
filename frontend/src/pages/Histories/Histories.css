@@ -196,11 +196,12 @@
 }
 
 /* 저장버튼 */
-.addLimitInfo .saveButtonContainer {
+.addHistoryFormTableTbodyTrTd .buttonContainer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin-top: 15px;
-    margin-right: 15px;
+    margin-right: -15px;
     margin-bottom: 20px;
 }
 
