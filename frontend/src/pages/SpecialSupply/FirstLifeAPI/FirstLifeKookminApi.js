@@ -31,6 +31,10 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     const getParams = location?.state?.firstLifeKookminType; // 국민주택 유형 props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 생애최초 국민 로직 접근 변수
 
     // 로딩 상태 적용
@@ -39,6 +43,19 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     const [form, setForm] = useState({
         name: '',
@@ -699,28 +716,10 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                             본인
                                                                                             기준
                                                                                             만
-                                                                                            30세부터
-                                                                                            하되,
-                                                                                            그
-                                                                                            전에
-                                                                                            혼인한
-                                                                                            경우
-                                                                                            혼인신고일을
-                                                                                            기준으로
-                                                                                            산정함.
-                                                                                        </div>
-                                                                                        <div className="tooltip-text-info">
-                                                                                            :
-                                                                                            무주택
-                                                                                            기간
-                                                                                            산정은
-                                                                                            본인
-                                                                                            기준
-                                                                                            만
-                                                                                            30세부터
-                                                                                            하되,
-                                                                                            그
-                                                                                            전에
+                                                                                            30세부터,
+                                                                                            <br />
+                                                                                            30세
+                                                                                            이전에
                                                                                             혼인한
                                                                                             경우
                                                                                             혼인신고일을

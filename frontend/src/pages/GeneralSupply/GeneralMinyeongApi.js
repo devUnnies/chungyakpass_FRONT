@@ -27,6 +27,10 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
     const [housingType, setHousingType] = useState();
     const history = useHistory();
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data; // 일반 민영 로직 접근 변수
 
     // 로딩 상태 적용
@@ -35,6 +39,19 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     const [form, setForm] = useState({
         name: '',

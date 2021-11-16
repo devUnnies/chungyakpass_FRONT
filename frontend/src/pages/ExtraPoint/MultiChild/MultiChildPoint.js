@@ -27,6 +27,10 @@ const MultiChildPoint = ({ onSaveData }) => {
     const getParams = location.state.multiChildHouseholdType; // notificationNumber props 가져오기
     console.log(getParams); // aptNum 페이지에서 받은 multiChildHouseholdType console로 찍기.
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data = multiChildPointStore?.postMultiChildPointAptNum?.data; // 다자녀 가점 로직 접근 변수
     const multiChildPointSum =
         data?.numberOfChild +
@@ -43,6 +47,19 @@ const MultiChildPoint = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     const [form, setForm] = useState({
         name: '',

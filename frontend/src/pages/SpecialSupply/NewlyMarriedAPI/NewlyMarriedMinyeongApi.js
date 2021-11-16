@@ -29,6 +29,10 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     const history = useHistory();
     const location = useLocation(); // aptNum 페이지의 props 불러오기
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data =
         newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum?.data; // 신혼부부 민영 로직 접근 변수
 
@@ -38,6 +42,19 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     const [form, setForm] = useState({
         name: '',

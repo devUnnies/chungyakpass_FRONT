@@ -156,6 +156,7 @@
 .qualification,
 span.qualificationBox,
 .general_result {
+    z-index: 100;
     padding-bottom: 5%;
     font-size: 14pt;
 }
@@ -166,6 +167,7 @@ span.qualificationBox,
     margin-left: 12%;
 }
 .qualificationIcon {
+    z-index: 100;
     margin-right: 1%;
 
     color: #2a4476;
@@ -194,11 +196,36 @@ span.qualificationBox,
 
 /*자격 조건 상세 말풍선*/
 .info_tooltip {
+    z-index: 200;
+    margin: 10px;
+    color: #2a4476;
+    background-color: white;
+}
+/*자격조건 상세 */
+.tooltip-text {
+    z-index: 200;
     margin: 10px;
 
     color: #2a4476;
     font-size: 12pt;
+    animation: 0.6s ease-in-out loadEffect2;
 }
+
+@keyframes loadEffect2 {
+    0% {
+        /* opacity: 0; */
+        transform: translateX(-30px);
+    }
+    50% {
+        /* opacity: 0.5; */
+        transform: translateX(30px);
+    }
+    100% {
+        /* opacity: 1; */
+        transform: translateX(0px);
+    }
+}
+
 /* 툴팁 테이블 디자인 */
 .tootipeTable {
     border-collapse: collapse;

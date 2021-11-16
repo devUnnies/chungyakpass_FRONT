@@ -26,6 +26,10 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
     const [housingType, setHousingType] = useState();
     const history = useHistory();
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 국민 로직 접근 변수
     // 입력 값 오류에 의한 error 발생 시 처리 코드
 
@@ -35,6 +39,19 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     const [form, setForm] = useState({
         name: '',
@@ -359,10 +376,10 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                             본인
                                                                             기준
                                                                             만
-                                                                            30세부터
-                                                                            하되,
-                                                                            그
-                                                                            전에
+                                                                            30세부터,
+                                                                            <br />
+                                                                            30세
+                                                                            이전에
                                                                             혼인한
                                                                             경우
                                                                             혼인신고일을

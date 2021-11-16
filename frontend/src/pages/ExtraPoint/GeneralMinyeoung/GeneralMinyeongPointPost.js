@@ -4,6 +4,7 @@ import Input from '../../../components/Input/Input';
 import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import useInputState from '../../../components/Input/useInputState';
 import { postGeneralMinyeongPoint } from '../../../store/actions/pointGeneralMinyeongAction';
+import { getMem } from '../../../store/actions/commonInfoAction';
 import { useHistory } from 'react-router-dom';
 import '../../ExtraPoint/ExtraPoint.css';
 
@@ -13,6 +14,12 @@ function GeneralMinyeongPointPost(props) {
     const generalMinyeongPointStore = useSelector(
         (state) => state.generalMinyeongPoint
     );
+    // member  불러오기
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+    const [members, setMembers] = useState([]);
+
+    const getMembers = commonInfoStore?.getMem?.data; // members 불러오기
+    console.log(getMembers);
 
     // enter 키 누를 경우 onClick 함수 실행.
     const onKeyPress = (e) => {
@@ -103,6 +110,17 @@ function GeneralMinyeongPointPost(props) {
                 generalMinyeongPointStore.postGeneralMinyeongPoint.data;
         }
     }, [generalMinyeongPointStore?.postGeneralMinyeongPoint]);
+
+    // member 불러오기
+    useEffect(() => {
+        const data = commonInfoStore?.getMem?.data;
+
+        if (data) {
+            setMembers(data);
+        }
+        console.log(data[0]?.id);
+        console.log(data[0]?.relation);
+    }, [commonInfoStore?.getMem]);
 
     return (
         <>

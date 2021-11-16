@@ -16,6 +16,7 @@ import '../SpecialSupply.css';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -31,9 +32,26 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const location = useLocation(); // aptNum 페이지의 props 불러오기
     const getParams = location.state.preNewlyMarriedYn; // 국민주택 유형 props 가져오기
 
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
+
     const data =
         newlyMarriedKookminSpecialStore?.postNewlyMarriedKookminSpecialAptNum
             ?.data; // 신혼부부 국민 로직 접근 변수
+
+    // info tooltip animation
+    const onClickBtn = () => {
+        if (mount) {
+            setEffect('unmount');
+            setTimeout(() => {
+                setMount((v) => !v);
+            }, 400);
+        } else {
+            setEffect('mount2');
+            setMount((v) => !v);
+        }
+    };
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -183,7 +201,9 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                         예비 신혼부부 해당 여부
                                                     </span>
                                                     <span className="info_tooltip">
-                                                        <InfoCircleOutlined />
+                                                        <InfoCircleOutlined
+                                                            onClick={onClickBtn}
+                                                        />
                                                         <span className="tooltip-text">
                                                             <p>
                                                                 예비 신혼부부의
@@ -242,7 +262,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 충족 여부
                                                             </span>
                                                             <span className="info_tooltip">
-                                                                <InfoCircleOutlined />
+                                                                <InfoCircleOutlined
+                                                                    onClick={
+                                                                        onClickBtn
+                                                                    }
+                                                                />
                                                                 <span className="tooltip-text">
                                                                     <p>
                                                                         ※ 국민
@@ -307,7 +331,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 여부
                                                             </span>
                                                             <span className="info_tooltip">
-                                                                <InfoCircleOutlined />
+                                                                <InfoCircleOutlined
+                                                                    onClick={
+                                                                        onClickBtn
+                                                                    }
+                                                                />
                                                                 <span className="tooltip-text">
                                                                     <p>
                                                                         ※
@@ -415,7 +443,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
-                                                                                <InfoCircleOutlined />
+                                                                                <InfoCircleOutlined
+                                                                                    onClick={
+                                                                                        onClickBtn
+                                                                                    }
+                                                                                />
                                                                                 <span className="tooltip-text">
                                                                                     <p>
                                                                                         미성년자의
@@ -475,7 +507,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         여부
                                                                                     </span>
                                                                                     <span className="info_tooltip">
-                                                                                        <InfoCircleOutlined />
+                                                                                        <InfoCircleOutlined
+                                                                                            onClick={
+                                                                                                onClickBtn
+                                                                                            }
+                                                                                        />
                                                                                         <span className="tooltip-text">
                                                                                             <p>
                                                                                                 미성년자의
@@ -594,15 +630,19 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                 여부
                                                                             </span>
                                                                             <span className="info_tooltip">
-                                                                                <InfoCircleOutlined />
+                                                                                <InfoCircleOutlined
+                                                                                    onClick={
+                                                                                        onClickBtn
+                                                                                    }
+                                                                                />
                                                                                 <span className="tooltip-text">
-                                                                                    <ul>
+                                                                                    <li>
                                                                                         혼인기간이
                                                                                         7년
                                                                                         이내
                                                                                         신혼부부
-                                                                                    </ul>
-                                                                                    <ul>
+                                                                                    </li>
+                                                                                    <li>
                                                                                         만
                                                                                         6세
                                                                                         이하의
@@ -611,13 +651,13 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         둔
                                                                                         한부모
                                                                                         가족
-                                                                                    </ul>
-                                                                                    <ul>
+                                                                                    </li>
+                                                                                    <li>
                                                                                         예비신혼부부일
                                                                                         경우
                                                                                         대상자에
                                                                                         해당.
-                                                                                    </ul>
+                                                                                    </li>
                                                                                 </span>
                                                                             </span>
                                                                         </td>
@@ -665,7 +705,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         여부
                                                                                     </span>
                                                                                     <span className="info_tooltip">
-                                                                                        <InfoCircleOutlined />
+                                                                                        <InfoCircleOutlined
+                                                                                            onClick={
+                                                                                                onClickBtn
+                                                                                            }
+                                                                                        />
                                                                                         <span className="tooltip-text">
                                                                                             <p>
                                                                                                 <div>
@@ -681,10 +725,10 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                     본인
                                                                                                     기준
                                                                                                     만
-                                                                                                    30세부터
-                                                                                                    하되,
-                                                                                                    그
-                                                                                                    전에
+                                                                                                    30세부터,
+                                                                                                    <br />
+                                                                                                    30세
+                                                                                                    이전에
                                                                                                     혼인한
                                                                                                     경우
                                                                                                     혼인신고일을
@@ -791,9 +835,14 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                 여부
                                                                                             </span>
                                                                                             <span className="info_tooltip">
-                                                                                                <InfoCircleOutlined />
+                                                                                                <InfoCircleOutlined
+                                                                                                    onClick={
+                                                                                                        onClickBtn
+                                                                                                    }
+                                                                                                />
                                                                                                 <span className="tooltip-text">
                                                                                                     <p>
+                                                                                                        *
                                                                                                         신혼부부
                                                                                                         소득기준
                                                                                                     </p>
@@ -877,7 +926,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                         여부
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
-                                                                                                        <InfoCircleOutlined />
+                                                                                                        <InfoCircleOutlined
+                                                                                                            onClick={
+                                                                                                                onClickBtn
+                                                                                                            }
+                                                                                                        />
                                                                                                         <span className="tooltip-text">
                                                                                                             <p>
                                                                                                                 국민주택의
@@ -939,7 +992,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                 여부
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
-                                                                                                                <InfoCircleOutlined />
+                                                                                                                <InfoCircleOutlined
+                                                                                                                    onClick={
+                                                                                                                        onClickBtn
+                                                                                                                    }
+                                                                                                                />
                                                                                                                 <span className="tooltip-text">
                                                                                                                     <p>
                                                                                                                         *
@@ -1017,7 +1074,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                         여부
                                                                                                                     </span>
                                                                                                                     <span className="info_tooltip">
-                                                                                                                        <InfoCircleOutlined />
+                                                                                                                        <InfoCircleOutlined
+                                                                                                                            onClick={
+                                                                                                                                onClickBtn
+                                                                                                                            }
+                                                                                                                        />
                                                                                                                         <span className="tooltip-text">
                                                                                                                             <table
                                                                                                                                 border="1"
@@ -1110,7 +1171,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                 여부
                                                                                                                             </span>
                                                                                                                             <span className="info_tooltip">
-                                                                                                                                <InfoCircleOutlined />
+                                                                                                                                <InfoCircleOutlined
+                                                                                                                                    onClick={
+                                                                                                                                        onClickBtn
+                                                                                                                                    }
+                                                                                                                                />
                                                                                                                                 <span className="tooltip-text">
                                                                                                                                     <table
                                                                                                                                         border="1"
@@ -1199,7 +1264,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                         여부
                                                                                                                                     </span>
                                                                                                                                     <span className="info_tooltip">
-                                                                                                                                        <InfoCircleOutlined />
+                                                                                                                                        <InfoCircleOutlined
+                                                                                                                                            onClick={
+                                                                                                                                                onClickBtn
+                                                                                                                                            }
+                                                                                                                                        />
                                                                                                                                         <span className="tooltip-text">
                                                                                                                                             혼인신고일
                                                                                                                                             이후
@@ -1263,8 +1332,30 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                                                                                 여부
                                                                                                                                             </span>
                                                                                                                                             <span className="info_tooltip">
-                                                                                                                                                <InfoCircleOutlined />
-                                                                                                                                                <span className="tooltip-text"></span>
+                                                                                                                                                <InfoCircleOutlined
+                                                                                                                                                    onClick={
+                                                                                                                                                        onClickBtn
+                                                                                                                                                    }
+                                                                                                                                                />
+                                                                                                                                                <span className="tooltip-text">
+                                                                                                                                                    <p>
+                                                                                                                                                        미성년
+                                                                                                                                                        자녀란?
+                                                                                                                                                    </p>{' '}
+                                                                                                                                                    입주자모집공고일
+                                                                                                                                                    현재
+                                                                                                                                                    신청자의
+                                                                                                                                                    주민등록등본이나
+                                                                                                                                                    가족관계증명서로
+                                                                                                                                                    확인되는
+                                                                                                                                                    미성년
+                                                                                                                                                    자녀.{' '}
+                                                                                                                                                    <br />
+                                                                                                                                                    예비
+                                                                                                                                                    신혼부부도
+                                                                                                                                                    동일하게
+                                                                                                                                                    적용.
+                                                                                                                                                </span>
                                                                                                                                             </span>
                                                                                                                                         </td>
                                                                                                                                         <td className="special_result">
