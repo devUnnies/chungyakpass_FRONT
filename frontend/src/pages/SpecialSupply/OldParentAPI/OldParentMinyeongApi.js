@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -132,6 +133,12 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 노부모부양 민영주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

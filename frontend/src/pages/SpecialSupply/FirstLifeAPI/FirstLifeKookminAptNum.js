@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
 import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
@@ -10,7 +9,7 @@ import '../SpecialSupply.css';
 function FirstLifeKookminAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const firstLifeKookminStore = useSelector(
+    const firstLifeKookminAptNumStore = useSelector(
         (state) => state.firstInLifeKookmin
     );
 
@@ -54,13 +53,12 @@ function FirstLifeKookminAptNum(props) {
     };
 
     const onClick = async () => {
-        if (
-            notificationNumber === '' ||
-            housingType === '' ||
-            firstLifeKookminType === ''
-        ) {
+        if (notificationNumber === '' || housingType === '') {
             alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
-        } else if (form.firstRankHistoryYn === 'n') {
+        } else if (
+            firstLifeKookminType === '' ||
+            form.firstRankHistoryYn === 'n'
+        ) {
             alert(
                 '일반공급 1순위 당첨 이력이 존재하는 경우에만 생애최초 자격확인이 가능합니다.'
             );
@@ -74,7 +72,7 @@ function FirstLifeKookminAptNum(props) {
             ); // api 연결 요청.
 
             const data =
-                firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data;
+                firstLifeKookminAptNumStore?.postFirstInLifeKookminAptNum?.data;
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialFirstLifeKookmin',
@@ -96,11 +94,11 @@ function FirstLifeKookminAptNum(props) {
 
     useEffect(() => {
         // 아파트 공고번호, 주택형 post 성공시 생애최초 국민 자격확인 페이지로 이동.
-        if (firstLifeKookminStore.postFirstInLifeKookminAptNum) {
+        if (firstLifeKookminAptNumStore?.postFirstInLifeKookminAptNum) {
             const data =
-                firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
+                firstLifeKookminAptNumStore.postFirstInLifeKookminAptNum.data;
         }
-    }, [firstLifeKookminStore?.postFirstInLifeKookminAptNum]);
+    }, [firstLifeKookminAptNumStore?.postFirstInLifeKookminAptNum]);
 
     return (
         <>

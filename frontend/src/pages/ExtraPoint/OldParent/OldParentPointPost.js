@@ -5,12 +5,19 @@ import useInputState from '../../../components/Input/useInputState';
 import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import { postSpecialOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
 import { useHistory } from 'react-router-dom';
-import './OldParentPoint.css';
+import '../../ExtraPoint/ExtraPoint.css';
 
 function OldParentPointPost(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const oldParentPointStore = useSelector((state) => state.oldParentPoint);
+
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
+        }
+    };
 
     const [houseMemberId, setHouseMemberId, handleChangeHouseMemberId] =
         useInputState('');
@@ -107,7 +114,11 @@ function OldParentPointPost(props) {
 
             <div className="specialAptNumForm">
                 <div className="specialAptNumContainer">
-                    <form onSubmit={handleSubmit} className="specialAptNumForm">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="specialAptNumForm"
+                    >
                         <div className="paramSelect">
                             <span className="qualificationBoxTitle">
                                 부모 사망 여부

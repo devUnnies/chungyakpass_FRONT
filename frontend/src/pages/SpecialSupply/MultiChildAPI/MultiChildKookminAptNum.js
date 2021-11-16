@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
 import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';

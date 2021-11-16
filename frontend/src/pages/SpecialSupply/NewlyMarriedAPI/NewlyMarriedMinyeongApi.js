@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedMinyeongAptNum } from '../../../store/actions/newlyMarriedMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -137,6 +138,12 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 신혼부부 민영주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

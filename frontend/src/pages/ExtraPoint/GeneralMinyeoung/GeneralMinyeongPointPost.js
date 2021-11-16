@@ -5,7 +5,7 @@ import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import useInputState from '../../../components/Input/useInputState';
 import { postGeneralMinyeongPoint } from '../../../store/actions/pointGeneralMinyeongAction';
 import { useHistory } from 'react-router-dom';
-import './GeneralMinyeoungPoint.css';
+import '../../ExtraPoint/ExtraPoint.css';
 
 function GeneralMinyeongPointPost(props) {
     const history = useHistory();
@@ -13,6 +13,13 @@ function GeneralMinyeongPointPost(props) {
     const generalMinyeongPointStore = useSelector(
         (state) => state.generalMinyeongPoint
     );
+
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
+        }
+    };
 
     const [houseMemberId, setHouseMemberId, handleChangeHouseMemberId] =
         useInputState('');
@@ -109,9 +116,13 @@ function GeneralMinyeongPointPost(props) {
                 </span>
             </div>
 
-            <div className="generalAptNumForm">
-                <div className="generalAptNumContainer">
-                    <form onSubmit={handleSubmit} className="generalAptNumForm">
+            <div className="pointAptNumForm">
+                <div className="pointAptNumContainer">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="pointAptNumForm"
+                    >
                         <div className="paramSelect">
                             <span className="qualificationBoxTitle">
                                 부모 사망 여부

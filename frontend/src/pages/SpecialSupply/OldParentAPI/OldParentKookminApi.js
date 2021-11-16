@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction'; // oldParentApi 만든 후 변경하기.
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -135,6 +136,12 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 노부모부양 국민주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

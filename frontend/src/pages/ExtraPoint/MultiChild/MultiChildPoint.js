@@ -4,15 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildPointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
 import { Link } from 'react-router-dom';
 import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
+    CheckOutlined,
+    CaretRightOutlined,
     InfoCircleOutlined,
-    PauseCircleOutlined,
+    PlusOutlined,
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import './MultiChildPoint.css';
+import '../../ExtraPoint/ExtraPoint.css';
 import Loading from '../../../components/Loading/loading';
 
 const MultiChildPoint = ({ onSaveData }) => {
@@ -103,328 +103,269 @@ const MultiChildPoint = ({ onSaveData }) => {
                                           '\n' +
                                           '사유: ' +
                                           data?.message
-                                  ) + history.goBack(-1)}
+                                  ) + history.push('/')}
                         </>
                     ) : (
                         <>
-                            <div className="point_title">
-                                <h3 className="point_mainTitle">
-                                    가점 계산
-                                    <span className="point_subTitle">
-                                        | 다자녀 특별공급{' '}
-                                    </span>
-                                </h3>
-                            </div>
+                            {data?.numberOfChild === undefined ? (
+                                alert(
+                                    '가배점을 확인할 수 없습니다.' +
+                                        '\n' +
+                                        '사유: 가배점 항목 중 가배점을 확인할 수 있는 데이터가 존재하지 않습니다.'
+                                ) + history.push('/point/multiChildAptNum')
+                            ) : (
+                                <>
+                                    <div className="point_title">
+                                        <strong className="point_mainTitle">
+                                            특별공급{' '}
+                                        </strong>
+                                        <span className="point_subTitle">
+                                            | 다자녀 유형
+                                        </span>
+                                        <div className="point_subPlusTitle">
+                                            <span className="checkRedIcon">
+                                                <CheckOutlined />
+                                            </span>
+                                            가배점 계산
+                                        </div>
+                                    </div>
 
-                            {/* 다자녀 가점 테이블 */}
-                            <form
-                                className="multiChildPoint_form"
-                                onSubmit={handleSubmit}
-                            >
-                                <table className="multiChildPoint_table">
-                                    {/* 다자녀 유형 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                다자녀 유형
-                                            </span>
-                                            <span className="info_tooltip">
-                                                <InfoCircleOutlined />
-                                                <span className="tooltip-text"></span>
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={getParams}
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {getParams !== '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
+                                    {/* 다자녀 가점 테이블 */}
+                                    <form
+                                        className="point_form"
+                                        onSubmit={handleSubmit}
+                                    >
+                                        <table className="point_table">
+                                            {/* 다자녀 유형 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
                                                     </span>
-                                                ) : null}
-                                                {getParams === '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
+                                                    <span className="qualificationBox">
+                                                        다자녀 유형
                                                     </span>
-                                                ) : null}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span className="tooltip-text"></span>
+                                                    </span>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={getParams}
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
 
-                                    {/* 만 19세 미만 자녀수 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                만 19세 미만 자녀수 가점 결과
-                                            </span>
-                                            <span className="info_tooltip">
-                                                <InfoCircleOutlined />
-                                                <span className="tooltip-text"></span>
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.numberOfChild
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.numberOfChild !== '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
+                                            {/* 만 19세 미만 자녀수 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
                                                     </span>
-                                                ) : null}
-                                                {data?.numberOfChild === '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
+                                                    <span className="qualificationBox">
+                                                        만 19세 미만 자녀수 가점
+                                                        결과
                                                     </span>
-                                                ) : null}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span className="tooltip-text"></span>
+                                                    </span>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.numberOfChild
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
 
-                                    {/* 만 6세 미만 자녀수 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                만 6세 미만 자녀 수 가점 결과
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.numberOfChildUnder6Year
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.numberOfChildUnder6Year !==
-                                                '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
+                                            {/* 만 6세 미만 자녀수 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
                                                     </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                {data?.numberOfChildUnder6Year ===
-                                                '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
-                                                        <span className="pause-tooltip-text"></span>
+                                                    <span className="qualificationBox">
+                                                        만 6세 미만 자녀 수 가점
+                                                        결과
                                                     </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.numberOfChildUnder6Year
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
 
-                                    {/* 청약통장 가입기간 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                청약통장 가입기간 가점 결과
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.bankbookJoinPeriod
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.bankbookJoinPeriod !==
-                                                '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
+                                            {/* 청약통장 가입기간 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
                                                     </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                {data?.bankbookJoinPeriod ===
-                                                '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
-                                                        <span className="pause-tooltip-text"></span>
+                                                    <span className="qualificationBox">
+                                                        청약통장 가입기간 가점
+                                                        결과
                                                     </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.bankbookJoinPeriod
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
 
-                                    {/* 해당지역 거주기간 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                해당지역 거주기간 가점 결과
+                                            {/* 해당지역 거주기간 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
+                                                    </span>
+                                                    <span className="qualificationBox">
+                                                        해당지역 거주기간 가점
+                                                        결과
+                                                    </span>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span className="tooltip-text">
+                                                            <p>
+                                                                만 19세부터
+                                                                계산.
+                                                            </p>
+                                                            수도권은 서울 인천
+                                                            경기 합산하여 계산.
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.periodOfApplicableAreaResidence
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
+
+                                            {/* 무주택 기간 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
+                                                    </span>
+                                                    <span className="qualificationBox">
+                                                        무주택 기간 가점 결과
+                                                    </span>
+                                                    <span className="info_tooltip">
+                                                        <InfoCircleOutlined />
+                                                        <span className="tooltip-text">
+                                                            <p>
+                                                                만19세부터 계산.
+                                                            </p>
+                                                            신청자 본인과
+                                                            배우자중 짧은
+                                                            기간으로 산정하여
+                                                            계산.
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.periodOfHomelessness
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
+
+                                            {/* 세대 구성 */}
+                                            <tr className="point_phase">
+                                                <td className="point_qualification">
+                                                    <span className="qualificationIcon">
+                                                        <CaretRightOutlined />
+                                                    </span>
+                                                    <span className="qualificationBox">
+                                                        세대 구성 가점 결과
+                                                    </span>
+                                                </td>
+                                                <td className="point_result">
+                                                    <input
+                                                        className="aptInfoSelect"
+                                                        value={
+                                                            JSON.stringify(
+                                                                data?.generationComposition
+                                                            ) +
+                                                            ' ' +
+                                                            '점'
+                                                        }
+                                                        readOnly={true}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <hr className="sum_hr" />
+
+                                        {/* 총 다자녀 가점 */}
+                                        <div className="pointRes">
+                                            <span className="sumPlusIcon">
+                                                <PlusOutlined />
                                             </span>
-                                            <span className="info_tooltip">
-                                                <InfoCircleOutlined />
-                                                <span className="tooltip-text">
-                                                    <p>만 19세부터 계산.</p>
-                                                    수도권은 서울 인천 경기
-                                                    합산하여 계산.
+                                            <span className="sumRes">
+                                                <span className="sum_text">
+                                                    총
+                                                </span>
+                                                <span className="pointSum">
+                                                    {multiChildPointSum < 10
+                                                        ? '0' +
+                                                          multiChildPointSum
+                                                        : multiChildPointSum}
+                                                </span>
+                                                <span className="sum_text">
+                                                    점
                                                 </span>
                                             </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.periodOfApplicableAreaResidence
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.periodOfApplicableAreaResidence !==
-                                                '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                {data?.periodOfApplicableAreaResidence ===
-                                                '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
-                                                        <span className="pause-tooltip-text"></span>
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    {/* 무주택 기간 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                무주택 기간 가점 결과
-                                            </span>
-                                            <span className="info_tooltip">
-                                                <InfoCircleOutlined />
-                                                <span className="tooltip-text">
-                                                    <p>만19세부터 계산.</p>
-                                                    신청자 본인과 배우자중 짧은
-                                                    기간으로 산정하여 계산.
-                                                </span>
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.periodOfHomelessness
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.periodOfHomelessness !==
-                                                '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                {data?.periodOfHomelessness ===
-                                                '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
-                                                        <span className="pause-tooltip-text"></span>
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    {/* 세대 구성 */}
-                                    <tr className="point_phase">
-                                        <td className="qualification">
-                                            <span className="qualificationBox">
-                                                세대 구성 가점 결과
-                                            </span>
-                                        </td>
-                                        <td className="point_result">
-                                            <input
-                                                className="aptInfoSelect"
-                                                value={
-                                                    JSON.stringify(
-                                                        data?.generationComposition
-                                                    ) +
-                                                    ' ' +
-                                                    '점'
-                                                }
-                                                readOnly={true}
-                                            />
-                                            <span>
-                                                {data?.generationComposition !==
-                                                '' ? (
-                                                    <span className="progress">
-                                                        <CheckCircleOutlined />
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                                {data?.generationComposition ===
-                                                '' ? (
-                                                    <span className="pause_tooltip">
-                                                        <CloseCircleOutlined />
-                                                        <span className="pause-tooltip-text"></span>
-                                                    </span>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <hr className="sum_hr" />
-
-                                {/* 총 다자녀 가점 */}
-                                <div className="multiChildPointRes">
-                                    <span className="sum_text">총</span>
-                                    <span className="multiChildPointSum">
-                                        {multiChildPointSum}
-                                    </span>
-                                    <span className="sum_text">점</span>
-                                </div>
-                            </form>
+                                        </div>
+                                    </form>
+                                </>
+                            )}
                         </>
                     )}
                 </>

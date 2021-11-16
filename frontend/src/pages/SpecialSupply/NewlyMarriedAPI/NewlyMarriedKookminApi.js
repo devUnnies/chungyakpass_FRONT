@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedKookminAptNum } from '../../../store/actions/multiChildKookminAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -136,6 +137,12 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 신혼부부 국민주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

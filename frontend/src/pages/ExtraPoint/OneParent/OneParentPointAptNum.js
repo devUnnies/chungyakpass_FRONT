@@ -5,7 +5,7 @@ import useInputState from '../../../components/Input/useInputState';
 import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import { postOneParentPointAptNum } from '../../../store/actions/pointSpecialOneParentAction';
 import { useHistory } from 'react-router-dom';
-import './OneParentPoint.css';
+import '../../ExtraPoint/ExtraPoint.css';
 
 function OneParentPointAptNum(props) {
     const history = useHistory();
@@ -13,6 +13,13 @@ function OneParentPointAptNum(props) {
     const oneParentPointAptNumStore = useSelector(
         (state) => state.oneParentPoint
     );
+
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
+        }
+    };
 
     const [
         notificationNumber,
@@ -77,9 +84,13 @@ function OneParentPointAptNum(props) {
                 </span>
             </div>
 
-            <div className="specialAptNumForm">
-                <div className="specialAptNumContainer">
-                    <form onSubmit={handleSubmit} className="specialAptNumForm">
+            <div className="pointAptNumForm">
+                <div className="pointAptNumContainer">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="pointAptNumForm"
+                    >
                         <div className="apt_subPlusTitle">
                             <span className="checkRedIcon">
                                 <CheckOutlined />
@@ -88,11 +99,11 @@ function OneParentPointAptNum(props) {
                         </div>
 
                         <input
+                            className="pointAptNumInput"
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
                             onChange={handleChangeNotificationNumber}
-                            className="specialAptNumInput"
                         />
 
                         <div className="buttonContainer">

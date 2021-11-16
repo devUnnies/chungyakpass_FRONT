@@ -162,7 +162,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                     </span>
                                                     <span className="info_tooltip">
                                                         <InfoCircleOutlined />
-                                                        <Tooltip className="tooltip-text">
+                                                        <span className="tooltip-text">
                                                             <p>
                                                                 규제
                                                                 지역('투기과열지구'
@@ -175,7 +175,7 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                             주택 시장 안정화
                                                             등을 위해 지정하여
                                                             관리하는 지역.
-                                                        </Tooltip>
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td className="general_result">

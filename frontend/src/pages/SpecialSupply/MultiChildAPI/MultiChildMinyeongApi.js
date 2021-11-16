@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -135,6 +136,12 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 다자녀 민영주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

@@ -5,12 +5,19 @@ import useInputState from '../../../components/Input/useInputState';
 import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
 import { postMultiChildPointAptNum } from '../../../store/actions/pointSpecialMultiChildAction';
 import { useHistory } from 'react-router-dom';
-import './MultiChildPoint.css';
+import '../../ExtraPoint/ExtraPoint.css';
 
 function MultiChildPointAptNum(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const multiChildAptNumStore = useSelector((state) => state.multiChildPoint);
+
+    // enter 키 누를 경우 onClick 함수 실행.
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
+            onClick();
+        }
+    };
 
     const [
         notificationNumber,
@@ -81,9 +88,13 @@ function MultiChildPointAptNum(props) {
                 </span>
             </div>
 
-            <div className="specialAptNumForm">
-                <div className="specialAptNumContainer">
-                    <form onSubmit={handleSubmit} className="specialAptNumForm">
+            <div className="pointAptNumForm">
+                <div className="pointAptNumContainer">
+                    <form
+                        onSubmit={handleSubmit}
+                        onKeyPress={onKeyPress}
+                        className="pointAptNumForm"
+                    >
                         <div className="apt_subPlusTitle">
                             <span className="checkRedIcon">
                                 <CheckOutlined />
@@ -92,7 +103,7 @@ function MultiChildPointAptNum(props) {
                         </div>
 
                         <input
-                            className="specialAptNumInput"
+                            className="pointAptNumInput"
                             type="number"
                             placeholder="아파트 공고번호"
                             value={notificationNumber}
@@ -100,7 +111,7 @@ function MultiChildPointAptNum(props) {
                         />
                         <br />
                         <select
-                            className="specialAptNumInput"
+                            className="pointAptNumInput"
                             name="multiChildPointType"
                             value={multiChildHouseholdType}
                             onChange={handleChangeMultiChildHouseholdType}

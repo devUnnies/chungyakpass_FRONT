@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postFirstInLifeMinyeongAptNum } from '../../../store/actions/firstInLifeMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
+    CheckOutlined,
     CaretRightOutlined,
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -134,6 +135,12 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 <span className="special_subTitle">
                                     | 생애최초 민영주택
                                 </span>
+                                <div className="special_subPlusTitle">
+                                    <span className="checkRedIcon">
+                                        <CheckOutlined />
+                                    </span>
+                                    청약 자격 확인
+                                </div>
                             </div>
 
                             <form

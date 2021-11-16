@@ -149,9 +149,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     <span className="checkRedIcon">
                                         <CheckOutlined />
                                     </span>
-                                    공공주택 특별법 적용
-                                </div>
-                                <div className="special_subPlusTitle">
+                                    공공주택 특별법 적용 <br />
                                     <span className="checkRedIcon">
                                         <CheckOutlined />
                                     </span>
