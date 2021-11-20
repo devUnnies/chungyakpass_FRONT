@@ -3,7 +3,7 @@ import './Histories.css';
 import SubButton from '../../components/Button/SubButton';
 import { EditFilled, DeleteFilled } from '@ant-design/icons';
 
-const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
+const HistoriesTd = ({ item, handleHistoryEdit, handleRemove }) => {
     const [isHistoryShow, setIsHistoryShow] = useState(false);
     const [isLimitShow, setIsLimitShow] = useState(false);
 
@@ -16,66 +16,66 @@ const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
         handleRemove(item?.id);
     };
 
-    const onEdit = () => {
+    const onEdit = (state) => {
         // console.log(JSON.stringify(item));
-        handleEdit(item);
+        if (state === 'history') handleHistoryEdit(item);
     };
 
     return (
         <tr className="historiesInfoTbodyTr">
             <td className="historiesInfoTableTbodyTrTd">
-                {isHistoryShow && item.history ? (
+                {isHistoryShow && item ? (
                     <div className="historiesContent">
-                        <span>{item.history.houseName}</span>
+                        <span>{item.houseName}</span>
                         <br />
-                        {item.history.housingType ? (
+                        {item.housingType ? (
                             <span>
-                                {item.history.housingType}
+                                {item.housingType}
                                 <br />
                             </span>
                         ) : null}
-                        <span>{item.history.supply}</span>
+                        <span>{item.supply}</span>
                         <br />
-                        {item.history.specialSupply ? (
+                        {item.specialSupply ? (
                             <span>
-                                {item.history.specialSupply}
+                                {item.specialSupply}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.ranking ? (
+                        {item.ranking ? (
                             <span>
-                                {item.history.ranking}
+                                {item.ranking}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.result ? (
+                        {item.result ? (
                             <span>
-                                {item.history.result}
+                                {item.result}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.preliminaryNumber ? (
+                        {item.preliminaryNumber ? (
                             <span>
-                                {item.history.preliminaryNumber}
+                                {item.preliminaryNumber}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.winningDate ? (
+                        {item.winningDate ? (
                             <span>
-                                {item.history.winningDate
+                                {item.winningDate
                                     .replace('-', '년 ')
                                     .replace('-', '월 ')
                                     .concat('일')}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.raffle ? (
+                        {item.raffle ? (
                             <span>
-                                {item.history.raffle}
+                                {item.raffle}
                                 <br />
                             </span>
                         ) : null}
-                        {item.history.cancelWinYn === 'n' ? (
+                        {item.cancelWinYn === 'n' ? (
                             <span>
                                 유지
                                 <br />
@@ -86,9 +86,9 @@ const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
                                 <br />
                             </span>
                         )}
-                        {item.history.ineligibleYn === 'y' ? (
+                        {item.ineligibleYn === 'y' ? (
                             <span>
-                                {item.history.ineligibleDate
+                                {item.ineligibleDate
                                     .replace('-', '년 ')
                                     .replace('-', '월 ')
                                     .concat('일')}
@@ -102,56 +102,62 @@ const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
                     {isHistoryShow ? '접기' : '더보기'}
                 </SubButton>
             </td>
+            <td onClick={() => onEdit('history')} className="modifyContainer">
+                <EditFilled className="modifyColor" />
+            </td>
             <td>
-                {item.limit ? (
+                {item.houseMemberChungyakRestrictionReadDto ? (
                     <>
                         {isLimitShow ? (
                             <div className="historiesContent">
-                                {item.limit.reWinningRestrictedDate ? (
+                                {item.houseMemberChungyakRestrictionReadDto
+                                    .reWinningRestrictedDate ? (
                                     <span>
                                         재당첨제한 :{' '}
-                                        {item.limit.reWinningRestrictedDate
+                                        {item.houseMemberChungyakRestrictionReadDto.reWinningRestrictedDate
                                             .replace('-', '년 ')
                                             .replace('-', '월 ')
                                             .concat('일')}
                                         <br />
                                     </span>
                                 ) : null}
-                                {item.limit.specialSupplyRestrictedYn ? (
+                                {item.houseMemberChungyakRestrictionReadDto
+                                    .specialSupplyRestrictedYn ? (
                                     <span>
-                                        {item.limit
+                                        {item
+                                            .houseMemberChungyakRestrictionReadDto
                                             .specialSupplyRestrictedYn === 'y'
                                             ? '청약불가'
                                             : '청약가능'}
                                         <br />
                                     </span>
                                 ) : null}
-                                {item.limit
+                                {item.houseMemberChungyakRestrictionReadDto
                                     .unqualifiedSubscriberRestrictedDate ? (
                                     <span>
                                         부적격당첨자제한 :{' '}
-                                        {item.limit.unqualifiedSubscriberRestrictedDate
+                                        {item.houseMemberChungyakRestrictionReadDto.unqualifiedSubscriberRestrictedDate
                                             .replace('-', '년 ')
                                             .replace('-', '월 ')
                                             .concat('일')}
                                         <br />
                                     </span>
                                 ) : null}
-                                {item.limit
+                                {item.houseMemberChungyakRestrictionReadDto
                                     .requlatedAreaFirstPriorityRestrictedDate ? (
                                     <span>
                                         투기청약과열지구 1순위 제한 :{' '}
-                                        {item.limit.requlatedAreaFirstPriorityRestrictedDate
+                                        {item.houseMemberChungyakRestrictionReadDto.requlatedAreaFirstPriorityRestrictedDate
                                             .replace('-', '년 ')
                                             .replace('-', '월 ')
                                             .concat('일')}
                                         <br />
                                     </span>
                                 ) : null}
-                                {item.limit
+                                {item.houseMemberChungyakRestrictionReadDto
                                     .additionalPointSystemRestrictedDate ? (
                                     <span>
-                                        {item.limit.additionalPointSystemRestrictedDate
+                                        {item.houseMemberChungyakRestrictionReadDto.additionalPointSystemRestrictedDate
                                             .replace('-', '년 ')
                                             .replace('-', '월 ')
                                             .concat('일')}
@@ -167,6 +173,9 @@ const HistoriesTd = ({ item, handleEdit, handleRemove }) => {
                 ) : (
                     '데이터 없음'
                 )}
+            </td>
+            <td onClick={onEdit} className="modifyContainer">
+                <EditFilled className="modifyColor" />
             </td>
 
             <td onClick={onRemove} className="historiesInfoTbodyTrTd">

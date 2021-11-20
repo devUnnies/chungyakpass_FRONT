@@ -4,18 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addRestr } from '../../store/actions/commonInfoAction';
 import { useHistory, useLocation } from 'react-router';
 
-const AddLimit = () => {
-    const [limit, setLimit] = useState({
-        reWinningRestrictedDate: null,
-        specialSupplyRestrictedYn: null,
-        unqualifiedSubscriberRestrictedDate: null,
-        requlatedAreaFirstPriorityRestrictedDate: null,
-        additionalPointSystemRestrictedDate: null,
-    });
-
+const ModLimit = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
+    const [limit, setLimit] = useState(location.state.limit);
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
     const commonInfoStore = useSelector((state) => state.commonInfo);
@@ -190,4 +183,4 @@ const AddLimit = () => {
     );
 };
 
-export default AddLimit;
+export default ModLimit;

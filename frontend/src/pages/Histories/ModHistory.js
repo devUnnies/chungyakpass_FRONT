@@ -1,42 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
-import AddLimit from './AddLimit';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChung } from '../../store/actions/commonInfoAction';
+import { modChung } from '../../store/actions/commonInfoAction';
 import { useHistory, useLocation } from 'react-router';
 
-const AddHistory = () => {
+const ModHistory = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const pos = location.state.pos;
     const memberId = location.state.memberId;
     const ineligibleDate = location.state.ineligibleDate;
-    const nextId = location.state.nextId;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     // history 초기화
-    const [history, setHistory] = useState({
-        houseMemberId: memberId,
-        houseName: '',
-        supply: '',
-        specialSupply: null,
-        housingType: '',
-        ranking: '',
-        result: '',
-        preliminaryNumber: '',
-        winningDate: null,
-        raffle: '',
-        cancelWinYn: null,
-    });
-    const [ineligible, setIneligible] = useState({
-        isIneligible: '',
-        date: '',
-    });
+    const [history, setHistory] = useState(location.state.history);
+    const [ineligible, setIneligible] = useState(location.state.ineligible);
     // 제한사항 여부
     const [haveLimit, setHaveLimit] = useState(false);
 
     const _history = useHistory();
+
+    console.log('포스 !!!! ' + pos);
 
     const onHistoryChange = (e) => {
         const { name, value } = e.target;
@@ -45,8 +30,7 @@ const AddHistory = () => {
 
     const handleSubmit = () => {
         // history 하나 우선 저장함
-        dispatch(addChung(history));
-        nextId.current += 1;
+        dispatch(modChung(history));
         // 초기화
         setHistory({
             houseName: '',
@@ -67,16 +51,14 @@ const AddHistory = () => {
     };
 
     useEffect(() => {
-        const data = commonInfoStore.addChungyak.data;
+        const data = commonInfoStore.modChungyak.data;
         if (data && haveLimit) {
             _history.push('/addLimit', {
                 pos: pos - 1,
                 ineligibleDate: ineligibleDate,
             });
-        } else if (data) {
-            _history.goBack(pos);
         }
-    }, [commonInfoStore.addChungyak]);
+    }, [commonInfoStore.modChungyak]);
 
     useEffect(() => {
         if (ineligible.isIneligible === 'y') {
@@ -85,11 +67,11 @@ const AddHistory = () => {
     }, [ineligible.isIneligible]);
 
     return (
-        <div id="addHistory" className="addHistoryFormContainer">
+        <div id="modHistory" className="addHistoryFormContainer">
             <form
-                onSubmit={handleSubmit}
+                // onSubmit={handleSubmit}
                 className="addHistoryForm"
-                name="addHistory"
+                name="modHistory"
             >
                 <table className="addHistoryFormTable">
                     <tbody className="addHistoryFormTableTbody">
@@ -413,12 +395,10 @@ const AddHistory = () => {
                                 <div className="buttonContainer">
                                     <SubButton
                                         type="back"
-                                        className="save"
+                                        className="list"
                                         width="80"
                                         height="30"
-                                        onClick={() => {
-                                            _history.goBack(pos);
-                                        }}
+                                        onClick={_history.goBack(pos, {})}
                                     >
                                         목록으로
                                     </SubButton>
@@ -441,4 +421,4 @@ const AddHistory = () => {
     );
 };
 
-export default AddHistory;
+export default ModHistory;

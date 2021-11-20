@@ -62,6 +62,10 @@ import {
     CHUNGYAK_GET,
     CHUNGYAK_GET_SUCCESS,
     CHUNGYAK_GET_ERROR,
+    ADD_CHUNGYAK_DELETE,
+    MOD_CHUNGYAK_DELETE,
+    ADD_CHUNGYAK_RESTR_DELETE,
+    MOD_CHUNGYAK_RESTR_DELETE,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -212,6 +216,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ADD_CHUNGYAK_DELETE:
+            return {
+                ...state,
+                addChungyak: reducerUtils.initial(),
+            };
         case MOD_CHUNGYAK_PUT:
         case MOD_CHUNGYAK_PUT_SUCCESS:
         case MOD_CHUNGYAK_PUT_ERROR:
@@ -219,6 +228,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case MOD_CHUNGYAK_DELETE:
+            return {
+                ...state,
+                modChungyak: reducerUtils.initial(),
+            };
         case ADD_CHUNGYAK_RESTR_POST:
         case ADD_CHUNGYAK_RESTR_POST_SUCCESS:
         case ADD_CHUNGYAK_RESTR_POST_ERROR:
@@ -226,6 +240,11 @@ export default function commonInfo(state = initialState, action) {
                 ADD_CHUNGYAK_RESTR_POST,
                 'addRestriction'
             )(state, action);
+        case ADD_CHUNGYAK_RESTR_DELETE:
+            return {
+                ...state,
+                addRestriction: reducerUtils.initial(),
+            };
         case MOD_CHUNGYAK_RESTR_PUT:
         case MOD_CHUNGYAK_RESTR_PUT_SUCCESS:
         case MOD_CHUNGYAK_RESTR_PUT_ERROR:
@@ -233,6 +252,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case MOD_CHUNGYAK_RESTR_DELETE:
+            return {
+                ...state,
+                modRestriction: reducerUtils.initial(),
+            };
         default:
             return state;
     }
