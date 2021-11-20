@@ -90,6 +90,14 @@ export const ADD_CHUNGYAK_POST_ERROR = 'ADD_CHUNGYAK_POST_ERROR';
 export const MOD_CHUNGYAK_PUT = 'MOD_CHUNGYAK_PUT';
 export const MOD_CHUNGYAK_PUT_SUCCESS = 'MOD_CHUNGYAK_PUT_SUCCESS';
 export const MOD_CHUNGYAK_PUT_ERROR = 'MOD_CHUNGYAK_PUT_ERROR';
+// 청약신청이력 삭제
+export const DEL_CHUNGYAK_DELETE = 'DEL_CHUNGYAK_DELETE';
+export const DEL_CHUNGYAK_DELETE_SUCCESS = 'DEL_CHUNGYAK_DELETE_SUCCESS';
+export const DEL_CHUNGYAK_DELETE_ERROR = 'DEL_CHUNGYAK_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const ADD_CHUNGYAK_DELETE = 'ADD_CHUNGYAK_DELETE';
+//저장 후 리덕스에서 삭제
+export const MOD_CHUNGYAK_DELETE = 'MOD_CHUNGYAK_DELETE';
 
 // 청약제한사항 저장
 export const ADD_CHUNGYAK_RESTR_POST = 'ADD_CHUNGYAK_RESTR_POST';
@@ -100,6 +108,16 @@ export const ADD_CHUNGYAK_RESTR_POST_ERROR = 'ADD_CHUNGYAK_RESTR_POST_ERROR';
 export const MOD_CHUNGYAK_RESTR_PUT = 'MOD_CHUNGYAK_RESTR_PUT';
 export const MOD_CHUNGYAK_RESTR_PUT_SUCCESS = 'MOD_CHUNGYAK_RESTR_PUT_SUCCESS';
 export const MOD_CHUNGYAK_RESTR_PUT_ERROR = 'MOD_CHUNGYAK_RESTR_PUT_ERROR';
+// 청약제한사항 삭제
+export const DEL_CHUNGYAK_RESTR_DELETE = 'DEL_CHUNGYAK_RESTR_DELETE';
+export const DEL_CHUNGYAK_RESTR_DELETE_SUCCESS =
+    'DEL_CHUNGYAK_RESTR_DELETE_SUCCESS';
+export const DEL_CHUNGYAK_RESTR_DELETE_ERROR =
+    'DEL_CHUNGYAK_RESTR_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const ADD_CHUNGYAK_RESTR_DELETE = 'ADD_CHUNGYAK_RESTR_DELETE';
+//저장 후 리덕스에서 삭제
+export const MOD_CHUNGYAK_RESTR_DELETE = 'MOD_CHUNGYAK_RESTR_DELETE';
 
 /* Action Creator */
 export const getHouse = createPromiseThunk(HOUSE_GET, commonInfoApi.getHouse);
@@ -187,9 +205,18 @@ export const addChung = createPromiseThunk(
     commonInfoApi.addChungyak
 );
 
+export const addChungDel = () => ({ type: ADD_CHUNGYAK_DELETE });
+
 export const modChung = createPromiseThunk(
     MOD_CHUNGYAK_PUT,
     commonInfoApi.modChungyak
+);
+
+export const modChungDel = () => ({ type: MOD_CHUNGYAK_DELETE });
+
+export const delChung = createPromiseThunk(
+    DEL_CHUNGYAK_DELETE,
+    commonInfoApi.delChungyak
 );
 
 export const addRestr = createPromiseThunk(
@@ -197,7 +224,16 @@ export const addRestr = createPromiseThunk(
     commonInfoApi.addRestriction
 );
 
+export const addRestrDel = () => ({ type: ADD_CHUNGYAK_RESTR_DELETE });
+
 export const modRestr = createPromiseThunk(
     MOD_CHUNGYAK_RESTR_PUT,
     commonInfoApi.modRestriction
+);
+
+export const modRestrDel = () => ({ type: MOD_CHUNGYAK_RESTR_DELETE });
+
+export const delRestr = createPromiseThunk(
+    DEL_CHUNGYAK_RESTR_DELETE,
+    commonInfoApi.delRestriction
 );

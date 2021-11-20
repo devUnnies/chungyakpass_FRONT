@@ -65,6 +65,9 @@ import {
     SeeHistories,
     ModMember,
     AddHistory,
+    AddLimit,
+    ModHistory,
+    ModLimit,
 } from '../pages';
 import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
@@ -94,6 +97,9 @@ class App extends Component {
                     <Route path="/modMember" component={ModMember} />
                     <Route path="/histories" component={SeeHistories} />
                     <Route path="/addHistory" component={AddHistory} />
+                    <Route path="/modHistory" component={ModHistory} />
+                    <Route path="/addLimit" component={AddLimit} />
+                    <Route path="/modLimit" component={ModLimit} />
                     <Route path="/assets" component={SeeAssets} />
 
                     <Route

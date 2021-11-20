@@ -75,7 +75,7 @@ function MultiChildMinyeongAptNum(props) {
 
     return (
         <>
-            <div className="historiesInfoHeaderContainer">
+            <div className="numbersInfoHeaderContainer">
                 <span className="apt_title">
                     <span className="apt_titleIcon">
                         <HomeOutlined />
