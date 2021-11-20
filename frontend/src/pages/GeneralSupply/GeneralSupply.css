@@ -225,15 +225,6 @@ span.qualificationBox,
         transform: translateX(0px);
     }
 }
-
-/* 툴팁 테이블 디자인 */
-.tootipeTable {
-    border-collapse: collapse;
-    text-align: center;
-}
-.tootipeTable tr td {
-    padding: 3px;
-}
 /*부적격 중지 및 부적격 툴팁*/
 .pause_tooltip {
     position: absolute;
