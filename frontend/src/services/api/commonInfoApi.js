@@ -69,7 +69,8 @@ export const patchHolder = (info) =>
 // ----------------------------------------------------------------------------
 
 //  - 세대구성원자산조회 API
-// export const getAssets = (memberId) => get(``)
+export const getAssets = (memberId) =>
+    get(`user/house/member/property/${memberId}`);
 
 //  - 세대구성원자산등록 API
 export const addAssets = (info) => post(`user/house/member/property`, info);
@@ -77,6 +78,10 @@ export const addAssets = (info) => post(`user/house/member/property`, info);
 //  - 세대구성원자산수정 API
 export const modAssets = (info) =>
     put(`user/house/member/property/${info.propertyId}`, info.assets);
+
+//  - 세대구성원자산삭제 API
+export const delAssets = (assetId) =>
+    del(`user/house/member/property/${assetId}`);
 
 //  - 세대구성원무주택시작일수정 API
 export const patchStartDate = (info) =>
@@ -99,14 +104,20 @@ export const modChungyak = (info) =>
     });
 
 //  - 세대구성원청약신청이력삭제 API
-
+export const delChungyak = (chungyakId) =>
+    del(`user/house/member/chungyak/${chungyakId}`);
 // ----------------------------------------------------------------------------
 
 //  - 세대구성원청약제한사항등록 API
 export const addRestriction = (info) =>
     post(`user/house/member/chungyak/restriction`, info);
 
+//  - 세대구성원청약제한사항수정 API
 export const modRestriction = (info) =>
     put(`user/house/member/chungyak/restriction/${info.restrictionId}`, {
         houseMemberChungyakRestrictionUpdateDtoList: info.restriction,
     });
+
+//  - 세대구성원청약제한사항삭제 API
+export const delRestriction = (restrictionId) =>
+    del(`user/house/member/chungyak/restriction/${restrictionId}`);

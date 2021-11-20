@@ -76,6 +76,10 @@ const AddMember = () => {
     }, [info]);
 
     useEffect(() => {
+        if (houseId) setInfo({ ...info, houseId: houseId });
+    }, [houseId]);
+
+    useEffect(() => {
         return setInfo({ ...info, homelessStartDate: info.birthDay });
     }, [info.birthDay]);
 

@@ -39,7 +39,7 @@ const FAQ = () => {
 
     return (
         <div className="faq_container">
-            <div className="historiesInfoHeaderContainer">
+            <div className="numbersInfoHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">자주 묻는 질문</span>
             </div>

@@ -29,6 +29,9 @@ const SeeMember = () => {
 
     useEffect(() => {
         dispatch(getHouse());
+    }, []);
+
+    useEffect(() => {
         const getData = commonInfoStore.getHouse.data;
         const addData = commonInfoStore.addHouse.data;
 
@@ -41,7 +44,7 @@ const SeeMember = () => {
         } else if (addData) {
             setHouseId(addData.id);
         }
-    }, []);
+    }, [commonInfoStore.getHouse, commonInfoStore.addHouse]);
 
     const handleAdd = () => {
         // console.log(houseId);
