@@ -43,10 +43,10 @@ const AddHistory = () => {
         setHistory({ ...history, [name]: value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         // history 하나 우선 저장함
         dispatch(addChung(history));
-        nextId.current += 1;
         // 초기화
         setHistory({
             houseName: '',
@@ -70,7 +70,7 @@ const AddHistory = () => {
         const data = commonInfoStore.addChungyak.data;
         if (data && haveLimit) {
             _history.push('/addLimit', {
-                pos: pos - 1,
+                pos: -2,
                 ineligibleDate: ineligibleDate,
             });
         } else if (data) {
@@ -79,7 +79,7 @@ const AddHistory = () => {
     }, [commonInfoStore.addChungyak]);
 
     useEffect(() => {
-        if (ineligible.isIneligible === 'y') {
+        if (ineligible.isIneligible === 'y' && ineligible.date) {
             ineligibleDate = ineligible.date;
         }
     }, [ineligible.isIneligible]);
@@ -350,7 +350,7 @@ const AddHistory = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        {history.ineligibleYn === 'y' ? (
+                        {ineligible.isIneligible === 'y' ? (
                             <tr className="addHistoryFormTableTbodyTr">
                                 <td className="addHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
@@ -427,7 +427,7 @@ const AddHistory = () => {
                                         className="save"
                                         width="80"
                                         height="30"
-                                        onClick={handleSubmit}
+                                        // onClick={handleSubmit}
                                     >
                                         저장
                                     </MainButton>
