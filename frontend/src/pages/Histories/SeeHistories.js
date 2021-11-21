@@ -8,6 +8,7 @@ import { useHistory, useLocation } from 'react-router';
 import {
     addChungDel,
     delChung,
+    delRestr,
     getChung,
     modChungDel,
     modRestrDel,
@@ -48,7 +49,7 @@ const SeeHistories = () => {
         dispatch(modChungDel());
 
         _history.push('/modHistory', {
-            pos: 0,
+            pos: 1,
             history: item,
             memberId: memberId,
             ineligible: {
@@ -58,12 +59,36 @@ const SeeHistories = () => {
         });
     };
     // limit
+    const handleLimitEdit = (id, item) => {
+        dispatch(modRestrDel());
 
-    // history 삭제하기
-    const handleRemove = (id) => {
+        _history.push('/modLimit', {
+            pos: 1,
+            limit: item,
+            chungyakId: id,
+            memberId: memberId,
+            ineligible: {
+                isIneligible: ineligibleDate ? true : false,
+                data: ineligibleDate,
+            },
+        });
+    };
+
+    // 삭제버튼을 누르면 !!
+    // history
+    const handleHistoryRemove = (id) => {
         console.log('지웁니다 ~!!! ' + JSON.stringify(history[id]));
         setHistory((info) => info.filter((item) => item.id !== id));
         dispatch(delChung(id));
+    };
+    // limit
+    const handleLimitRemove = (id) => {
+        // let temp = history.find((item) => item.id === id);
+        // temp = { ...temp, houseMemberChungyakRestrictionReadDto: null };
+        // setHistory((info) => info.filter((item) => item.id !== id));
+        // setHistory([...history, temp]);
+        dispatch(delRestr(id));
+        window.location.reload();
     };
 
     // 초기에 memberId가 있으면 memberId로 청약 이력을 조회함
@@ -97,11 +122,12 @@ const SeeHistories = () => {
         // 자산 목록 !!! 으로 !!! 넘겨야 함 !!!!
         if (haveAssets === 'y') {
             _history.push('/assets', {
+                name: name,
                 ineligibleDate: ineligibleDate,
                 pos: -3,
             });
         } else {
-            _history.goBack(-1);
+            _history.goBack(-2);
         }
     };
 
@@ -131,6 +157,7 @@ const SeeHistories = () => {
                     <tr className="historiesInfoTheadTr">
                         <th className="historiesInfoTheadTrTh"> 청약이력 </th>
                         <th className="historiesInfoTheadTrTh"> 수정 </th>
+                        <th className="historiesInfoTheadTrTh"> 삭제 </th>
                         <th className="historiesInfoTheadTrTh">
                             {' '}
                             청약제한사항{' '}
@@ -142,9 +169,10 @@ const SeeHistories = () => {
                 {history ? (
                     <HistoriesTr
                         data={history}
-                        handleRemove={handleRemove}
+                        handleHistoryRemove={handleHistoryRemove}
+                        handleLimitRemove={handleLimitRemove}
                         handleHistoryEdit={handleHistoryEdit}
-                        // handleLimitEdit={handleLimitEdit}
+                        handleLimitEdit={handleLimitEdit}
                     />
                 ) : null}
             </table>
