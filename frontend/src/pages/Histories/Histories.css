@@ -151,6 +151,49 @@
     border-width: 1px;
 }
 
+/* ModHistory.js */
+.modHistoryFormContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.modHistoryFormTableTbodyTrTdTooltip {
+    display: flex;
+    flex-direction: 'row';
+    width: fit-content;
+}
+
+.modHistoryFormTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
+}
+
+.subTitle {
+    font-family: Noto Sans;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.tooltipIcon {
+    font-weight: bold;
+    color: #2a4476;
+    margin-left: 5px;
+}
+
+.modHistoryFormTableTbodyTrSpace {
+    height: 20px;
+}
+
+.houseNameInput {
+    border-width: 1px;
+}
+
+.houseTypeInput {
+    border-width: 1px;
+}
+
 /* 저장버튼 */
 .addHistoryInfo .saveButtonContainer {
     display: flex;
