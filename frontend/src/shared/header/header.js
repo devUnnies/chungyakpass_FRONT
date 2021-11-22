@@ -319,7 +319,7 @@ function Nav(props) {
             });
         }
 
-        if (commonInfoStore.getHouse.loading) {
+        if (commonInfoStore.getHouse.data?.status === 404) {
             window.confirm('아직 기초정보가 등록되어있지 않습니다 !');
             // if (window.confirm('아직 기초정보가 등록되어있지 않습니다 !')) {
             //     history.push('/addBankBook');
