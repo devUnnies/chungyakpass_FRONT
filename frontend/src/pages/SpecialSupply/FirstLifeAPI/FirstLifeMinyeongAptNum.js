@@ -67,7 +67,7 @@ function FirstLifeMinyeongAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialFirstLifeMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },

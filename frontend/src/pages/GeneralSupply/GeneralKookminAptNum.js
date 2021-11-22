@@ -54,7 +54,7 @@ function GeneralKookminAptNum(props) {
             // console.log(JSON.stringify(data));
             history.push({
                 pathname: '/generalKookmin',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },

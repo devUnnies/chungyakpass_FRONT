@@ -76,7 +76,7 @@ function FirstLifeKookminAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialFirstLifeKookmin',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                     firstLifeKookminType,

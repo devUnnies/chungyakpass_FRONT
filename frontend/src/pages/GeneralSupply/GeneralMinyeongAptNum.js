@@ -47,11 +47,11 @@ function GeneralMinyeongAptNum(props) {
             ); // api 연결 요청.
 
             const data =
-                generalMinyeongAptNumStore.postGeneralMinyeongAptNum.data;
+                generalMinyeongAptNumStore?.postGeneralMinyeongAptNum?.data;
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/generalMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },
