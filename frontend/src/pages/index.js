@@ -21,6 +21,8 @@ export { default as ModHistory } from './Histories/ModHistory';
 export { default as AddLimit } from './Histories/AddLimit';
 export { default as ModLimit } from './Histories/ModLimit';
 export { default as SeeAssets } from './Assets/SeeAssets';
+export { default as AddAsset } from './Assets/AddAsset';
+export { default as ModAsset } from './Assets/ModAsset';
 // 끝 ---
 export { default as AtAGlance } from './AtAGlance/AtAGlance';
 export { default as PersonalInfo } from './CommonInput/PersonalInfo';
