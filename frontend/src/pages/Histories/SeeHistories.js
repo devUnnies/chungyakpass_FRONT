@@ -29,6 +29,7 @@ const SeeHistories = () => {
     let ineligibleDate = location.state.ineligibleDate
         ? location.state.ineligibleDate
         : '';
+    const houseState = location.state.houseState;
 
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
@@ -37,9 +38,11 @@ const SeeHistories = () => {
         dispatch(addChungDel());
 
         _history.push('/addHistory', {
-            pos: -1,
+            pos: -3,
             ineligibleDate: ineligibleDate,
             memberId: memberId,
+            houseState: houseState,
+            haveAssets: haveAssets,
         });
     };
 
@@ -54,8 +57,11 @@ const SeeHistories = () => {
             memberId: memberId,
             ineligible: {
                 isIneligible: ineligibleDate ? true : false,
-                data: ineligibleDate,
+                date: ineligibleDate,
             },
+            ineligibleDate: ineligibleDate,
+            houseState: houseState,
+            haveAssets: haveAssets,
         });
     };
     // limit
@@ -71,6 +77,7 @@ const SeeHistories = () => {
                 isIneligible: ineligibleDate ? true : false,
                 data: ineligibleDate,
             },
+            houseState: houseState,
         });
     };
 
@@ -124,7 +131,8 @@ const SeeHistories = () => {
             _history.push('/assets', {
                 name: name,
                 ineligibleDate: ineligibleDate,
-                pos: -3,
+                pos: -5,
+                houseState: houseState,
             });
         } else {
             _history.goBack(-2);
@@ -204,7 +212,7 @@ const SeeHistories = () => {
                         _history.goBack(pos);
                     }}
                 >
-                    목록으로
+                    세대구성원 목록으로
                 </SubButton>
             </div>
         </div>

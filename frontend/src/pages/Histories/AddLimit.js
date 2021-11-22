@@ -11,6 +11,7 @@ const AddLimit = () => {
     const location = useLocation();
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
+    const houseState = location.state.houseState;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     const [limit, setLimit] = useState({
@@ -55,6 +56,7 @@ const AddLimit = () => {
         if (data) {
             history.goBack(pos, {
                 ineligibleDate: ineligibleDate ? ineligibleDate : null,
+                houseState: houseState,
             });
         }
     }, [commonInfoStore.addRestriction]);

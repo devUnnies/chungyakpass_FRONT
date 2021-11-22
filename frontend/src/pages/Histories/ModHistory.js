@@ -11,6 +11,8 @@ const ModHistory = () => {
     const pos = location.state.pos;
     const memberId = location.state.memberId;
     let ineligibleDate = location.state.ineligibleDate;
+    const houseState = location.state.houseState;
+    const haveAssets = location.state.haveAssets;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     // history 초기화
@@ -72,6 +74,7 @@ const ModHistory = () => {
             _history.push('/addLimit', {
                 pos: pos + 1,
                 ineligibleDate: ineligibleDate,
+                houseState: houseState,
             });
         } else if (data) {
             _history.goBack(pos);
@@ -437,7 +440,14 @@ const ModHistory = () => {
                                         className="list"
                                         width="80"
                                         height="30"
-                                        onClick={() => _history.goBack(pos, {})}
+                                        onClick={() =>
+                                            _history.push('/histories', {
+                                                houseState: houseState,
+                                                haveAssets: haveAssets,
+                                                ineligibleDate: ineligibleDate,
+                                                memberId: memberId,
+                                            })
+                                        }
                                     >
                                         목록으로
                                     </SubButton>

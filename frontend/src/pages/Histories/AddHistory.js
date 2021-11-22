@@ -13,6 +13,8 @@ const AddHistory = () => {
     const memberId = location.state.memberId;
     const ineligibleDate = location.state.ineligibleDate;
     const nextId = location.state.nextId;
+    const houseState = location.state.houseState;
+    const haveAssets = location.state.haveAssets;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     // history 초기화
@@ -72,9 +74,10 @@ const AddHistory = () => {
             _history.push('/addLimit', {
                 pos: -2,
                 ineligibleDate: ineligibleDate,
+                houseState: houseState,
             });
         } else if (data) {
-            _history.goBack(pos);
+            _history.goBack(pos, { houseState: houseState });
         }
     }, [commonInfoStore.addChungyak]);
 
@@ -417,7 +420,12 @@ const AddHistory = () => {
                                         width="80"
                                         height="30"
                                         onClick={() => {
-                                            _history.goBack(pos);
+                                            _history.push('/histories', {
+                                                houseState: houseState,
+                                                haveAssets: haveAssets,
+                                                ineligibleDate: ineligibleDate,
+                                                memberId: memberId,
+                                            });
                                         }}
                                     >
                                         목록으로

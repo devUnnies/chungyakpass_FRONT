@@ -17,6 +17,7 @@ const ModLimit = () => {
 
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
+    const houseState = location.state.houseState;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     const onLimitChange = (e) => {
@@ -91,6 +92,7 @@ const ModLimit = () => {
         if (data) {
             history.goBack(pos, {
                 ineligibleDate: ineligibleDate ? ineligibleDate : null,
+                houseState: houseState,
             });
         }
     }, [commonInfoStore.modRestriction]);
