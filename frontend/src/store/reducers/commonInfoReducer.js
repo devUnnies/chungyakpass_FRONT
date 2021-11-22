@@ -66,6 +66,20 @@ import {
     MOD_CHUNGYAK_DELETE,
     ADD_CHUNGYAK_RESTR_DELETE,
     MOD_CHUNGYAK_RESTR_DELETE,
+    DEL_CHUNGYAK_DELETE,
+    DEL_CHUNGYAK_DELETE_SUCCESS,
+    DEL_CHUNGYAK_DELETE_ERROR,
+    DEL_CHUNGYAK_RESTR_DELETE,
+    DEL_CHUNGYAK_RESTR_DELETE_SUCCESS,
+    DEL_CHUNGYAK_RESTR_DELETE_ERROR,
+    ASSETS_GET,
+    ASSETS_GET_SUCCESS,
+    ASSETS_GET_ERROR,
+    ADD_ASSETS_POST_DELETE,
+    MOD_ASSETS_PUT_DELETE,
+    DEL_ASSETS_DELETE,
+    DEL_ASSETS_DELETE_SUCCESS,
+    DEL_ASSETS_DELETE_ERROR,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -85,14 +99,18 @@ const initialState = {
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
+    getAssets: reducerUtils.initial(),
     addAssets: reducerUtils.initial(),
     patchStartDate: reducerUtils.initial(),
     modAssets: reducerUtils.initial(),
+    delAssets: reducerUtils.initial(),
     getChungyak: reducerUtils.initial(),
     addChungyak: reducerUtils.initial(),
     modChungyak: reducerUtils.initial(),
+    delChungyak: reducerUtils.initial(),
     addRestriction: reducerUtils.initial(),
     modRestriction: reducerUtils.initial(),
+    delRestriction: reducerUtils.initial(),
 };
 
 export default function commonInfo(state = initialState, action) {
@@ -181,6 +199,10 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ASSETS_GET:
+        case ASSETS_GET_SUCCESS:
+        case ASSETS_GET_ERROR:
+            return handleAsyncActions(ASSETS_GET, 'getAssets')(state, action);
         case ADD_ASSETS_POST:
         case ADD_ASSETS_POST_SUCCESS:
         case ADD_ASSETS_POST_ERROR:
@@ -188,10 +210,27 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ADD_ASSETS_POST_DELETE:
+            return {
+                ...state,
+                addAssets: reducerUtils.initial(),
+            };
         case MOD_ASSETS_PUT:
         case MOD_ASSETS_PUT_SUCCESS:
         case MOD_ASSETS_PUT_ERROR:
             return handleAsyncActions(MOD_ASSETS_PUT, 'modAssets')(
+                state,
+                action
+            );
+        case MOD_ASSETS_PUT_DELETE:
+            return {
+                ...state,
+                modAssets: reducerUtils.initial(),
+            };
+        case DEL_ASSETS_DELETE:
+        case DEL_ASSETS_DELETE_SUCCESS:
+        case DEL_ASSETS_DELETE_ERROR:
+            return handleAsyncActions(DEL_ASSETS_DELETE, 'delAssets')(
                 state,
                 action
             );
@@ -233,6 +272,13 @@ export default function commonInfo(state = initialState, action) {
                 ...state,
                 modChungyak: reducerUtils.initial(),
             };
+        case DEL_CHUNGYAK_DELETE:
+        case DEL_CHUNGYAK_DELETE_SUCCESS:
+        case DEL_CHUNGYAK_DELETE_ERROR:
+            return handleAsyncActions(DEL_CHUNGYAK_DELETE, 'delChungyak')(
+                state,
+                action
+            );
         case ADD_CHUNGYAK_RESTR_POST:
         case ADD_CHUNGYAK_RESTR_POST_SUCCESS:
         case ADD_CHUNGYAK_RESTR_POST_ERROR:
@@ -257,6 +303,13 @@ export default function commonInfo(state = initialState, action) {
                 ...state,
                 modRestriction: reducerUtils.initial(),
             };
+        case DEL_CHUNGYAK_RESTR_DELETE:
+        case DEL_CHUNGYAK_RESTR_DELETE_SUCCESS:
+        case DEL_CHUNGYAK_RESTR_DELETE_ERROR:
+            return handleAsyncActions(
+                DEL_CHUNGYAK_RESTR_DELETE,
+                'delRestriction'
+            )(state, action);
         default:
             return state;
     }
