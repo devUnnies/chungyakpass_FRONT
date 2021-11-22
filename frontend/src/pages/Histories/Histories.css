@@ -1,6 +1,6 @@
 /* SeeHistories.js */
 .historiesInfoContainer {
-    margin-top: -3%;
+    margin-top: 0%;
     margin-bottom: 4.5%;
 }
 
@@ -263,5 +263,5 @@
 .backButton {
     display: flex;
     justify-content: flex-end;
-    margin-right: 15px;
+    margin-right: 2%;
 }
