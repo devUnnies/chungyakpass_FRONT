@@ -51,7 +51,7 @@ function OldParentMinyeongAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialOldParentMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },

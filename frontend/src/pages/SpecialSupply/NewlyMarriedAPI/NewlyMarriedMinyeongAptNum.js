@@ -50,7 +50,7 @@ function NewlyMarriedMinyeongAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialNewlyMarriedMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },

@@ -15,7 +15,6 @@ function FirstLifeKookminAptNum(props) {
 
     const [form, setForm] = useState({
         name: '',
-        firstRankHistoryYn: '',
     });
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -37,6 +36,11 @@ function FirstLifeKookminAptNum(props) {
         setFirstLifeKookminType,
         handleChangeFirstLifeKookminType,
     ] = useInputState('');
+    const [
+        firstRankHistoryYn,
+        setFirstRankHistoryYn,
+        handleChangeFirstRankHistoryYn,
+    ] = useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -48,6 +52,7 @@ function FirstLifeKookminAptNum(props) {
                 notificationNumber: notificationNumber,
                 housingType: housingType,
                 firstLifeKookminType: firstLifeKookminType,
+                firstRankHistoryYn: firstRankHistoryYn,
             })
         );
     };
@@ -55,10 +60,7 @@ function FirstLifeKookminAptNum(props) {
     const onClick = async () => {
         if (notificationNumber === '' || housingType === '') {
             alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
-        } else if (
-            firstLifeKookminType === '' ||
-            form.firstRankHistoryYn === 'n'
-        ) {
+        } else if (firstLifeKookminType === '' || firstRankHistoryYn === 'n') {
             alert(
                 '일반공급 1순위 당첨 이력이 존재하는 경우에만 생애최초 자격확인이 가능합니다.'
             );
@@ -68,6 +70,7 @@ function FirstLifeKookminAptNum(props) {
                     notificationNumber: notificationNumber,
                     housingType: housingType,
                     firstLifeKookminType: firstLifeKookminType,
+                    firstRankHistoryYn: firstRankHistoryYn,
                 })
             ); // api 연결 요청.
 
@@ -76,10 +79,11 @@ function FirstLifeKookminAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialFirstLifeKookmin',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                     firstLifeKookminType,
+                    firstRankHistoryYn,
                 },
             });
         }
@@ -163,33 +167,29 @@ function FirstLifeKookminAptNum(props) {
                             </option>
                         </select>
 
-                        <div className="paramSelect">
+                        <div className="qualificationSelect">
                             <span className="qualificationBoxTitle">
                                 <strong>일반공급 1순위 당첨 이력</strong>
                             </span>
                             <input
-                                className="paramSelectInput"
+                                className="qualificationSelectInput"
                                 type="radio"
                                 name="firstRankHistoryYn"
-                                onChange={onChange}
+                                onChange={handleChangeFirstRankHistoryYn}
                                 value="y"
                                 checked={
-                                    form.firstRankHistoryYn === 'y'
-                                        ? true
-                                        : false
+                                    firstRankHistoryYn === 'y' ? true : false
                                 }
                             />
                             <span className="selectInputText">존재</span>
                             <input
-                                className="paramSelectInput"
+                                className="qualificationSelectInput"
                                 type="radio"
                                 name="firstRankHistoryYn"
-                                onChange={onChange}
+                                onChange={handleChangeFirstRankHistoryYn}
                                 value="n"
                                 checked={
-                                    form.firstRankHistoryYn === 'n'
-                                        ? true
-                                        : false
+                                    firstRankHistoryYn === 'n' ? true : false
                                 }
                             />
                             <span className="selectInputText">미존재</span>
