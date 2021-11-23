@@ -139,14 +139,15 @@ const GeneralKookminApi = ({ onSaveData }) => {
     };
 
     useEffect(() => {
-        setGeneralKookminRank(
-            form?.generalKookminRes !== '' ? form?.generalKookminRes : null
-        );
+        if (form?.generalKookminRes !== '')
+            setGeneralKookminRank(form.generalKookminRes);
+        else setGeneralKookminRank(null);
     }, [generalKookminRankStore.patchGeneralKookminRank]);
 
     console.log(generalKookminRank);
     console.log(supportYn);
     console.log(lifeYn);
+    console.log(form.generalKookminRes);
 
     return (
         <>
@@ -668,9 +669,6 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                                                                         <input
                                                                                             type="radio"
                                                                                             name="supportYn"
-                                                                                            value={
-                                                                                                supportYn
-                                                                                            }
                                                                                             onChange={
                                                                                                 handleChangeSupportYn
                                                                                             }
@@ -688,9 +686,6 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                                                                         <input
                                                                                             type="radio"
                                                                                             name="supportYn"
-                                                                                            value={
-                                                                                                supportYn
-                                                                                            }
                                                                                             onChange={
                                                                                                 handleChangeSupportYn
                                                                                             }
@@ -777,9 +772,6 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                                                                     className="isLifeYnInput"
                                                                                     type="radio"
                                                                                     name="lifeYn"
-                                                                                    value={
-                                                                                        lifeYn
-                                                                                    }
                                                                                     onChange={
                                                                                         handleChangeLifeYn
                                                                                     }
@@ -798,9 +790,6 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                                                                     className="isLifeYnInput"
                                                                                     type="radio"
                                                                                     name="lifeYn"
-                                                                                    value={
-                                                                                        lifeYn
-                                                                                    }
                                                                                     onChange={
                                                                                         handleChangeLifeYn
                                                                                     }
@@ -1352,8 +1341,8 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                             data?.americanAge < 30 &&
                                             lifeYn === 'y') ||
                                         data?.americanAge >= 30) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
+                                    // data?.meetAllHouseMemberRewinningRestrictionTf ===
+                                    //     true &&
                                     ((data?.restrictedAreaTf === true &&
                                         data?.householderTf === true &&
                                         data?.meetAllHouseMemberNotWinningIn5yearsTf ===
@@ -1377,8 +1366,8 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                             lifeYn === 'y') ||
                                         data?.americanAge >= 30) &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true &&
+                                        // data?.meetAllHouseMemberRewinningRestrictionTf ===
+                                        //     true &&
                                         ((data?.americanAge >= 20 &&
                                             data?.householderTf === false) ||
                                             data?.meetAllHouseMemberNotWinningIn5yearsTf ===
@@ -1407,11 +1396,11 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                             data?.householderTf === false)) ||
                                     (data?.americanAge >= 20 &&
                                         data?.americanAge < 30 &&
-                                        lifeYn !== 'y') ||
-                                    (data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            false)
-                                        ? (form.generalKookminRes = '탈락')
+                                        lifeYn !== 'y')
+                                        ? // (data?.restrictedAreaTf === true &&
+                                          //     data?.meetAllHouseMemberRewinningRestrictionTf ===
+                                          //         false)
+                                          (form.generalKookminRes = '탈락')
                                         : null}
                                 </div>
 
