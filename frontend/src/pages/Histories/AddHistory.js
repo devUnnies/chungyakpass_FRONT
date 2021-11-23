@@ -13,6 +13,8 @@ const AddHistory = () => {
     const memberId = location.state.memberId;
     const ineligibleDate = location.state.ineligibleDate;
     const nextId = location.state.nextId;
+    const houseState = location.state.houseState;
+    const haveAssets = location.state.haveAssets;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     // history 초기화
@@ -43,10 +45,10 @@ const AddHistory = () => {
         setHistory({ ...history, [name]: value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         // history 하나 우선 저장함
         dispatch(addChung(history));
-        nextId.current += 1;
         // 초기화
         setHistory({
             houseName: '',
@@ -70,16 +72,17 @@ const AddHistory = () => {
         const data = commonInfoStore.addChungyak.data;
         if (data && haveLimit) {
             _history.push('/addLimit', {
-                pos: pos - 1,
+                pos: -2,
                 ineligibleDate: ineligibleDate,
+                houseState: houseState,
             });
         } else if (data) {
-            _history.goBack(pos);
+            _history.goBack(pos, { houseState: houseState });
         }
     }, [commonInfoStore.addChungyak]);
 
     useEffect(() => {
-        if (ineligible.isIneligible === 'y') {
+        if (ineligible.isIneligible === 'y' && ineligible.date) {
             ineligibleDate = ineligible.date;
         }
     }, [ineligible.isIneligible]);
@@ -350,7 +353,7 @@ const AddHistory = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        {history.ineligibleYn === 'y' ? (
+                        {ineligible.isIneligible === 'y' ? (
                             <tr className="addHistoryFormTableTbodyTr">
                                 <td className="addHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
@@ -417,7 +420,12 @@ const AddHistory = () => {
                                         width="80"
                                         height="30"
                                         onClick={() => {
-                                            _history.goBack(pos);
+                                            _history.push('/histories', {
+                                                houseState: houseState,
+                                                haveAssets: haveAssets,
+                                                ineligibleDate: ineligibleDate,
+                                                memberId: memberId,
+                                            });
                                         }}
                                     >
                                         목록으로
@@ -427,7 +435,7 @@ const AddHistory = () => {
                                         className="save"
                                         width="80"
                                         height="30"
-                                        onClick={handleSubmit}
+                                        // onClick={handleSubmit}
                                     >
                                         저장
                                     </MainButton>

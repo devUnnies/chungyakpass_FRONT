@@ -3,22 +3,38 @@ import './Histories.css';
 import SubButton from '../../components/Button/SubButton';
 import { EditFilled, DeleteFilled } from '@ant-design/icons';
 
-const HistoriesTd = ({ item, handleHistoryEdit, handleRemove }) => {
+const HistoriesTd = ({
+    item,
+    handleHistoryEdit,
+    handleHistoryRemove,
+    handleLimitEdit,
+    handleLimitRemove,
+}) => {
     const [isHistoryShow, setIsHistoryShow] = useState(false);
     const [isLimitShow, setIsLimitShow] = useState(false);
 
-    const onRemove = () => {
+    const onRemove = (state) => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             alert('삭제가 완료되었습니다.');
         } else {
             return;
         }
-        handleRemove(item?.id);
+        if (state === 'history') handleHistoryRemove(item?.id);
+        else if (
+            state !== 'history' &&
+            item.houseMemberChungyakRestrictionReadDto
+        )
+            handleLimitRemove(item?.houseMemberChungyakRestrictionReadDto?.id);
     };
 
     const onEdit = (state) => {
         // console.log(JSON.stringify(item));
         if (state === 'history') handleHistoryEdit(item);
+        else
+            handleLimitEdit(
+                item.id,
+                item.houseMemberChungyakRestrictionReadDto
+            );
     };
 
     return (
@@ -86,16 +102,6 @@ const HistoriesTd = ({ item, handleHistoryEdit, handleRemove }) => {
                                 <br />
                             </span>
                         )}
-                        {item.ineligibleYn === 'y' ? (
-                            <span>
-                                {item.ineligibleDate
-                                    .replace('-', '년 ')
-                                    .replace('-', '월 ')
-                                    .concat('일')}
-                            </span>
-                        ) : (
-                            <span>부적격사항 없음</span>
-                        )}
                     </div>
                 ) : null}
                 <SubButton onClick={() => setIsHistoryShow(!isHistoryShow)}>
@@ -104,6 +110,12 @@ const HistoriesTd = ({ item, handleHistoryEdit, handleRemove }) => {
             </td>
             <td onClick={() => onEdit('history')} className="modifyContainer">
                 <EditFilled className="modifyColor" />
+            </td>
+            <td
+                onClick={() => onRemove('history')}
+                className="historiesInfoTbodyTrTd"
+            >
+                <DeleteFilled className="deleteColor" />
             </td>
             <td>
                 {item.houseMemberChungyakRestrictionReadDto ? (
@@ -174,13 +186,28 @@ const HistoriesTd = ({ item, handleHistoryEdit, handleRemove }) => {
                     '데이터 없음'
                 )}
             </td>
-            <td onClick={onEdit} className="modifyContainer">
-                <EditFilled className="modifyColor" />
-            </td>
+            {item.houseMemberChungyakRestrictionReadDto ? (
+                <td onClick={() => onEdit('limit')} className="modifyContainer">
+                    <EditFilled className="modifyColor" />
+                </td>
+            ) : (
+                <td className="modifyContainer_non">
+                    <EditFilled className="modifyColor" />
+                </td>
+            )}
 
-            <td onClick={onRemove} className="historiesInfoTbodyTrTd">
-                <DeleteFilled className="deleteColor" />
-            </td>
+            {item.houseMemberChungyakRestrictionReadDto ? (
+                <td
+                    onClick={() => onRemove('limit')}
+                    className="historiesInfoTbodyTrTd"
+                >
+                    <DeleteFilled className="deleteColor" />
+                </td>
+            ) : (
+                <td className="historiesInfoTbodyTrTd_non">
+                    <DeleteFilled className="deleteColor" />
+                </td>
+            )}
         </tr>
     );
 };

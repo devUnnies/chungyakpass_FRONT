@@ -48,6 +48,7 @@ const SeeMember = () => {
 
     const handleAdd = () => {
         // console.log(houseId);
+        dispatch(getHouse());
         dispatch(addMemDel());
 
         history.push('/addMember', {
