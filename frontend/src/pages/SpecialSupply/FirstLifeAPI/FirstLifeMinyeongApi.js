@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postFirstInLifeMinyeongAptNum } from '../../../store/actions/firstInLifeMinyeongAction';
+import { patchFirstLifeMinyeongRank } from '../../../store/actions/firstInLifeMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,18 +22,27 @@ import Loading from '../../../components/Loading/loading';
 const FirstLifeMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const firstLifeMinyeongStore = useSelector(
         (state) => state.firstInLifeMinyeong
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
-
-    // info_tooltip animation 추가
+    );
+    const firstLifeMinyeongRankStore = useSelector(
+        (state) => state.firstLifeMinyeongRank
+    ); // 순위 patch
+    const [loading, setLoading] = useState(true); // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
+    const location = useLocation();
+    const history = useHistory();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
+    const [firstRankHistoryYn, setFirstRankHistoryYn] = useState(
+        location?.state?.firstRankHistoryYn
+    );
 
     const data = firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum?.data; // 생애최초 민영 로직 접근 변수
 
@@ -57,7 +68,6 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        incomeTaxPayYn: '',
         firstLifeMinyeongRes: '',
     });
     const onChange = (e) => {
@@ -65,15 +75,6 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            incomeTaxPayYn: '',
-            firstLifeMinyeongRes: '',
         });
     };
 
@@ -104,6 +105,56 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
             );
         }
     };
+
+    // 생애최초 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [firstLifeMinyeongRank, setFirstLifeMinyeongRank] = useState('');
+    const [taxOver5yearsYn, setTaxOver5yearsYn, handleChangeTaxOver5yearsYn] =
+        useInputState(null);
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            firstLifeMinyeongRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchFirstLifeMinyeongRank({
+                firstRankHistoryYn,
+                firstLifeMinyeongRank,
+                supportYn,
+                taxOver5yearsYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchFirstLifeMinyeongRank({
+                firstRankHistoryYn,
+                firstLifeMinyeongRank,
+                supportYn,
+                taxOver5yearsYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setFirstLifeMinyeongRank(
+            form?.firstLifeMinyeongRes !== ''
+                ? form?.firstLifeMinyeongRes
+                : null
+        );
+    }, [firstLifeMinyeongRankStore.patchFirstLifeMinyeongRank]);
+
+    console.log(firstRankHistoryYn);
+    console.log(firstLifeMinyeongRank);
+    console.log(supportYn);
+    console.log(taxOver5yearsYn);
 
     return (
         <>
@@ -1085,98 +1136,75 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                     data?.restrictedAreaTf ===
                                                                                         false ? (
                                                                                         <>
-                                                                                            {/* 청약통장 가입기간 충족 여부 */}
+                                                                                            {/* 현재 근로자 또는 자영업자로서 5년 이상 소득세를 납부여부 */}
                                                                                             <tr className="special_phase">
                                                                                                 <td className="qualification">
                                                                                                     <span className="qualificationBox">
                                                                                                         <span className="qualificationIcon">
                                                                                                             <CaretRightOutlined />
                                                                                                         </span>
-                                                                                                        청약통장
-                                                                                                        가입기간
-                                                                                                        충족
+                                                                                                        근로자
+                                                                                                        혹은
+                                                                                                        자영업자로
+                                                                                                        5년
+                                                                                                        이상
+                                                                                                        소득세를
+                                                                                                        납부
                                                                                                         여부
                                                                                                     </span>
                                                                                                     <span className="info_tooltip">
                                                                                                         <InfoCircleOutlined />
-                                                                                                        <span className="tooltip-text">
-                                                                                                            주택별
-                                                                                                            청약
-                                                                                                            가능한
-                                                                                                            청약통장에
-                                                                                                            가입한지
-                                                                                                            24개월(지역
-                                                                                                            및
-                                                                                                            주택에
-                                                                                                            따라
-                                                                                                            6~24개월)이
-                                                                                                            경과
-                                                                                                            <table
-                                                                                                                border="1"
-                                                                                                                className="tootipeTable"
-                                                                                                            >
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        규제지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        위축
-                                                                                                                        지역
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        수도권
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        수도권
-                                                                                                                        외
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        가입
-                                                                                                                        기간
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        24개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        1개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        12개월
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        6개월
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </span>
+                                                                                                        <span className="tooltip-text"></span>
                                                                                                     </span>
                                                                                                 </td>
                                                                                                 <td className="special_result">
-                                                                                                    <input
-                                                                                                        className="aptInfoSelect"
-                                                                                                        value={
-                                                                                                            data?.meetBankJoinPeriodTf
-                                                                                                                ? '충족'
-                                                                                                                : '미충족'
-                                                                                                        }
-                                                                                                        readOnly={
-                                                                                                            true
-                                                                                                        }
-                                                                                                    />
+                                                                                                    <span className="special_result_input">
+                                                                                                        <input
+                                                                                                            className="isSupportInput"
+                                                                                                            type="radio"
+                                                                                                            name="taxOver5yearsYn"
+                                                                                                            onChange={
+                                                                                                                onChange
+                                                                                                            }
+                                                                                                            value="y"
+                                                                                                            checked={
+                                                                                                                taxOver5yearsYn ===
+                                                                                                                'y'
+                                                                                                                    ? true
+                                                                                                                    : false
+                                                                                                            }
+                                                                                                        />
+                                                                                                        <span className="InputText">
+                                                                                                            예
+                                                                                                        </span>
+                                                                                                        <input
+                                                                                                            className="isSupportInput"
+                                                                                                            type="radio"
+                                                                                                            name="taxOver5yearsYn"
+                                                                                                            onChange={
+                                                                                                                onChange
+                                                                                                            }
+                                                                                                            value="n"
+                                                                                                            checked={
+                                                                                                                taxOver5yearsYn ===
+                                                                                                                'n'
+                                                                                                                    ? true
+                                                                                                                    : false
+                                                                                                            }
+                                                                                                        />
+                                                                                                        <span className="InputText">
+                                                                                                            아니오
+                                                                                                        </span>
+                                                                                                    </span>
                                                                                                     <span>
-                                                                                                        {data?.meetBankJoinPeriodTf ===
-                                                                                                        true ? (
+                                                                                                        {taxOver5yearsYn ===
+                                                                                                        'y' ? (
                                                                                                             <span className="progress">
                                                                                                                 <CheckCircleOutlined />
                                                                                                             </span>
                                                                                                         ) : null}
-                                                                                                        {data?.meetBankJoinPeriodTf ===
-                                                                                                        false ? (
+                                                                                                        {taxOver5yearsYn ===
+                                                                                                        'n' ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
                                                                                                             </span>
@@ -1185,57 +1213,74 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                 </td>
                                                                                             </tr>
 
-                                                                                            {data?.meetBankbookJoinPeriodTf ===
+                                                                                            {taxOver5yearsYn ===
                                                                                             true ? (
                                                                                                 <>
-                                                                                                    {/* 예치 금액 충족 여부 */}
+                                                                                                    {/* 청약통장 가입기간 충족 여부 */}
                                                                                                     <tr className="special_phase">
                                                                                                         <td className="qualification">
                                                                                                             <span className="qualificationBox">
                                                                                                                 <span className="qualificationIcon">
                                                                                                                     <CaretRightOutlined />
                                                                                                                 </span>
-                                                                                                                예치
-                                                                                                                금액
+                                                                                                                청약통장
+                                                                                                                가입기간
                                                                                                                 충족
                                                                                                                 여부
                                                                                                             </span>
                                                                                                             <span className="info_tooltip">
                                                                                                                 <InfoCircleOutlined />
                                                                                                                 <span className="tooltip-text">
+                                                                                                                    주택별
+                                                                                                                    청약
+                                                                                                                    가능한
+                                                                                                                    청약통장에
+                                                                                                                    가입한지
+                                                                                                                    24개월(지역
+                                                                                                                    및
+                                                                                                                    주택에
+                                                                                                                    따라
+                                                                                                                    6~24개월)이
+                                                                                                                    경과
                                                                                                                     <table
                                                                                                                         border="1"
                                                                                                                         className="tootipeTable"
                                                                                                                     >
                                                                                                                         <tr>
                                                                                                                             <td>
-                                                                                                                                구분
+                                                                                                                                지역
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                서울/부산
+                                                                                                                                규제지역
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                기타
-                                                                                                                                광역시
+                                                                                                                                위축
+                                                                                                                                지역
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                기타
-                                                                                                                                시/군
+                                                                                                                                수도권
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                                수도권
+                                                                                                                                외
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                         <tr>
                                                                                                                             <td>
-                                                                                                                                85㎡
-                                                                                                                                이하
+                                                                                                                                가입
+                                                                                                                                기간
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                300만원
+                                                                                                                                24개월
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                200만원
+                                                                                                                                1개월
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                200만원
+                                                                                                                                12개월
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                                6개월
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
@@ -1246,7 +1291,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             <input
                                                                                                                 className="aptInfoSelect"
                                                                                                                 value={
-                                                                                                                    data?.meetDepositTf
+                                                                                                                    data?.meetBankJoinPeriodTf
                                                                                                                         ? '충족'
                                                                                                                         : '미충족'
                                                                                                                 }
@@ -1255,13 +1300,13 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                                 }
                                                                                                             />
                                                                                                             <span>
-                                                                                                                {data?.meetDepositTf ===
+                                                                                                                {data?.meetBankJoinPeriodTf ===
                                                                                                                 true ? (
                                                                                                                     <span className="progress">
                                                                                                                         <CheckCircleOutlined />
                                                                                                                     </span>
                                                                                                                 ) : null}
-                                                                                                                {data?.meetDepositTf ===
+                                                                                                                {data?.meetBankJoinPeriodTf ===
                                                                                                                 false ? (
                                                                                                                     <span className="pause_tooltip">
                                                                                                                         <CloseCircleOutlined />
@@ -1270,6 +1315,94 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                                             </span>
                                                                                                         </td>
                                                                                                     </tr>
+
+                                                                                                    {data?.meetBankbookJoinPeriodTf ===
+                                                                                                    true ? (
+                                                                                                        <>
+                                                                                                            {/* 예치 금액 충족 여부 */}
+                                                                                                            <tr className="special_phase">
+                                                                                                                <td className="qualification">
+                                                                                                                    <span className="qualificationBox">
+                                                                                                                        <span className="qualificationIcon">
+                                                                                                                            <CaretRightOutlined />
+                                                                                                                        </span>
+                                                                                                                        예치
+                                                                                                                        금액
+                                                                                                                        충족
+                                                                                                                        여부
+                                                                                                                    </span>
+                                                                                                                    <span className="info_tooltip">
+                                                                                                                        <InfoCircleOutlined />
+                                                                                                                        <span className="tooltip-text">
+                                                                                                                            <table
+                                                                                                                                border="1"
+                                                                                                                                className="tootipeTable"
+                                                                                                                            >
+                                                                                                                                <tr>
+                                                                                                                                    <td>
+                                                                                                                                        구분
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        서울/부산
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        기타
+                                                                                                                                        광역시
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        기타
+                                                                                                                                        시/군
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                                <tr>
+                                                                                                                                    <td>
+                                                                                                                                        85㎡
+                                                                                                                                        이하
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        300만원
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        200만원
+                                                                                                                                    </td>
+                                                                                                                                    <td>
+                                                                                                                                        200만원
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </span>
+                                                                                                                    </span>
+                                                                                                                </td>
+                                                                                                                <td className="special_result">
+                                                                                                                    <input
+                                                                                                                        className="aptInfoSelect"
+                                                                                                                        value={
+                                                                                                                            data?.meetDepositTf
+                                                                                                                                ? '충족'
+                                                                                                                                : '미충족'
+                                                                                                                        }
+                                                                                                                        readOnly={
+                                                                                                                            true
+                                                                                                                        }
+                                                                                                                    />
+                                                                                                                    <span>
+                                                                                                                        {data?.meetDepositTf ===
+                                                                                                                        true ? (
+                                                                                                                            <span className="progress">
+                                                                                                                                <CheckCircleOutlined />
+                                                                                                                            </span>
+                                                                                                                        ) : null}
+                                                                                                                        {data?.meetDepositTf ===
+                                                                                                                        false ? (
+                                                                                                                            <span className="pause_tooltip">
+                                                                                                                                <CloseCircleOutlined />
+                                                                                                                            </span>
+                                                                                                                        ) : null}
+                                                                                                                    </span>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </>
+                                                                                                    ) : null}
                                                                                                 </>
                                                                                             ) : null}
                                                                                         </>
@@ -1311,6 +1444,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             true) ||
                                         data?.restrictedAreaTf === false) &&
+                                    taxOver5yearsYn === true &&
                                     data?.meetBankbookJoinPeriodTf === true &&
                                     data?.meetDepositTf === true
                                         ? (form.firstLifeMinyeongRes = '1순위')
@@ -1322,6 +1456,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {form.firstLifeMinyeongRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="submit"
                                             width="100"
@@ -1338,6 +1473,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {form.firstLifeMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

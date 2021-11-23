@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedKookminAptNum } from '../../../store/actions/multiChildKookminAction';
+import { patchNewlyMarriedKookminRank } from '../../../store/actions/newlyMarriedKookminRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,14 +22,22 @@ import Loading from '../../../components/Loading/loading';
 const NewlyMarriedKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const newlyMarriedKookminStore = useSelector(
         (state) => state.newlyMarriedKookmin
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    );
+    const newlyMarriedKookminRankStore = useSelector(
+        (state) => state.newlyMarriedKookminRank
+    ); // 순위 patch
     const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
     const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
@@ -57,7 +67,6 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         newlyMarriedKookminRes: '',
     });
     const onChange = (e) => {
@@ -65,14 +74,6 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            newlyMarriedKookminRes: '',
         });
     };
 
@@ -104,6 +105,53 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 신혼부부 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [newlyMarriedKookminRank, setNewlyMarriedKookminRank] = useState('');
+    const [newlyMarriedKookminType, setNewlyMarriedKookminType] =
+        useState('공공주택특별법미적용');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            newlyMarriedKookminRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchNewlyMarriedKookminRank({
+                newlyMarriedKookminType,
+                newlyMarriedKookminRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchNewlyMarriedKookminRank({
+                newlyMarriedKookminType,
+                newlyMarriedKookminRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setNewlyMarriedKookminRank(
+            form?.newlyMarriedKookminRes !== ''
+                ? form?.newlyMarriedKookminRes
+                : null
+        );
+    }, [newlyMarriedKookminRankStore.patchNewlyMarriedKookminRank]);
+
+    console.log(newlyMarriedKookminType);
+    console.log(newlyMarriedKookminRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -442,7 +490,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -460,7 +508,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -471,13 +519,13 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -496,8 +544,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                                     (data?.americanAge < 20 &&
                                                         data?.householderTf ===
                                                             true &&
-                                                        form.supportYn ===
-                                                            'y') ? (
+                                                        supportYn === 'y') ? (
                                                         <>
                                                             <tr className="special_phase">
                                                                 <td className="qualification">
@@ -1138,7 +1185,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
@@ -1161,7 +1208,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
@@ -1185,7 +1232,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                         false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
-                                            form.supportYn !== 'y')) ||
+                                            supportYn !== 'y')) ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     data?.meetMarriagePeriodIn7yearsTf ===
@@ -1206,6 +1253,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 form.newlyMarriedKookminRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="submit"
                                             width="100"
@@ -1222,6 +1270,7 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 {form.newlyMarriedKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

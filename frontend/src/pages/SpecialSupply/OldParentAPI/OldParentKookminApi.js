@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction'; // oldParentApi 만든 후 변경하기.
+import { patchOldParentKookminRank } from '../../../store/actions/oldParentKookminRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,17 +22,25 @@ import Loading from '../../../components/Loading/loading';
 const OldParentKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const oldParentKookminStore = useSelector(
         (state) => state.oldParentKookmin
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    );
+    const oldParentKookminRankStore = useSelector(
+        (state) => state.oldParentKookminRank
+    ); // 순위 patch
     const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const [oldParentKookminType, setOldParentKookminType] = useState();
     const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
-    const getParams = location.state.oldParentKookminType; // 국민주택 유형 props 가져오기
-    console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
+    const [oldParentKookminType, setOldParentKookminType] = useState(
+        location?.state?.oldParentKookminType
+    );
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
@@ -70,14 +80,6 @@ const OldParentKookminApi = ({ onSaveData }) => {
             [name]: value,
         });
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            oldParentKookmines: '',
-        });
-    };
 
     useEffect(() => {
         if (oldParentKookminStore.postOldParentKookminAptNum.data) {
@@ -88,7 +90,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
 
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.oldParentKookmines === '1순위') {
+        if (form?.oldParentKookminRes === '1순위') {
             history.push({
                 pathname: '/rank',
                 state: {
@@ -99,12 +101,55 @@ const OldParentKookminApi = ({ onSaveData }) => {
     };
 
     const fail = async () => {
-        if (form?.oldParentKookmines !== '1순위') {
+        if (form?.oldParentKookminRes !== '1순위') {
             alert(
                 '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
             );
         }
     };
+
+    // 노부모 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [oldParentKookminRank, setOldParentKookminRank] = useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            oldParentKookminRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchOldParentKookminRank({
+                oldParentKookminType,
+                oldParentKookminRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchOldParentKookminRank({
+                oldParentKookminType,
+                oldParentKookminRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setOldParentKookminRank(
+            form?.oldParentKookminRes !== '' ? form?.oldParentKookminRes : null
+        );
+    }, [oldParentKookminRankStore.patchOldParentKookminRank]);
+
+    console.log(oldParentKookminType);
+    console.log(oldParentKookminRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -187,18 +232,18 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                         <td className="special_result">
                                             <input
                                                 className="typeInfoSelect"
-                                                value={getParams}
+                                                value={oldParentKookminType}
                                                 readOnly={true}
                                             />
                                             <span>
-                                                {getParams !== '' ? (
+                                                {oldParentKookminType !== '' ? (
                                                     <span className="progress">
                                                         <CheckCircleOutlined />
                                                     </span>
                                                 ) : (
                                                     <></>
                                                 )}
-                                                {getParams === '' ? (
+                                                {oldParentKookminType === '' ? (
                                                     <span className="pause_tooltip">
                                                         <CloseCircleOutlined />
                                                     </span>
@@ -532,7 +577,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -550,7 +595,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -561,13 +606,13 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -584,7 +629,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                 20 ||
                                                             (data?.americanAge <
                                                                 20 &&
-                                                                form.supportYn ===
+                                                                supportYn ===
                                                                     'y') ? (
                                                                 <>
                                                                     <tr className="special_phase">
@@ -784,7 +829,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                             {data?.meetOldParentSupportMore3yearsTf ===
                                                                             true ? (
                                                                                 <>
-                                                                                    {getParams !==
+                                                                                    {oldParentKookminType !==
                                                                                     '그외 국민주택' ? (
                                                                                         <>
                                                                                             <tr className="special_phase">
@@ -935,7 +980,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
 
                                                                                             {/* 자산 기준 충족 여부*/}
                                                                                             {/* 공공주택특별법 적용인 경우에만 적용 */}
-                                                                                            {getParams ===
+                                                                                            {oldParentKookminType ===
                                                                                             '공공주택특별법 적용' ? (
                                                                                                 <tr className="special_phase">
                                                                                                     <td className="qualification">
@@ -1023,13 +1068,13 @@ const OldParentKookminApi = ({ onSaveData }) => {
 
                                                                                     {/* 규제 지역인 경우에만 보이도록 */}
                                                                                     {/* 세대원 청약 당첨 이력 */}
-                                                                                    {getParams ===
+                                                                                    {oldParentKookminType ===
                                                                                         '그외 국민주택' ||
-                                                                                    (getParams ===
+                                                                                    (oldParentKookminType ===
                                                                                         '공공주택특별법 미적용' &&
                                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                                             true) ||
-                                                                                    (getParams ===
+                                                                                    (oldParentKookminType ===
                                                                                         '공공주택특별법 적용' &&
                                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                                             true &&
@@ -1393,23 +1438,24 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 <div className="rankRes">
                                     {/* 순위 매기기 */}
                                     {/* 1순위 */}
-                                    {getParams !== '' &&
+                                    {oldParentKookminType !== '' &&
                                     data?.accountTf === true &&
                                     data?.householderTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     data?.meetOldParentSupportMore3yearsTf ===
                                         true &&
-                                    (getParams === '그외 국민주택' ||
-                                        (getParams === '공공주택특별법 적용' &&
+                                    (oldParentKookminType === '그외 국민주택' ||
+                                        (oldParentKookminType ===
+                                            '공공주택특별법 적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true &&
                                             data?.meetPropertyTf === true) ||
-                                        (getParams ===
+                                        (oldParentKookminType ===
                                             '공공주택특별법 미적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true)) &&
@@ -1429,6 +1475,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 {form.oldParentKookminRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="button"
                                             width="100"
@@ -1442,6 +1489,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

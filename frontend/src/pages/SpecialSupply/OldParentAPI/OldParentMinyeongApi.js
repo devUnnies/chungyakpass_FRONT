@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
+import { patchOldParentMinyeongRank } from '../../../store/actions/oldParentMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,17 +22,26 @@ import Loading from '../../../components/Loading/loading';
 const OldParentMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const oldParentMinyeongStore = useSelector(
         (state) => state.oldParentMinyeong
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const history = useHistory();
-
+    );
+    const oldParentMinyeongRankStore = useSelector(
+        (state) => state.oldParentMinyeongRank
+    ); // 순위 patch
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
+
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
 
     const data = oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data; // 노부모 민영 로직 접근 변수
 
@@ -56,7 +67,6 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         oldParentMinyeongRes: '',
     });
     const onChange = (e) => {
@@ -64,14 +74,6 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            oldParentMinyeongRes: '',
         });
     };
 
@@ -102,6 +104,48 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
             );
         }
     };
+
+    // 노부모 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [oldParentMinyeongRank, setOldParentMinyeongRank] = useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            oldParentMinyeongRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchOldParentMinyeongRank({
+                oldParentMinyeongRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchOldParentMinyeongRank({
+                oldParentMinyeongRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setOldParentMinyeongRank(
+            form?.oldParentMinyeongRes !== ''
+                ? form?.oldParentMinyeongRes
+                : null
+        );
+    }, [oldParentMinyeongRankStore.patchOldParentMinyeongRank]);
+
+    console.log(oldParentMinyeongRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -525,7 +569,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -543,7 +587,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -554,13 +598,13 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -1224,7 +1268,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                     data?.householderTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
@@ -1246,6 +1290,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 {form.oldParentMinyeongRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="button"
                                             width="100"
@@ -1259,6 +1304,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

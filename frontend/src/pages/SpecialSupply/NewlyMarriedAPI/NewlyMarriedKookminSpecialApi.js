@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
+import { patchNewlyMarriedKookminSpecialRank } from '../../../store/actions/newlyMarriedKookminSpecialRankAction';
 import { Link } from 'react-router-dom';
 import {
     CaretRightOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -21,24 +23,40 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const newlyMarriedKookminSpecialStore = useSelector(
         (state) => state.newlyMarriedKookminSpecial
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const [preNewlyMarriedYn, setPreNewlyMarriedYn] = useState();
-    const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
-    const getParams = location.state.preNewlyMarriedYn; // 국민주택 유형 props 가져오기
-
+    );
+    const newlyMarriedKookminSpecialRankStore = useSelector(
+        (state) => state.newlyMarriedKookminSpecialRank
+    ); // 순위 patch
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
 
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
+    const [preNewlyMarriedYn, setPreNewlyMarriedYn] = useState(
+        location?.state?.preNewlyMarriedYn
+    );
+
+    // 로딩 상태 적용
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 1200);
+    }, []);
+
     const data =
-        newlyMarriedKookminSpecialStore?.postNewlyMarriedKookminSpecialAptNum
-            ?.data; // 신혼부부 국민 로직 접근 변수
+        newlyMarriedKookminSpecialStore.postNewlyMarriedKookminSpecialAptNum
+            .data; // 신혼부부 국민 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -53,16 +71,8 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
         }
     };
 
-    // 로딩 상태 적용
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 1200);
-    }, []);
-
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         newlyMarriedKookminSpecialRes: '',
     });
     const onChange = (e) => {
@@ -70,14 +80,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            newlyMarriedKookminSpecialRes: '',
         });
     };
 
@@ -113,6 +115,59 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 신혼부부 공특법 적용 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [newlyMarriedKookminSpecialRank, setNewlyMarriedKookminSpecialRank] =
+        useState('');
+    const [newlyMarriedKookminSpecialType, setNewlyMarriedKookminSpecialType] =
+        useState('공공주택특별법적용');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            newlyMarriedKookminSpecialRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchNewlyMarriedKookminSpecialRank({
+                newlyMarriedKookminSpecialRank,
+                newlyMarriedKookminSpecialType,
+                preNewlyMarriedYn,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchNewlyMarriedKookminSpecialRank({
+                newlyMarriedKookminSpecialRank,
+                newlyMarriedKookminSpecialType,
+                preNewlyMarriedYn,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setNewlyMarriedKookminSpecialRank(
+            form?.newlyMarriedKookminSpecialRes !== ''
+                ? form?.newlyMarriedKookminSpecialRes
+                : null
+        );
+    }, [
+        newlyMarriedKookminSpecialRankStore.patchNewlyMarriedKookminSpecialRank,
+    ]);
+
+    console.log(newlyMarriedKookminSpecialRank);
+    console.log(newlyMarriedKookminSpecialType);
+    console.log(preNewlyMarriedYn);
+    console.log(supportYn);
 
     return (
         <>
@@ -189,7 +244,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                         알려드립니다.
                                     </p>
 
-                                    {getParams !== '' ? (
+                                    {preNewlyMarriedYn !== '' ? (
                                         <>
                                             {/* 예비 신혼부부 여부 */}
                                             <tr className="special_phase">
@@ -220,21 +275,24 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                     <input
                                                         className="typeInfoSelect"
                                                         value={
-                                                            getParams === 'y'
+                                                            preNewlyMarriedYn ===
+                                                            'y'
                                                                 ? '예비신혼부부'
                                                                 : '신혼부부'
                                                         }
                                                         readOnly={true}
                                                     />
                                                     <span>
-                                                        {getParams !== '' ? (
+                                                        {preNewlyMarriedYn !==
+                                                        '' ? (
                                                             <span className="progress">
                                                                 <CheckCircleOutlined />
                                                             </span>
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        {getParams === '' ? (
+                                                        {preNewlyMarriedYn ===
+                                                        '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
                                                             </span>
@@ -247,7 +305,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                         </>
                                     ) : null}
 
-                                    {getParams !== '' ? (
+                                    {preNewlyMarriedYn !== '' ? (
                                         <>
                                             {data !== null ? (
                                                 <>
@@ -558,7 +616,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                             }
                                                                                             value="y"
                                                                                             checked={
-                                                                                                form.supportYn ===
+                                                                                                supportYn ===
                                                                                                 'y'
                                                                                                     ? true
                                                                                                     : false
@@ -576,7 +634,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                             }
                                                                                             value="n"
                                                                                             checked={
-                                                                                                form.supportYn ===
+                                                                                                supportYn ===
                                                                                                 'n'
                                                                                                     ? true
                                                                                                     : false
@@ -587,13 +645,13 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                                         </span>
                                                                                     </span>
                                                                                     <span>
-                                                                                        {form.supportYn ===
+                                                                                        {supportYn ===
                                                                                         'y' ? (
                                                                                             <span className="progress">
                                                                                                 <CheckCircleOutlined />
                                                                                             </span>
                                                                                         ) : null}
-                                                                                        {form.supportYn ===
+                                                                                        {supportYn ===
                                                                                         'n' ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
@@ -611,7 +669,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                                                 20 ||
                                                             (data?.americanAge <
                                                                 20 &&
-                                                                form.supportYn ===
+                                                                supportYn ===
                                                                     'y' &&
                                                                 data?.householderTf ===
                                                                     true) ? (
@@ -1415,12 +1473,12 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                 <div className="rankRes">
                                     {/* 순위 매기기 */}
                                     {/* 1순위 */}
-                                    {getParams === 'n' &&
+                                    {preNewlyMarriedYn === 'n' &&
                                     data?.accountTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
@@ -1436,7 +1494,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetNumberOfPaymentsTf === true &&
                                     data?.secondChungyak === false &&
                                     data?.hasMinorChildren === true &&
-                                    getParams === 'n'
+                                    preNewlyMarriedYn === 'n'
                                         ? (form.newlyMarriedKookminSpecialRes =
                                               '1순위')
                                         : null}
@@ -1446,7 +1504,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetRecipientTf === true &&
                                     data?.meetHomelessHouseholdMembersTf ===
@@ -1460,11 +1518,11 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     data?.meetPropertyTf === true &&
                                     data?.meetBankbookJoinPeriodTf === true &&
                                     data?.meetNumberOfPaymentsTf === true &&
-                                    ((getParams === 'n' &&
+                                    ((preNewlyMarriedYn === 'n' &&
                                         (data?.secondChungyak === true ||
                                             data?.hasMinorChildren ===
                                                 false)) ||
-                                        getParams === 'y')
+                                        preNewlyMarriedYn === 'y')
                                         ? (form.newlyMarriedKookminSpecialRes =
                                               '2순위')
                                         : null}
@@ -1475,7 +1533,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                         false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
-                                            form.supportYn !== 'y')) ||
+                                            supportYn !== 'y')) ||
                                     data?.meetRecipientTf === false ||
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
@@ -1501,6 +1559,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="submit"
                                             width="100"
@@ -1518,6 +1577,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                 '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postGeneralKookminAptNum } from '../../store/actions/generalKookminAction';
+import { patchGeneralKookminRank } from '../../store/actions/generalKookminRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,25 +14,34 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../components/Button/MainButton';
 import './GeneralSupply.css';
+import useInputState from '../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/Loading/loading';
 
-const GeneralKookminApi = ({ onSaveData, location }) => {
+const GeneralKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const generalKookminStore = useSelector((state) => state.generalKookmin); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const history = useHistory();
-
+    const generalKookminRankStore = useSelector(
+        (state) => state.generalKookminRank
+    ); // 순위 patch
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
 
-    const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 국민 로직 접근 변수
-    // 입력 값 오류에 의한 error 발생 시 처리 코드
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
+
+    const data = generalKookminStore.postGeneralKookminAptNum.data; // 일반 민영 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -55,8 +65,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
-        lifeYn: '',
         generalKookminRes: '',
     });
     const onChange = (e) => {
@@ -64,14 +72,6 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            generalKookminRes: '',
         });
     };
 
@@ -104,7 +104,49 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
         }
     };
 
-    console.log(data);
+    // 일반 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [lifeYn, setLifeYn, handleChangeLifeYn] = useInputState(null);
+    const [generalKookminRank, setGeneralKookminRank] = useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            generalKookminRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchGeneralKookminRank({
+                generalKookminRank,
+                supportYn,
+                lifeYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchGeneralKookminRank({
+                generalKookminRank,
+                supportYn,
+                lifeYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setGeneralKookminRank(
+            form?.generalKookminRes !== '' ? form?.generalKookminRes : null
+        );
+    }, [generalKookminRankStore.patchGeneralKookminRank]);
+
+    console.log(generalKookminRank);
+    console.log(supportYn);
+    console.log(lifeYn);
 
     return (
         <>
@@ -624,15 +666,17 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 <td className="general_result">
                                                                                     <span className="general_result_input">
                                                                                         <input
-                                                                                            className="isSupportInput"
                                                                                             type="radio"
                                                                                             name="supportYn"
+                                                                                            value={
+                                                                                                supportYn
+                                                                                            }
                                                                                             onChange={
-                                                                                                onChange
+                                                                                                handleChangeSupportYn
                                                                                             }
                                                                                             value="y"
                                                                                             checked={
-                                                                                                form.supportYn ===
+                                                                                                supportYn ===
                                                                                                 'y'
                                                                                                     ? true
                                                                                                     : false
@@ -642,15 +686,17 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                             예
                                                                                         </span>
                                                                                         <input
-                                                                                            className="isSupportInput"
                                                                                             type="radio"
                                                                                             name="supportYn"
+                                                                                            value={
+                                                                                                supportYn
+                                                                                            }
                                                                                             onChange={
-                                                                                                onChange
+                                                                                                handleChangeSupportYn
                                                                                             }
                                                                                             value="n"
                                                                                             checked={
-                                                                                                form.supportYn ===
+                                                                                                supportYn ===
                                                                                                 'n'
                                                                                                     ? true
                                                                                                     : false
@@ -661,13 +707,13 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                         </span>
                                                                                     </span>
                                                                                     <span>
-                                                                                        {form.supportYn ===
+                                                                                        {supportYn ===
                                                                                         'y' ? (
                                                                                             <span className="progress">
                                                                                                 <CheckCircleOutlined />
                                                                                             </span>
                                                                                         ) : null}
-                                                                                        {form.supportYn ===
+                                                                                        {supportYn ===
                                                                                         'n' ? (
                                                                                             <span className="pause_tooltip">
                                                                                                 <CloseCircleOutlined />
@@ -731,12 +777,15 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                     className="isLifeYnInput"
                                                                                     type="radio"
                                                                                     name="lifeYn"
+                                                                                    value={
+                                                                                        lifeYn
+                                                                                    }
                                                                                     onChange={
-                                                                                        onChange
+                                                                                        handleChangeLifeYn
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.lifeYn ===
+                                                                                        lifeYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -749,12 +798,15 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                     className="isLifeYnInput"
                                                                                     type="radio"
                                                                                     name="lifeYn"
+                                                                                    value={
+                                                                                        lifeYn
+                                                                                    }
                                                                                     onChange={
-                                                                                        onChange
+                                                                                        handleChangeLifeYn
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.lifeYn ===
+                                                                                        lifeYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -765,13 +817,13 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.lifeYn ===
+                                                                                {lifeYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.lifeYn ===
+                                                                                {lifeYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -1294,11 +1346,11 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         (data?.americanAge >= 20 &&
                                             data?.americanAge < 30 &&
-                                            form.lifeYn === 'y') ||
+                                            lifeYn === 'y') ||
                                         data?.americanAge >= 30) &&
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
                                         true &&
@@ -1318,11 +1370,11 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         (data?.americanAge >= 20 &&
                                             data?.americanAge < 30 &&
-                                            form.lifeYn === 'y') ||
+                                            lifeYn === 'y') ||
                                         data?.americanAge >= 30) &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1351,11 +1403,11 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         false ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn !== 'y' ||
+                                        (supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (data?.americanAge >= 20 &&
                                         data?.americanAge < 30 &&
-                                        form.lifeYn !== 'y') ||
+                                        lifeYn !== 'y') ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             false)
@@ -1369,6 +1421,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                 form.generalKookminRes === '2순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={rankSuccess}
                                             type="button"
                                             width="100"
@@ -1385,6 +1438,7 @@ const GeneralKookminApi = ({ onSaveData, location }) => {
                                 {form.generalKookminRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
+                                            onClick={onClick}
                                             onClick={fail}
                                             type="button"
                                             width="100"

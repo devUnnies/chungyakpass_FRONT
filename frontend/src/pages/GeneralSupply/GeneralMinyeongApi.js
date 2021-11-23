@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
-import { postGeneralRank } from '../../store/actions/generalRankPostAction';
+import { patchGeneralMinyeongRank } from '../../store/actions/generalMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -22,17 +22,20 @@ import Loading from '../../components/Loading/loading';
 const GeneralMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-
     // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // 자격확인 로직 결과 가져오기
-    const generalRankStore = useSelector((state) => state.generalRank); // 순위 post
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
+    const generalMinyeongRankStore = useSelector(
+        (state) => state.generalMinyeongRank
+    ); // 순위 patch
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
     const [loading, setLoading] = useState(true);
     const history = useHistory();
-    const location = useLocation();
-    const type = location?.state?.notificationNumber;
-    console.log(type);
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
@@ -101,12 +104,10 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    // 일반 민영 순위 post
-    const [generalType, setGeneralType] = useState('민영주택');
+    // 일반 민영 순위 patch
     const [supportYn, setSupportYn, handleChangeSupportYn] =
         useInputState(null);
-    const [lifeYn, setLifeYn, handleChangeLifeYn] = useInputState(null);
-    const [generalRank, setGeneralRank] = useState('');
+    const [generalMinyeongRank, setGeneralMinyeongRank] = useState('');
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -118,40 +119,30 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postGeneralRank({
-                housingType,
-                notificationNumber,
-                generalType,
-                generalRank,
+            patchGeneralMinyeongRank({
+                generalMinyeongRank,
                 supportYn,
-                lifeYn,
             })
         );
     };
 
     const onClick = async () => {
         dispatch(
-            postGeneralRank({
-                housingType,
-                notificationNumber,
-                generalType,
-                generalRank,
+            patchGeneralMinyeongRank({
+                generalMinyeongRank,
                 supportYn,
-                lifeYn,
             })
         ); // api 연결 요청.
     };
 
     useEffect(() => {
-        setGeneralRank(
+        setGeneralMinyeongRank(
             form?.generalMinyeongRes !== '' ? form?.generalMinyeongRes : null
         );
-    }, [generalRankStore.postGeneralRank]);
+    }, [generalMinyeongRankStore.patchGeneralMinyeongRank]);
 
-    console.log(generalType);
-    console.log(generalRank);
+    console.log(generalMinyeongRank);
     console.log(supportYn);
-    console.log(lifeYn);
 
     return (
         <>
@@ -608,122 +599,12 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                                         </>
                                                     ) : null}
 
-                                                    {/* 20대인 경우에만 보이는 로직 */}
-                                                    {/* 20대 단독 세대주 여부 */}
-                                                    {data?.americanAge >= 20 &&
-                                                    data?.americanAge < 30 ? (
-                                                        <>
-                                                            <tr className="general_phase">
-                                                                <td className="qualification">
-                                                                    <span className="qualificationBox">
-                                                                        <span className="qualificationIcon">
-                                                                            <CaretRightOutlined />
-                                                                        </span>
-                                                                        소득이
-                                                                        있으면서
-                                                                        독립적으로
-                                                                        생계
-                                                                        유지가
-                                                                        가능한가?
-                                                                    </span>
-                                                                    <span className="info_tooltip">
-                                                                        <InfoCircleOutlined />
-                                                                        <span className="tooltip-text">
-                                                                            <p>
-                                                                                미혼
-                                                                                20대
-                                                                                단독세대주
-                                                                                ?
-                                                                            </p>
-                                                                            20대이며,
-                                                                            최저
-                                                                            생계비
-                                                                            (기준중위소득
-                                                                            40%,
-                                                                            약
-                                                                            월
-                                                                            70만원)
-                                                                            이상의
-                                                                            소득이
-                                                                            존재해야
-                                                                            함.
-                                                                        </span>
-                                                                    </span>
-                                                                </td>
-                                                                <td className="general_result">
-                                                                    <span className="general_result_input">
-                                                                        <input
-                                                                            className="isLifeYnInput"
-                                                                            type="radio"
-                                                                            name="lifeYn"
-                                                                            value={
-                                                                                lifeYn
-                                                                            }
-                                                                            onChange={
-                                                                                handleChangeLifeYn
-                                                                            }
-                                                                            value="y"
-                                                                            checked={
-                                                                                lifeYn ===
-                                                                                'y'
-                                                                                    ? true
-                                                                                    : false
-                                                                            }
-                                                                        />
-                                                                        <span className="InputText">
-                                                                            예
-                                                                        </span>
-                                                                        <input
-                                                                            className="isLifeYnInput"
-                                                                            type="radio"
-                                                                            name="lifeYn"
-                                                                            value={
-                                                                                lifeYn
-                                                                            }
-                                                                            onChange={
-                                                                                handleChangeLifeYn
-                                                                            }
-                                                                            value="n"
-                                                                            checked={
-                                                                                lifeYn ===
-                                                                                'n'
-                                                                                    ? true
-                                                                                    : false
-                                                                            }
-                                                                        />
-                                                                        <span className="InputText">
-                                                                            아니오
-                                                                        </span>
-                                                                    </span>
-                                                                    <span>
-                                                                        {form.lifeYn ===
-                                                                        'y' ? (
-                                                                            <span className="progress">
-                                                                                <CheckCircleOutlined />
-                                                                            </span>
-                                                                        ) : null}
-                                                                        {form.lifeYn ===
-                                                                        'n' ? (
-                                                                            <span className="pause_tooltip">
-                                                                                <CloseCircleOutlined />
-                                                                            </span>
-                                                                        ) : null}
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </>
-                                                    ) : null}
-
                                                     {/* 이후 조건 충족 시 다음 인풋 보이도록. */}
                                                     {(data?.americanAge < 20 &&
                                                         data?.householderTf ===
                                                             true &&
                                                         supportYn === 'y') ||
-                                                    (data?.americanAge >= 20 &&
-                                                        data?.americanAge <
-                                                            30 &&
-                                                        lifeYn === 'y') ||
-                                                    data?.americanAge >= 30 ? (
+                                                    data?.americanAge >= 20 ? (
                                                         <>
                                                             {/* 순위 판별 시작 */}
                                                             {/* 주거전용 85㎡ 기준 충족*/}
@@ -1339,9 +1220,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     ((data?.americanAge < 20 &&
                                         supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            lifeYn === 'y') ||
+                                        data?.americanAge >= 20 ||
                                         data?.americanAge >= 30) &&
                                     data?.priorityApt === true &&
                                     ((data?.restrictedAreaTf === true &&
@@ -1355,8 +1234,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                         data?.restrictedAreaTf === false) &&
                                     data?.meetBankbookJoinPeriodTf === true &&
                                     data?.meetDepositTf === true
-                                        ? (form.generalMinyeongRes = '1순위') &&
-                                          generalRank === '1순위'
+                                        ? (form.generalMinyeongRes = '1순위')
                                         : null}
 
                                     {/* 2순위 */}
@@ -1365,13 +1243,11 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     ((data?.americanAge < 20 &&
                                         supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            lifeYn === 'y') ||
+                                        data?.americanAge >= 20 ||
                                         data?.americanAge >= 30) &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
-                                        // data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        //     true &&
+                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
+                                            true &&
                                         ((data?.americanAge >= 20 &&
                                             data?.householderTf === false) ||
                                             data?.priorityApt === false ||
@@ -1396,9 +1272,6 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     (data?.americanAge < 20 &&
                                         (supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
-                                    (data?.americanAge >= 20 &&
-                                        data?.americanAge < 30 &&
-                                        lifeYn !== 'y') ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             false)

@@ -21,7 +21,6 @@ function NewlyMarriedKookminSpecialAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
-
     const [
         preNewlyMarriedYn,
         setPreNewlyMarriedYn,
@@ -145,12 +144,12 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                             required
                         />
                         <br />
-                        <div className="paramSelect">
+                        <div className="qualificationSelect">
                             <span className="qualificationBoxTitle">
                                 <strong>예비 신혼부부 여부</strong>
                             </span>
                             <input
-                                className="paramSelectInput"
+                                className="qualificationSelectInput"
                                 type="radio"
                                 name="preNewlyMarriedYn"
                                 onChange={handleChangePreNewlyMarriedYn}
@@ -161,7 +160,7 @@ function NewlyMarriedKookminSpecialAptNum(props) {
                             />
                             <span className="selectInputText">해당</span>
                             <input
-                                className="paramSelectInput"
+                                className="qualificationSelectInput"
                                 type="radio"
                                 name="preNewlyMarriedYn"
                                 onChange={handleChangePreNewlyMarriedYn}
