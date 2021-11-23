@@ -18,6 +18,17 @@ import newlyMarriedKookminSpecial from './newlyMarriedKookminSpecialReducer';
 import newlyMarriagePoint from './pointSpecialNewlyMarriageReducer';
 import oneParentPoint from './pointSpecialOneParentReducer';
 import oldParentPoint from './pointSpecialOldParentReducer';
+import generalMinyeongRank from './generalMinyeongRankReducer';
+import generalKookminRank from './generalKookminRankReducer';
+import firstLifeMinyeongRank from './firstInLifeMinyeongRankReducer';
+import firstLifeKookminRank from './firstInLifeKookminRankReducer';
+import multiChildMinyeongRank from './multiChildMinyeongRankReducer';
+import multiChildKookminRank from './multiChildKookminRankReducer';
+import newlyMarriedMinyeongRank from './newlyMarriedMinyeongRankReducer';
+import newlyMarriedKookminRank from './newlyMarriedKookminRankReducer';
+import newlyMarriedKookminSpecialRank from './newlyMarriedKookminSpecialRankReducer';
+import oldParentMinyeongRank from './oldParentMinyeongRankReducer';
+import oldParentKookminRank from './oldParentKookminRankReducer';
 
 const rootReducer = combineReducers({
     auth,
@@ -39,6 +50,17 @@ const rootReducer = combineReducers({
     newlyMarriedMinyeong,
     newlyMarriagePoint,
     oneParentPoint,
+    generalMinyeongRank,
+    generalKookminRank,
+    firstLifeMinyeongRank,
+    firstLifeKookminRank,
+    multiChildMinyeongRank,
+    multiChildKookminRank,
+    newlyMarriedMinyeongRank,
+    newlyMarriedKookminRank,
+    newlyMarriedKookminSpecialRank,
+    oldParentMinyeongRank,
+    oldParentKookminRank,
 });
 
 // const rootReducer = (state, action) => {

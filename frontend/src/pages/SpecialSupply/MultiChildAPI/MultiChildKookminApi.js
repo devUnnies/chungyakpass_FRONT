@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
+import { patchMultiChildKookminRank } from '../../../store/actions/multiChildKookminRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,23 +22,28 @@ import Loading from '../../../components/Loading/loading';
 const MultiChildKookminApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const multiChildKookminStore = useSelector(
         (state) => state.multiChildKookmin
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    );
+    const multiChildKookminRankStore = useSelector(
+        (state) => state.multiChildKookminRank
+    ); // 순위 patch
     const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const [multiChildKookminType, setMultiChildKookminType] = useState();
     const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
-    const getParams = location.state.multiChildKookminType; // 국민주택 유형 props 가져오기
-    console.log(getParams); // aptNum 페이지에서 받은 국민주택 종류 console 찍기.
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
 
-    const data = multiChildKookminStore?.postMultiChildKookminAptNum?.data; // 다자녀 국민 로직 접근 변수
+    const data = multiChildKookminStore.postMultiChildKookminAptNum.data; // 다자녀 국민 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -60,7 +67,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         multiChildKookminRes: '',
     });
     const onChange = (e) => {
@@ -68,14 +74,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            multiChildKookminRes: '',
         });
     };
 
@@ -107,6 +105,54 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 다자녀 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [multiChildKookminRank, setMultiChildKookminRank] = useState('');
+    const [multiChildKookminType, setMultiChildKookminType] = useState(
+        location?.state?.multiChildKookminType
+    );
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            multiChildKookminRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchMultiChildKookminRank({
+                multiChildKookminType,
+                multiChildKookminRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchMultiChildKookminRank({
+                multiChildKookminType,
+                multiChildKookminRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setMultiChildKookminRank(
+            form?.multiChildKookminRes !== ''
+                ? form?.multiChildKookminRes
+                : null
+        );
+    }, [multiChildKookminRankStore.patchMultiChildKookminRank]);
+
+    console.log(multiChildKookminType);
+    console.log(multiChildKookminRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -201,18 +247,22 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                 <td className="special_result">
                                                     <input
                                                         className="typeInfoSelect"
-                                                        value={getParams}
+                                                        value={
+                                                            multiChildKookminType
+                                                        }
                                                         readOnly={true}
                                                     />
                                                     <span>
-                                                        {getParams !== '' ? (
+                                                        {multiChildKookminType !==
+                                                        '' ? (
                                                             <span className="progress">
                                                                 <CheckCircleOutlined />
                                                             </span>
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        {getParams === '' ? (
+                                                        {multiChildKookminType ===
+                                                        '' ? (
                                                             <span className="pause_tooltip">
                                                                 <CloseCircleOutlined />
                                                             </span>
@@ -538,7 +588,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                             {data?.calcMinorChildren >=
                                                             3 ? (
                                                                 <>
-                                                                    {getParams !==
+                                                                    {multiChildKookminType !==
                                                                     '그외 국민주택' ? (
                                                                         <>
                                                                             <tr className="special_phase">
@@ -687,7 +737,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                 <>
                                                                                     {/* 자산 기준 충족 여부*/}
                                                                                     {/* 공공주택특별법 적용인 경우에만 적용 */}
-                                                                                    {getParams ===
+                                                                                    {multiChildKookminType ===
                                                                                     '공공주택특별법 적용' ? (
                                                                                         <tr className="special_phase">
                                                                                             <td className="qualification">
@@ -770,17 +820,17 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                         </>
                                                                     ) : null}
 
-                                                                    {(getParams ===
+                                                                    {(multiChildKookminType ===
                                                                         '공공주택특별법 적용' &&
                                                                         data?.meetPropertyTf >=
                                                                             true &&
                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                             true) ||
-                                                                    (getParams ===
+                                                                    (multiChildKookminType ===
                                                                         '공공주택특별법 미적용' &&
                                                                         data?.meetMonthlyAverageIncome ===
                                                                             true) ||
-                                                                    getParams ===
+                                                                    multiChildKookminType ===
                                                                         '그외 국민주택' ? (
                                                                         <>
                                                                             {/* 만 나이 로직 결과 출력*/}
@@ -943,7 +993,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                             }
                                                                                                             value="y"
                                                                                                             checked={
-                                                                                                                form.supportYn ===
+                                                                                                                supportYn ===
                                                                                                                 'y'
                                                                                                                     ? true
                                                                                                                     : false
@@ -961,7 +1011,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                             }
                                                                                                             value="n"
                                                                                                             checked={
-                                                                                                                form.supportYn ===
+                                                                                                                supportYn ===
                                                                                                                 'n'
                                                                                                                     ? true
                                                                                                                     : false
@@ -972,13 +1022,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                                         </span>
                                                                                                     </span>
                                                                                                     <span>
-                                                                                                        {form.supportYn ===
+                                                                                                        {supportYn ===
                                                                                                         'y' ? (
                                                                                                             <span className="progress">
                                                                                                                 <CheckCircleOutlined />
                                                                                                             </span>
                                                                                                         ) : null}
-                                                                                                        {form.supportYn ===
+                                                                                                        {supportYn ===
                                                                                                         'n' ? (
                                                                                                             <span className="pause_tooltip">
                                                                                                                 <CloseCircleOutlined />
@@ -997,7 +1047,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                 20 &&
                                                                                 data?.householderTf ===
                                                                                     true &&
-                                                                                form.supportYn ===
+                                                                                supportYn ===
                                                                                     'y') ||
                                                                             data?.americanAge >=
                                                                                 20 ? (
@@ -1205,17 +1255,19 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
-                                    (getParams === '그외 국민주택' ||
-                                        (getParams === '공공주택특별법 적용' &&
+                                    (multiChildKookminType ===
+                                        '그외 국민주택' ||
+                                        (multiChildKookminType ===
+                                            '공공주택특별법 적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true &&
                                             data?.meetPropertyTf === true) ||
-                                        (getParams ===
+                                        (multiChildKookminType ===
                                             '공공주택특별법 미적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true)) &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         data?.americanAge >= 20) &&
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1231,17 +1283,19 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     data?.meetHomelessHouseholdMembersTf ===
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
-                                    (getParams === '그외 국민주택' ||
-                                        (getParams === '공공주택특별법 적용' &&
+                                    (multiChildKookminType ===
+                                        '그외 국민주택' ||
+                                        (multiChildKookminType ===
+                                            '공공주택특별법 적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true &&
                                             data?.meetPropertyTf === true) ||
-                                        (getParams ===
+                                        (multiChildKookminType ===
                                             '공공주택특별법 미적용' &&
                                             data?.meetMonthlyAverageIncomeTf ===
                                                 true)) &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         data?.americanAge >= 20) &&
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1259,13 +1313,15 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                         false ||
                                     data?.calcMinorChildren < 3 ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn !== 'y' ||
+                                        (supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
-                                    (getParams === '공공주택특별법 적용' &&
+                                    (multiChildKookminType ===
+                                        '공공주택특별법 적용' &&
                                         (data?.meetMonthlyAverageIncomeTf ===
                                             false ||
                                             data?.meetPropertyTf === false)) ||
-                                    (getParams === '공공주택특별법 미적용' &&
+                                    (multiChildKookminType ===
+                                        '공공주택특별법 미적용' &&
                                         data?.meetMonthlyAverageIncomeTf ===
                                             false) ||
                                     data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1280,7 +1336,10 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 form.multiChildKookminRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1296,7 +1355,10 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 {form.multiChildKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

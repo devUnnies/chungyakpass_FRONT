@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
+import { patchMultiChildMinyeongRank } from '../../../store/actions/multiChildMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,13 +22,22 @@ import Loading from '../../../components/Loading/loading';
 const MultiChildMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const multiChildMinyeongStore = useSelector(
         (state) => state.multiChildMinyeong
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    );
+    const multiChildMinyeongRankStore = useSelector(
+        (state) => state.multiChildMinyeongRank
+    ); // 순위 patch
     const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
     const history = useHistory();
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
@@ -56,7 +67,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         multiChildMinyeongRes: '',
     });
     const onChange = (e) => {
@@ -64,14 +74,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            multiChildMinyeongRes: '',
         });
     };
 
@@ -103,6 +105,48 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 다자녀 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [multiChildMinyeongRank, setMultiChildMinyeongRank] = useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            multiChildMinyeongRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchMultiChildMinyeongRank({
+                multiChildMinyeongRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchMultiChildMinyeongRank({
+                multiChildMinyeongRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setMultiChildMinyeongRank(
+            form?.multiChildMinyeongRes !== ''
+                ? form?.multiChildMinyeongRes
+                : null
+        );
+    }, [multiChildMinyeongRankStore.patchMultiChildMinyeongRank]);
+
+    console.log(multiChildMinyeongRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -703,7 +747,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                     }
                                                                                                     value="y"
                                                                                                     checked={
-                                                                                                        form.supportYn ===
+                                                                                                        supportYn ===
                                                                                                         'y'
                                                                                                             ? true
                                                                                                             : false
@@ -721,7 +765,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                     }
                                                                                                     value="n"
                                                                                                     checked={
-                                                                                                        form.supportYn ===
+                                                                                                        supportYn ===
                                                                                                         'n'
                                                                                                             ? true
                                                                                                             : false
@@ -732,13 +776,13 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                                                 </span>
                                                                                             </span>
                                                                                             <span>
-                                                                                                {form.supportYn ===
+                                                                                                {supportYn ===
                                                                                                 'y' ? (
                                                                                                     <span className="progress">
                                                                                                         <CheckCircleOutlined />
                                                                                                     </span>
                                                                                                 ) : null}
-                                                                                                {form.supportYn ===
+                                                                                                {supportYn ===
                                                                                                 'n' ? (
                                                                                                     <span className="pause_tooltip">
                                                                                                         <CloseCircleOutlined />
@@ -756,7 +800,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                                                         20 &&
                                                                         data?.householderTf ===
                                                                             true &&
-                                                                        form.supportYn ===
+                                                                        supportYn ===
                                                                             'y') ||
                                                                     data?.americanAge >
                                                                         20 ? (
@@ -1232,7 +1276,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         data?.americanAge >= 20) &&
                                     ((data?.restrictedAreaTf === true &&
@@ -1253,7 +1297,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         true &&
                                     data?.calcMinorChildren >= 3 &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         data?.americanAge >= 20) &&
                                     (data?.priorityApt === false ||
@@ -1282,7 +1326,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                         false ||
                                     data?.calcMinorChildren < 3 ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn !== 'y' ||
+                                        (supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1297,7 +1341,10 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 form.multiChildMinyeongRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1313,7 +1360,10 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 {form.multiChildMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

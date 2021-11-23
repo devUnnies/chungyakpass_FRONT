@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postNewlyMarriedMinyeongAptNum } from '../../../store/actions/newlyMarriedMinyeongAction';
+import { patchNewlyMarriedMinyeongRank } from '../../../store/actions/newlyMarriedMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../../components/Button/MainButton';
 import '../SpecialSupply.css';
+import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
@@ -20,21 +22,28 @@ import Loading from '../../../components/Loading/loading';
 const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const newlyMarriedMinyeongStore = useSelector(
         (state) => state.newlyMarriedMinyeong
-    ); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
-    const history = useHistory();
-    const location = useLocation(); // aptNum 페이지의 props 불러오기
-
+    );
+    const newlyMarriedMinyeongRankStore = useSelector(
+        (state) => state.newlyMarriedMinyeongRank
+    ); // 순위 patch
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
 
-    const data =
-        newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum?.data; // 신혼부부 민영 로직 접근 변수
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
+
+    const data = newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data; // 신혼부부 민영 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -58,7 +67,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
         newlyMarriedMinyeongRes: '',
     });
     const onChange = (e) => {
@@ -66,14 +74,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            newlyMarriedMinyeongRes: '',
         });
     };
 
@@ -105,6 +105,49 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 신혼부부 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [newlyMarriedMinyeongRank, setNewlyMarriedMinyeongRank] =
+        useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            newlyMarriedMinyeongRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchNewlyMarriedMinyeongRank({
+                newlyMarriedMinyeongRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchNewlyMarriedMinyeongRank({
+                newlyMarriedMinyeongRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setNewlyMarriedMinyeongRank(
+            form?.newlyMarriedMinyeongRes !== ''
+                ? form?.newlyMarriedMinyeongRes
+                : null
+        );
+    }, [newlyMarriedMinyeongRankStore.patchNewlyMarriedMinyeongRank]);
+
+    console.log(newlyMarriedMinyeongRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -517,7 +560,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -535,7 +578,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -546,13 +589,13 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -569,7 +612,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                                             (data?.age < 20 &&
                                                                 data?.householderTf ===
                                                                     true &&
-                                                                form.supportYn ===
+                                                                supportYn ===
                                                                     'y') ? (
                                                                 <>
                                                                     <tr className="special_phase">
@@ -1275,7 +1318,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetMarriagePeriodIn7yearsTf ===
                                         true &&
@@ -1303,7 +1346,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
                                         data?.householderTf === true &&
-                                        form.supportYn === 'y') ||
+                                        supportYn === 'y') ||
                                         data?.americanAge >= 20) &&
                                     data?.meetMarriagePeriodIn7yearsTf ===
                                         true &&
@@ -1332,7 +1375,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                         false ||
                                     (data?.americanAge < 20 &&
                                         (data?.householderTf === false ||
-                                            form.supportYn !== 'y')) ||
+                                            supportYn !== 'y')) ||
                                     data?.americanAge >= 20 ||
                                     (data?.meetMarriagePeriodIn7yearsTf ===
                                         false &&
@@ -1361,7 +1404,10 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                 form.newlyMarriedMinyeongRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1377,7 +1423,10 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                 {form.newlyMarriedMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

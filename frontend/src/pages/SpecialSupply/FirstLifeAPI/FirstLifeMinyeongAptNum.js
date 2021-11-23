@@ -32,6 +32,11 @@ function FirstLifeMinyeongAptNum(props) {
     ] = useInputState('');
     const [housingType, setHousingType, handleChangeHousingType] =
         useInputState('');
+    const [
+        firstRankHistoryYn,
+        setFirstRankHistoryYn,
+        handleChangeFirstRankHistoryYn,
+    ] = useInputState('');
 
     const handleSubmit = (event) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -42,6 +47,7 @@ function FirstLifeMinyeongAptNum(props) {
             postFirstInLifeMinyeongAptNum({
                 notificationNumber: notificationNumber,
                 housingType: housingType,
+                firstRankHistoryYn: firstRankHistoryYn,
             })
         );
     };
@@ -50,7 +56,7 @@ function FirstLifeMinyeongAptNum(props) {
     const onClick = async () => {
         if (notificationNumber === '' || housingType === '') {
             alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
-        } else if (form.firstRankHistoryYn === 'n') {
+        } else if (firstRankHistoryYn === 'n') {
             alert(
                 '일반공급 1순위 당첨 이력이 존재하는 경우에만 생애최초 자격확인이 가능합니다.'
             );
@@ -59,6 +65,7 @@ function FirstLifeMinyeongAptNum(props) {
                 postFirstInLifeMinyeongAptNum({
                     notificationNumber: notificationNumber,
                     housingType: housingType,
+                    firstRankHistoryYn: firstRankHistoryYn,
                 })
             ); // api 연결 요청.
 
@@ -67,9 +74,10 @@ function FirstLifeMinyeongAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialFirstLifeMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
+                    firstRankHistoryYn,
                 },
             });
         }
@@ -143,12 +151,10 @@ function FirstLifeMinyeongAptNum(props) {
                                 className="paramSelectInput"
                                 type="radio"
                                 name="firstRankHistoryYn"
-                                onChange={onChange}
+                                onChange={handleChangeFirstRankHistoryYn}
                                 value="y"
                                 checked={
-                                    form.firstRankHistoryYn === 'y'
-                                        ? true
-                                        : false
+                                    firstRankHistoryYn === 'y' ? true : false
                                 }
                             />
                             <span className="selectInputText">존재</span>
@@ -156,12 +162,10 @@ function FirstLifeMinyeongAptNum(props) {
                                 className="paramSelectInput"
                                 type="radio"
                                 name="firstRankHistoryYn"
-                                onChange={onChange}
+                                onChange={handleChangeFirstRankHistoryYn}
                                 value="n"
                                 checked={
-                                    form.firstRankHistoryYn === 'n'
-                                        ? true
-                                        : false
+                                    firstRankHistoryYn === 'n' ? true : false
                                 }
                             />
                             <span className="selectInputText">미존재</span>
