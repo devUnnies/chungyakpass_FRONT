@@ -50,7 +50,7 @@ function MultiChildMinyeongAptNum(props) {
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/specialMultiChildMinyeong',
-                props: {
+                state: {
                     notificationNumber,
                     housingType,
                 },

@@ -119,153 +119,205 @@ function OldParentPointPost(props) {
                         onKeyPress={onKeyPress}
                         className="specialAptNumForm"
                     >
-                        <div className="paramSelect">
-                            <span className="qualificationBoxTitle">
-                                부모 사망 여부
-                            </span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="parentsDeathYn"
-                                onChange={handleChangeParentsDeathYn}
-                                value="y"
-                                checked={parentsDeathYn === 'y' ? true : false}
-                            />
-                            <span className="selectInputText">해당함</span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="parentsDeathYn"
-                                onChange={handleChangeParentsDeathYn}
-                                value="n"
-                                checked={parentsDeathYn === 'n' ? true : false}
-                            />
-                            <span className="selectInputText">
-                                해당하지 않음
-                            </span>
-                        </div>
+                        <table border="1" className="pointTable">
+                            <tr className="paramSelect">
+                                <td className="pointTable_list">
+                                    <span className="qualificationBoxTitle">
+                                        부모 사망 여부
+                                    </span>
+                                </td>
+                                <td className="pointTable_select">
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="parentsDeathYn"
+                                        onChange={handleChangeParentsDeathYn}
+                                        value="y"
+                                        checked={
+                                            parentsDeathYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당함
+                                    </span>
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="parentsDeathYn"
+                                        onChange={handleChangeParentsDeathYn}
+                                        value="n"
+                                        checked={
+                                            parentsDeathYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당하지 않음
+                                    </span>
+                                </td>
+                            </tr>
 
-                        <br />
-                        <div className="paramSelect">
-                            <span className="qualificationBoxTitle">
-                                이혼 여부
-                            </span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="divorceYn"
-                                onChange={handleChangeDivorceYn}
-                                value="y"
-                                checked={divorceYn === 'y' ? true : false}
-                            />
-                            <span className="selectInputText">해당함</span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="divorceYn"
-                                onChange={handleChangeDivorceYn}
-                                value="n"
-                                checked={divorceYn === 'n' ? true : false}
-                            />
-                            <span className="selectInputText">
-                                해당하지 않음
-                            </span>
-                        </div>
+                            <br />
+                            <tr className="paramSelect">
+                                <td className="pointTable_list">
+                                    <span className="qualificationBoxTitle">
+                                        이혼 여부
+                                    </span>
+                                </td>
+                                <td className="pointTable_select">
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="divorceYn"
+                                        onChange={handleChangeDivorceYn}
+                                        value="y"
+                                        checked={
+                                            divorceYn === 'y' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당함
+                                    </span>
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="divorceYn"
+                                        onChange={handleChangeDivorceYn}
+                                        value="n"
+                                        checked={
+                                            divorceYn === 'n' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당하지 않음
+                                    </span>
+                                </td>
+                            </tr>
 
-                        <br />
-                        <div className="paramSelect">
-                            <span className="qualificationBoxTitle">
-                                동일 주소지 거주 여부
-                            </span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="sameResidentRegistrationYn"
-                                onChange={
-                                    handleChangeSameResidentRegistrationYn
-                                }
-                                value="y"
-                                checked={
-                                    sameResidentRegistrationYn === 'y'
-                                        ? true
-                                        : false
-                                }
-                            />
-                            <span className="selectInputText">해당함</span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="sameResidentRegistrationYn"
-                                onChange={
-                                    handleChangeSameResidentRegistrationYn
-                                }
-                                value="n"
-                                checked={
-                                    sameResidentRegistrationYn === 'n'
-                                        ? true
-                                        : false
-                                }
-                            />
-                            <span className="selectInputText">
-                                해당하지 않음
-                            </span>
-                        </div>
+                            <br />
+                            <tr className="paramSelect">
+                                <td className="pointTable_list">
+                                    <span className="qualificationBoxTitle">
+                                        동일 주소지 거주 여부
+                                    </span>
+                                </td>
+                                <td className="pointTable_select">
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="sameResidentRegistrationYn"
+                                        onChange={
+                                            handleChangeSameResidentRegistrationYn
+                                        }
+                                        value="y"
+                                        checked={
+                                            sameResidentRegistrationYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당함
+                                    </span>
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="sameResidentRegistrationYn"
+                                        onChange={
+                                            handleChangeSameResidentRegistrationYn
+                                        }
+                                        value="n"
+                                        checked={
+                                            sameResidentRegistrationYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당하지 않음
+                                    </span>
+                                </td>
+                            </tr>
 
-                        <br />
+                            <br />
 
-                        <div className="paramSelect">
-                            <span className="qualificationBoxTitle">
-                                해외 혹은 요양시설 체류 여부
-                            </span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="stayOverYn"
-                                onChange={handleChangeStayOverYn}
-                                value="y"
-                                checked={stayOverYn === 'y' ? true : false}
-                            />
-                            <span className="selectInputText">해당함</span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="stayOverYn"
-                                onChange={handleChangeStayOverYn}
-                                value="n"
-                                checked={stayOverYn === 'n' ? true : false}
-                            />
-                            <span className="selectInputText">
-                                해당하지 않음
-                            </span>
-                        </div>
+                            <tr className="paramSelect">
+                                <td className="pointTable_list">
+                                    <span className="qualificationBoxTitle">
+                                        해외 혹은 요양시설 체류 여부
+                                    </span>
+                                </td>
+                                <td className="pointTable_select">
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="stayOverYn"
+                                        onChange={handleChangeStayOverYn}
+                                        value="y"
+                                        checked={
+                                            stayOverYn === 'y' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당함
+                                    </span>
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="stayOverYn"
+                                        onChange={handleChangeStayOverYn}
+                                        value="n"
+                                        checked={
+                                            stayOverYn === 'n' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당하지 않음
+                                    </span>
+                                </td>
+                            </tr>
 
-                        <br />
+                            <br />
 
-                        <div className="paramSelect">
-                            <span className="qualificationBoxTitle">
-                                현재 해외 체류 여부
-                            </span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="nowStayOverYn"
-                                onChange={handleChangeNowStayOverYn}
-                                value="y"
-                                checked={nowStayOverYn === 'y' ? true : false}
-                            />
-                            <span className="selectInputText">해당함</span>
-                            <input
-                                className="paramSelectInput"
-                                type="radio"
-                                name="nowStayOverYn"
-                                onChange={handleChangeNowStayOverYn}
-                                value="n"
-                                checked={nowStayOverYn === 'n' ? true : false}
-                            />
-                            <span className="selectInputText">
-                                해당하지 않음
-                            </span>
-                        </div>
+                            <tr className="paramSelect">
+                                <td className="pointTable_list">
+                                    <span className="qualificationBoxTitle">
+                                        현재 해외 체류 여부
+                                    </span>
+                                </td>
+                                <td className="pointTable_select">
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="nowStayOverYn"
+                                        onChange={handleChangeNowStayOverYn}
+                                        value="y"
+                                        checked={
+                                            nowStayOverYn === 'y' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당함
+                                    </span>
+                                    <input
+                                        className="paramSelectInput"
+                                        type="radio"
+                                        name="nowStayOverYn"
+                                        onChange={handleChangeNowStayOverYn}
+                                        value="n"
+                                        checked={
+                                            nowStayOverYn === 'n' ? true : false
+                                        }
+                                    />
+                                    <span className="selectInputText">
+                                        해당하지 않음
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
 
                         <div className="buttonContainer">
                             <span className="buttonPosition">
