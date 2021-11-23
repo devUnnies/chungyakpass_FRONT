@@ -142,6 +142,8 @@ const GeneralKookminApi = ({ onSaveData }) => {
         if (form?.generalKookminRes !== '')
             setGeneralKookminRank(form.generalKookminRes);
         else setGeneralKookminRank(null);
+
+        console.log(generalKookminRank);
     }, [generalKookminRankStore.patchGeneralKookminRank]);
 
     console.log(generalKookminRank);
