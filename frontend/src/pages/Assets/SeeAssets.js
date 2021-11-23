@@ -5,27 +5,28 @@ import AssetsTr from './AssetsTr';
 import AddAsset from './AddAsset';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { addAsse, patStart } from '../../store/actions/commonInfoAction';
+import {
+    addAsseDel,
+    delAsse,
+    getAsse,
+    modAsseDel,
+    patStart,
+} from '../../store/actions/commonInfoAction';
 import SubButton from '../../components/Button/SubButton';
 
 const SeeAssets = () => {
-    const [name, setName] = useState();
-    const [asset, setAsset] = useState();
-    const [assets, setAssets] = useState();
     const [memberId, setMemberId] = useState();
+    const [name, setName] = useState();
+    const [assets, setAssets] = useState();
     const [birthDay, setBirthDay] = useState();
     const [startDate, setStartDate] = useState();
-    const [startDates, setStartDates] = useState([startDate]);
-    const [selected, setSelected] = useState('');
-    const [add, setAdd] = useState(false);
-    const [modify, setModify] = useState(false);
+    const [startDates, setStartDates] = useState();
     const location = useLocation();
 
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
     const houseState = location.state.houseState;
 
-    const nextId = useRef(1);
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -34,7 +35,7 @@ const SeeAssets = () => {
     // 자산 각각의 무주택 시작일을 계산해서 가장 나중의 무주택 시작일을 넘겨줘야 함
     const calStartDate = () => {
         setStartDates(
-            startDates?.sort((a, b) => {
+            startDates.sort((a, b) => {
                 return (
                     new Date(Date.parse(b?.startDate)) -
                     new Date(Date.parse(a?.startDate))
@@ -54,167 +55,126 @@ const SeeAssets = () => {
 
     // 추가버튼 누르면 추가화면이 아래에 뜨게
     const handleAdd = () => {
-        setAdd(!add);
-        setStartDate({
+        dispatch(addAsseDel());
+
+        history.push('/addAsset', {
+            pos: -1,
+            ineligibleDate: ineligibleDate,
+            birthDay: birthDay,
+            startDates: startDates,
+            memberId: memberId,
+            houseState: houseState,
+        });
+
+        setStartDates({
             id: 0,
             startDate: birthDay,
         });
-        setStartDates([startDate]);
-        setModify(false);
     };
 
-    // 추가 혹은 수정한 값 저장하는 함수
-    const handleSave = (data) => {
-        // 데이터 수정하기
-        if (data.id) {
-            // console.log(data.id + '!!!!!');
-            // 받아온 데이터 id 가 있을 경우
-            setAsset(data);
-            setAssets(
-                assets.map((row) =>
-                    data.id === row.id
-                        ? {
-                              // 가져온 id 가 기존 table id가 같으면
-                              // 가져온 데이터 변경
-                              id: data.id,
-                              property: data.property,
-                              saleRightYn: data.saleRightYn,
-                              residentialBuildingYn: data.residentialBuildingYn,
-                              residentialBuilding: data.residentialBuilding,
-                              nonResidentialBuilding:
-                                  data.nonResidentialBuilding,
-                              metropolitanBuildingYn:
-                                  data.metropolitanBuildingYn,
-                              exceptionHouseYn: data.exceptionHouseYn,
-                              acquisitionDate: data.acquisitionDate,
-                              dispositionDate: data.dispositionDate,
-                              exclusiveArea: data.exclusiveArea,
-                              amount: data.amount,
-                              taxBaseDate: data.taxBaseDate,
-                          }
-                        : row
-                )
-            );
-        } else {
-            // console.log(JSON.stringify(data));
-            // 기존의 데이터 추가하기
-            setAsset({ ...data, id: nextId.current });
-
-            nextId.current += 1;
-        }
-
-        setAdd(false);
-    };
+    useEffect(() => {
+        const data = commonInfoStore.delAssets.data;
+        if (memberId || data) dispatch(getAsse(memberId));
+    }, [memberId, commonInfoStore.delAssets]);
 
     // 멤버 데이터가 있을 경우
     useEffect(() => {
         const member = commonInfoStore.addMem.data;
+        const member2 = commonInfoStore.modMem.data;
         // 미리 값 연결해두기
         if (member) {
+            setMemberId(member.id);
             setName(member.name);
             setStartDate(member.homelessStartDate);
             setBirthDay(member.birthDay);
-            setStartDates([{ id: 0, startDate: startDate }]);
+        } else if (member2) {
+            setMemberId(member2.id);
+            setName(member2.name);
+            setStartDate(member2.homelessStartDate);
+            setBirthDay(member2.birthDay);
         }
-    }, [commonInfoStore.addMem]);
+    }, [commonInfoStore.addMem, commonInfoStore.modMem]);
+
+    useEffect(() => {
+        const data = commonInfoStore.getAssets.data;
+        if (data) {
+            setAssets(data);
+        }
+    }, [commonInfoStore.getAssets]);
+
+    useEffect(() => {
+        let temp = [];
+        if (assets) {
+            assets.map((content, i) => {
+                if (content.property == '건물' || content.property == '토지') {
+                    if (temp !== [])
+                        temp = [
+                            ...temp,
+                            {
+                                id: content.id,
+                                startDate: content.dispositionDate,
+                            },
+                        ];
+                    else
+                        temp = [
+                            {
+                                id: content.id,
+                                startDate: content.dispositionDate,
+                            },
+                        ];
+                }
+            });
+            if (temp)
+                temp = [
+                    ...temp,
+                    {
+                        id: 0,
+                        startDate: birthDay,
+                    },
+                ];
+            setStartDates(temp);
+        }
+    }, [assets]);
 
     useEffect(() => {
         if (birthDay) {
-            setStartDate({
-                id: 0,
-                startDate: birthDay,
-            });
+            setStartDates([
+                {
+                    id: 0,
+                    startDate: birthDay,
+                },
+            ]);
         }
     }, [birthDay]);
-
-    // asset이 변할 때마다 assets에 추가하기
-    useEffect(() => {
-        if (assets && asset)
-            setAssets([
-                ...assets,
-                {
-                    houseMemberId: memberId,
-                    property: asset.property,
-                    saleRightYn: asset.saleRightYn,
-                    residentialBuildingYn: asset.residentialBuildingYn,
-                    residentialBuilding: asset.residentialBuilding,
-                    nonResidentialBuilding: asset.nonResidentialBuilding,
-                    metropolitanBuildingYn: asset.metropolitanBuildingYn,
-                    exceptionHouseYn: asset.exceptionHouseYn,
-                    acquisitionDate: asset.acquisitionDate,
-                    dispositionDate: asset.dispositionDate,
-                    exclusiveArea: asset.exclusiveArea,
-                    amount: asset.amount,
-                    taxBaseDate: asset.taxBaseDate,
-                },
-            ]);
-        else if (asset)
-            setAssets([
-                {
-                    houseMemberId: memberId,
-                    property: asset.property,
-                    saleRightYn: asset.saleRightYn,
-                    residentialBuildingYn: asset.residentialBuildingYn,
-                    residentialBuilding: asset.residentialBuilding,
-                    nonResidentialBuilding: asset.nonResidentialBuilding,
-                    metropolitanBuildingYn: asset.metropolitanBuildingYn,
-                    exceptionHouseYn: asset.exceptionHouseYn,
-                    acquisitionDate: asset.acquisitionDate,
-                    dispositionDate: asset.dispositionDate,
-                    exclusiveArea: asset.exclusiveArea,
-                    amount: asset.amount,
-                    taxBaseDate: asset.taxBaseDate,
-                },
-            ]);
-    }, [asset]);
 
     // asset 삭제하기
     const handleRemove = (id) => {
         setAssets((info) => info.filter((item) => item.id !== id));
-        setStartDates((info) => info.filter((item) => item.id !== id));
-        nextId.current -= 1;
+        setStartDates();
+
+        dispatch(delAsse(id));
     };
 
     // 수정하기
     const handleEdit = (item) => {
-        setAdd(false);
-        setModify(!modify);
-        const selectedData = {
-            id: item.id,
-            property: item.property,
-            saleRightYn: item.saleRightYn,
-            residentialBuildingYn: item.residentialBuildingYn,
-            residentialBuilding: item.residentialBuilding,
-            nonResidentialBuilding: item.nonResidentialBuilding,
-            metropolitanBuildingYn: item.metropolitanBuildingYn,
-            exceptionHouseYn: item.exceptionHouseYn,
-            acquisitionDate: item.acquisitionDate,
-            dispositionDate: item.dispositionDate,
-            exclusiveArea: item.exclusiveArea,
-            amount: item.amount,
-            taxBaseDate: item.taxBaseDate,
-        };
-        // console.log(selectedData);
-        setSelected(selectedData);
-    };
+        dispatch(modAsseDel());
 
-    // 수정 취소하기
-    const handleCancel = () => {
-        setModify(false);
-    };
+        history.push('/modAsset', {
+            pos: 1,
+            asset: item,
+            houseState: houseState,
+        });
 
-    // 수정한 값 저장하고 수정 화면 닫기
-    const handleEditSubmit = (item) => {
-        // console.log(item);
-        handleSave(item);
-        setModify(false);
+        setStartDates([
+            {
+                id: 0,
+                startDate: birthDay,
+            },
+        ]);
     };
 
     // 자산 목록 api로 넘기기
     const handleAssetsSubmit = () => {
-        // console.log('자산 목록 !!!! ' + JSON.stringify(assets));
-        // dispatch(addAsse(assets));
-
         // 무주택 시작일만 변경하여 수정 요청
         const userStartDate = {
             memberId: memberId,
@@ -223,21 +183,28 @@ const SeeAssets = () => {
                     ? birthDay
                     : startDate.startDate,
         };
+        // console.log('파라미터 !!! ' + JSON.stringify(userStartDate));
         dispatch(patStart(userStartDate));
 
-        history.goBack(pos);
+        history.push('/members', {
+            houseState: houseState,
+        });
+
+        // window.location.replace('/members', { houseState: houseState });
     };
 
     useEffect(() => {
         const data = commonInfoStore.addMem.data;
+        const data2 = commonInfoStore.modMem.data;
         if (data) {
             setMemberId(data.id);
+        } else if (data2) {
+            setMemberId(data2.id);
         }
-    }, [commonInfoStore.addMem]);
+    }, [commonInfoStore.addMem, commonInfoStore.modMem]);
 
     useEffect(() => {
-        // if (memberId && startDates[0].startDate !== new Date('1500/01/01'))
-        calStartDate();
+        if (startDates) calStartDate();
         console.log('목록 ~~~' + JSON.stringify(startDates));
     }, [startDates]);
 
@@ -300,27 +267,6 @@ const SeeAssets = () => {
                     <></>
                 )}
             </div>
-            {add && (
-                <AddAsset
-                    onSaveData={handleSave}
-                    startDates={startDates}
-                    setStartDates={setStartDates}
-                    birthDay={birthDay}
-                    nextId={nextId}
-                    ineligibleDate={ineligibleDate}
-                />
-            )}
-            {/* {modify && (
-                <ModifyAsset
-                    selectedData={selected}
-                    startDates={startDates}
-                    setStartDates={setStartDates}
-                    handleCancel={handleCancel}
-                    handleEditSubmit={handleEditSubmit}
-                    birthDate={birthDate}
-                    ineligibleDate={ineligibleDate}
-                />
-            )} */}
 
             <div className="backButton">
                 <SubButton
@@ -329,12 +275,12 @@ const SeeAssets = () => {
                     width="80"
                     height="30"
                     onClick={() => {
-                        window.location.replace('/members', {
+                        history.push('/members', {
                             houseState: houseState,
                         });
                     }}
                 >
-                    목록으로
+                    세대구성원 목록으로
                 </SubButton>
             </div>
         </div>

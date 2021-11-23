@@ -4,15 +4,13 @@ import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 
 const AssetsTd = ({ item, handleRemove, handleEdit }) => {
-    let text = '';
-
     const onRemove = () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             alert('삭제가 완료되었습니다.');
         } else {
             return;
         }
-        handleRemove(item?.id);
+        handleRemove(item.id);
     };
 
     const onEdit = () => {
@@ -44,8 +42,8 @@ const AssetsTd = ({ item, handleRemove, handleEdit }) => {
             </td>
             <td className="assetsInfoTbodyTd">
                 <span>
-                    {item?.acquistionDate
-                        ? item?.acquistionDate
+                    {item?.acquisitionDate
+                        ? item?.acquisitionDate
                               .replace('-', '년 ')
                               .replace('-', '월 ')
                               .concat('일')
@@ -64,13 +62,11 @@ const AssetsTd = ({ item, handleRemove, handleEdit }) => {
             </td>
             <td className="assetsInfoTbodyTd">
                 <span>
-                    {item?.exclusiveArea
-                        ? item?.exclusiveArea.concat('m²')
-                        : null}
+                    {item?.exclusiveArea ? item?.exclusiveArea + 'm²' : null}
                 </span>
             </td>
             <td className="assetsInfoTbodyTd">
-                <span>{item?.amount ? item?.amount.concat('원') : null}</span>
+                <span>{item?.amount ? item?.amount + '원' : null}</span>
             </td>
             <td className="assetsInfoTbodyTd">
                 <span>

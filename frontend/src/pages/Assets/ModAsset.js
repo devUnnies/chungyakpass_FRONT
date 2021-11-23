@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
-import { addAsse } from '../../store/actions/commonInfoAction';
+import { modAsse } from '../../store/actions/commonInfoAction';
 
-const AddAsset = () => {
+const ModAsset = () => {
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -19,21 +19,7 @@ const AddAsset = () => {
 
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
-    const [asset, setAsset] = useState({
-        houseMemberId: memberId,
-        property: '',
-        saleRightYn: null,
-        residentialBuildingYn: null,
-        residentialBuilding: null,
-        nonResidentialBuilding: null,
-        metropolitanBuildingYn: null,
-        exceptionHouseYn: null,
-        acquisitionDate: null,
-        dispositionDate: null,
-        exclusiveArea: null,
-        amount: null,
-        taxBaseDate: null,
-    });
+    const [asset, setAsset] = useState(location.state.asset);
     const [logicData, setLogicData] = useState({
         isInheritance: '',
         conditionType: '',
@@ -45,6 +31,8 @@ const AddAsset = () => {
     );
 
     const [failMsg, setFailMsg] = useState(null);
+
+    console.log(JSON.stringify(asset));
 
     const logic = () => {
         // console.log('ADD !!!! ' + JSON.stringify(asset));
@@ -79,10 +67,14 @@ const AddAsset = () => {
                     }
                 }
 
-                startDates = [
-                    ...startDates,
-                    { startDate: asset.dispositionDate },
-                ];
+                if (startDates) {
+                    startDates = [
+                        ...startDates,
+                        { startDate: asset.dispositionDate },
+                    ];
+                } else {
+                    startDates = [{ startDate: asset.dispositionDate }];
+                }
             } else {
                 setIsNoStruct(false);
                 setStartDate(null);
@@ -99,7 +91,7 @@ const AddAsset = () => {
     };
 
     useEffect(() => {
-        const data = commonInfoStore.addAssets.data;
+        const data = commonInfoStore.modAssets.data;
         if (data) {
             if (
                 data.status === 400 ||
@@ -111,7 +103,7 @@ const AddAsset = () => {
                 history.goBack(pos, { houseState: houseState });
             }
         }
-    }, [commonInfoStore.addAssets]);
+    }, [commonInfoStore.modAssets]);
 
     useEffect(() => {
         if (asset.property === '자동차') {
@@ -193,7 +185,7 @@ const AddAsset = () => {
 
         if (failMsg === null) {
             logic();
-            dispatch(addAsse(asset));
+            dispatch(modAsse(asset));
 
             setAsset({
                 property: '',
@@ -396,7 +388,6 @@ const AddAsset = () => {
                                             name="residentialBuilding"
                                             onChange={onAssetChange}
                                             value={asset.residentialBuilding}
-                                            required
                                         >
                                             <option value="">
                                                 {' '}
@@ -429,7 +420,6 @@ const AddAsset = () => {
                                             name="nonResidentialBuilding"
                                             onChange={onAssetChange}
                                             value={asset.nonResidentialBuilding}
-                                            required
                                         >
                                             <option value="">
                                                 {' '}
@@ -459,7 +449,6 @@ const AddAsset = () => {
                                             name="conditionType"
                                             onChange={onLogicDataChange}
                                             value={logicData.conditionType}
-                                            required
                                         >
                                             <option value="n">
                                                 {' '}
@@ -565,7 +554,6 @@ const AddAsset = () => {
                                         name="dispositionDate"
                                         value={asset.dispositionDate}
                                         onChange={onAssetChange}
-                                        required
                                     />
                                 </td>
                                 <td className="addMemberFormTableTbodyTrTdError">
@@ -667,4 +655,4 @@ const AddAsset = () => {
     );
 };
 
-export default AddAsset;
+export default ModAsset;

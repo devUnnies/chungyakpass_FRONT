@@ -6,6 +6,8 @@ import {
     modMem,
     getMem,
     patHolder,
+    getChung,
+    getAsse,
 } from '../../store/actions/commonInfoAction';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
@@ -27,6 +29,31 @@ const ModMember = () => {
     const [failMsg, setFailMsg] = useState(null);
 
     const houseState = location.state.houseState;
+
+    useEffect(() => {
+        dispatch(getChung(edited.id));
+        dispatch(getAsse(edited.id));
+    }, []);
+
+    useEffect(() => {
+        if (
+            !commonInfoStore.getChungyak.loading &&
+            commonInfoStore.getChungyak.data
+        ) {
+            setHaveHistories('y');
+        } else {
+            setHaveHistories('n');
+        }
+
+        if (
+            !commonInfoStore.getAssets.loading &&
+            commonInfoStore.getAssets.data
+        ) {
+            setHaveAssets('y');
+        } else {
+            setHaveAssets('n');
+        }
+    }, [commonInfoStore.getChungyak, commonInfoStore.getAssets]);
 
     const onInfoChange = (e) => {
         const { name, value } = e.target;
@@ -85,6 +112,7 @@ const ModMember = () => {
                 // 청약이력 목록 화면으로
                 if (haveHistories === 'y') {
                     history.push('/histories', {
+                        houseState: houseState,
                         haveAssets: haveAssets,
                         memberId: member.id,
                         pos: -2,
