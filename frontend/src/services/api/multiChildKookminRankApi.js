@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { patch } from './instance';
+import { get, patch } from './instance';
 
 // 다자녀 국민 순위 api
 export const patchMultiChildKookminRank = (info) =>
     patch(
         `verification/special/kookmin/public/multiChild/${info.verificationRecordSpecialMinyeongMultiChildId}`,
         {
-            multiChildKookminType: info.multiChildType,
-            multiChildKookminRank: info.multiChildKookminRank,
-            supportYn: info.supportYn,
+            kookminType: info.multiChildType,
+            ranking: info.multiChildKookminRank,
+            sibilingSupportYn: info.supportYn,
         }
     );
+
+//  다자녀 국민 순위 get
+export const getMultiChildKookminRank = () =>
+    get(`verification/special/kookmin/public/multiChild`);

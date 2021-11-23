@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { patch } from './instance';
+import { get, patch } from './instance';
 
 // 노부모 민영 순위 api
 export const patchOldParentMinyeongRank = (info) =>
@@ -10,3 +10,7 @@ export const patchOldParentMinyeongRank = (info) =>
             supportYn: info.supportYn,
         }
     );
+
+//   노부모 민영 순위 get
+export const getOldParentMinyeongRank = () =>
+    get(`verification/special/minyeong/oldParent`);

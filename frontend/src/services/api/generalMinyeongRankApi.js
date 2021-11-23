@@ -1,12 +1,16 @@
 import axios from 'axios';
-import { patch } from './instance';
+import { get, patch } from './instance';
 
 // 일반 민영 순위 api
 export const patchGeneralMinyeongRank = (info) =>
     patch(
         `verification/general/minyeong/${info.verificationRecordGeneralMinyeongId}`,
         {
-            supportYn: info.supportYn,
-            generalMinyeongRank: info.generalMinyeongRank,
+            sibilingSupportYn: info.supportYn,
+            ranking: info.generalMinyeongRank,
         }
     );
+
+//   일반 민영 순위 get
+export const getGeneralMinyeongRank = () =>
+    get(`verification/general/minyeong`);

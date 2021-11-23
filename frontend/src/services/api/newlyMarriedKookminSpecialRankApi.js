@@ -7,8 +7,8 @@ export const patchNewlyMarriedKookminSpecialRank = (info) =>
         `verification/special/kookmin/public/newlyMarried/${info.verificationRecordSpecialKookminNewlyMarriedId}`,
         {
             preNewMarriedYn: info.preNewMarriedYn,
-            newlyMarriedKookminSpecialType: info.newlyMarriedKookminSpecialType,
-            newlyMarriedKookminSpecialRank: info.newlyMarriedKookminSpecialRank,
-            supportYn: info.supportYn,
+            kookminType: info.newlyMarriedKookminSpecialType,
+            ranking: info.newlyMarriedKookminSpecialRank,
+            sibilingSupportYn: info.supportYn,
         }
     );

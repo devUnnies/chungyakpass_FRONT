@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { patch } from './instance';
+import { get, patch } from './instance';
 
 // 노부모 국민 순위 api
 export const patchOldParentKookminRank = (info) =>
@@ -11,3 +11,7 @@ export const patchOldParentKookminRank = (info) =>
             supportYn: info.supportYn,
         }
     );
+
+//   노부모 국민 순위 get
+export const getOldParentKookminRank = () =>
+    get(`verification/special/kookmin/public/oldParent`);
