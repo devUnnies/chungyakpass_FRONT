@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
+import { patchGeneralMinyeongRank } from '../../store/actions/generalMinyeongRankAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -13,18 +14,27 @@ import {
 } from '@ant-design/icons';
 import MainButton from '../../components/Button/MainButton';
 import './GeneralSupply.css';
+import useInputState from '../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/Loading/loading';
-import Tooltip from '../../components/Tooltip/Tooltip';
 
-const GeneralMinyeongApi = ({ onSaveData, location }) => {
+const GeneralMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
-    const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
+    const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // 자격확인 로직 결과 가져오기
+    const generalMinyeongRankStore = useSelector(
+        (state) => state.generalMinyeongRank
+    ); // 순위 patch
+    const location = useLocation();
+    const [notificationNumber, setNotificationNumber] = useState(
+        location?.state?.notificationNumber
+    );
+    const [housingType, setHousingType] = useState(
+        location?.state?.housingType
+    );
     const [loading, setLoading] = useState(true);
-    const [notificationNumber, setNotificationNumber] = useState();
-    const [housingType, setHousingType] = useState();
     const history = useHistory();
 
     // info_tooltip animation 추가
@@ -55,8 +65,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
 
     const [form, setForm] = useState({
         name: '',
-        supportYn: '',
-        lifeYn: '',
         generalMinyeongRes: '',
     });
     const onChange = (e) => {
@@ -64,14 +72,6 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
         setForm({
             ...form,
             [name]: value,
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSaveData(form);
-        console.log(form);
-        setForm({
-            generalMinyeongRes: '',
         });
     };
 
@@ -103,6 +103,46 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
         }
     };
+
+    // 일반 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [generalMinyeongRank, setGeneralMinyeongRank] = useState('');
+
+    const handleSubmit = (e) => {
+        // 이전의 값을 가지고 와서 기본값으로 세팅
+        e.preventDefault();
+        onSaveData(form);
+        setForm({
+            generalMinyeongRes: '',
+        });
+
+        // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
+        dispatch(
+            patchGeneralMinyeongRank({
+                generalMinyeongRank,
+                supportYn,
+            })
+        );
+    };
+
+    const onClick = async () => {
+        dispatch(
+            patchGeneralMinyeongRank({
+                generalMinyeongRank,
+                supportYn,
+            })
+        ); // api 연결 요청.
+    };
+
+    useEffect(() => {
+        setGeneralMinyeongRank(
+            form?.generalMinyeongRes !== '' ? form?.generalMinyeongRes : null
+        );
+    }, [generalMinyeongRankStore.patchGeneralMinyeongRank]);
+
+    console.log(generalMinyeongRank);
+    console.log(supportYn);
 
     return (
         <>
@@ -500,12 +540,15 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 <input
                                                                                     type="radio"
                                                                                     name="supportYn"
+                                                                                    value={
+                                                                                        supportYn
+                                                                                    }
                                                                                     onChange={
-                                                                                        onChange
+                                                                                        handleChangeSupportYn
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -517,12 +560,15 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 <input
                                                                                     type="radio"
                                                                                     name="supportYn"
+                                                                                    value={
+                                                                                        supportYn
+                                                                                    }
                                                                                     onChange={
-                                                                                        onChange
+                                                                                        handleChangeSupportYn
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -533,13 +579,13 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -553,117 +599,12 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                                         </>
                                                     ) : null}
 
-                                                    {/* 20대인 경우에만 보이는 로직 */}
-                                                    {/* 20대 단독 세대주 여부 */}
-                                                    {data?.americanAge >= 20 &&
-                                                    data?.americanAge < 30 ? (
-                                                        <>
-                                                            <tr className="general_phase">
-                                                                <td className="qualification">
-                                                                    <span className="qualificationBox">
-                                                                        <span className="qualificationIcon">
-                                                                            <CaretRightOutlined />
-                                                                        </span>
-                                                                        소득이
-                                                                        있으면서
-                                                                        독립적으로
-                                                                        생계
-                                                                        유지가
-                                                                        가능한가?
-                                                                    </span>
-                                                                    <span className="info_tooltip">
-                                                                        <InfoCircleOutlined />
-                                                                        <span className="tooltip-text">
-                                                                            <p>
-                                                                                미혼
-                                                                                20대
-                                                                                단독세대주
-                                                                                ?
-                                                                            </p>
-                                                                            20대이며,
-                                                                            최저
-                                                                            생계비
-                                                                            (기준중위소득
-                                                                            40%,
-                                                                            약
-                                                                            월
-                                                                            70만원)
-                                                                            이상의
-                                                                            소득이
-                                                                            존재해야
-                                                                            함.
-                                                                        </span>
-                                                                    </span>
-                                                                </td>
-                                                                <td className="general_result">
-                                                                    <span className="general_result_input">
-                                                                        <input
-                                                                            className="isLifeYnInput"
-                                                                            type="radio"
-                                                                            name="lifeYn"
-                                                                            onChange={
-                                                                                onChange
-                                                                            }
-                                                                            value="y"
-                                                                            checked={
-                                                                                form.lifeYn ===
-                                                                                'y'
-                                                                                    ? true
-                                                                                    : false
-                                                                            }
-                                                                        />
-                                                                        <span className="InputText">
-                                                                            예
-                                                                        </span>
-                                                                        <input
-                                                                            className="isLifeYnInput"
-                                                                            type="radio"
-                                                                            name="lifeYn"
-                                                                            onChange={
-                                                                                onChange
-                                                                            }
-                                                                            value="n"
-                                                                            checked={
-                                                                                form.lifeYn ===
-                                                                                'n'
-                                                                                    ? true
-                                                                                    : false
-                                                                            }
-                                                                        />
-                                                                        <span className="InputText">
-                                                                            아니오
-                                                                        </span>
-                                                                    </span>
-                                                                    <span>
-                                                                        {form.lifeYn ===
-                                                                        'y' ? (
-                                                                            <span className="progress">
-                                                                                <CheckCircleOutlined />
-                                                                            </span>
-                                                                        ) : null}
-                                                                        {form.lifeYn ===
-                                                                        'n' ? (
-                                                                            <span className="pause_tooltip">
-                                                                                <CloseCircleOutlined />
-                                                                            </span>
-                                                                        ) : null}
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </>
-                                                    ) : null}
-
                                                     {/* 이후 조건 충족 시 다음 인풋 보이도록. */}
                                                     {(data?.americanAge < 20 &&
                                                         data?.householderTf ===
                                                             true &&
-                                                        form.supportYn ===
-                                                            'y') ||
-                                                    (data?.americanAge >= 20 &&
-                                                        data?.americanAge <
-                                                            30 &&
-                                                        form.lifeYn === 'y') ||
-                                                    data?.americanAge >= 30 ? (
+                                                        supportYn === 'y') ||
+                                                    data?.americanAge >= 20 ? (
                                                         <>
                                                             {/* 순위 판별 시작 */}
                                                             {/* 주거전용 85㎡ 기준 충족*/}
@@ -1277,12 +1218,9 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     {data?.accountTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            form.lifeYn === 'y') ||
-                                        data?.americanAge >= 30) &&
+                                        data?.americanAge >= 20) &&
                                     data?.priorityApt === true &&
                                     ((data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1302,21 +1240,16 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     {data?.accountTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            form.lifeYn === 'y') ||
-                                        data?.americanAge >= 30) &&
+                                        data?.americanAge >= 20) &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             true &&
                                         ((data?.americanAge >= 20 &&
                                             data?.householderTf === false) ||
-                                            data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                                false ||
                                             data?.priorityApt === false ||
-                                            data?.meetHouseHavingLessThan2AptTf ===
+                                            data?.meetAllHouseMemberNotWinningIn5yearsTf ===
                                                 false ||
                                             data?.meetBankbookJoinPeriodTf ===
                                                 false ||
@@ -1335,11 +1268,8 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                     data?.meetLivingInSurroundAreaTf ===
                                         false ||
                                     (data?.americanAge < 20 &&
-                                        (form.supportYn !== 'y' ||
+                                        (supportYn !== 'y' ||
                                             data?.householderTf === false)) ||
-                                    (data?.americanAge >= 20 &&
-                                        data?.americanAge < 30 &&
-                                        form.lifeYn !== 'y') ||
                                     (data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             false)
@@ -1353,7 +1283,10 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 form.generalMinyeongRes === '2순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1369,7 +1302,10 @@ const GeneralMinyeongApi = ({ onSaveData, location }) => {
                                 {form.generalMinyeongRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
