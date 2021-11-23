@@ -77,8 +77,14 @@ function Signup() {
         if (authStore.signup.data) {
             const data = authStore.signup.data;
             if (data !== null) {
-                alert('청약패스에 가입해주신 이용자님, 환영합니다 ! ^____^ *');
-                window.location.replace('/login');
+                if (data.status === 409) {
+                    alert(data.message);
+                } else {
+                    alert(
+                        '청약패스에 가입해주신 이용자님, 환영합니다 ! ^____^ *'
+                    );
+                    window.location.replace('/login');
+                }
             }
         }
     }, [authStore.signup]);
