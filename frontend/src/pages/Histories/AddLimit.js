@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import MainButton from '../../components/Button/MainButton';
+import SubButton from '../../components/Button/SubButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRestr } from '../../store/actions/commonInfoAction';
 import { useHistory, useLocation } from 'react-router';
 
 const AddLimit = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
+    const ineligibleDate = location.state.ineligibleDate;
+    const pos = location.state.pos;
+    const houseState = location.state.houseState;
+    const commonInfoStore = useSelector((state) => state.commonInfo);
+
     const [limit, setLimit] = useState({
+        houseMemberChungyakId: null,
         reWinningRestrictedDate: null,
         specialSupplyRestrictedYn: null,
         unqualifiedSubscriberRestrictedDate: null,
@@ -13,43 +23,43 @@ const AddLimit = () => {
         additionalPointSystemRestrictedDate: null,
     });
 
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const location = useLocation();
-    const ineligibleDate = location.state.ineligibleDate;
-    const pos = location.state.pos;
-    const commonInfoStore = useSelector((state) => state.commonInfo);
-
     const onLimitChange = (e) => {
         const { name, value } = e.target;
         setLimit({ ...limit, [name]: value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         dispatch(addRestr(limit));
         setLimit({
-            houseMemberChungyakId: '',
-            reWinningRestrictedDate: '',
-            specialSupplyRestrictedYn: '',
-            unqualifiedSubscriberRestrictedDate: '',
-            requlatedAreaFirstPriorityRestrictedDate: '',
-            additionalPointSystemRestrictedDate: '',
+            houseMemberChungyakId: null,
+            reWinningRestrictedDate: null,
+            specialSupplyRestrictedYn: null,
+            unqualifiedSubscriberRestrictedDate: null,
+            requlatedAreaFirstPriorityRestrictedDate: null,
+            additionalPointSystemRestrictedDate: null,
         });
     };
 
     useEffect(() => {
         const data = commonInfoStore.addChungyak.data;
+        const data2 = commonInfoStore.modChungyak.data;
         if (data) {
-            setLimit({ ...limit, houseMemberChungyakId: data[0]?.id });
+            setLimit({ ...limit, houseMemberChungyakId: data.id });
+        } else if (data2) {
+            setLimit({ ...limit, houseMemberChungyakId: data2.id });
         }
-    }, [commonInfoStore.addChungyak]);
+    }, [commonInfoStore.addChungyak, commonInfoStore.modChungyak]);
 
     useEffect(() => {
-        const data = commonInfoStore.addRestr?.data;
+        const data = commonInfoStore.addRestriction.data;
         if (data) {
-            history.goBack(pos, { ineligibleDate: ineligibleDate });
+            history.goBack(pos, {
+                ineligibleDate: ineligibleDate ? ineligibleDate : null,
+                houseState: houseState,
+            });
         }
-    }, [commonInfoStore.addRestr]);
+    }, [commonInfoStore.addRestriction]);
 
     return (
         <div id="addLimit" className="addLimitFormContainer">
@@ -170,7 +180,18 @@ const AddLimit = () => {
                                 colSpan="3"
                                 className="addLimitFormTableTbodyTrTd"
                             >
-                                <div className="saveButtonContainer">
+                                <div className="buttonContainer">
+                                    <SubButton
+                                        type="back"
+                                        className="save"
+                                        width="80"
+                                        height="30"
+                                        onClick={() => {
+                                            history.goBack(pos);
+                                        }}
+                                    >
+                                        목록으로
+                                    </SubButton>
                                     <MainButton
                                         type="submit"
                                         className="save"

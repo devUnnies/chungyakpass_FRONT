@@ -104,6 +104,7 @@ const AddMember = () => {
                 // 청약이력 목록 화면으로
                 if (haveHistories === 'y') {
                     history.push('/histories', {
+                        houseState: houseState,
                         haveAssets: haveAssets,
                         memberId: member.id,
                         pos: -1,

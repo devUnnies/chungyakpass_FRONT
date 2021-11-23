@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MainButton from '../../components/Button/MainButton';
+import SubButton from '../../components/Button/SubButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRestr } from '../../store/actions/commonInfoAction';
+import { modRestr } from '../../store/actions/commonInfoAction';
 import { useHistory, useLocation } from 'react-router';
 
 const ModLimit = () => {
@@ -9,8 +10,14 @@ const ModLimit = () => {
     const history = useHistory();
     const location = useLocation();
     const [limit, setLimit] = useState(location.state.limit);
+    const [chungyakId, setChungyakId] = useState(location.state.chungyakId);
+    let tempLimit = limit;
+
+    console.log('수정 도착 !!! ' + JSON.stringify(limit));
+
     const ineligibleDate = location.state.ineligibleDate;
     const pos = location.state.pos;
+    const houseState = location.state.houseState;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     const onLimitChange = (e) => {
@@ -18,10 +25,39 @@ const ModLimit = () => {
         setLimit({ ...limit, [name]: value });
     };
 
-    const handleSubmit = () => {
-        dispatch(addRestr(limit));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const userForm = {
+            id: limit.id,
+            restriction: {
+                houseMemberChungyakId: limit.houseMemberChungyakId,
+                reWinningRestrictedDate:
+                    limit.reWinningRestrictedDate === ''
+                        ? null
+                        : limit.reWinningRestrictedDate,
+                specialSupplyRestrictedYn:
+                    limit.specialSupplyRestrictedYn === ''
+                        ? null
+                        : limit.specialSupplyRestrictedYn,
+                unqualifiedSubscriberRestrictedDate:
+                    limit.unqualifiedSubscriberRestrictedDate === ''
+                        ? null
+                        : limit.unqualifiedSubscriberRestrictedDate,
+                requlatedAreaFirstPriorityRestrictedDate:
+                    limit.requlatedAreaFirstPriorityRestrictedDate === ''
+                        ? null
+                        : limit.requlatedAreaFirstPriorityRestrictedDate,
+                additionalPointSystemRestrictedDate:
+                    limit.additionalPointSystemRestrictedDate === ''
+                        ? null
+                        : limit.additionalPointSystemRestrictedDate,
+            },
+        };
+
+        console.log(JSON.stringify(userForm));
+        dispatch(modRestr(userForm));
         setLimit({
-            houseMemberChungyakId: '',
+            houseMemberChungyakId: null,
             reWinningRestrictedDate: '',
             specialSupplyRestrictedYn: '',
             unqualifiedSubscriberRestrictedDate: '',
@@ -31,25 +67,42 @@ const ModLimit = () => {
     };
 
     useEffect(() => {
-        const data = commonInfoStore.addChungyak.data;
-        if (data) {
-            setLimit({ ...limit, houseMemberChungyakId: data[0]?.id });
-        }
-    }, [commonInfoStore.addChungyak]);
+        Object.values(tempLimit).map((content, i) => {
+            if (typeof content === 'object') {
+                tempLimit[Object.keys(tempLimit)[i]] = '';
+            }
+        });
+
+        setLimit(tempLimit);
+        setLimit({ ...limit, houseMemberChungyakId: chungyakId });
+    }, []);
 
     useEffect(() => {
-        const data = commonInfoStore.addRestr?.data;
+        const data = commonInfoStore.addChungyak.data;
+        const data2 = commonInfoStore.modChungyak.data;
         if (data) {
-            history.goBack(pos, { ineligibleDate: ineligibleDate });
+            setLimit({ ...limit, houseMemberChungyakId: data?.id });
+        } else if (data2) {
+            setLimit({ ...limit, houseMemberChungyakId: data2?.id });
         }
-    }, [commonInfoStore.addRestr]);
+    }, [commonInfoStore.addChungyak, commonInfoStore.modChungyak]);
+
+    useEffect(() => {
+        const data = commonInfoStore.modRestriction?.data;
+        if (data) {
+            history.goBack(pos, {
+                ineligibleDate: ineligibleDate ? ineligibleDate : null,
+                houseState: houseState,
+            });
+        }
+    }, [commonInfoStore.modRestriction]);
 
     return (
-        <div id="addLimit" className="addLimitFormContainer">
+        <div id="modLimit" className="addLimitFormContainer">
             <form
+                className="modLimitForm"
+                name="modLimit"
                 onSubmit={handleSubmit}
-                className="addLimitForm"
-                name="addLimit"
             >
                 <table className="addLimitFormTable">
                     <tbody className="addLimitFormTableTbody">
@@ -85,7 +138,7 @@ const ModLimit = () => {
                                             : false
                                     }
                                 />{' '}
-                                <span className="limitInputText">청약불가</span>
+                                <span className="limitInputText">청약불가</span>{' '}
                                 <input
                                     className="limitInput"
                                     type="radio"
@@ -97,7 +150,7 @@ const ModLimit = () => {
                                             ? true
                                             : false
                                     }
-                                />
+                                />{' '}
                                 <span className="limitInputText">청약가능</span>
                             </td>
                         </tr>
@@ -114,6 +167,8 @@ const ModLimit = () => {
                                     name="unqualifiedSubscriberRestrictedDate"
                                     value={
                                         limit.unqualifiedSubscriberRestrictedDate
+                                            ? limit.unqualifiedSubscriberRestrictedDate
+                                            : ''
                                     }
                                     onChange={onLimitChange}
                                 />
@@ -163,13 +218,24 @@ const ModLimit = () => {
                                 colSpan="3"
                                 className="addLimitFormTableTbodyTrTd"
                             >
-                                <div className="saveButtonContainer">
-                                    <MainButton
-                                        type="submit"
-                                        className="save"
+                                <div className="buttonContainer">
+                                    <SubButton
+                                        type="back"
                                         width="80"
                                         height="30"
-                                        onClick={handleSubmit}
+                                        onClick={() => {
+                                            history.goBack(pos);
+                                        }}
+                                    >
+                                        목록으로
+                                    </SubButton>
+                                    <MainButton
+                                        type="submit"
+                                        width="80"
+                                        height="30"
+                                        onClick={() => {
+                                            // alert('누름!');
+                                        }}
                                     >
                                         저장
                                     </MainButton>

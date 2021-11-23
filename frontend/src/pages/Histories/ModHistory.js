@@ -10,7 +10,9 @@ const ModHistory = () => {
     const location = useLocation();
     const pos = location.state.pos;
     const memberId = location.state.memberId;
-    const ineligibleDate = location.state.ineligibleDate;
+    let ineligibleDate = location.state.ineligibleDate;
+    const houseState = location.state.houseState;
+    const haveAssets = location.state.haveAssets;
     const commonInfoStore = useSelector((state) => state.commonInfo);
 
     // history 초기화
@@ -21,16 +23,32 @@ const ModHistory = () => {
 
     const _history = useHistory();
 
-    console.log('포스 !!!! ' + pos);
-
     const onHistoryChange = (e) => {
         const { name, value } = e.target;
         setHistory({ ...history, [name]: value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         // history 하나 우선 저장함
-        dispatch(modChung(history));
+
+        const userForm = {
+            id: history.id,
+            history: {
+                houseMemberId: memberId,
+                houseName: history.houseName,
+                supply: history.supply,
+                specialSupply: history.specialSupply,
+                housingType: history.housingType,
+                ranking: history.ranking,
+                result: history.result,
+                preliminaryNumber: history.preliminaryNumber,
+                winningDate: history.winningDate,
+                raffle: history.raffle,
+                cancelWinYn: history.cancelWinYn,
+            },
+        };
+        dispatch(modChung(userForm));
         // 초기화
         setHistory({
             houseName: '',
@@ -54,9 +72,12 @@ const ModHistory = () => {
         const data = commonInfoStore.modChungyak.data;
         if (data && haveLimit) {
             _history.push('/addLimit', {
-                pos: pos - 1,
+                pos: pos + 1,
                 ineligibleDate: ineligibleDate,
+                houseState: houseState,
             });
+        } else if (data) {
+            _history.goBack(pos);
         }
     }, [commonInfoStore.modChungyak]);
 
@@ -66,20 +87,31 @@ const ModHistory = () => {
         }
     }, [ineligible.isIneligible]);
 
+    useEffect(() => {
+        if (history.result === '미당첨') {
+            setHistory({
+                ...history,
+                preliminaryNumber: null,
+                winningDate: null,
+                cancelWinYn: null,
+            });
+        }
+    }, [history.result]);
+
     return (
-        <div id="modHistory" className="addHistoryFormContainer">
+        <div id="modHistory" className="modHistoryFormContainer">
             <form
-                // onSubmit={handleSubmit}
-                className="addHistoryForm"
+                onSubmit={handleSubmit}
+                className="modHistoryForm"
                 name="modHistory"
             >
-                <table className="addHistoryFormTable">
-                    <tbody className="addHistoryFormTableTbody">
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                <table className="modHistoryFormTable">
+                    <tbody className="modHistoryFormTableTbody">
+                        <tr className="modHistoryFormTableTbodyTr">
+                            <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">주택명</span>
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
+                            <td className="modHistoryFormTableTbodyTrTd">
                                 <input
                                     className="houseNameInput"
                                     type="text"
@@ -89,13 +121,13 @@ const ModHistory = () => {
                                     required
                                 />
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTdError"></td>
+                            <td className="modHistoryFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addHistoryFormTableTbodyTr">
+                        <tr className="modHistoryFormTableTbodyTr">
                             <td className="addHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">주택형</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="houseTypeInput"
                                     type="text"
@@ -105,11 +137,11 @@ const ModHistory = () => {
                                 />
                             </td>
                         </tr>
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                        <tr className="modHistoryFormTableTbodyTr">
+                            <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">공급유형</span>
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
+                            <td className="modHistoryFormTableTbodyTrTd">
                                 <select
                                     className="supplySelect"
                                     name="supply"
@@ -127,11 +159,11 @@ const ModHistory = () => {
                         </tr>
                         {history.supply === '특별공급' ||
                         history.supply === '특별공급가점' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">세부유형</span>
                                 </td>
-                                <td className="addHistoryFormTableTbodyTrTd">
+                                <td className="modHistoryFormTableTbodyTrTd">
                                     <select
                                         className="specialSupplySelect"
                                         name="spercialSupply"
@@ -155,11 +187,11 @@ const ModHistory = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                        <tr className="modHistoryFormTableTbodyTr">
+                            <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">순위</span>
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
+                            <td className="modHistoryFormTableTbodyTrTd">
                                 <select
                                     className="rankingSelect"
                                     name="ranking"
@@ -172,11 +204,11 @@ const ModHistory = () => {
                                 </select>
                             </td>
                         </tr>
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                        <tr className="modHistoryFormTableTbodyTr">
+                            <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">추첨방식</span>
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
+                            <td className="modHistoryFormTableTbodyTrTd">
                                 <select
                                     className="resultSelect"
                                     name="raffle"
@@ -189,11 +221,11 @@ const ModHistory = () => {
                                 </select>
                             </td>
                         </tr>
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                        <tr className="modHistoryFormTableTbodyTr">
+                            <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">당첨결과</span>
                             </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
+                            <td className="modHistoryFormTableTbodyTrTd">
                                 <select
                                     className="resultSelect"
                                     name="result"
@@ -208,11 +240,11 @@ const ModHistory = () => {
                             </td>
                         </tr>
                         {history.result === '예비당첨' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">예비번호</span>
                                 </td>
-                                <td className="addHistoryFormTableTbodyTrTd">
+                                <td className="modHistoryFormTableTbodyTrTd">
                                     <input
                                         className="houseTypeInput"
                                         type="text"
@@ -224,11 +256,11 @@ const ModHistory = () => {
                             </tr>
                         ) : null}
                         {history.result === '당첨' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">당첨일</span>
                                 </td>
-                                <td className="addHistoryFormTableTbodyTrTd">
+                                <td className="modHistoryFormTableTbodyTrTd">
                                     <input
                                         className="houseTypeInput"
                                         type="date"
@@ -241,13 +273,13 @@ const ModHistory = () => {
                         ) : null}
                         {history.result === '당첨' ||
                         history.result === '예비당첨' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">당첨취소</span>
                                 </td>
-                                <td className="addMemberFormTableTbodyTrTd">
+                                <td className="modMemberFormTableTbodyTrTd">
                                     <input
-                                        className="cancelYnInput"
+                                        className="cancelWinYnInput"
                                         type="radio"
                                         name="cancelWinYn"
                                         onChange={onHistoryChange}
@@ -263,13 +295,13 @@ const ModHistory = () => {
                                         취소
                                     </span>
                                     <input
-                                        className="cancelYnInput"
+                                        className="cancelWinYnInput"
                                         type="radio"
-                                        name="cancelYn"
+                                        name="cancelWinYn"
                                         onChange={onHistoryChange}
                                         value="n"
                                         checked={
-                                            history.cancelYn === 'n'
+                                            history.cancelWinYn === 'n'
                                                 ? true
                                                 : false
                                         }
@@ -282,11 +314,11 @@ const ModHistory = () => {
                             </tr>
                         ) : null}
                         {history.result === '당첨' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">부적격여부</span>
                                 </td>
-                                <td className="addHistoryFormTableTbodyTrTd">
+                                <td className="modHistoryFormTableTbodyTrTd">
                                     <input
                                         className="cancelYnInput"
                                         type="radio"
@@ -332,14 +364,14 @@ const ModHistory = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        {history.ineligibleYn === 'y' ? (
-                            <tr className="addHistoryFormTableTbodyTr">
-                                <td className="addHistoryFormTableTbodyTrTdSubTitle">
+                        {ineligible.isIneligible === 'y' ? (
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
                                     <span className="subTitle">
                                         부적격통보날짜
                                     </span>
                                 </td>
-                                <td className="addHistoryFormTableTbodyTrTd">
+                                <td className="modHistoryFormTableTbodyTrTd">
                                     <input
                                         className="cancelYnInput"
                                         type="date"
@@ -356,41 +388,51 @@ const ModHistory = () => {
                                 </td>
                             </tr>
                         ) : null}
-                        <tr className="addHistoryFormTableTbodyTr">
-                            <td className="addHistoryFormTableTbodyTrTdSubTitle">
-                                <span className="subTitle">제한사항여부</span>
-                            </td>
-                            <td className="addHistoryFormTableTbodyTrTd">
-                                <input
-                                    className="cancelYnInput"
-                                    type="radio"
-                                    name="haveLimit"
-                                    onChange={() => {
-                                        setHaveLimit(true);
-                                    }}
-                                    value="true"
-                                    checked={haveLimit}
-                                    required
-                                />{' '}
-                                <span className="historyInputText">있음</span>
-                                <input
-                                    className="cancelYnInput"
-                                    type="radio"
-                                    name="haveLimit"
-                                    onChange={() => {
-                                        setHaveLimit(false);
-                                    }}
-                                    value="false"
-                                    checked={!haveLimit}
-                                    required
-                                />
-                                <span className="historyInputText">없음</span>
-                            </td>
-                        </tr>
-                        <tr className="addHistoryFormTableTbodyTr">
+                        {!history.houseMemberChungyakRestrictionReadDto ? (
+                            <tr className="modHistoryFormTableTbodyTr">
+                                <td className="modHistoryFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">
+                                        제한사항여부
+                                    </span>
+                                </td>
+                                <td className="modHistoryFormTableTbodyTrTd">
+                                    <input
+                                        className="cancelYnInput"
+                                        type="radio"
+                                        name="haveLimit"
+                                        onChange={() => {
+                                            setHaveLimit(true);
+                                        }}
+                                        value="true"
+                                        checked={haveLimit}
+                                        required
+                                    />{' '}
+                                    <span className="historyInputText">
+                                        있음
+                                    </span>
+                                    <input
+                                        className="cancelYnInput"
+                                        type="radio"
+                                        name="haveLimit"
+                                        onChange={() => {
+                                            setHaveLimit(false);
+                                        }}
+                                        value="false"
+                                        checked={!haveLimit}
+                                        required
+                                    />
+                                    <span className="historyInputText">
+                                        없음
+                                    </span>
+                                </td>
+                            </tr>
+                        ) : (
+                            <></>
+                        )}
+                        <tr className="modHistoryFormTableTbodyTr">
                             <td
                                 colSpan="3"
-                                className="addHistoryFormTableTbodyTrTd"
+                                className="modHistoryFormTableTbodyTrTd"
                             >
                                 <div className="buttonContainer">
                                     <SubButton
@@ -398,7 +440,14 @@ const ModHistory = () => {
                                         className="list"
                                         width="80"
                                         height="30"
-                                        onClick={_history.goBack(pos, {})}
+                                        onClick={() =>
+                                            _history.push('/histories', {
+                                                houseState: houseState,
+                                                haveAssets: haveAssets,
+                                                ineligibleDate: ineligibleDate,
+                                                memberId: memberId,
+                                            })
+                                        }
                                     >
                                         목록으로
                                     </SubButton>
@@ -407,7 +456,7 @@ const ModHistory = () => {
                                         className="save"
                                         width="80"
                                         height="30"
-                                        onClick={handleSubmit}
+                                        // onClick={handleSubmit}
                                     >
                                         저장
                                     </MainButton>
