@@ -41,12 +41,6 @@
 }
 
 /* aptNum 페이지 입력 값 */
-.paramSelect {
-    width: 150%;
-    margin-top: 5%;
-    margin-bottom: 10%;
-    font-size: 12pt;
-}
 .paramSelectInput {
     margin-left: 10px;
 }
@@ -97,6 +91,19 @@
 .aptNextButton:hover,
 .aptNextButton:focus {
     background: var(--button-hover-bg-color, #8097c2);
+}
+
+/* 일반 민영, 노부모 민영 paramSelect table */
+table.pointTable {
+    border: 0;
+    width: 500px;
+    text-align: left;
+}
+.paramSelect {
+    width: 500px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    font-size: 14pt;
 }
 
 /* point_title */
@@ -157,13 +164,6 @@ td.point_result {
     border: 0;
 }
 
-/*값 존재*/
-.progress {
-    position: absolute;
-    color: forestgreen;
-    margin-left: 1%;
-}
-
 /*자격 조건 상세 말풍선*/
 .info_tooltip {
     z-index: 200;
@@ -195,23 +195,6 @@ td.point_result {
         transform: translateX(0px);
     }
 }
-
-/* 툴팁 테이블 디자인 */
-.tootipeTable {
-    border-collapse: collapse;
-    text-align: center;
-}
-.tootipeTable tr td {
-    padding: 3px;
-}
-/* 값없음. */
-.pause_tooltip {
-    position: absolute;
-    display: inline-block;
-    color: #fa1c33;
-}
-
-.pause-tooltip-text,
 .tooltip-text {
     display: none;
     position: absolute;
@@ -225,9 +208,6 @@ td.point_result {
 }
 
 .info_tooltip:hover .tooltip-text {
-    display: block;
-}
-.pause_tooltip:hover .pause-tooltip-text {
     display: block;
 }
 
