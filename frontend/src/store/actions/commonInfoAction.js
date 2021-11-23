@@ -61,14 +61,24 @@ export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
 export const HOUSE_HOLDER_PATCH_SUCCESS = 'HOUSE_HOLDER_PATCH_SUCCESS';
 export const HOUSE_HOLDER_PATCH_ERROR = 'HOUSE_HOLDER_PATCH_ERROR';
 
+//자산 조회
+export const ASSETS_GET = 'ASSETS_GET';
+export const ASSETS_GET_SUCCESS = 'ASSETS_GET_SUCCESS';
+export const ASSETS_GET_ERROR = 'ASSETS_GET_ERROR';
 //자산 저장
 export const ADD_ASSETS_POST = 'ADD_ASSETS_POST';
 export const ADD_ASSETS_POST_SUCCESS = 'ADD_ASSETS_POST_SUCCESS';
 export const ADD_ASSETS_POST_ERROR = 'ADD_ASSETS_POST_ERROR';
+export const ADD_ASSETS_POST_DELETE = 'ADD_ASSETS_POST_DELETE';
 //자산 수정
 export const MOD_ASSETS_PUT = 'MOD_ASSETS_PUT';
 export const MOD_ASSETS_PUT_SUCCESS = 'MOD_ASSETS_PUT_SUCCESS';
 export const MOD_ASSETS_PUT_ERROR = 'MOD_ASSETS_PUT_ERROR';
+export const MOD_ASSETS_PUT_DELETE = 'MOD_ASSETS_PUT_DELETE';
+//자산 삭제
+export const DEL_ASSETS_DELETE = 'DEL_ASSETS_DELETE';
+export const DEL_ASSETS_DELETE_SUCCESS = 'DEL_ASSETS_DELETE_SUCCESS';
+export const DEL_ASSETS_DELETE_ERROR = 'DEL_ASSETS_DELETE_ERROR';
 
 //무주택시작일 수정
 export const HOMELESS_START_DATE_PATCH = 'HOMELESS_START_DATE_PATCH';
@@ -180,14 +190,25 @@ export const patHolder = createPromiseThunk(
     commonInfoApi.patchHolder
 );
 
+export const getAsse = createPromiseThunk(ASSETS_GET, commonInfoApi.getAssets);
+
 export const addAsse = createPromiseThunk(
     ADD_ASSETS_POST,
     commonInfoApi.addAssets
 );
 
+export const addAsseDel = () => ({ type: ADD_ASSETS_POST_DELETE });
+
 export const modAsse = createPromiseThunk(
     MOD_ASSETS_PUT,
     commonInfoApi.modAssets
+);
+
+export const modAsseDel = () => ({ type: MOD_ASSETS_PUT_DELETE });
+
+export const delAsse = createPromiseThunk(
+    DEL_ASSETS_DELETE,
+    commonInfoApi.delAssets
 );
 
 export const patStart = createPromiseThunk(
