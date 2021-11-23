@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import HistoriesTd from './HistoriesTd';
 import './Histories.css';
 
-const HistoriesTr = ({ data, handleRemove, handleHistoryEdit }) => {
+const HistoriesTr = ({
+    data,
+    handleHistoryRemove,
+    handleHistoryEdit,
+    handleLimitRemove,
+    handleLimitEdit,
+}) => {
     return (
         <tbody className="historiesInfoTbody">
             {data?.map((content, i) => {
@@ -11,7 +17,9 @@ const HistoriesTr = ({ data, handleRemove, handleHistoryEdit }) => {
                         key={i}
                         item={content}
                         handleHistoryEdit={handleHistoryEdit}
-                        handleRemove={handleRemove}
+                        handleHistoryRemove={handleHistoryRemove}
+                        handleLimitEdit={handleLimitEdit}
+                        handleLimitRemove={handleLimitRemove}
                     />
                 );
             })}
