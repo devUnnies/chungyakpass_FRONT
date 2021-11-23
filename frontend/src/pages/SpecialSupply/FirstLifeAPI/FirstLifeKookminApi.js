@@ -1591,8 +1591,10 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                 {form.firstLifeKookminRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1608,8 +1610,10 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                 {form.firstLifeKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

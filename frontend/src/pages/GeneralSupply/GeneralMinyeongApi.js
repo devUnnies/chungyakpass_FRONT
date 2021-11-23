@@ -1220,8 +1220,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     ((data?.americanAge < 20 &&
                                         supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        data?.americanAge >= 20 ||
-                                        data?.americanAge >= 30) &&
+                                        data?.americanAge >= 20) &&
                                     data?.priorityApt === true &&
                                     ((data?.restrictedAreaTf === true &&
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
@@ -1243,8 +1242,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     ((data?.americanAge < 20 &&
                                         supportYn === 'y' &&
                                         data?.householderTf === true) ||
-                                        data?.americanAge >= 20 ||
-                                        data?.americanAge >= 30) &&
+                                        data?.americanAge >= 20) &&
                                     ((data?.restrictedAreaTf === true && // 규제지역
                                         data?.meetAllHouseMemberRewinningRestrictionTf ===
                                             true &&
@@ -1285,8 +1283,10 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                 form.generalMinyeongRes === '2순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1302,8 +1302,10 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                 {form.generalMinyeongRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

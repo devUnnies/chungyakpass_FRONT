@@ -1253,8 +1253,10 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 form.newlyMarriedKookminRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1270,8 +1272,10 @@ const NewlyMarriedKookminApi = ({ onSaveData }) => {
                                 {form.newlyMarriedKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

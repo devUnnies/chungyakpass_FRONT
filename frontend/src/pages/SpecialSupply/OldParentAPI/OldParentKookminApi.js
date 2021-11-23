@@ -1475,8 +1475,10 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 {form.oldParentKookminRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1489,8 +1491,10 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

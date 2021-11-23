@@ -18,6 +18,7 @@ import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
 
 const FirstLifeMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -564,7 +565,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="y"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'y'
                                                                                             ? true
                                                                                             : false
@@ -582,7 +583,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                     }
                                                                                     value="n"
                                                                                     checked={
-                                                                                        form.supportYn ===
+                                                                                        supportYn ===
                                                                                         'n'
                                                                                             ? true
                                                                                             : false
@@ -593,13 +594,13 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                                                 </span>
                                                                             </span>
                                                                             <span>
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'y' ? (
                                                                                     <span className="progress">
                                                                                         <CheckCircleOutlined />
                                                                                     </span>
                                                                                 ) : null}
-                                                                                {form.supportYn ===
+                                                                                {supportYn ===
                                                                                 'n' ? (
                                                                                     <span className="pause_tooltip">
                                                                                         <CloseCircleOutlined />
@@ -617,8 +618,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                                     (data?.americanAge < 20 &&
                                                         data?.householderTf ===
                                                             true &&
-                                                        form.supportYn ===
-                                                            'y') ? (
+                                                        supportYn === 'y') ? (
                                                         <>
                                                             {/* 생애최초 대상자 여부 판단 */}
                                                             <tr className="special_phase">
@@ -1427,7 +1427,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                     {data?.accountTf === true &&
                                     data?.meetLivingInSurroundAreaTf === true &&
                                     ((data?.americanAge < 20 &&
-                                        form.supportYn === 'y' &&
+                                        supportYn === 'y' &&
                                         data?.householderTf === true) ||
                                         data?.americanAge >= 20) &&
                                     data?.meetRecipientTf === true &&
@@ -1456,8 +1456,10 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {form.firstLifeMinyeongRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1473,8 +1475,10 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {form.firstLifeMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

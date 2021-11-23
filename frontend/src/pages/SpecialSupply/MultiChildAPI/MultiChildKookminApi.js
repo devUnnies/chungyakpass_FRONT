@@ -1336,8 +1336,10 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 form.multiChildKookminRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1353,8 +1355,10 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 {form.multiChildKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

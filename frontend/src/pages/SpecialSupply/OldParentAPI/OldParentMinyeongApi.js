@@ -635,7 +635,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                                                 20 ||
                                                             (data?.americanAge <
                                                                 20 &&
-                                                                form.supportYn ===
+                                                                supportYn ===
                                                                     true) ? (
                                                                 <>
                                                                     <tr className="special_phase">
@@ -1290,8 +1290,10 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 {form.oldParentMinyeongRes === '1순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1304,8 +1306,10 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

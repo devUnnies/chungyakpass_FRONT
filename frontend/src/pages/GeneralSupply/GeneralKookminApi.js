@@ -843,13 +843,13 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                                                 20 &&
                                                                 data?.householderTf ===
                                                                     true &&
-                                                                form.supportYn ===
+                                                                supportYn ===
                                                                     'y') ||
                                                             (data?.americanAge >=
                                                                 20 &&
                                                                 data?.americanAge <
                                                                     30 &&
-                                                                form.lifeYn ===
+                                                                lifeYn ===
                                                                     'y') ||
                                                             data?.americanAge >=
                                                                 30 ? (
@@ -1421,8 +1421,10 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                 form.generalKookminRes === '2순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1438,8 +1440,10 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                 {form.generalKookminRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"

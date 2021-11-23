@@ -1341,8 +1341,10 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 form.multiChildMinyeongRes === '2순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={rankSuccess}
+                                            onClick={() => {
+                                                onClick();
+                                                rankSuccess();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1358,8 +1360,10 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 {form.multiChildMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={onClick}
-                                            onClick={fail}
+                                            onClick={() => {
+                                                onClick();
+                                                fail();
+                                            }}
                                             type="button"
                                             width="100"
                                             height="30"
