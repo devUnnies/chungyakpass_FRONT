@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postSpecialOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
+import { postOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -27,7 +27,7 @@ const OldParentPoint = ({ onSaveData }) => {
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
 
-    const data = oldParentPointStore?.postSpecialOldParentPoint?.data; // 노부모 가점 로직 접근 변수
+    const data = oldParentPointStore?.postOldParentPoint?.data; // 노부모 가점 로직 접근 변수
     const oldParentPointSum =
         data?.periodOfHomelessness +
         data?.bankbookJoinPeriod +
@@ -72,11 +72,11 @@ const OldParentPoint = ({ onSaveData }) => {
     };
 
     useEffect(() => {
-        if (oldParentPointStore?.postSpecialOldParentPoint?.data) {
-            const data = oldParentPointStore.postSpecialOldParentPoint.data;
+        if (oldParentPointStore?.postOldParentPoint?.data) {
+            const data = oldParentPointStore.postOldParentPoint.data;
             console.log(JSON.stringify(data));
         }
-    }, [oldParentPointStore?.postSpecialOldParentPoint]);
+    }, [oldParentPointStore?.postOldParentPoint]);
 
     return (
         <>

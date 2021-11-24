@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../../components/Input/Input';
 import useInputState from '../../../components/Input/useInputState';
 import { CalculatorOutlined, CheckOutlined } from '@ant-design/icons';
-import { postSpecialOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
+import { postOldParentPoint } from '../../../store/actions/pointSpecialOldParentAction';
 import { useHistory } from 'react-router-dom';
 import '../../ExtraPoint/ExtraPoint.css';
 
@@ -77,7 +77,7 @@ function OldParentPointPost(props) {
                 })
             ); // api 연결 요청.
 
-            const data = oldParentPointStore?.postSpecialOldParentPoint?.data;
+            const data = oldParentPointStore?.postOldParentPoint?.data;
             console.log(JSON.stringify(data));
             history.push({
                 pathname: '/point/oldParent',
@@ -95,10 +95,10 @@ function OldParentPointPost(props) {
 
     useEffect(() => {
         // 아파트 공고번호, 주택형 post 성공시 노부모 가배점 페이지로 이동.
-        if (oldParentPointStore?.postSpecialOldParentPoint) {
-            const data = oldParentPointStore.postSpecialOldParentPoint.data;
+        if (oldParentPointStore?.postOldParentPoint) {
+            const data = oldParentPointStore.postOldParentPoint.data;
         }
-    }, [oldParentPointStore?.postSpecialOldParentPoint]);
+    }, [oldParentPointStore?.postOldParentPoint]);
 
     return (
         <>
