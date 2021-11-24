@@ -89,6 +89,18 @@ import {
     HOUSE_GET_DELETE,
     BANKBOOK_GET_DELETE,
     DEL_HOUSE_DELETE_DELETE,
+    ADD_MEMBER_ADD_INFO_POST,
+    ADD_MEMBER_ADD_INFO_POST_SUCCESS,
+    ADD_MEMBER_ADD_INFO_POST_ERROR,
+    ADD_MEMBER_ADD_INFO_POST_DELETE,
+    MOD_MEMBER_ADD_INFO_PUT,
+    MOD_MEMBER_ADD_INFO_PUT_SUCCESS,
+    MOD_MEMBER_ADD_INFO_PUT_ERROR,
+    MOD_MEMBER_ADD_INFO_PUT_DELETE,
+    DEL_MEMBER_ADD_INFO_DELETE,
+    DEL_MEMBER_ADD_INFO_DELETE_SUCCESS,
+    DEL_MEMBER_ADD_INFO_DELETE_ERROR,
+    DEL_MEMBER_ADD_INFO_DELETE_DELETE,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -108,6 +120,9 @@ const initialState = {
     addMem: reducerUtils.initial(),
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
+    addMemPlus: reducerUtils.initial(),
+    modMemPlus: reducerUtils.initial(),
+    delMemPlus: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
     getAssets: reducerUtils.initial(),
     addAssets: reducerUtils.initial(),
@@ -213,19 +228,43 @@ export default function commonInfo(state = initialState, action) {
         case ADD_MEMBER_POST_SUCCESS:
         case ADD_MEMBER_POST_ERROR:
             return handleAsyncActions(ADD_MEMBER_POST, 'addMem')(state, action);
+        case ADD_MEMBER_ADD_INFO_POST:
+        case ADD_MEMBER_ADD_INFO_POST_SUCCESS:
+        case ADD_MEMBER_ADD_INFO_POST_ERROR:
+            return handleAsyncActions(ADD_MEMBER_ADD_INFO_POST, 'addMemPlus')(
+                state,
+                action
+            );
         case ADD_MEMBER_DELETE:
             return {
                 ...state,
                 addMem: reducerUtils.initial(),
             };
+        case ADD_MEMBER_ADD_INFO_POST_DELETE:
+            return {
+                ...state,
+                addMemPlus: reducerUtils.initial(),
+            };
         case MOD_MEMBER_PUT:
         case MOD_MEMBER_PUT_SUCCESS:
         case MOD_MEMBER_PUT_ERROR:
             return handleAsyncActions(MOD_MEMBER_PUT, 'modMem')(state, action);
+        case MOD_MEMBER_ADD_INFO_PUT:
+        case MOD_MEMBER_ADD_INFO_PUT_SUCCESS:
+        case MOD_MEMBER_ADD_INFO_PUT_ERROR:
+            return handleAsyncActions(MOD_MEMBER_ADD_INFO_PUT, 'modMemPlus')(
+                state,
+                action
+            );
         case MOD_MEMBER_DELETE:
             return {
                 ...state,
                 modMem: reducerUtils.initial(),
+            };
+        case MOD_MEMBER_ADD_INFO_PUT_DELETE:
+            return {
+                ...state,
+                modMemPlus: reducerUtils.initial(),
             };
         case DEL_MEMBER_DELETE:
         case DEL_MEMBER_DELETE_SUCCESS:
@@ -234,6 +273,15 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case DEL_MEMBER_ADD_INFO_DELETE:
+        case DEL_MEMBER_ADD_INFO_DELETE_SUCCESS:
+        case DEL_MEMBER_ADD_INFO_DELETE_ERROR:
+            return handleAsyncActions(DEL_MEMBER_ADD_INFO_DELETE, 'delMemPlus')(
+                state,
+                action
+            );
+        case DEL_MEMBER_ADD_INFO_DELETE_DELETE:
+            return { ...state, delMemPlus: reducerUtils.initial() };
         case HOUSE_HOLDER_PATCH:
         case HOUSE_HOLDER_PATCH_SUCCESS:
         case HOUSE_HOLDER_PATCH_ERROR:

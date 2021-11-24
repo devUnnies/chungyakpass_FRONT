@@ -85,7 +85,12 @@ const SeeBankbook = () => {
                         </td>
                         <td className="getBankbookTableTbodyTrTd">
                             <span className="getBankbookTableTbodyTrTdText">
-                                {account.joinDate ? account.joinDate : null}
+                                {account.joinDate
+                                    ? account.joinDate
+                                          .replace('-', '년 ')
+                                          .replace('-', '월 ')
+                                          .concat('일')
+                                    : null}
                             </span>
                         </td>
                     </tr>

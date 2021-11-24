@@ -143,12 +143,6 @@ const AddHouse = (props) => {
                 )}
             </div>
             <div name="addHouseAddress" className="addHouseContainer">
-                {/* <form
-                    name="addHouseHolderAddress"
-                    target="addHouseHolderAddress"
-                    className="addressFormContainer"
-                    onSubmit={handleSubmit}
-                > */}
                 <div className="addressFormContainer">
                     <table className="addressFormTable">
                         <tbody>
@@ -209,7 +203,6 @@ const AddHouse = (props) => {
                         등록
                     </MainButton> */}
                 </div>
-                {/* </form> */}
             </div>
         </div>
     );

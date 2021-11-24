@@ -54,7 +54,7 @@ const data = {
                 // {
                 //     idx: 0,
                 //     name: '공통정보입력',
-                //     link: '/addHouseHolder',
+                //     link: '',
                 // },
                 // {
                 //     idx: 0,

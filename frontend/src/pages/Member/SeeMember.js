@@ -12,6 +12,9 @@ import {
     getMem,
     addHouseDel,
     getHouse,
+    addMemAddInfoDel,
+    modMemAddInfoDel,
+    delMemAddInfo,
 } from '../../store/actions/commonInfoAction';
 import SubButton from '../../components/Button/SubButton';
 
@@ -25,6 +28,7 @@ const SeeMember = () => {
     const [houseId, setHouseId] = useState();
     const [members, setMembers] = useState([]);
     const [selected, setSelected] = useState('');
+    const [houseHolderYn, setHouseHolderYn] = useState();
 
     useEffect(() => {
         dispatch(getHouse());
@@ -49,6 +53,7 @@ const SeeMember = () => {
         // console.log(houseId);
         dispatch(getHouse());
         dispatch(addMemDel());
+        dispatch(addMemAddInfoDel());
 
         history.push('/addMember', {
             houseState: houseState,
@@ -58,6 +63,9 @@ const SeeMember = () => {
 
     const handleEdit = (item) => {
         dispatch(modMemDel());
+        dispatch(modMemAddInfoDel());
+
+        console.log('hhhhhhhh => ' + houseHolderYn);
 
         // 선택한 데이터 재정의
         const selectedData = {
@@ -67,15 +75,16 @@ const SeeMember = () => {
             account: item.account,
             foreignerYn: item.foreignerYn,
             relation: item.relation,
-            householderYn: item.householderYn,
+            householderYn: houseHolderYn,
             soldierYn: item.soldierYn,
             homelessStartDate: item.homelessStartDate,
             isMarried: item.isMarried,
             marriedDate: item.marriedDate,
             transferDate: item.transferDate,
             income: item.income,
+            houseMemberAdditionalInfoResponseDto:
+                item.houseMemberAdditionalInfoResponseDto,
         };
-        // console.log(selectedData);
         // 선택한 데이터로 바꾸기
         setSelected(selectedData);
         history.push('/modMember', {
@@ -124,7 +133,9 @@ const SeeMember = () => {
         const data = commonInfoStore.getMem.data;
 
         if (data) {
-            setMembers(data);
+            if (data.status === 404) {
+                alert(data.message);
+            } else setMembers(data);
         }
     }, [commonInfoStore.getMem]);
 
@@ -148,10 +159,7 @@ const SeeMember = () => {
                             <th className="membersInfoTheadTrTh"> 생년월일 </th>
                             <th className="membersInfoTheadTrTh"> 국적 </th>
                             <th className="membersInfoTheadTrTh"> 관계 </th>
-                            <th className="membersInfoTheadTrTh">
-                                {' '}
-                                장기복무 여부{' '}
-                            </th>
+                            <th className="membersInfoTheadTrTh"> 장기복무 </th>
                             <th className="membersInfoTheadTrTh">
                                 {' '}
                                 혼인신고일{' '}
@@ -166,8 +174,9 @@ const SeeMember = () => {
                             </th>
                             <th className="membersInfoTheadTrTh">
                                 {' '}
-                                월 평균 소득{' '}
+                                월평균소득{' '}
                             </th>
+                            <th className="membersInfoTheadTrTh"> 추가정보 </th>
                             <th className="membersInfoTheadTrTh"> 수정 </th>
                             <th className="membersInfoTheadTrTh"> 삭제 </th>
                         </tr>

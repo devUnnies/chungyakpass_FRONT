@@ -84,7 +84,7 @@
 }
 
 /* 저장버튼 */
-.saveButtonContainer {
+.addBankbookContainer .saveButtonContainer {
     display: flex;
     justify-content: flex-end;
     margin-top: 15px;
@@ -92,7 +92,7 @@
     margin-bottom: 20px;
 }
 
-.saveButtonContainer .save {
+.addBankbookContainer .saveButtonContainer .save {
     width: 80px;
     padding: 10px;
     margin-left: 200px;
@@ -158,16 +158,17 @@
 }
 
 /* button */
-.saveButtonContainer {
+.getBankbookTableTbodyTrTd .saveButtonContainer {
+    text-align: right;
 }
-.saveButtonContainer .modify {
+.getBankbookTableTbodyTrTd .saveButtonContainer .modify {
     font-size: 17px;
     padding-right: 10px;
     color: #2a4476;
     cursor: pointer;
 }
 
-.saveButtonContainer .delete {
+.getBankbookTableTbodyTrTd .saveButtonContainer .delete {
     font-size: 17px;
     color: #2a4476;
     cursor: pointer;

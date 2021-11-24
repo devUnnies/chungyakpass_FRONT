@@ -149,12 +149,6 @@ const ModHouse = () => {
                 )}
             </div>
             <div name="addHouseAddress" className="addHouseContainer">
-                {/* <form
-                    name="addHouseHolderAddress"
-                    target="addHouseHolderAddress"
-                    className="addressFormContainer"
-                    onSubmit={handleSubmit}
-                > */}
                 <div className="addressFormContainer">
                     <table className="addressFormTable">
                         <tbody>

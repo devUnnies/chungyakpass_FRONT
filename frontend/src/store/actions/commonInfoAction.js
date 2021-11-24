@@ -66,6 +66,29 @@ export const DEL_MEMBER_DELETE_ERROR = 'DEL_MEMBER_DELETE_ERROR';
 export const ADD_MEMBER_DELETE = 'ADD_MEMBER_DELETE';
 export const MOD_MEMBER_DELETE = 'MOD_MEMBER_DELETE';
 
+//세대구성원 추가정보 저장
+export const ADD_MEMBER_ADD_INFO_POST = 'ADD_MEMBER_ADD_INFO_POST';
+export const ADD_MEMBER_ADD_INFO_POST_SUCCESS =
+    'ADD_MEMBER_ADD_INFO_POST_SUCCESS';
+export const ADD_MEMBER_ADD_INFO_POST_ERROR = 'ADD_MEMBER_ADD_INFO_POST_ERROR';
+//세대구성원 추가정보 수정
+export const MOD_MEMBER_ADD_INFO_PUT = 'MOD_MEMBER_ADD_INFO_PUT';
+export const MOD_MEMBER_ADD_INFO_PUT_SUCCESS =
+    'MOD_MEMBER_ADD_INFO_PUT_SUCCESS';
+export const MOD_MEMBER_ADD_INFO_PUT_ERROR = 'MOD_MEMBER_ADD_INFO_PUT_ERROR';
+//세대구성원 추가정보 삭제
+export const DEL_MEMBER_ADD_INFO_DELETE = 'DEL_MEMBER_ADD_INFO_DELETE';
+export const DEL_MEMBER_ADD_INFO_DELETE_SUCCESS =
+    'DEL_MEMBER_ADD_INFO_DELETE_SUCCESS';
+export const DEL_MEMBER_ADD_INFO_DELETE_ERROR =
+    'DEL_MEMBER_ADD_INFO_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const ADD_MEMBER_ADD_INFO_POST_DELETE =
+    'ADD_MEMBER_ADD_INFO_POST_DELETE';
+export const MOD_MEMBER_ADD_INFO_PUT_DELETE = 'MOD_MEMBER_ADD_INFO_PUT_DELETE';
+export const DEL_MEMBER_ADD_INFO_DELETE_DELETE =
+    'DEL_MEMBER_ADD_INFO_DELETE_DELETE';
+
 //세대주 지정
 export const HOUSE_HOLDER_PATCH = 'HOUSE_HOLDER_PATCH';
 export const HOUSE_HOLDER_PATCH_SUCCESS = 'HOUSE_HOLDER_PATCH_SUCCESS';
@@ -209,6 +232,29 @@ export const modMemDel = () => ({ type: MOD_MEMBER_DELETE });
 export const delMem = createPromiseThunk(
     DEL_MEMBER_DELETE,
     commonInfoApi.delMember
+);
+
+export const addMemAddInfo = createPromiseThunk(
+    ADD_MEMBER_ADD_INFO_POST,
+    commonInfoApi.addMemberPlusInfo
+);
+
+export const addMemAddInfoDel = () => ({
+    type: ADD_MEMBER_ADD_INFO_POST_DELETE,
+});
+
+export const modMemAddInfo = createPromiseThunk(
+    MOD_MEMBER_ADD_INFO_PUT,
+    commonInfoApi.modMemberPlusInfo
+);
+
+export const modMemAddInfoDel = () => ({
+    type: MOD_MEMBER_ADD_INFO_PUT_DELETE,
+});
+
+export const delMemAddInfo = createPromiseThunk(
+    DEL_MEMBER_ADD_INFO_DELETE,
+    commonInfoApi.delMemberPlusInfo
 );
 
 export const patHolder = createPromiseThunk(

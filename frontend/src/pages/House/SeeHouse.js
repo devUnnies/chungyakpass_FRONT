@@ -124,7 +124,7 @@ const SeeHouse = () => {
                 <thead className="getHouseTableThead">
                     <tr className="getHouseTableTheadTr">
                         <td className="getHouseTableTheadTrTd"></td>
-                        <td className="getHouseTableTheadTrTd">
+                        <td className="getHouseTableTheadTrTdAddress">
                             <span className="subTitle">주소</span>
                         </td>
                         <td className="getHouseTableTheadTrTd">
@@ -200,7 +200,10 @@ const SeeHouse = () => {
                             </>
                         ) : (
                             <>
-                                <td className="getHouseTableTbodyTrTdPlus">
+                                <td
+                                    className="getHouseTableTbodyTrTdPlus"
+                                    colSpan="4"
+                                >
                                     <div className="saveButtonContainer">
                                         <PlusOutlined
                                             className="add"
@@ -272,7 +275,10 @@ const SeeHouse = () => {
                             </>
                         ) : (
                             <>
-                                <td className="getHouseTableTbodyTrTdPlus">
+                                <td
+                                    className="getHouseTableTbodyTrTdPlus"
+                                    colSpan="4"
+                                >
                                     <div className="saveButtonContainer">
                                         <PlusOutlined
                                             className="add"

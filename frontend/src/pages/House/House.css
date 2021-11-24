@@ -5,7 +5,7 @@
 }
 
 .getHouseHeaderContainer {
-    margin-left: 30%;
+    margin-left: 20%;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -30,9 +30,9 @@
 }
 
 .getHouseTable {
-    width: 500px;
+    width: 700px;
     margin-top: 3%;
-    margin-left: 30%;
+    margin-left: 20%;
 }
 
 .getHouseTableTbodyTrTdSubTitle {
@@ -47,6 +47,11 @@
     text-align: center;
 }
 
+.getHouseTableTheadTrTdAddress {
+    text-align: center;
+    width: 300px;
+}
+
 .getHouseTableTbodyTrTd {
     text-align: center;
 }
@@ -57,6 +62,22 @@
 .getHouseTableTbodyTrTdClick {
     cursor: pointer;
     width: 120px;
+}
+
+.getHouseContainer .saveButtonContainer {
+    text-align: center;
+}
+
+.getHouseContainer .saveButtonContainer .modify {
+    font-size: 17px;
+    color: #2a4476;
+    cursor: pointer;
+}
+
+.getHouseContainer .saveButtonContainer .delete {
+    font-size: 17px;
+    color: #2a4476;
+    cursor: pointer;
 }
 
 /* AddHouse.js */

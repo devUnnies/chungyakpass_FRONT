@@ -4,8 +4,9 @@ import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 
 const Td = ({ item, assets, handleEdit, handleRemove }) => {
+    const [isShow, setIsShow] = useState(false);
+
     const onEdit = () => {
-        // console.log(JSON.stringify(item));
         handleEdit(item);
     };
 
@@ -18,14 +19,8 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
         handleRemove(item?.id);
     };
 
-    // const onEdit = () => {
-    //     // console.log(JSON.stringify(item));
-    //     handleEdit(item);
-    // };
-
     return (
         <>
-            {console.log(JSON.stringify(item))}
             {item ? (
                 <tr className="membersInfoTbodyTr">
                     {/* 이름 */}
@@ -80,6 +75,95 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
                             : item?.income === 0
                             ? item?.income + '원'
                             : null}
+                    </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item.houseMemberAdditionalInfoResponseDto ? (
+                            <>
+                                {isShow ? (
+                                    <>
+                                        <span>부모 사망 이력 : </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .parentsDeathYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        {item.relation !== '본인' &&
+                                        item.relation !== '배우자' &&
+                                        !item.marriageDate ? (
+                                            <>
+                                                <span>이혼여부 : </span>
+                                                {item
+                                                    .houseMemberAdditionalInfoResponseDto
+                                                    .divorceYn === 'y' ? (
+                                                    <>
+                                                        <span>O</span>
+                                                        <br />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span>X</span>
+                                                        <br />
+                                                    </>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        <span>
+                                            해외나 요양시설 체류 이력 :{' '}
+                                        </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .stayOverYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        <span>해외나 요양시설 체류 중 : </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .nowStayOverYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        <SubButton
+                                            onClick={() => setIsShow(!isShow)}
+                                        >
+                                            접기
+                                        </SubButton>
+                                    </>
+                                ) : (
+                                    <SubButton
+                                        onClick={() => setIsShow(!isShow)}
+                                    >
+                                        더보기
+                                    </SubButton>
+                                )}
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </td>
                     {/* 수정 버튼 */}
                     <td onClick={onEdit} className="modifyContainer">
