@@ -6,10 +6,15 @@ import storage from '../../services/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/actions/authAction';
 import { signoutWithToken } from '../../store/actions/tokenAction';
-import { getHouse, getMem } from '../../store/actions/commonInfoAction';
+import {
+    getBank,
+    getHouse,
+    getMem,
+} from '../../store/actions/commonInfoAction';
 
-const blockUrl = '/addBankBook';
+let blockUrl = '/addBankBook';
 
+let bank = blockUrl;
 let generalKookminAptNum = blockUrl;
 let generalMinyeongAptNum = blockUrl;
 let specialNewlyMarriedTypeSelect = blockUrl;
@@ -27,12 +32,12 @@ const data = {
         {
             idx: 0,
             name: '기초정보등록',
-            link: '/addBankbook',
+            link: bank,
             subcategory: [
                 {
                     idx: 0,
                     name: '통장정보등록',
-                    link: '/addBankbook',
+                    link: bank,
                 },
                 {
                     idx: 1,
@@ -52,7 +57,7 @@ const data = {
                 //     link: '/addHouseHolder',
                 // },
                 // {
-                //     idx: 1,
+                //     idx: 0,
                 //     name: '한눈에보기',
                 //     link: '/atAGlance',
                 // },
@@ -256,9 +261,18 @@ function Nav(props) {
     const history = useHistory();
 
     useEffect(() => {
+        const data1 = commonInfoStore.getBank.data;
         const data2 = commonInfoStore.getMem.data;
         const data3 = commonInfoStore.getHouse.data;
-        console.log(data3);
+
+        if (data1) {
+            if (data1.status === 404) {
+                bank = '/addBankbook';
+            } else {
+                bank = '/bankbook';
+            }
+        }
+
         if (data3) {
             generalKookminAptNum = '/generalKookminAptNum';
             generalMinyeongAptNum = '/generalMinyeongAptNum';
@@ -273,7 +287,13 @@ function Nav(props) {
             pointOneParentAptNum = '/point/oneParentAptNum';
 
             data.category.map((content, i) => {
-                if (content.name === '청약자격확인') {
+                if (content.name === '기초정보등록') {
+                    content.subcategory.map((content2, j) => {
+                        if (content2.name === '통장정보등록') {
+                            content2.link = bank;
+                        }
+                    });
+                } else if (content.name === '청약자격확인') {
                     content.subcategory.map((content2, j) => {
                         content2.subcategory.map((content3, k) => {
                             if (content3.name === '일반공급') {
@@ -319,16 +339,10 @@ function Nav(props) {
             });
         }
 
-        if (commonInfoStore.getHouse.data?.status === 404) {
+        if (data3?.status === 404) {
             window.confirm('아직 기초정보가 등록되어있지 않습니다 !');
-            // if (window.confirm('아직 기초정보가 등록되어있지 않습니다 !')) {
-            //     history.push('/addBankBook');
-            // }
         }
-        // } else {
-        //     // alert('아직 기초정보가 등록되어있지 않습니다 !');
-        // }
-    }, [commonInfoStore.getMem]);
+    }, [commonInfoStore.getHouse, commonInfoStore.getMem]);
 
     return (
         <div className="nav">
@@ -460,6 +474,7 @@ const Header = (props) => {
     // const authStore = useSelector((state) => state.auth);
 
     useEffect(() => {
+        dispatch(getBank());
         dispatch(getHouse());
     }, []);
 

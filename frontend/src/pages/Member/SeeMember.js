@@ -37,9 +37,9 @@ const SeeMember = () => {
 
         if (getData) {
             if (houseState === 'my') {
-                setHouseId(getData.houseResponseDto?.id);
+                setHouseId(getData.houseResponseDto.id);
             } else {
-                setHouseId(getData.spouseHouseResponseDto?.id);
+                setHouseId(getData.spouseHouseResponseDto.id);
             }
         } else if (addData) {
             setHouseId(addData.id);

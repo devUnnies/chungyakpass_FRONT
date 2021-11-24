@@ -1,5 +1,6 @@
+/* AddBankbook.js */
 .addBankbookContainer {
-    margin-top: 1%;
+    margin-top: 0%;
     margin-bottom: 4.5%;
 }
 
@@ -101,4 +102,125 @@
     border-radius: 20px;
     background-color: #2a4476;
     cursor: pointer;
+}
+
+/* SeeBankbook.js */
+.getBankbookContainer {
+    margin-top: 0%;
+    margin-bottom: 4.5%;
+}
+
+.getBankbookHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.getBankbookHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.getBankbookHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+/* 표 */
+.getBankbookTable {
+    width: 600px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.getBankbookTableTbody {
+}
+
+.getBankbookTableTbodyTr {
+}
+
+.getBankbookTableTbodyTrTd {
+}
+
+.getBankbookTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 15px;
+    width: 150px;
+}
+
+/* button */
+.saveButtonContainer {
+}
+.saveButtonContainer .modify {
+    font-size: 17px;
+    padding-right: 10px;
+    color: #2a4476;
+    cursor: pointer;
+}
+
+.saveButtonContainer .delete {
+    font-size: 17px;
+    color: #2a4476;
+    cursor: pointer;
+}
+
+/* ModBankbook.js */
+.modBankbookContainer {
+    margin-top: 0%;
+    margin-bottom: 4.5%;
+}
+
+.modBankbookHeaderContainer {
+    margin-left: 30%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.modBankbookHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.modBankbookHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
+/* 표 */
+.modBankbookFormTable {
+    width: 600px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.modBankbookFormTableTbody {
+}
+
+.modBankbookFormTableTbodyTr {
+}
+
+.modBankbookFormTableTbodyTrTd {
+}
+
+.modBankbookFormTableTbodyTrTdError {
+    width: 50px;
+    text-align: left;
 }

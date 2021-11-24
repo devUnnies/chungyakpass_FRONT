@@ -9,7 +9,9 @@ export { default as PersonalRules } from './PersonalRules/PersonalRules';
 export { default as NoEmail } from './NoEmail/NoEmail';
 export { default as Sitemap } from './Sitemap/Sitemap';
 // 바뀐 공통입력정보
+export { default as SeeBankbook } from './Bankbook/SeeBankbook';
 export { default as AddBankbook } from './Bankbook/AddBankbook';
+export { default as ModBankbook } from './Bankbook/ModBankbook';
 export { default as SelectHouse } from './House/SelectHouse';
 export { default as AddHouse } from './House/AddHouse';
 export { default as AddMember } from './Member/AddMember';
@@ -25,7 +27,6 @@ export { default as AddAsset } from './Assets/AddAsset';
 export { default as ModAsset } from './Assets/ModAsset';
 // 끝 ---
 export { default as AtAGlance } from './AtAGlance/AtAGlance';
-export { default as PersonalInfo } from './CommonInput/PersonalInfo';
 export { default as BoardMain } from './CaseBoard/BoardMain';
 export { default as BoardView } from './CaseBoard/BoardView';
 export { default as FAQ } from './FAQ/FAQ';

@@ -19,8 +19,14 @@ export const DEL_HOUSE_DELETE = 'DEL_HOUSE_DELETE';
 export const DEL_HOUSE_DELETE_SUCCESS = 'DEL_HOUSE_DELETE_SUCCESS';
 export const DEL_HOUSE_DELETE_ERROR = 'DEL_HOUSE_DELETE_ERROR';
 //분리세대 이동 시에 리덕스에서 삭제
+export const HOUSE_GET_DELETE = 'HOUSE_GET_DELETE';
 export const ADD_HOUSE_POST_DELETE = 'ADD_HOUSE_POST_DELETE';
+export const MOD_HOUSE_PUT_DELETE = 'MOD_HOUSE_PUT_DELETE';
 
+//청약통장 조회
+export const BANKBOOK_GET = 'BANKBOOK_GET';
+export const BANKBOOK_GET_SUCCESS = 'BANKBOOK_GET_SUCCESS';
+export const BANKBOOK_GET_ERROR = 'BANKBOOK_GET_ERROR';
 //청약통장 저장
 export const ADD_BANKBOOK_POST = 'ADD_BANKBOOK_POST';
 export const ADD_BANKBOOK_POST_SUCCESS = 'ADD_BANKBOOK_POST_SUCCESS';
@@ -33,6 +39,10 @@ export const MOD_BANKBOOK_PUT_ERROR = 'MOD_BANKBOOK_PUT_ERROR';
 export const DEL_BANKBOOK_DELETE = 'DEL_BANKBOOK_DELETE';
 export const DEL_BANKBOOK_DELETE_SUCCESS = 'DEL_BANKBOOK_DELETE_SUCCESS';
 export const DEL_BANKBOOK_DELETE_ERROR = 'DEL_BANKBOOK_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const BANKBOOK_GET_DELETE = 'BANKBOOK_GET_DELETE';
+export const ADD_BANKBOOK_POST_DELETE = 'ADD_BANKBOOK_POST_DELETE';
+export const MOD_BANKBOOK_PUT_DELETE = 'MOD_BANKBOOK_PUT_DELETE';
 
 //세대구성원 조회
 export const MEMBER_GET = 'MEMBER_GET';
@@ -53,7 +63,6 @@ export const DEL_MEMBER_DELETE_SUCCESS = 'DEL_MEMBER_DELETE_SUCCESS';
 export const DEL_MEMBER_DELETE_ERROR = 'DEL_MEMBER_DELETE_ERROR';
 //저장 후 리덕스에서 삭제
 export const ADD_MEMBER_DELETE = 'ADD_MEMBER_DELETE';
-//저장 후 리덕스에서 삭제
 export const MOD_MEMBER_DELETE = 'MOD_MEMBER_DELETE';
 
 //세대주 지정
@@ -69,16 +78,17 @@ export const ASSETS_GET_ERROR = 'ASSETS_GET_ERROR';
 export const ADD_ASSETS_POST = 'ADD_ASSETS_POST';
 export const ADD_ASSETS_POST_SUCCESS = 'ADD_ASSETS_POST_SUCCESS';
 export const ADD_ASSETS_POST_ERROR = 'ADD_ASSETS_POST_ERROR';
-export const ADD_ASSETS_POST_DELETE = 'ADD_ASSETS_POST_DELETE';
 //자산 수정
 export const MOD_ASSETS_PUT = 'MOD_ASSETS_PUT';
 export const MOD_ASSETS_PUT_SUCCESS = 'MOD_ASSETS_PUT_SUCCESS';
 export const MOD_ASSETS_PUT_ERROR = 'MOD_ASSETS_PUT_ERROR';
-export const MOD_ASSETS_PUT_DELETE = 'MOD_ASSETS_PUT_DELETE';
 //자산 삭제
 export const DEL_ASSETS_DELETE = 'DEL_ASSETS_DELETE';
 export const DEL_ASSETS_DELETE_SUCCESS = 'DEL_ASSETS_DELETE_SUCCESS';
 export const DEL_ASSETS_DELETE_ERROR = 'DEL_ASSETS_DELETE_ERROR';
+//저장 후 리덕스에서 삭제
+export const ADD_ASSETS_POST_DELETE = 'ADD_ASSETS_POST_DELETE';
+export const MOD_ASSETS_PUT_DELETE = 'MOD_ASSETS_PUT_DELETE';
 
 //무주택시작일 수정
 export const HOMELESS_START_DATE_PATCH = 'HOMELESS_START_DATE_PATCH';
@@ -106,7 +116,6 @@ export const DEL_CHUNGYAK_DELETE_SUCCESS = 'DEL_CHUNGYAK_DELETE_SUCCESS';
 export const DEL_CHUNGYAK_DELETE_ERROR = 'DEL_CHUNGYAK_DELETE_ERROR';
 //저장 후 리덕스에서 삭제
 export const ADD_CHUNGYAK_DELETE = 'ADD_CHUNGYAK_DELETE';
-//저장 후 리덕스에서 삭제
 export const MOD_CHUNGYAK_DELETE = 'MOD_CHUNGYAK_DELETE';
 
 // 청약제한사항 저장
@@ -126,16 +135,19 @@ export const DEL_CHUNGYAK_RESTR_DELETE_ERROR =
     'DEL_CHUNGYAK_RESTR_DELETE_ERROR';
 //저장 후 리덕스에서 삭제
 export const ADD_CHUNGYAK_RESTR_DELETE = 'ADD_CHUNGYAK_RESTR_DELETE';
-//저장 후 리덕스에서 삭제
 export const MOD_CHUNGYAK_RESTR_DELETE = 'MOD_CHUNGYAK_RESTR_DELETE';
 
 /* Action Creator */
 export const getHouse = createPromiseThunk(HOUSE_GET, commonInfoApi.getHouse);
 
+export const getHouseDel = () => ({ type: HOUSE_GET_DELETE });
+
 export const addHouse = createPromiseThunk(
     ADD_HOUSE_POST,
     commonInfoApi.addHouse
 );
+
+export const addHouseDel = () => ({ type: ADD_HOUSE_POST_DELETE });
 
 export const modHouse = createPromiseThunk(
     MOD_HOUSE_PUT,
@@ -147,17 +159,26 @@ export const delHouse = createPromiseThunk(
     commonInfoApi.delHouse
 );
 
-export const addHouseDel = () => ({ type: ADD_HOUSE_POST_DELETE });
+export const getBank = createPromiseThunk(
+    BANKBOOK_GET,
+    commonInfoApi.getBankBook
+);
+
+export const getBankDel = () => ({ type: BANKBOOK_GET_DELETE });
 
 export const addBank = createPromiseThunk(
     ADD_BANKBOOK_POST,
     commonInfoApi.addBankBook
 );
 
+export const addBankDel = () => ({ type: ADD_BANKBOOK_POST_DELETE });
+
 export const modBank = createPromiseThunk(
     MOD_BANKBOOK_PUT,
     commonInfoApi.modBankBook
 );
+
+export const modBankDel = () => ({ type: MOD_BANKBOOK_PUT_DELETE });
 
 export const delBank = createPromiseThunk(
     DEL_BANKBOOK_DELETE,

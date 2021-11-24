@@ -16,18 +16,20 @@ export const delHouse = (houseId) => del(`user/house/${houseId}`);
 
 // ----------------------------------------------------------------------------
 
+//  - 통장정보조회 API
+export const getBankBook = () => get(`user/bankbook`);
+
 //  - 통장정보등록 API
 export const addBankBook = (info) => post('user/bankbook', info);
 
 //  - 통장정보수정 API
 export const modBankBook = (info) =>
-    put(`user/bankbook/${info.bankBookId}`, {
+    put(`user/bankbook/${info.id}`, {
         bank: info.bank,
         bankbook: info.bankbook,
         joinDate: info.joinDate,
         deposit: info.deposit,
         paymentsCount: info.paymentsCount,
-        validYn: info.validYn,
     });
 
 //  - 통장정보삭제 API

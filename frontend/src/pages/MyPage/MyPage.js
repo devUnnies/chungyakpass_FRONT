@@ -13,15 +13,12 @@ const MyPage = () => {
                     width="100"
                     height="50"
                     fontSize="13"
-                    type="readCommonInfo"
+                    type="readBankbook"
                     onClick={() => {
-                        // history.push('/commonInfo');
-                        alert('서비스를 개발 중입니다!');
+                        history.push('/bankbook');
                     }}
                 >
-                    기초정보
-                    <br />
-                    확인
+                    청약통장 조회
                 </MainButton>
 
                 <MainButton
