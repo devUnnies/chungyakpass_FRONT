@@ -95,9 +95,10 @@ const SeeBankbook = () => {
                         </td>
                         <td className="getBankbookTableTbodyTrTd">
                             <span className="getBankbookTableTbodyTrTdText">
-                                {account.deposit ? account.deposit : null}
+                                {account.deposit
+                                    ? account.deposit + '원'
+                                    : null}
                             </span>
-                            <span> 원</span>
                         </td>
                     </tr>
                     <tr className="getBankbookTableTbodyTr">
@@ -107,10 +108,9 @@ const SeeBankbook = () => {
                         <td className="">
                             <span className="getBankbookTableTbodyTrTdText">
                                 {account.paymentsCount
-                                    ? account.paymentsCount
+                                    ? account.paymentsCount + '회'
                                     : null}
                             </span>
-                            <span> 회</span>
                         </td>
                     </tr>
 

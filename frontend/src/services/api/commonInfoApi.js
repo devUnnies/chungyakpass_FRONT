@@ -8,8 +8,7 @@ export const getHouse = () => get(`user/house`);
 export const addHouse = (info) => post('user/house', info);
 
 //  - 세대수정 API
-export const modHouse = (info) =>
-    put(`user/house/${info.houseId}`, info.addressArr);
+export const modHouse = (info) => put(`user/house/${info.id}`, info.addressArr);
 
 //  - 세대삭제 API
 export const delHouse = (houseId) => del(`user/house/${houseId}`);

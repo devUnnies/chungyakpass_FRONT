@@ -22,7 +22,6 @@ const SeeMember = () => {
     const location = useLocation();
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const houseState = location.state.houseState;
-    const membersPrev = location.state.members;
     const [houseId, setHouseId] = useState();
     const [members, setMembers] = useState([]);
     const [selected, setSelected] = useState('');
@@ -37,12 +36,12 @@ const SeeMember = () => {
 
         if (getData) {
             if (houseState === 'my') {
-                setHouseId(getData.houseResponseDto.id);
+                setHouseId(getData.houseResponseDto?.id);
             } else {
-                setHouseId(getData.spouseHouseResponseDto.id);
+                setHouseId(getData.spouseHouseResponseDto?.id);
             }
         } else if (addData) {
-            setHouseId(addData.id);
+            setHouseId(addData?.id);
         }
     }, [commonInfoStore.getHouse, commonInfoStore.addHouse]);
 
@@ -94,14 +93,22 @@ const SeeMember = () => {
     };
 
     const handleMembersSubmit = () => {
-        if (window.confirm('배우자분리세대를 등록하시겠습니까?')) {
-            history.push('/selectHouse');
-            dispatch(addHouseDel());
-        } else {
+        const data = commonInfoStore.getHouse.data;
+        if (data.spouseHouseResponseDto) {
             window.location.replace('/');
             dispatch(
                 getMem(commonInfoStore.addHouse.data?.houseResponseDto?.id)
             );
+        } else {
+            if (window.confirm('배우자분리세대를 등록하시겠습니까?')) {
+                history.push('/house');
+                dispatch(addHouseDel());
+            } else {
+                window.location.replace('/');
+                dispatch(
+                    getMem(commonInfoStore.addHouse.data?.houseResponseDto?.id)
+                );
+            }
         }
     };
 

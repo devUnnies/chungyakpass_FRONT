@@ -22,6 +22,7 @@ export const DEL_HOUSE_DELETE_ERROR = 'DEL_HOUSE_DELETE_ERROR';
 export const HOUSE_GET_DELETE = 'HOUSE_GET_DELETE';
 export const ADD_HOUSE_POST_DELETE = 'ADD_HOUSE_POST_DELETE';
 export const MOD_HOUSE_PUT_DELETE = 'MOD_HOUSE_PUT_DELETE';
+export const DEL_HOUSE_DELETE_DELETE = 'DEL_HOUSE_DELETE_DELETE';
 
 //청약통장 조회
 export const BANKBOOK_GET = 'BANKBOOK_GET';
@@ -154,10 +155,14 @@ export const modHouse = createPromiseThunk(
     commonInfoApi.modHouse
 );
 
+export const modHouseDel = () => ({ type: MOD_HOUSE_PUT_DELETE });
+
 export const delHouse = createPromiseThunk(
     DEL_HOUSE_DELETE,
     commonInfoApi.delHouse
 );
+
+export const delHouseDel = () => ({ type: DEL_HOUSE_DELETE_DELETE });
 
 export const getBank = createPromiseThunk(
     BANKBOOK_GET,

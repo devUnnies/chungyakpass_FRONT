@@ -88,6 +88,7 @@ import {
     MOD_BANKBOOK_PUT_DELETE,
     HOUSE_GET_DELETE,
     BANKBOOK_GET_DELETE,
+    DEL_HOUSE_DELETE_DELETE,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -162,7 +163,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
-
+        case DEL_HOUSE_DELETE_DELETE:
+            return {
+                ...state,
+                delHouse: reducerUtils.initial(),
+            };
         case BANKBOOK_GET:
         case BANKBOOK_GET_SUCCESS:
         case BANKBOOK_GET_ERROR:

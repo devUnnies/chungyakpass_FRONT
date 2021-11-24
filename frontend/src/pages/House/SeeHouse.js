@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './BankBook.css';
-import { EditFilled, DeleteFilled } from '@ant-design/icons';
+import './House.css';
+import { PlusOutlined, EditFilled, DeleteFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import {
-    delBank,
-    getBank,
-    modBankDel,
+    addHouseDel,
+    modHouseDel,
+    getHouse,
+    delHouse,
 } from '../../store/actions/commonInfoAction';
 import SubButton from '../../components/Button/SubButton';
 import MainButton from '../../components/Button/MainButton';
@@ -16,125 +17,274 @@ const SeeHouse = () => {
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const history = useHistory();
 
-    const [account, setAccount] = useState({
-        bank: '',
-        bankbook: '',
-        joinDate: '',
-        deposit: 0,
-        paymentsCount: 0,
+    const [house, setHouse] = useState({
+        houseResponseDto: {
+            houseHolderId: '',
+            addressLevel1: '',
+            addressLevel2: '',
+            addressDetail: '',
+            zipcode: '',
+        },
+        spouseHouseResponseDto: {
+            houseHolderId: '',
+            addressLevel1: '',
+            addressLevel2: '',
+            addressDetail: '',
+            zipcode: '',
+        },
     });
 
+    const [state, setState] = useState();
+
+    console.log(state);
+
+    const handleAdd = () => {
+        dispatch(addHouseDel());
+        if (state === 'my') {
+            history.push('/addHouse', { houseState: 'my' });
+        } else if (state === 'spouse') {
+            history.push('/addHouse', { houseState: 'spouse' });
+        }
+    };
+
     const handleEdit = () => {
-        dispatch(modBankDel());
-        history.push('/modBankbook', { item: account });
+        dispatch(modHouseDel());
+        if (state === 'my') {
+            history.push('/modHouse', {
+                houseState: 'my',
+                selectedData: house.houseResponseDto,
+            });
+        } else if (state === 'spouse') {
+            history.push('/modHouse', {
+                houseState: 'spouse',
+                selectedData: house.spouseHouseResponseDto,
+            });
+        }
     };
 
     const handleRemove = () => {
-        if (account.id) {
-            if (window.confirm('정말 삭제하시겠습니까?')) {
-                alert('삭제가 완료되었습니다.');
-            } else {
-                return;
+        if (state === 'my') {
+            if (house.houseResponseDto.id) {
+                if (window.confirm('정말 삭제하시겠습니까?')) {
+                    alert('삭제가 완료되었습니다.');
+                } else {
+                    return;
+                }
+                dispatch(delHouse(house.houseResponseDto.id));
             }
-            dispatch(delBank(account.id));
+        } else if (state === 'spouse') {
+            if (house.spouseHouseResponseDto.id) {
+                if (window.confirm('정말 삭제하시겠습니까?')) {
+                    alert('삭제가 완료되었습니다.');
+                } else {
+                    return;
+                }
+                dispatch(delHouse(house.spouseHouseResponseDto.id));
+            }
         }
     };
 
     useEffect(() => {
-        dispatch(getBank());
+        dispatch(getHouse());
     }, []);
 
     useEffect(() => {
-        const data = commonInfoStore.getBank.data;
+        const data = commonInfoStore.getHouse.data;
         if (data) {
             if (data.status === 404) {
-                alert(data.message + '\n 통장 정보를 등록해주세요 !');
-                history.push('/addBankbook');
+                alert('세대 정보를 등록해주세요 !');
             } else {
-                setAccount(data);
+                setHouse(data);
             }
         }
-    }, [commonInfoStore.getBank]);
+    }, [commonInfoStore.getHouse]);
+
+    useEffect(() => {
+        const data = commonInfoStore.delHouse.data;
+        if (data) {
+            if (data.status === 409) {
+                if (window.confirm('먼저 세대주 멤버를 삭제해주십시오 !')) {
+                    history.push('/addHouse', { houseState: state });
+                } else {
+                    return;
+                }
+            }
+            window.location.replace('/house');
+        }
+    }, [commonInfoStore.delHouse]);
 
     return (
-        <div className="getBankbookContainer">
-            <div className="getBankbookHeaderContainer">
+        <div className="getHouseContainer">
+            <div className="getHouseHeaderContainer">
                 <div className="heightBar"></div>
-                <span className="listTitle">청약통장 조회</span>
+                <span className="listTitle">세대 조회</span>
             </div>
 
-            <table className="getBankbookTable">
-                <tbody className="getBankbookTableTbody">
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTdSubTitle">
-                            <span className="subTitle">개설은행</span>
+            <table className="getHouseTable">
+                <thead className="getHouseTableThead">
+                    <tr className="getHouseTableTheadTr">
+                        <td className="getHouseTableTheadTrTd"></td>
+                        <td className="getHouseTableTheadTrTd">
+                            <span className="subTitle">주소</span>
                         </td>
-                        <td className="getBankbookTableTbodyTrTd">
-                            <span className="getBankbookTableTbodyTrTdText">
-                                {account.bank ? account.bank : null}
-                            </span>
+                        <td className="getHouseTableTheadTrTd">
+                            <span className="subTitle">우편번호</span>
                         </td>
-                    </tr>
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTdSubTitle">
-                            <span className="subTitle">청약통장종류</span>
+                        <td className="getHouseTableTheadTrTd">
+                            <span className="subTitle">수정</span>
                         </td>
-                        <td className="getBankbookTableTbodyTrTd">
-                            <span className="getBankbookTableTbodyTrTdText">
-                                {account.bankbook ? account.bankbook : null}
-                            </span>
+                        <td className="getHouseTableTheadTrTd">
+                            <span className="subTitle">삭제</span>
                         </td>
                     </tr>
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTdSubTitle">
-                            <span className="subTitle">가입일</span>
+                </thead>
+                <tbody className="getHouseTableTbody">
+                    <tr className="getHouseTableTbodyTr">
+                        <td className="getHouseTableTbodyTrTdSubTitle">
+                            <span className="subTitle">본인세대</span>
                         </td>
-                        <td className="getBankbookTableTbodyTrTd">
-                            <span className="getBankbookTableTbodyTrTdText">
-                                {account.joinDate ? account.joinDate : null}
-                            </span>
-                        </td>
+                        {house.houseResponseDto ? (
+                            <>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <span
+                                        className="getHouseTableTbodyTrTdClick"
+                                        onClick={() => {
+                                            history.push('/members', {
+                                                houseState: 'my',
+                                            });
+                                        }}
+                                    >
+                                        {house.houseResponseDto.addressLevel1 &&
+                                        house.houseResponseDto.addressLevel2 &&
+                                        house.houseResponseDto.addressDetail
+                                            ? house.houseResponseDto
+                                                  .addressLevel1 +
+                                              ' ' +
+                                              house.houseResponseDto
+                                                  .addressLevel2 +
+                                              ' ' +
+                                              house.houseResponseDto
+                                                  .addressDetail
+                                            : null}
+                                    </span>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <span className="getHouseTableTbodyTrTdText">
+                                        {house.houseResponseDto.zipcode
+                                            ? house.houseResponseDto.zipcode
+                                            : null}
+                                    </span>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <div className="saveButtonContainer">
+                                        <EditFilled
+                                            className="modify"
+                                            onClick={() => {
+                                                setState('my');
+                                                handleEdit();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <div className="saveButtonContainer">
+                                        <DeleteFilled
+                                            className="delete"
+                                            onClick={() => {
+                                                setState('my');
+                                                handleRemove();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                            </>
+                        ) : (
+                            <>
+                                <td className="getHouseTableTbodyTrTdPlus">
+                                    <div className="saveButtonContainer">
+                                        <PlusOutlined
+                                            className="add"
+                                            onClick={() => {
+                                                setState('my');
+                                                handleAdd();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                            </>
+                        )}
                     </tr>
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTdSubTitle">
-                            <span className="subTitle">예치금액</span>
+                    <tr className="getHouseTableTbodyTr">
+                        <td className="getHouseTableTbodyTrTdSubTitle">
+                            <span className="subTitle">배우자분리세대</span>
                         </td>
-                        <td className="getBankbookTableTbodyTrTd">
-                            <span className="getBankbookTableTbodyTrTdText">
-                                {account.deposit ? account.deposit : null}
-                            </span>
-                            <span> 원</span>
-                        </td>
-                    </tr>
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTdSubTitle">
-                            <span className="subTitle">납입횟수</span>
-                        </td>
-                        <td className="">
-                            <span className="getBankbookTableTbodyTrTdText">
-                                {account.paymentsCount
-                                    ? account.paymentsCount
-                                    : null}
-                            </span>
-                            <span> 회</span>
-                        </td>
-                    </tr>
-
-                    <tr className="getBankbookTableTbodyTr">
-                        <td className="getBankbookTableTbodyTrTd" colSpan="2">
-                            <div className="saveButtonContainer">
-                                {/* 수정 */}
-                                <EditFilled
-                                    className="modify"
-                                    onClick={handleEdit}
-                                />
-                                {/* 삭제 */}
-                                <DeleteFilled
-                                    className="delete"
-                                    onClick={handleRemove}
-                                />
-                            </div>
-                        </td>
+                        {house.spouseHouseResponseDto ? (
+                            <>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <span className="getHouseTableTbodyTrTdClick">
+                                        {house.spouseHouseResponseDto
+                                            .addressLevel1 &&
+                                        house.spouseHouseResponseDto
+                                            .addressLevel2 &&
+                                        house.spouseHouseResponseDto
+                                            .addressDetail
+                                            ? house.spouseHouseResponseDto
+                                                  .addressLevel1 +
+                                              ' ' +
+                                              house.spouseHouseResponseDto
+                                                  .addressLevel2 +
+                                              ' ' +
+                                              house.spouseHouseResponseDto
+                                                  .addressDetail
+                                            : null}
+                                    </span>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <span className="getHouseTableTbodyTrTdText">
+                                        {house.spouseHouseResponseDto.zipcode
+                                            ? house.spouseHouseResponseDto
+                                                  .zipcode
+                                            : null}
+                                    </span>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <div className="saveButtonContainer">
+                                        <EditFilled
+                                            className="modify"
+                                            onClick={() => {
+                                                setState('spouse');
+                                                handleEdit();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                                <td className="getHouseTableTbodyTrTd">
+                                    <div className="saveButtonContainer">
+                                        <DeleteFilled
+                                            className="delete"
+                                            onClick={() => {
+                                                setState('spouse');
+                                                handleRemove();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                            </>
+                        ) : (
+                            <>
+                                <td className="getHouseTableTbodyTrTdPlus">
+                                    <div className="saveButtonContainer">
+                                        <PlusOutlined
+                                            className="add"
+                                            onClick={() => {
+                                                setState('spouse');
+                                                handleAdd();
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                            </>
+                        )}
                     </tr>
                 </tbody>
             </table>

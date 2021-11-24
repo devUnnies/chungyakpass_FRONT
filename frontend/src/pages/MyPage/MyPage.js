@@ -25,6 +25,18 @@ const MyPage = () => {
                     width="100"
                     height="50"
                     fontSize="13"
+                    type="readHouse"
+                    onClick={() => {
+                        history.push('/house');
+                    }}
+                >
+                    세대 조회
+                </MainButton>
+
+                <MainButton
+                    width="100"
+                    height="50"
+                    fontSize="13"
                     type="readJudgeHistory"
                     onClick={() => {
                         // history.push('/judgeHistory');

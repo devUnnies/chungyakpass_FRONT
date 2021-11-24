@@ -42,7 +42,7 @@ const data = {
                 {
                     idx: 1,
                     name: '세대등록',
-                    link: '/selectHouse',
+                    link: '/house',
                 },
             ],
         },

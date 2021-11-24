@@ -49,7 +49,6 @@ import {
     NewlyMarriagePointAptNum,
     NewlyMarriagePoint,
     AddBankbook,
-    SelectHouse,
     AddHouse,
     SeeMember,
     AddMember,
@@ -64,6 +63,8 @@ import {
     ModAsset,
     SeeBankbook,
     ModBankbook,
+    SeeHouse,
+    ModHouse,
 } from '../pages';
 import Header from './header/header';
 import Footer from './footer/footer';
@@ -89,8 +90,9 @@ class App extends Component {
                     <Route path="/bankbook" component={SeeBankbook} />
                     <Route path="/addBankbook" component={AddBankbook} />
                     <Route path="/modBankbook" component={ModBankbook} />
-                    <Route path="/selectHouse" component={SelectHouse} />
+                    <Route path="/house" component={SeeHouse} />
                     <Route path="/addHouse" component={AddHouse} />
+                    <Route path="/modHouse" component={ModHouse} />
                     <Route path="/members" component={SeeMember} />
                     <Route path="/addMember" component={AddMember} />
                     <Route path="/modMember" component={ModMember} />
