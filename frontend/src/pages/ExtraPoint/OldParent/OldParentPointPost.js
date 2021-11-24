@@ -45,7 +45,7 @@ function OldParentPointPost(props) {
 
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
-            postSpecialOldParentPoint({
+            postOldParentPoint({
                 houseMemberId: houseMemberId,
                 parentsDeathYn: parentsDeathYn,
                 divorceYn: divorceYn,
@@ -67,7 +67,7 @@ function OldParentPointPost(props) {
             alert('필수 입력 값 중 비어있는 값이 존재합니다.');
         } else {
             dispatch(
-                postSpecialOldParentPoint({
+                postOldParentPoint({
                     houseMemberId: houseMemberId,
                     parentsDeathYn: parentsDeathYn,
                     divorceYn: divorceYn,

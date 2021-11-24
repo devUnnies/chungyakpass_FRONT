@@ -4,7 +4,7 @@ import { post } from './instance';
 // 생애최초 민영 api
 //아파트 공고번호, 주택형 보내기
 export const postFirstInLifeMinyeongAptNum = (info) =>
-    post('verification/special/private/firstLife', {
+    post('verification/special/minyeong/first-life', {
         notificationNumber: info.notificationNumber,
         housingType: info.housingType,
     });

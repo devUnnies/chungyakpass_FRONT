@@ -27,7 +27,7 @@ function Rank({ history }) {
 
     const GreetingMessage1st =
         '모든 자격 조건을 충족하셨습니다. 1순위 축하드립니다!'; // 1순위일 경우 출력 결과
-    const GreetingMessage2nd = '2순위 축하드립니다!'; // 2순위일 경우 출력 결과
+    const GreetingMessage2nd = '2순위입니다'; // 2순위일 경우 출력 결과
 
     const location = useLocation(); // 각 공급별 결과 props 불러오기
 
