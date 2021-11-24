@@ -41,7 +41,7 @@ const AddAsset = () => {
     const [isNoStruct, setIsNoStruct] = useState(false);
     const [startDate, setStartDate] = useState(new Date('1500/01/01'));
     const [ineliDate, setIneliDate] = useState(
-        new Date(ineligibleDate).getMonth() + 3
+        new Date(ineligibleDate).getMonth() - 3
     );
 
     const [failMsg, setFailMsg] = useState(null);
@@ -57,7 +57,7 @@ const AddAsset = () => {
                 // 3개월 이내 처분한 상속주택인지?
                 if (
                     logicData.isInheritance === 'y' &&
-                    new Date(asset.dispositionDate) <= ineliDate
+                    new Date(asset.dispositionDate) >= ineliDate
                 ) {
                     setIsNoStruct(true);
                     setAsset({ ...asset, exceptionHouseYn: 'y' });
