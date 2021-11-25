@@ -6,7 +6,6 @@ import {
     patchGeneralMinyeongRank,
     getGeneralMinyeongRank,
 } from '../../store/actions/generalMinyeongAction';
-import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -34,12 +33,6 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(true);
     const location = useLocation();
     const history = useHistory();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
     // 일반 민영 순위 patch
     const [supportYn, setSupportYn, handleChangeSupportYn] =
         useInputState(null);
@@ -125,51 +118,51 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
 
     // 일반 민영 순위 로직
     if (
-        data.accountTf === true &&
-        data.meetLivingInSurroundAreaTf === true &&
-        ((data.americanAge < 20 &&
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
             supportYn === 'y' &&
-            data.householderTf === true) ||
-            data.americanAge >= 20) &&
-        data.priorityApt === true &&
-        ((data.restrictedAreaTf === true &&
-            data.meetAllHouseMemberRewinningRestrictionTf === true &&
-            data.meetHouseHavingLessThan2AptTf === true &&
-            data.householderTf === true &&
-            data.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
-            data.restrictedAreaTf === false) &&
-        data.meetBankbookJoinPeriodTf === true &&
-        data.meetDepositTf === true
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        data?.priorityApt === true &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+            data?.meetHouseHavingLessThan2AptTf === true &&
+            data?.householderTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true
     ) {
         form.generalMinyeongRes = '일순위';
     } else if (
-        data.accountTf === true &&
-        data.meetLivingInSurroundAreaTf === true &&
-        ((data.americanAge < 20 &&
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
             supportYn === 'y' &&
-            data.householderTf === true) ||
-            data.americanAge >= 20) &&
-        ((data.restrictedAreaTf === true && // 규제지역
-            data.meetAllHouseMemberRewinningRestrictionTf === true &&
-            ((data.americanAge >= 20 && data.householderTf === false) ||
-                data.priorityApt === false ||
-                data.meetAllHouseMemberNotWinningIn5yearsTf === false ||
-                data.meetBankbookJoinPeriodTf === false ||
-                data.meetDepositTf === false)) ||
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        ((data?.restrictedAreaTf === true && // 규제지역
+            data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+            ((data?.americanAge >= 20 && data?.householderTf === false) ||
+                data?.priorityApt === false ||
+                data?.meetAllHouseMemberNotWinningIn5yearsTf === false ||
+                data?.meetBankbookJoinPeriodTf === false ||
+                data?.meetDepositTf === false)) ||
             // 비규제지역
-            (data.restrictedAreaTf === false &&
-                (data.meetBankbookJoinPeriodTf === false ||
-                    data.meetDepositTf === false ||
-                    data.priorityApt === false)))
+            (data?.restrictedAreaTf === false &&
+                (data?.meetBankbookJoinPeriodTf === false ||
+                    data?.meetDepositTf === false ||
+                    data?.priorityApt === false)))
     ) {
         form.generalMinyeongRes = '이순위';
     } else if (
-        data.accountTf === false ||
-        data.meetLivingInSurroundAreaTf === false ||
-        (data.americanAge < 20 &&
-            (supportYn !== 'y' || data.householderTf === false)) ||
-        (data.restrictedAreaTf === true &&
-            data.meetAllHouseMemberRewinningRestrictionTf === false)
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        (data?.americanAge < 20 &&
+            (supportYn !== 'y' || data?.householderTf === false)) ||
+        (data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === false)
     ) {
         form.generalMinyeongRes = '탈락';
     } else {
@@ -187,7 +180,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchGeneralMinyeongRank({
-                verificationRecordGeneralMinyeongId: data.id,
+                verificationRecordGeneralMinyeongId: data?.id,
                 generalMinyeongRank: form.generalMinyeongRes,
                 supportYn,
             })

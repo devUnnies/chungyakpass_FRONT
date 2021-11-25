@@ -10,21 +10,34 @@ export const RES_MULTICHILD_MINYEONG_APTNUM_POST_SUCCESS =
 export const RES_MULTICHILD_MINYEONG_APTNUM_POST_ERROR =
     'RES_MULTICHILD_MINYEONG_APTNUM_POST_ERROR';
 
+// 다자녀 민영 순위
+export const RES_MULTICHILD_MINYEONG_RANK_PATCH =
+    'RES_MULTICHILD_MINYEONG_RANK_PATCH';
+export const RES_MULTICHILD_MINYEONG_RANK_PATCH_SUCCESS =
+    'RES_MULTICHILD_MINYEONG_RANK_PATCH_SUCCESS';
+export const RES_MULTICHILD_MINYEONG_RANK_PATCH_ERROR =
+    'RES_MULTICHILD_MINYEONG_RANK_PATCH_ERROR';
+
+// 다자녀 민영 순위 조회
+export const RES_MULTICHILD_MINYEONG_RANK_GET =
+    'RES_MULTICHILD_MINYEONG_RANK_GET';
+export const RES_MULTICHILD_MINYEONG_RANK_GET_SUCCESS =
+    'RES_MULTICHILD_MINYEONG_RANK_GET_SUCCESS';
+export const RES_MULTICHILD_MINYEONG_RANK_GET_ERROR =
+    'RES_MULTICHILD_MINYEONG_RANK_GET_ERROR';
+
 /* Action Creator */
 export const postMultiChildMinyeongAptNum = createPromiseThunk(
     RES_MULTICHILD_MINYEONG_APTNUM_POST,
     multiChildMinyeongApi.postMultiChildMinyeongAptNum
 );
 
-// // 다자녀 민영 로직 get
-// export const RES_MULTICHILD_MINYEONG_GET = 'RES_MULTICHILD_MINYEONG_GET';
-// export const RES_MULTICHILD_MINYEONG_GET_SUCCESS =
-//     'RES_MULTICHILD_MINYEONG_GET_SUCCESS';
-// export const RES_MULTICHILD_MINYEONG_GET_ERROR =
-//     'RES_MULTICHILD_MINYEONG_GET_ERROR';
+export const patchMultiChildMinyeongRank = createPromiseThunk(
+    RES_MULTICHILD_MINYEONG_RANK_PATCH,
+    multiChildMinyeongApi.patchMultiChildMinyeongRank
+);
 
-// /* Action Creator */
-// export const getMultiChildMinyeong = createPromiseThunk(
-//     RES_MULTICHILD_MINYEONG_GET,
-//     multiChildMinyeongApi.getMultiChildMinyeong
-// );
+export const getMultiChildMinyeongRank = createPromiseThunk(
+    RES_MULTICHILD_MINYEONG_RANK_GET,
+    multiChildMinyeongApi.getMultiChildMinyeongRank
+);
