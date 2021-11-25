@@ -34,7 +34,7 @@ function NormalRequiredDocuments() {
                 </tr>
 
                 <tr>
-                    <td rowspan="7" className="table-row1">
+                    <td rowSpan="7" className="table-row1">
                         제출 <br />
                         서류
                     </td>
@@ -137,7 +137,7 @@ function NormalRequiredDocuments() {
                 </tr>
 
                 <tr>
-                    <td rowspan="8" className="table-row1">
+                    <td rowSpan="8" className="table-row1">
                         가점제
                         <br />
                         당첨자
@@ -154,7 +154,7 @@ function NormalRequiredDocuments() {
                 </tr>
 
                 <tr>
-                    <td rowspan="2" className="table-text-align">
+                    <td rowSpan="2" className="table-text-align">
                         주민등록표초본(상세)
                     </td>
                     <td className="table-text-align1">직계존속</td>
@@ -177,7 +177,7 @@ function NormalRequiredDocuments() {
                 </td>
 
                 <tr>
-                    <td rowspan="2" className="table-text-align">
+                    <td rowSpan="2" className="table-text-align">
                         출입국사실증명원
                     </td>
                     <td className="table-text-align1">직계존속</td>
@@ -198,7 +198,7 @@ function NormalRequiredDocuments() {
                 </td>
 
                 <tr>
-                    <td rowspan="2" className="table-text-align">
+                    <td rowSpan="2" className="table-text-align">
                         혼인관계증명서(상세)
                     </td>
                     <td className="table-text-align1">본인</td>

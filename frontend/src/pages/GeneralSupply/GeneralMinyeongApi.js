@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postGeneralMinyeongAptNum } from '../../store/actions/generalMinyeongAction';
-import { patchGeneralMinyeongRank } from '../../store/actions/generalMinyeongRankAction';
+import {
+    postGeneralMinyeongAptNum,
+    patchGeneralMinyeongRank,
+    getGeneralMinyeongRank,
+} from '../../store/actions/generalMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -23,25 +26,28 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
     // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // 자격확인 로직 결과 가져오기
-    const generalMinyeongRankStore = useSelector(
-        (state) => state.generalMinyeongRank
-    ); // 순위 patch
+    const generalMinyeongStore = useSelector((state) => state.generalMinyeong); // 일반민영 api
+    const [form, setForm] = useState({
+        name: '',
+        generalMinyeongRes: '',
+    });
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
+    const history = useHistory();
     const [notificationNumber, setNotificationNumber] = useState(
         location?.state?.notificationNumber
     );
     const [housingType, setHousingType] = useState(
         location?.state?.housingType
     );
-    const [loading, setLoading] = useState(true);
-    const history = useHistory();
+    // 일반 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [generalMinyeongRank, setGeneralMinyeongRank] = useState('');
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
-
-    const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data; // 일반 민영 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -49,6 +55,15 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (generalMinyeongStore.postGeneralMinyeongAptNum.data) {
+            const data = generalMinyeongStore.postGeneralMinyeongAptNum?.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [generalMinyeongStore.postGeneralMinyeongAptNum]);
+
+    const data = generalMinyeongStore?.postGeneralMinyeongAptNum?.data; // 일반 민영 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -63,10 +78,6 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        generalMinyeongRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -75,19 +86,20 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (generalMinyeongStore.postGeneralMinyeongAptNum.data) {
-            const data = generalMinyeongStore.postGeneralMinyeongAptNum?.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [generalMinyeongStore.postGeneralMinyeongAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.generalMinyeongRes === '1순위' ||
-            form?.generalMinyeongRes === '2순위'
+            form?.generalMinyeongRes === '일순위' ||
+            form?.generalMinyeongRes === '이순위'
         ) {
+            dispatch(
+                patchGeneralMinyeongRank({
+                    verificationRecordGeneralMinyeongId: data.id,
+                    generalMinyeongRank: form.generalMinyeongRes,
+                    supportYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -101,13 +113,68 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.generalMinyeongRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+            dispatch(
+                patchGeneralMinyeongRank({
+                    verificationRecordGeneralMinyeongId: data.id,
+                    generalMinyeongRank: form.generalMinyeongRes,
+                    supportYn,
+                })
+            );
         }
     };
 
-    // 일반 민영 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [generalMinyeongRank, setGeneralMinyeongRank] = useState('');
+    // 일반 민영 순위 로직
+    if (
+        data.accountTf === true &&
+        data.meetLivingInSurroundAreaTf === true &&
+        ((data.americanAge < 20 &&
+            supportYn === 'y' &&
+            data.householderTf === true) ||
+            data.americanAge >= 20) &&
+        data.priorityApt === true &&
+        ((data.restrictedAreaTf === true &&
+            data.meetAllHouseMemberRewinningRestrictionTf === true &&
+            data.meetHouseHavingLessThan2AptTf === true &&
+            data.householderTf === true &&
+            data.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
+            data.restrictedAreaTf === false) &&
+        data.meetBankbookJoinPeriodTf === true &&
+        data.meetDepositTf === true
+    ) {
+        form.generalMinyeongRes = '일순위';
+    } else if (
+        data.accountTf === true &&
+        data.meetLivingInSurroundAreaTf === true &&
+        ((data.americanAge < 20 &&
+            supportYn === 'y' &&
+            data.householderTf === true) ||
+            data.americanAge >= 20) &&
+        ((data.restrictedAreaTf === true && // 규제지역
+            data.meetAllHouseMemberRewinningRestrictionTf === true &&
+            ((data.americanAge >= 20 && data.householderTf === false) ||
+                data.priorityApt === false ||
+                data.meetAllHouseMemberNotWinningIn5yearsTf === false ||
+                data.meetBankbookJoinPeriodTf === false ||
+                data.meetDepositTf === false)) ||
+            // 비규제지역
+            (data.restrictedAreaTf === false &&
+                (data.meetBankbookJoinPeriodTf === false ||
+                    data.meetDepositTf === false ||
+                    data.priorityApt === false)))
+    ) {
+        form.generalMinyeongRes = '이순위';
+    } else if (
+        data.accountTf === false ||
+        data.meetLivingInSurroundAreaTf === false ||
+        (data.americanAge < 20 &&
+            (supportYn !== 'y' || data.householderTf === false)) ||
+        (data.restrictedAreaTf === true &&
+            data.meetAllHouseMemberRewinningRestrictionTf === false)
+    ) {
+        form.generalMinyeongRes = '탈락';
+    } else {
+        form.generalMinyeongRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -120,29 +187,16 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchGeneralMinyeongRank({
-                generalMinyeongRank,
+                verificationRecordGeneralMinyeongId: data.id,
+                generalMinyeongRank: form.generalMinyeongRes,
                 supportYn,
             })
         );
     };
 
-    const onClick = async () => {
-        dispatch(
-            patchGeneralMinyeongRank({
-                generalMinyeongRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setGeneralMinyeongRank(
-            form?.generalMinyeongRes !== '' ? form?.generalMinyeongRes : null
-        );
-    }, [generalMinyeongRankStore.patchGeneralMinyeongRank]);
-
-    console.log(generalMinyeongRank);
+    console.log(form.generalMinyeongRes);
     console.log(supportYn);
+    console.log(data?.ranking);
 
     return (
         <>
@@ -343,7 +397,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                                                 ※ 인근지역의
                                                                 경우
                                                             </p>
-                                                            1순위 조건 충족자는
+                                                            일순위 조건 충족자는
                                                             맞지만 해당 지역에
                                                             거주하는 자에게 우선
                                                             공급하므로 {'\n'}{' '}
@@ -1212,81 +1266,13 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    data?.priorityApt === true &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true &&
-                                        data?.meetHouseHavingLessThan2AptTf ===
-                                            true &&
-                                        data?.householderTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true
-                                        ? (form.generalMinyeongRes = '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    ((data?.restrictedAreaTf === true && // 규제지역
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true &&
-                                        ((data?.americanAge >= 20 &&
-                                            data?.householderTf === false) ||
-                                            data?.priorityApt === false ||
-                                            data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                                false ||
-                                            data?.meetBankbookJoinPeriodTf ===
-                                                false ||
-                                            data?.meetDepositTf === false)) ||
-                                        // 비규제지역
-                                        (data?.restrictedAreaTf === false &&
-                                            (data?.meetBankbookJoinPeriodTf ===
-                                                false ||
-                                                data?.meetDepositTf === false ||
-                                                data?.priorityApt === false)))
-                                        ? (form.generalMinyeongRes = '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    (data?.americanAge < 20 &&
-                                        (supportYn !== 'y' ||
-                                            data?.householderTf === false)) ||
-                                    (data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            false)
-                                        ? (form.generalMinyeongRes = '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
-                                {form.generalMinyeongRes === '1순위' ||
-                                form.generalMinyeongRes === '2순위' ? (
+                                {form.generalMinyeongRes === '일순위' ||
+                                form.generalMinyeongRes === '이순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1302,10 +1288,7 @@ const GeneralMinyeongApi = ({ onSaveData }) => {
                                 {form.generalMinyeongRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"
