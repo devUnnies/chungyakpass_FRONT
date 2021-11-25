@@ -63,17 +63,17 @@ function Rank({ history }) {
                 <>
                     <div className="RankMain">
                         {/* 1순위 */}
-                        {generalMinyeongRes === '1순위' ||
-                        generalKookminRes === '1순위' ||
-                        multiChildMinyeongRes === '1순위' ||
-                        multiChildKookminRes === '1순위' ||
-                        oldParentMinyeongRes === '1순위' ||
-                        oldParentKookminRes === '1순위' ||
-                        newlyMarriedMinyeongRes === '1순위' ||
-                        newlyMarriedKookminSpecialRes === '1순위' ||
-                        newlyMarriedKookminRes === '1순위' ||
-                        firstLifeMinyeongRes === '1순위' ||
-                        firstLifeKookminRes === '1순위' ? (
+                        {generalMinyeongRes === '일순위' ||
+                        generalKookminRes === '일순위' ||
+                        multiChildMinyeongRes === '일순위' ||
+                        multiChildKookminRes === '일순위' ||
+                        oldParentMinyeongRes === '일순위' ||
+                        oldParentKookminRes === '일순위' ||
+                        newlyMarriedMinyeongRes === '일순위' ||
+                        newlyMarriedKookminSpecialRes === '일순위' ||
+                        newlyMarriedKookminRes === '일순위' ||
+                        firstLifeMinyeongRes === '일순위' ||
+                        firstLifeKookminRes === '일순위' ? (
                             <>
                                 <div className="greetingMessage">
                                     {GreetingMessage1st}
@@ -83,13 +83,13 @@ function Rank({ history }) {
                         ) : null}
 
                         {/* 2순위 */}
-                        {generalMinyeongRes === '2순위' ||
-                        generalKookminRes === '2순위' ||
-                        multiChildMinyeongRes === '2순위' ||
-                        multiChildKookminRes === '2순위' ||
-                        newlyMarriedMinyeongRes === '2순위' ||
-                        newlyMarriedKookminSpecialRes === '2순위' ||
-                        newlyMarriedKookminRes === '2순위' ? (
+                        {generalMinyeongRes === '이순위' ||
+                        generalKookminRes === '이순위' ||
+                        multiChildMinyeongRes === '이순위' ||
+                        multiChildKookminRes === '이순위' ||
+                        newlyMarriedMinyeongRes === '이순위' ||
+                        newlyMarriedKookminSpecialRes === '이순위' ||
+                        newlyMarriedKookminRes === '이순위' ? (
                             <>
                                 <div className="greetingMessage">
                                     {GreetingMessage2nd}
@@ -99,10 +99,10 @@ function Rank({ history }) {
 
                         {/* 제출 서류확인 테이블 */}
                         {/* 일반 공급 서류제출 */}
-                        {generalMinyeongRes === '1순위' ||
-                        generalMinyeongRes === '2순위' ||
-                        generalKookminRes === '1순위' ||
-                        generalKookminRes === '2순위' ? (
+                        {generalMinyeongRes === '일순위' ||
+                        generalMinyeongRes === '이순위' ||
+                        generalKookminRes === '일순위' ||
+                        generalKookminRes === '이순위' ? (
                             <NormalRequiredDocuments />
                         ) : null}
 

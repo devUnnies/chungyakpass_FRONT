@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postGeneralKookminAptNum } from '../../store/actions/generalKookminAction';
-import { patchGeneralKookminRank } from '../../store/actions/generalKookminRankAction';
+import {
+    postGeneralKookminAptNum,
+    patchGeneralKookminRank,
+    getGeneralKookminRank,
+} from '../../store/actions/generalKookminAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -24,9 +27,12 @@ const GeneralKookminApi = ({ onSaveData }) => {
     const dispatch = useDispatch(); // api 연결 데이터 가져오기 위함.
     // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
     const generalKookminStore = useSelector((state) => state.generalKookmin); // dispatch 로 가져온 값을 redux로 화면에 뿌려줌.
-    const generalKookminRankStore = useSelector(
-        (state) => state.generalKookminRank
-    ); // 순위 patch
+
+    const [form, setForm] = useState({
+        name: '',
+        generalKookminRes: '',
+    });
+
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
@@ -35,13 +41,15 @@ const GeneralKookminApi = ({ onSaveData }) => {
     const history = useHistory();
     const location = useLocation();
     const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
+        location.state.notificationNumber
     );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
-
-    const data = generalKookminStore.postGeneralKookminAptNum.data; // 일반 민영 로직 접근 변수
+    const [housingType, setHousingType] = useState(location.state.housingType);
+    // 일반 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [lifeYn, setLifeYn, handleChangeLifeYn] = useInputState(null);
+    // 순위
+    const [generalKookminRank, setGeneralKookminRank] = useState('');
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -49,6 +57,24 @@ const GeneralKookminApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (generalKookminStore.postGeneralKookminAptNum.data) {
+            const data = generalKookminStore.postGeneralKookminAptNum?.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [generalKookminStore.postGeneralKookminAptNum]);
+
+    // 순위 로직
+    useEffect(() => {
+        // 순위 useEffect.
+        if (generalKookminStore?.patchGeneralKookminRank) {
+            const data = generalKookminStore?.patchGeneralKookminRank?.data;
+        }
+    }, [generalKookminStore?.patchGeneralKookminRank]);
+
+    const data = generalKookminStore?.postGeneralKookminAptNum?.data; // 일반 민영 로직 접근 변수
+    // console.log(data.id);
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -63,31 +89,29 @@ const GeneralKookminApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        generalKookminRes: '',
-    });
     const onChange = (e) => {
-        const { name, value } = e.target;
+        const { generalKookminRes, value } = e.target;
         setForm({
             ...form,
-            [name]: value,
+            [generalKookminRes]: value,
         });
     };
-
-    useEffect(() => {
-        if (generalKookminStore?.postGeneralKookminAptNum?.data) {
-            const data = generalKookminStore?.postGeneralKookminAptNum?.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [generalKookminStore?.postGeneralKookminAptNum]);
 
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.generalKookminRes === '1순위' ||
-            form?.generalKookminRes === '2순위'
+            form?.generalKookminRes === '일순위' ||
+            form?.generalKookminRes === '이순위'
         ) {
+            dispatch(
+                patchGeneralKookminRank({
+                    verificationRecordGeneralKookminId: data.id,
+                    generalKookminRank: form.generalKookminRes,
+                    supportYn,
+                    lifeYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -101,14 +125,74 @@ const GeneralKookminApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.generalKookminRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+            dispatch(
+                patchGeneralKookminRank({
+                    verificationRecordGeneralKookminId: data.id,
+                    generalKookminRank: form.generalKookminRes,
+                    supportYn,
+                    lifeYn,
+                })
+            );
         }
     };
 
-    // 일반 국민 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [lifeYn, setLifeYn, handleChangeLifeYn] = useInputState(null);
-    const [generalKookminRank, setGeneralKookminRank] = useState('');
+    // 일반 국민 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            (data?.americanAge >= 20 &&
+                data?.americanAge < 30 &&
+                lifeYn === 'y') ||
+            data?.americanAge >= 30) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+            data?.householderTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetNumberOfPaymentsTf === true
+    ) {
+        form.generalKookminRes = '일순위';
+    } else if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            (data?.americanAge >= 20 &&
+                data?.americanAge < 30 &&
+                lifeYn === 'y') ||
+            data?.americanAge >= 30) &&
+        ((data?.restrictedAreaTf === true && // 규제지역
+            data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+            ((data?.americanAge >= 20 && data?.householderTf === false) ||
+                data?.meetAllHouseMemberNotWinningIn5yearsTf === false ||
+                data?.meetBankbookJoinPeriodTf === false ||
+                data?.meetNumberOfPaymentsTf === false)) ||
+            // 비규제지역
+            (data?.restrictedAreaTf === false &&
+                (data?.meetBankbookJoinPeriodTf === false ||
+                    data?.meetNumberOfPaymentsTf === false)))
+    ) {
+        form.generalKookminRes = '이순위';
+    } else if (
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        data?.meetHomelessHouseholdMembersTf === false ||
+        (data?.americanAge < 20 && supportYn !== 'y') ||
+        data?.householderTf === false ||
+        (data?.americanAge >= 20 && lifeYn !== 'y') ||
+        data?.meetAllHouseMemberRewinningRestrictionTf === false
+    ) {
+        form.generalKookminRes = '탈락';
+    } else {
+        form.generalKookminRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -121,6 +205,7 @@ const GeneralKookminApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchGeneralKookminRank({
+                verificationRecordGeneralKookminId: data.id,
                 generalKookminRank,
                 supportYn,
                 lifeYn,
@@ -128,28 +213,9 @@ const GeneralKookminApi = ({ onSaveData }) => {
         );
     };
 
-    const onClick = async () => {
-        dispatch(
-            patchGeneralKookminRank({
-                generalKookminRank,
-                supportYn,
-                lifeYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        if (form?.generalKookminRes !== '')
-            setGeneralKookminRank(form.generalKookminRes);
-        else setGeneralKookminRank(null);
-
-        console.log(generalKookminRank);
-    }, [generalKookminRankStore.patchGeneralKookminRank]);
-
-    console.log(generalKookminRank);
     console.log(supportYn);
     console.log(lifeYn);
-    console.log(form.generalKookminRes);
+    console.log(form?.generalKookminRes);
 
     return (
         <>
@@ -168,7 +234,7 @@ const GeneralKookminApi = ({ onSaveData }) => {
                 </>
             ) : (
                 <>
-                    {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
+                    {/* 공통 정보 입력 오류 값에 의한 error 발생 시(data?.error 값이 null이 아닌 경우) alert 창으로 접근 막음.
                     공통 정보 입력 수정 페이지 생성 시 수정 페이지로 연결하기. */}
                     {data?.error === 'BAD_REQUEST' ||
                     data?.error === 'NOT_FOUND' ? (
@@ -1329,93 +1395,13 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            lifeYn === 'y') ||
-                                        data?.americanAge >= 30) &&
-                                    // data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                    //     true &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.householderTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetNumberOfPaymentsTf === true
-                                        ? (form.generalKookminRes = '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        (data?.americanAge >= 20 &&
-                                            data?.americanAge < 30 &&
-                                            lifeYn === 'y') ||
-                                        data?.americanAge >= 30) &&
-                                    ((data?.restrictedAreaTf === true && // 규제지역
-                                        // data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        //     true &&
-                                        ((data?.americanAge >= 20 &&
-                                            data?.householderTf === false) ||
-                                            data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                                false)) ||
-                                        data?.meetBankbookJoinPeriodTf ===
-                                            false ||
-                                        data?.meetNumberOfPaymentsTf ===
-                                            false ||
-                                        // 비규제지역
-                                        (data?.restrictedAreaTf === false &&
-                                            (data?.meetBankbookJoinPeriodTf ===
-                                                false ||
-                                                data?.meetNumberOfPaymentsTf ===
-                                                    false)))
-                                        ? (form.generalKookminRes = '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        false ||
-                                    (data?.americanAge < 20 &&
-                                        (supportYn !== 'y' ||
-                                            data?.householderTf === false)) ||
-                                    (data?.americanAge >= 20 &&
-                                        data?.americanAge < 30 &&
-                                        lifeYn !== 'y')
-                                        ? // (data?.restrictedAreaTf === true &&
-                                          //     data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                          //         false)
-                                          (form.generalKookminRes = '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
-                                {form.generalKookminRes === '1순위' ||
-                                form.generalKookminRes === '2순위' ? (
+                                {form.generalKookminRes === '일순위' ||
+                                form.generalKookminRes === '이순위' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1431,10 +1417,7 @@ const GeneralKookminApi = ({ onSaveData }) => {
                                 {form.generalKookminRes === '탈락' ? (
                                     <div className="generalRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"
