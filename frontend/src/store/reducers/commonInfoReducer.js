@@ -58,6 +58,7 @@ import {
     MEMBER_GET_SUCCESS,
     MEMBER_GET_ERROR,
     ADD_HOUSE_POST_DELETE,
+    MOD_HOUSE_PUT_DELETE,
     MOD_MEMBER_DELETE,
     CHUNGYAK_GET,
     CHUNGYAK_GET_SUCCESS,
@@ -80,6 +81,26 @@ import {
     DEL_ASSETS_DELETE,
     DEL_ASSETS_DELETE_SUCCESS,
     DEL_ASSETS_DELETE_ERROR,
+    BANKBOOK_GET,
+    BANKBOOK_GET_SUCCESS,
+    BANKBOOK_GET_ERROR,
+    ADD_BANKBOOK_POST_DELETE,
+    MOD_BANKBOOK_PUT_DELETE,
+    HOUSE_GET_DELETE,
+    BANKBOOK_GET_DELETE,
+    DEL_HOUSE_DELETE_DELETE,
+    ADD_MEMBER_ADD_INFO_POST,
+    ADD_MEMBER_ADD_INFO_POST_SUCCESS,
+    ADD_MEMBER_ADD_INFO_POST_ERROR,
+    ADD_MEMBER_ADD_INFO_POST_DELETE,
+    MOD_MEMBER_ADD_INFO_PUT,
+    MOD_MEMBER_ADD_INFO_PUT_SUCCESS,
+    MOD_MEMBER_ADD_INFO_PUT_ERROR,
+    MOD_MEMBER_ADD_INFO_PUT_DELETE,
+    DEL_MEMBER_ADD_INFO_DELETE,
+    DEL_MEMBER_ADD_INFO_DELETE_SUCCESS,
+    DEL_MEMBER_ADD_INFO_DELETE_ERROR,
+    DEL_MEMBER_ADD_INFO_DELETE_DELETE,
 } from '../actions/commonInfoAction';
 import {
     reducerUtils,
@@ -91,6 +112,7 @@ const initialState = {
     addHouse: reducerUtils.initial(),
     modHouse: reducerUtils.initial(),
     delHouse: reducerUtils.initial(),
+    getBank: reducerUtils.initial(),
     addBank: reducerUtils.initial(),
     modBank: reducerUtils.initial(),
     delBank: reducerUtils.initial(),
@@ -98,6 +120,9 @@ const initialState = {
     addMem: reducerUtils.initial(),
     modMem: reducerUtils.initial(),
     delMem: reducerUtils.initial(),
+    addMemPlus: reducerUtils.initial(),
+    modMemPlus: reducerUtils.initial(),
+    delMemPlus: reducerUtils.initial(),
     patHolder: reducerUtils.initial(),
     getAssets: reducerUtils.initial(),
     addAssets: reducerUtils.initial(),
@@ -119,21 +144,15 @@ export default function commonInfo(state = initialState, action) {
         case HOUSE_GET_SUCCESS:
         case HOUSE_GET_ERROR:
             return handleAsyncActions(HOUSE_GET, 'getHouse')(state, action);
+        case HOUSE_GET_DELETE:
+            return {
+                ...state,
+                getHouse: reducerUtils.initial(),
+            };
         case ADD_HOUSE_POST:
         case ADD_HOUSE_POST_SUCCESS:
         case ADD_HOUSE_POST_ERROR:
             return handleAsyncActions(ADD_HOUSE_POST, 'addHouse')(
-                state,
-                action
-            );
-        case MOD_HOUSE_PUT:
-        case MOD_HOUSE_PUT_SUCCESS:
-        case MOD_HOUSE_PUT_ERROR:
-            return handleAsyncActions(MOD_HOUSE_PUT, 'modHouse')(state, action);
-        case DEL_HOUSE_DELETE:
-        case DEL_HOUSE_DELETE_SUCCESS:
-        case DEL_HOUSE_DELETE_ERROR:
-            return handleAsyncActions(DEL_HOUSE_DELETE, 'delHouse')(
                 state,
                 action
             );
@@ -142,6 +161,34 @@ export default function commonInfo(state = initialState, action) {
                 ...state,
                 addHouse: reducerUtils.initial(),
             };
+        case MOD_HOUSE_PUT:
+        case MOD_HOUSE_PUT_SUCCESS:
+        case MOD_HOUSE_PUT_ERROR:
+            return handleAsyncActions(MOD_HOUSE_PUT, 'modHouse')(state, action);
+        case MOD_HOUSE_PUT_DELETE:
+            return {
+                ...state,
+                modHouse: reducerUtils.initial(),
+            };
+
+        case DEL_HOUSE_DELETE:
+        case DEL_HOUSE_DELETE_SUCCESS:
+        case DEL_HOUSE_DELETE_ERROR:
+            return handleAsyncActions(DEL_HOUSE_DELETE, 'delHouse')(
+                state,
+                action
+            );
+        case DEL_HOUSE_DELETE_DELETE:
+            return {
+                ...state,
+                delHouse: reducerUtils.initial(),
+            };
+        case BANKBOOK_GET:
+        case BANKBOOK_GET_SUCCESS:
+        case BANKBOOK_GET_ERROR:
+            return handleAsyncActions(BANKBOOK_GET, 'getBank')(state, action);
+        case BANKBOOK_GET_DELETE:
+            return { ...state, getBank: reducerUtils.initial() };
         case ADD_BANKBOOK_POST:
         case ADD_BANKBOOK_POST_SUCCESS:
         case ADD_BANKBOOK_POST_ERROR:
@@ -149,6 +196,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case ADD_BANKBOOK_POST_DELETE:
+            return {
+                ...state,
+                addBank: reducerUtils.initial(),
+            };
         case MOD_BANKBOOK_PUT:
         case MOD_BANKBOOK_PUT_SUCCESS:
         case MOD_BANKBOOK_PUT_ERROR:
@@ -156,6 +208,11 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case MOD_BANKBOOK_PUT_DELETE:
+            return {
+                ...state,
+                modBank: reducerUtils.initial(),
+            };
         case DEL_BANKBOOK_DELETE:
         case DEL_BANKBOOK_DELETE_SUCCESS:
         case DEL_BANKBOOK_DELETE_ERROR:
@@ -171,19 +228,43 @@ export default function commonInfo(state = initialState, action) {
         case ADD_MEMBER_POST_SUCCESS:
         case ADD_MEMBER_POST_ERROR:
             return handleAsyncActions(ADD_MEMBER_POST, 'addMem')(state, action);
+        case ADD_MEMBER_ADD_INFO_POST:
+        case ADD_MEMBER_ADD_INFO_POST_SUCCESS:
+        case ADD_MEMBER_ADD_INFO_POST_ERROR:
+            return handleAsyncActions(ADD_MEMBER_ADD_INFO_POST, 'addMemPlus')(
+                state,
+                action
+            );
         case ADD_MEMBER_DELETE:
             return {
                 ...state,
                 addMem: reducerUtils.initial(),
             };
+        case ADD_MEMBER_ADD_INFO_POST_DELETE:
+            return {
+                ...state,
+                addMemPlus: reducerUtils.initial(),
+            };
         case MOD_MEMBER_PUT:
         case MOD_MEMBER_PUT_SUCCESS:
         case MOD_MEMBER_PUT_ERROR:
             return handleAsyncActions(MOD_MEMBER_PUT, 'modMem')(state, action);
+        case MOD_MEMBER_ADD_INFO_PUT:
+        case MOD_MEMBER_ADD_INFO_PUT_SUCCESS:
+        case MOD_MEMBER_ADD_INFO_PUT_ERROR:
+            return handleAsyncActions(MOD_MEMBER_ADD_INFO_PUT, 'modMemPlus')(
+                state,
+                action
+            );
         case MOD_MEMBER_DELETE:
             return {
                 ...state,
                 modMem: reducerUtils.initial(),
+            };
+        case MOD_MEMBER_ADD_INFO_PUT_DELETE:
+            return {
+                ...state,
+                modMemPlus: reducerUtils.initial(),
             };
         case DEL_MEMBER_DELETE:
         case DEL_MEMBER_DELETE_SUCCESS:
@@ -192,6 +273,15 @@ export default function commonInfo(state = initialState, action) {
                 state,
                 action
             );
+        case DEL_MEMBER_ADD_INFO_DELETE:
+        case DEL_MEMBER_ADD_INFO_DELETE_SUCCESS:
+        case DEL_MEMBER_ADD_INFO_DELETE_ERROR:
+            return handleAsyncActions(DEL_MEMBER_ADD_INFO_DELETE, 'delMemPlus')(
+                state,
+                action
+            );
+        case DEL_MEMBER_ADD_INFO_DELETE_DELETE:
+            return { ...state, delMemPlus: reducerUtils.initial() };
         case HOUSE_HOLDER_PATCH:
         case HOUSE_HOLDER_PATCH_SUCCESS:
         case HOUSE_HOLDER_PATCH_ERROR:

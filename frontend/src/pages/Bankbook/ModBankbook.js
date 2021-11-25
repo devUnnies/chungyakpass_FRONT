@@ -2,23 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './BankBook.css';
 import MainButton from '../../components/Button/MainButton';
-import { addBank } from '../../store/actions/commonInfoAction';
-import { useHistory } from 'react-router';
+import { getHouse, modBank } from '../../store/actions/commonInfoAction';
+import { useHistory, useLocation } from 'react-router';
 
-const AddBankbook = () => {
-    const [account, setAccount] = useState({
-        bank: '',
-        bankbook: '',
-        joinDate: '',
-        deposit: 0,
-        paymentsCount: 0,
-    });
-    const [validYn, setValidYn] = useState();
-    const [failMsg, setFailMsg] = useState(null);
-
+const ModBankbook = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
     const commonInfoStore = useSelector((state) => state.commonInfo);
     const history = useHistory();
+    const item = location.state?.item ? location.state.item : undefined;
+    const [account, setAccount] = useState({
+        bank: '',
+    });
+
+    const [failMsg, setFailMsg] = useState(null);
 
     const onAccountChange = (e) => {
         const { name, value } = e.target;
@@ -28,17 +25,13 @@ const AddBankbook = () => {
         });
     };
 
-    const onValidYnChange = (e) => {
-        setValidYn(e.target.value);
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if (failMsg === null) {
             console.log('등록할 통장 정보 !!!! ' + JSON.stringify(account));
 
             // 디스패치가 들어올 공간
-            dispatch(addBank(account));
+            dispatch(modBank(account));
 
             setAccount({
                 bank: '',
@@ -53,44 +46,65 @@ const AddBankbook = () => {
     };
 
     useEffect(() => {
-        if (validYn === 'n') {
-            setFailMsg('!!');
-        } else {
-            setFailMsg(null);
+        const data = commonInfoStore.getBank.data;
+        if (data) {
+            if (
+                data.status === 400 ||
+                data.status === 404 ||
+                data.status === 409
+            ) {
+                alert(data.message);
+                history.push('/');
+            } else {
+                if (item) setAccount(item);
+                else setAccount(data);
+            }
         }
-    }, [validYn]);
+    }, [commonInfoStore.getBank]);
 
     // 디스패치 이후 데이터 인식해서 데이터가 들어왔으면
     // 세대를 선택하는 화면으로 보내기
     useEffect(() => {
-        const data = commonInfoStore.addBank.data;
+        const data = commonInfoStore.modBank.data;
         if (data) {
             if (data.status === 409) {
                 alert(data.message);
             }
-            history.push('/bankbook');
         }
-    }, [commonInfoStore.addBank]);
+    }, [commonInfoStore.modBank]);
+
+    useEffect(() => {
+        const data = commonInfoStore.getHouse.data;
+        if (data) {
+            if (data.status === 404) {
+                history.push('/selectHouse');
+            } else {
+                // 분리세대 등록하는 거 다시 확인하고 추가 할 것 !!!!!!!!
+                // history.push('/selectHouse');
+                console.log('통장은 등록되어있고 세대가 등록 안되어있는 경우');
+            }
+        }
+    }, [commonInfoStore.getHouse]);
 
     return (
-        <div className="addBankbookContainer">
-            <div className="addBankbookHeaderContainer">
+        <div className="modBankbookContainer">
+            <div className="modBankbookHeaderContainer">
                 <div className="heightBar"></div>
-                <span className="listTitle">청약통장 등록</span>
+                <span className="listTitle">청약통장 수정</span>
             </div>
 
             <form
-                className="addBankbookForm"
+                className="modBankbookForm"
                 onSubmit={handleSubmit}
-                name="addBankbook"
+                name="modBankbook"
             >
-                <table className="addBankbookFormTable">
-                    <tbody className="addBankbookFormTableTbody">
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                <table className="modBankbookFormTable">
+                    <tbody className="modBankbookFormTableTbody">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">개설은행</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <select
                                     className="bankSelect"
                                     name="bank"
@@ -106,13 +120,13 @@ const AddBankbook = () => {
                                     <option value="하나">하나</option>
                                 </select>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">청약통장종류</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <select
                                     className="bankbookSelect"
                                     name="bankbook"
@@ -129,13 +143,13 @@ const AddBankbook = () => {
                                     <option value="청약부금">청약부금</option>
                                 </select>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">가입일</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="joinDateInput"
                                     type="date"
@@ -144,13 +158,13 @@ const AddBankbook = () => {
                                     onChange={onAccountChange}
                                 />
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">예치금액</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="depositInput"
                                     type="number"
@@ -160,73 +174,38 @@ const AddBankbook = () => {
                                 />
                                 <span> 원</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">납입횟수</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTd">
+                            <td className="modMemberFormTableTbodyTrTd">
                                 <input
                                     className="paymentsCountInput"
                                     type="number"
                                     name="paymentsCount"
-                                    value={account.paymentsCount}
+                                    value={Number(account.paymentsCount)}
                                     onChange={onAccountChange}
                                 />
                                 <span> 회</span>
                             </td>
-                            <td className="addMemberFormTableTbodyTrTdError"></td>
+                            <td className="modMemberFormTableTbodyTrTdError"></td>
                         </tr>
-                        <tr className="addMemberFormTableTbodyTr">
-                            <td className="addMemberFormTableTbodyTrTdSubTitle">
-                                <span className="subTitle">유효여부</span>
-                            </td>
-                            <td className="addMemberFormTableTbodyTrTd">
-                                <input
-                                    className="validYnInput"
-                                    type="radio"
-                                    name="validYn"
-                                    onChange={onValidYnChange}
-                                    value="y"
-                                    checked={validYn === 'y' ? true : false}
-                                    required
-                                />
-                                <span className="validYnInputText">예</span>
-                                <input
-                                    className="validYnInput"
-                                    type="radio"
-                                    name="validYn"
-                                    onChange={onValidYnChange}
-                                    value="n"
-                                    checked={validYn === 'n' ? true : false}
-                                    required
-                                />
-                                <span className="validYnInputText">아니오</span>
-                            </td>
-                            <td className="addMemberFormTableTbodyTrTdError">
-                                {validYn === 'n' ? (
-                                    <div>
-                                        <span className="failMsg">
-                                            {failMsg}
-                                        </span>
-                                    </div>
-                                ) : null}
-                            </td>
-                        </tr>
-                        <tr className="addMemberFormTableTbodyTr">
+
+                        <tr className="modMemberFormTableTbodyTr">
                             <td
-                                className="addMemberFormTableTbodyTrTd"
+                                className="modMemberFormTableTbodyTrTd"
                                 colSpan="3"
                             >
                                 <div className="saveButtonContainer">
                                     <MainButton
                                         type="submit"
-                                        // className="save"
+                                        className="save"
                                         width="80"
                                         height="30"
                                     >
-                                        등록
+                                        수정
                                     </MainButton>
                                 </div>
                             </td>
@@ -238,4 +217,4 @@ const AddBankbook = () => {
     );
 };
 
-export default AddBankbook;
+export default ModBankbook;
