@@ -8,26 +8,27 @@ export const getHouse = () => get(`user/house`);
 export const addHouse = (info) => post('user/house', info);
 
 //  - 세대수정 API
-export const modHouse = (info) =>
-    put(`user/house/${info.houseId}`, info.addressArr);
+export const modHouse = (info) => put(`user/house/${info.id}`, info.addressArr);
 
 //  - 세대삭제 API
 export const delHouse = (houseId) => del(`user/house/${houseId}`);
 
 // ----------------------------------------------------------------------------
 
+//  - 통장정보조회 API
+export const getBankBook = () => get(`user/bankbook`);
+
 //  - 통장정보등록 API
 export const addBankBook = (info) => post('user/bankbook', info);
 
 //  - 통장정보수정 API
 export const modBankBook = (info) =>
-    put(`user/bankbook/${info.bankBookId}`, {
+    put(`user/bankbook/${info.id}`, {
         bank: info.bank,
         bankbook: info.bankbook,
         joinDate: info.joinDate,
         deposit: info.deposit,
         paymentsCount: info.paymentsCount,
-        validYn: info.validYn,
     });
 
 //  - 통장정보삭제 API
@@ -57,6 +58,26 @@ export const modMember = (info) =>
 
 //  - 세대구성원삭제 API
 export const delMember = (memberId) => del(`user/house/member/${memberId}`);
+
+//  - 세대구성원 추가정보 저장 API
+export const addMemberPlusInfo = (info) =>
+    post(`user/house/member/additional-info`, info);
+
+export const modMemberPlusInfo = (info) =>
+    put(
+        `user/house/member/additional-info/${info.houseMemberAdditionalInfoId}`,
+        {
+            houseMemberId: info.houseMemberId,
+            parentsDeathYn: info.parentsDeathYn,
+            divorceYn: info.divorceYn,
+            sameResidentRegistrationYn: info.sameResidentRegistrationYn,
+            stayOverYn: info.stayOverYn,
+            nowStayOverYn: info.nowStayOverYn,
+        }
+    );
+
+export const delMemberPlusInfo = (id) =>
+    del(`user/house/member/additional-info/${id}`);
 
 // ----------------------------------------------------------------------------
 

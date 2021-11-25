@@ -27,6 +27,32 @@
 }
 
 /*게시글 상세보기*/
+
+.caseBoardInfoHeaderContainer {
+    margin-left: 17%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.caseBoardInfoHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.caseBoardInfoHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
 /* board_title */
 .board_title {
     margin-left: 20%;
@@ -65,12 +91,14 @@
     border-radius: 3px;
 }
 .postName {
-    width: 5%;
-    text-align: center;
+    width: 10%;
+    text-align: right;
+    font-weight: bold;
 }
 .inner {
     float: left;
-    margin-left: 10%;
+    width: 95%;
+    margin-left: 30px;
 }
 
 /*목록 버튼 위치 조정*/

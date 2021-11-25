@@ -4,8 +4,9 @@ import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import SubButton from '../../components/Button/SubButton';
 
 const Td = ({ item, assets, handleEdit, handleRemove }) => {
+    const [isShow, setIsShow] = useState(false);
+
     const onEdit = () => {
-        // console.log(JSON.stringify(item));
         handleEdit(item);
     };
 
@@ -18,50 +19,8 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
         handleRemove(item?.id);
     };
 
-    const relation = (num) => {
-        switch (num) {
-            case 1:
-                return '본인';
-            case 2:
-                return '배우자';
-
-            case 3:
-                return '부';
-            case 4:
-                return '모';
-            case 5:
-                return '배우자의부';
-            case 6:
-                return '배우자의모';
-            case 7:
-                return '조부';
-            case 8:
-                return '조모';
-            case 9:
-                return '배우자의조부';
-            case 10:
-                return '배우자의조모';
-            case 11:
-                return '자녀_일반';
-            case 12:
-                return '자녀_태아';
-            case 13:
-                return '자녀의배우자';
-            case 14:
-                return '손자녀';
-            case 15:
-                return '손자녀의배우자';
-        }
-    };
-
-    // const onEdit = () => {
-    //     // console.log(JSON.stringify(item));
-    //     handleEdit(item);
-    // };
-
     return (
         <>
-            {console.log(JSON.stringify(item))}
             {item ? (
                 <tr className="membersInfoTbodyTr">
                     {/* 이름 */}
@@ -116,6 +75,95 @@ const Td = ({ item, assets, handleEdit, handleRemove }) => {
                             : item?.income === 0
                             ? item?.income + '원'
                             : null}
+                    </td>
+                    <td className="membersInfoTbodyTrTd">
+                        {item.houseMemberAdditionalInfoResponseDto ? (
+                            <>
+                                {isShow ? (
+                                    <>
+                                        <span>부모 사망 이력 : </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .parentsDeathYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        {item.relation !== '본인' &&
+                                        item.relation !== '배우자' &&
+                                        !item.marriageDate ? (
+                                            <>
+                                                <span>이혼여부 : </span>
+                                                {item
+                                                    .houseMemberAdditionalInfoResponseDto
+                                                    .divorceYn === 'y' ? (
+                                                    <>
+                                                        <span>O</span>
+                                                        <br />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span>X</span>
+                                                        <br />
+                                                    </>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        <span>
+                                            해외나 요양시설 체류 이력 :{' '}
+                                        </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .stayOverYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        <span>해외나 요양시설 체류 중 : </span>
+                                        {item
+                                            .houseMemberAdditionalInfoResponseDto
+                                            .nowStayOverYn === 'y' ? (
+                                            <>
+                                                <span>O</span>
+                                                <br />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>X</span>
+                                                <br />
+                                            </>
+                                        )}
+                                        <SubButton
+                                            onClick={() => setIsShow(!isShow)}
+                                        >
+                                            접기
+                                        </SubButton>
+                                    </>
+                                ) : (
+                                    <SubButton
+                                        onClick={() => setIsShow(!isShow)}
+                                    >
+                                        더보기
+                                    </SubButton>
+                                )}
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </td>
                     {/* 수정 버튼 */}
                     <td onClick={onEdit} className="modifyContainer">

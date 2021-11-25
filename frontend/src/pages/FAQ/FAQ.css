@@ -38,6 +38,31 @@
     margin-top: 20%;
 }
 
+.faqInfoHeaderContainer {
+    margin-left: 17%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.faqInfoHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
+}
+
+.faqInfoHeaderContainer .listTitle {
+    font-family: Gothic A1;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.1em;
+    color: #2a4476;
+}
+
 /* faq_title */
 .faq_title {
     margin-left: 20%;
