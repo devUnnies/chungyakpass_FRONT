@@ -5,7 +5,7 @@ import useInputState from '../../components/Input/useInputState';
 import { HomeOutlined, CheckOutlined } from '@ant-design/icons';
 import {
     postGeneralKookminAptNum,
-    RES_GENERAL_KOOKMIN_APTNUM_POST_ERROR,
+    getGeneralKookminRank,
 } from '../../store/actions/generalKookminAction';
 import { useHistory } from 'react-router-dom';
 import './GeneralSupply.css';
@@ -42,12 +42,15 @@ function GeneralKookminAptNum(props) {
         if (notificationNumber === '' || housingType === '') {
             alert('아파트 공고번호 혹은 주택형 입력칸이 비어있습니다.');
         } else {
+            // 일반 국민 aptNum post api 연결 요청.
             dispatch(
                 postGeneralKookminAptNum({
                     notificationNumber: notificationNumber,
                     housingType: housingType,
                 })
-            ); // api 연결 요청.
+            );
+            // 일반 국민 순위 결과 get 요청
+            dispatch(getGeneralKookminRank());
 
             const data =
                 generalKookminAptNumStore.postGeneralKookminAptNum.data;
@@ -76,6 +79,14 @@ function GeneralKookminAptNum(props) {
                 generalKookminAptNumStore.postGeneralKookminAptNum.data;
         }
     }, [generalKookminAptNumStore.postGeneralKookminAptNum]);
+
+    useEffect(() => {
+        const data = generalKookminAptNumStore.getGeneralKookminRank.data;
+
+        if (data) {
+            dispatch(getGeneralKookminRank(data.id));
+        }
+    }, []);
 
     return (
         <>
