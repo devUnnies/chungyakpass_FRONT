@@ -65,8 +65,6 @@ const SeeMember = () => {
         dispatch(modMemDel());
         dispatch(modMemAddInfoDel());
 
-        console.log('hhhhhhhh => ' + houseHolderYn);
-
         // 선택한 데이터 재정의
         const selectedData = {
             id: item.id,
