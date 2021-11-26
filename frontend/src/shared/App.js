@@ -5,7 +5,6 @@ import {
     Login,
     Signup,
     AllowLogin,
-    PersonalInfo,
     GeneralMinyeongApi,
     GeneralMinyeongAptNum,
     GeneralKookminApi,
@@ -33,14 +32,7 @@ import {
     NewlyMarriedMinyeongAptNum,
     NewlyMarriedMinyeongApi,
     Rank,
-    PassbookInfo,
-    HousingInfo,
-    MemberInfo,
-    MemberHousingInfo,
-    AddHouseHolder,
     AtAGlance,
-    Board,
-    Post,
     BoardMain,
     BoardView,
     PersonalRules,
@@ -57,7 +49,6 @@ import {
     NewlyMarriagePointAptNum,
     NewlyMarriagePoint,
     AddBankbook,
-    SelectHouse,
     AddHouse,
     SeeMember,
     AddMember,
@@ -70,8 +61,11 @@ import {
     ModLimit,
     AddAsset,
     ModAsset,
+    SeeBankbook,
+    ModBankbook,
+    SeeHouse,
+    ModHouse,
 } from '../pages';
-import List from '../pages/AddMember/AssetsWindow/List';
 import Header from './header/header';
 import Footer from './footer/footer';
 import GeneralMinyeoungPoint from '../pages/ExtraPoint/GeneralMinyeoung/GeneralMinyeoungPoint';
@@ -81,19 +75,24 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Header></Header>
+                <Header />
                 <Switch>
                     <Route exact path="/" component={Main} />
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/needLogin" component={AllowLogin} />
                     <Route path="/mypage" component={MyPage} />
+                    {/* 부가 정보 */}
                     <Route path="/personalRule" component={PersonalRules} />
                     <Route path="/noEmail" component={NoEmail} />
                     <Route path="/sitemap" component={Sitemap} />
+                    {/* 기초정보 관련 */}
+                    <Route path="/bankbook" component={SeeBankbook} />
                     <Route path="/addBankbook" component={AddBankbook} />
-                    <Route path="/selectHouse" component={SelectHouse} />
+                    <Route path="/modBankbook" component={ModBankbook} />
+                    <Route path="/house" component={SeeHouse} />
                     <Route path="/addHouse" component={AddHouse} />
+                    <Route path="/modHouse" component={ModHouse} />
                     <Route path="/members" component={SeeMember} />
                     <Route path="/addMember" component={AddMember} />
                     <Route path="/modMember" component={ModMember} />
@@ -106,11 +105,6 @@ class App extends Component {
                     <Route path="/addAsset" component={AddAsset} />
                     <Route path="/modAsset" component={ModAsset} />
 
-                    <Route
-                        exact
-                        path="/addHouseHolder/assetList"
-                        component={List}
-                    />
                     <Route exact path="/atAGlance" component={AtAGlance} />
 
                     <Route
@@ -277,7 +271,7 @@ class App extends Component {
                         component={OldParentPoint}
                     />
                 </Switch>
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     }

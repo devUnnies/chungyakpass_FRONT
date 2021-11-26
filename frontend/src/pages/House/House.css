@@ -1,17 +1,18 @@
-.selectHouseContainer {
+/* SeeHouse.js */
+.getHouseContainer {
     margin-top: 0%;
     margin-bottom: 4.5%;
 }
 
-.selectHouseHeaderContainer {
-    margin-left: 30%;
+.getHouseHeaderContainer {
+    margin-left: 20%;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.selectHouseHeaderContainer .heightBar {
+.getHouseHeaderContainer .heightBar {
     width: 5px;
     height: 35px;
 
@@ -19,7 +20,7 @@
     margin-right: 10px;
 }
 
-.selectHouseHeaderContainer .listTitle {
+.getHouseHeaderContainer .listTitle {
     font-family: Gothic A1;
     font-weight: bold;
     font-size: 18px;
@@ -28,25 +29,58 @@
     color: #2a4476;
 }
 
-.selectHouseFormTable {
-    width: 500px;
+.getHouseTable {
+    width: 700px;
     margin-top: 3%;
-    margin-left: 36%;
+    margin-left: 20%;
 }
 
-.selectHouseFormTableTrTd {
-    padding-bottom: 10px;
+.getHouseTableTbodyTrTdSubTitle {
+    text-align: right;
+    padding-right: 10px;
 }
 
-.selectHouseForm .saveButtonContainer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10%;
-    margin-right: 15%;
-    margin-bottom: 5%;
+.getHouseTableTheadTr {
 }
 
-/* add house !! */
+.getHouseTableTheadTrTd {
+    text-align: center;
+}
+
+.getHouseTableTheadTrTdAddress {
+    text-align: center;
+    width: 300px;
+}
+
+.getHouseTableTbodyTrTd {
+    text-align: center;
+}
+
+.getHouseTableTbodyTrTdText {
+}
+
+.getHouseTableTbodyTrTdClick {
+    cursor: pointer;
+    width: 120px;
+}
+
+.getHouseContainer .saveButtonContainer {
+    text-align: center;
+}
+
+.getHouseContainer .saveButtonContainer .modify {
+    font-size: 17px;
+    color: #2a4476;
+    cursor: pointer;
+}
+
+.getHouseContainer .saveButtonContainer .delete {
+    font-size: 17px;
+    color: #2a4476;
+    cursor: pointer;
+}
+
+/* AddHouse.js */
 .addHouseView {
     margin-top: 0%;
     margin-bottom: 4.5%;
@@ -58,6 +92,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.addHouseHeaderContainer .heightBar {
+    width: 5px;
+    height: 35px;
+
+    background-color: #2a4476;
+    margin-right: 10px;
 }
 
 .addAddressTitle {
@@ -87,7 +129,7 @@
     align-items: center;
     width: 600px;
     margin-top: 2%;
-    margin-left: 28%;
+    margin-left: 27%;
 }
 
 .addressFormContainer {
@@ -126,6 +168,7 @@
 }
 
 .submitButtonWrapper {
+    width: 800px;
     display: flex;
     justify-content: flex-end;
     margin-top: 15px;

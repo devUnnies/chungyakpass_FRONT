@@ -68,7 +68,6 @@ const AddHouse = (props) => {
         };
 
         // console.log(JSON.stringify(userForm));
-        history.push('/members', { houseState: houseState });
         dispatch(addHouse(userForm));
 
         return false;
@@ -144,12 +143,6 @@ const AddHouse = (props) => {
                 )}
             </div>
             <div name="addHouseAddress" className="addHouseContainer">
-                {/* <form
-                    name="addHouseHolderAddress"
-                    target="addHouseHolderAddress"
-                    className="addressFormContainer"
-                    onSubmit={handleSubmit}
-                > */}
                 <div className="addressFormContainer">
                     <table className="addressFormTable">
                         <tbody>
@@ -188,28 +181,28 @@ const AddHouse = (props) => {
                             </tr>
                         </tbody>
                     </table>
-                    {/* 구성원 목록으로 가는 버튼 추가 */}
-                    <div className="submitButtonWrapper">
-                        <NextButton
-                            width={50}
-                            height={50}
-                            className="addAddressButton"
-                            type="addAddress"
-                            fontSize={150}
-                            onClick={() => handleSubmit()}
-                        />
-
-                        {/* <MainButton
-                            type="submit"
-                            width="60"
-                            height="30"
-                            onClick={handleSubmit}
-                        >
-                            등록
-                        </MainButton> */}
-                    </div>
                 </div>
-                {/* </form> */}
+
+                {/* 구성원 목록으로 가는 버튼 추가 */}
+                <div className="submitButtonWrapper">
+                    <NextButton
+                        width={50}
+                        height={50}
+                        className="addAddressButton"
+                        type="addAddress"
+                        fontSize={150}
+                        onClick={() => handleSubmit()}
+                    />
+
+                    {/* <MainButton
+                        type="submit"
+                        width="60"
+                        height="30"
+                        onClick={handleSubmit}
+                    >
+                        등록
+                    </MainButton> */}
+                </div>
             </div>
         </div>
     );
