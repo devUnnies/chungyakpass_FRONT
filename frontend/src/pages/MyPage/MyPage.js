@@ -10,33 +10,40 @@ const MyPage = () => {
         <div className="mypage">
             <div className="mypageContainer">
                 <MainButton
-                    width="100"
+                    width="200"
                     height="50"
-                    fontSize="13"
-                    type="readCommonInfo"
+                    fontSize="17"
+                    type="readBankbook"
                     onClick={() => {
-                        // history.push('/commonInfo');
-                        alert('서비스를 개발 중입니다!');
+                        history.push('/bankbook');
                     }}
                 >
-                    기초정보
-                    <br />
-                    확인
+                    청약통장 조회
                 </MainButton>
 
                 <MainButton
-                    width="100"
+                    width="200"
                     height="50"
-                    fontSize="13"
+                    fontSize="17"
+                    type="readHouse"
+                    onClick={() => {
+                        history.push('/house');
+                    }}
+                >
+                    세대 조회
+                </MainButton>
+
+                <MainButton
+                    width="200"
+                    height="50"
+                    fontSize="17"
                     type="readJudgeHistory"
                     onClick={() => {
                         // history.push('/judgeHistory');
                         alert('서비스를 개발 중입니다!');
                     }}
                 >
-                    자격판단이력
-                    <br />
-                    확인
+                    자격판단이력 확인
                 </MainButton>
             </div>
         </div>

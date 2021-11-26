@@ -258,6 +258,11 @@
     margin-left: 5px;
 }
 
+.addMemberFormTableTbodyTrTdError {
+    color: red;
+    font-weight: 700;
+}
+
 .addMemberFormTableTbodyTrSpace {
     height: 20px;
 }

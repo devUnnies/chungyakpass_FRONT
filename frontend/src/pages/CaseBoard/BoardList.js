@@ -42,7 +42,7 @@ const BoardList = (props) => {
 
     return (
         <div className="boardContainer">
-            <div className="numbersInfoHeaderContainer">
+            <div className="caseBoardInfoHeaderContainer">
                 <div className="heightBar"></div>
                 <span className="listTitle">부적격 사례</span>
             </div>

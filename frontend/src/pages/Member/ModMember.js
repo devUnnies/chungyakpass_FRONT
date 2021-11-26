@@ -8,6 +8,8 @@ import {
     patHolder,
     getChung,
     getAsse,
+    modMemAddInfo,
+    getHouse,
 } from '../../store/actions/commonInfoAction';
 import MainButton from '../../components/Button/MainButton';
 import SubButton from '../../components/Button/SubButton';
@@ -24,36 +26,68 @@ const ModMember = () => {
     const houseId = location.state.houseId;
     const [edited, setEdited] = useState(location.state.selectedData);
     const [info, setInfo] = useState(location.state.selectedData);
+    const [addInfo, setAddInfo] = useState(
+        location.state.selectedData.houseMemberAdditionalInfoResponseDto
+    );
     const [haveHistories, setHaveHistories] = useState(null);
     const [haveAssets, setHaveAssets] = useState(null);
     const [failMsg, setFailMsg] = useState(null);
 
     const houseState = location.state.houseState;
 
+    console.log('수정 아이템 !! ' + JSON.stringify(info));
+
     useEffect(() => {
         dispatch(getChung(edited.id));
         dispatch(getAsse(edited.id));
+        dispatch(getHouse());
     }, []);
 
     useEffect(() => {
-        if (
-            !commonInfoStore.getChungyak.loading &&
-            commonInfoStore.getChungyak.data
-        ) {
+        const data = commonInfoStore.getHouse.data;
+
+        if (data) {
+            if (houseState === 'my') {
+                if (data.houseResponseDto.houseHolderId) {
+                    if (info.id === data.houseResponseDto.houseHolderId)
+                        setInfo({ ...info, householderYn: 'y' });
+                } else {
+                    setInfo({ ...info, householderYn: 'n' });
+                }
+            } else if (houseState === 'spouse') {
+                if (data.spouseHouseResponseDto.houseHolderId) {
+                    if (info.id === data.spouseHouseResponseDto.houseHolderId)
+                        setInfo({ ...info, householderYn: 'y' });
+                } else {
+                    setInfo({ ...info, householderYn: 'n' });
+                }
+            }
+        }
+    }, [commonInfoStore.getHouse]);
+
+    useEffect(() => {
+        if (commonInfoStore.getChungyak.loading) {
             setHaveHistories('y');
         } else {
-            setHaveHistories('n');
+            if (commonInfoStore.getChungyak.data) setHaveHistories('n');
+            else setHaveHistories('y');
         }
 
-        if (
-            !commonInfoStore.getAssets.loading &&
-            commonInfoStore.getAssets.data
-        ) {
+        if (commonInfoStore.getAssets.loading) {
             setHaveAssets('y');
-        } else {
-            setHaveAssets('n');
+        } else if (commonInfoStore.getAssets.data) {
+            if (commonInfoStore.getAssets.data) setHaveAssets('n');
+            else setHaveAssets('y');
         }
     }, [commonInfoStore.getChungyak, commonInfoStore.getAssets]);
+
+    const onAddInfoChange = (e) => {
+        const { name, value } = e.target;
+        setAddInfo({
+            ...addInfo,
+            [name]: value,
+        });
+    };
 
     const onInfoChange = (e) => {
         const { name, value } = e.target;
@@ -72,6 +106,7 @@ const ModMember = () => {
             haveAssets,
             haveHistories
         );
+        dispatch(modMemAddInfo(addInfo));
         dispatch(modMem(info));
         // handleEditSubmit(edited);
     };
@@ -86,6 +121,16 @@ const ModMember = () => {
             setFailMsg(null);
         }
     }, [info]);
+
+    useEffect(() => {
+        if (addInfo.sameResidentRegistrationYn === 'n') {
+            setFailMsg('!!!');
+        } else {
+            setFailMsg();
+        }
+    }, [addInfo?.sameResidentRegistrationYn]);
+
+    useEffect(() => {}, [addInfo]);
 
     useEffect(() => {
         return setInfo({ ...info, homelessStartDate: info.birthDay });
@@ -173,13 +218,56 @@ const ModMember = () => {
                 </span>
             </div>
             <div className="modMemberFormContainer">
-                {/* <form
-                    onSubmit={() => handleSubmit}
-                    className="addMemberForm"
-                    name="addMember"
-                > */}
                 <table className="modMemberFormTable">
                     <tbody className="modMemberFormTableTbody">
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">
+                                    동세대 거주 여부
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="sameResidentRegistrationYn"
+                                    onChange={onAddInfoChange}
+                                    value="y"
+                                    checked={
+                                        addInfo.sameResidentRegistrationYn ===
+                                        'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    예{'  '}
+                                </span>
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="sameResidentRegistrationYn"
+                                    onChange={onAddInfoChange}
+                                    value="n"
+                                    checked={
+                                        addInfo.sameResidentRegistrationYn ===
+                                        'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    아니오
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTdError">
+                                {failMsg}
+                            </td>
+                        </tr>
                         <tr className="modMemberFormTableTbodyTr">
                             <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">이름</span>
@@ -243,6 +331,7 @@ const ModMember = () => {
                                     required
                                 />
                                 <span className="foreignerInputText">
+                                    {' '}
                                     내국인
                                 </span>
                             </td>
@@ -436,51 +525,49 @@ const ModMember = () => {
                                 />
                             </td>
                         </tr>
-                        {info.relation === '본인' ||
-                        info.relation === '배우자' ? (
-                            <tr className="modMemberFormTableTbodyTr">
-                                <td className="modMemberFormTableTbodyTrTdSubTitle">
-                                    <span className="subTitle">혼인 여부</span>
-                                </td>
-                                <td className="modMemberFormTableTbodyTrTd">
+
+                        <tr className="modMemberFormTableTbodyTr">
+                            <td className="modMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">혼인 여부</span>
+                            </td>
+                            <td className="modMemberFormTableTbodyTrTd">
+                                {' '}
+                                <input
+                                    className="isMarriedInput"
+                                    type="radio"
+                                    name="isMarried"
+                                    onChange={onInfoChange}
+                                    value="n"
+                                    checked={
+                                        !info.marriedDate ||
+                                        info.isMarried === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                />
+                                <span className="isMarriedInputText">
                                     {' '}
-                                    <input
-                                        className="isMarriedInput"
-                                        type="radio"
-                                        name="isMarried"
-                                        onChange={onInfoChange}
-                                        value="n"
-                                        checked={
-                                            !info.marriedDate ||
-                                            info.isMarried === 'n'
-                                                ? true
-                                                : false
-                                        }
-                                    />
-                                    <span className="isMarriedInputText">
-                                        {' '}
-                                        결혼한 상태가 아닙니다{'  '}
-                                    </span>
-                                    <input
-                                        className="isMarriedInput"
-                                        type="radio"
-                                        name="isMarried"
-                                        onChange={onInfoChange}
-                                        value="y"
-                                        checked={
-                                            info.marriedDate ||
-                                            info.isMarried === 'y'
-                                                ? true
-                                                : false
-                                        }
-                                    />
-                                    <span className="isMarriedInputText">
-                                        {' '}
-                                        결혼한 상태입니다{'  '}
-                                    </span>
-                                </td>
-                            </tr>
-                        ) : null}
+                                    결혼한 상태가 아닙니다{'  '}
+                                </span>
+                                <input
+                                    className="isMarriedInput"
+                                    type="radio"
+                                    name="isMarried"
+                                    onChange={onInfoChange}
+                                    value="y"
+                                    checked={
+                                        info.marriedDate ||
+                                        info.isMarried === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                />
+                                <span className="isMarriedInputText">
+                                    {' '}
+                                    결혼한 상태입니다{'  '}
+                                </span>
+                            </td>
+                        </tr>
                         {(info.relation === '본인' ||
                             info.relation === '배우자') &&
                         info.isMarried === 'y' ? (
@@ -499,6 +586,92 @@ const ModMember = () => {
                                 </td>
                             </tr>
                         ) : null}
+                        {info.relation !== '본인' &&
+                        info.relation !== '배우자' &&
+                        info.isMarried === 'n' ? (
+                            <tr className="addMemberFormTableTbodyTr">
+                                <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                    <span className="subTitle">이혼여부</span>
+                                </td>
+                                <td className="addMemberFormTableTbodyTrTd">
+                                    <input
+                                        className="assetHaveAssetsInput"
+                                        type="radio"
+                                        name="divorceYn"
+                                        onChange={onAddInfoChange}
+                                        value="y"
+                                        checked={
+                                            addInfo.divorceYn === 'y'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="assetHaveAssetsInputText">
+                                        {' '}
+                                        있습니다{'  '}
+                                    </span>
+                                    <input
+                                        className="assetHaveAssetsInput"
+                                        type="radio"
+                                        name="divorceYn"
+                                        onChange={onAddInfoChange}
+                                        value="n"
+                                        checked={
+                                            addInfo.divorceYn === 'n'
+                                                ? true
+                                                : false
+                                        }
+                                        required
+                                    />
+                                    <span className="assetHaveAssetsInputText">
+                                        {' '}
+                                        없습니다
+                                    </span>
+                                </td>
+                            </tr>
+                        ) : null}
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">부모사망이력</span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="parentsDeathYn"
+                                    onChange={onAddInfoChange}
+                                    value="y"
+                                    checked={
+                                        addInfo.parentsDeathYn === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    있습니다{'  '}
+                                </span>
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="parentsDeathYn"
+                                    onChange={onAddInfoChange}
+                                    value="n"
+                                    checked={
+                                        addInfo.parentsDeathYn === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    없습니다
+                                </span>
+                            </td>
+                        </tr>
                         <tr className="modMemberFormTableTbodyTr">
                             <td className="modMemberFormTableTbodyTrTdSubTitle">
                                 <span className="subTitle">월 평균 소득</span>
@@ -523,6 +696,92 @@ const ModMember = () => {
                                 >
                                     <ExclamationCircleOutlined className="tooltipIcon" />
                                 </Tooltip>
+                            </td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">
+                                    해외나 요양시설 체류중 여부
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="nowStayOverYn"
+                                    onChange={onAddInfoChange}
+                                    value="y"
+                                    checked={
+                                        addInfo.nowStayOverYn === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    예{'  '}
+                                </span>
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="nowStayOverYn"
+                                    onChange={onAddInfoChange}
+                                    value="n"
+                                    checked={
+                                        addInfo.nowStayOverYn === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    아니오
+                                </span>
+                            </td>
+                        </tr>
+                        <tr className="addMemberFormTableTbodyTr">
+                            <td className="addMemberFormTableTbodyTrTdSubTitle">
+                                <span className="subTitle">
+                                    해외나 요양시설 체류이력
+                                </span>
+                            </td>
+                            <td className="addMemberFormTableTbodyTrTd">
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="stayOverYn"
+                                    onChange={onAddInfoChange}
+                                    value="y"
+                                    checked={
+                                        addInfo.stayOverYn === 'y'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    있습니다{'  '}
+                                </span>
+                                <input
+                                    className="assetHaveAssetsInput"
+                                    type="radio"
+                                    name="stayOverYn"
+                                    onChange={onAddInfoChange}
+                                    value="n"
+                                    checked={
+                                        addInfo.stayOverYn === 'n'
+                                            ? true
+                                            : false
+                                    }
+                                    required
+                                />
+                                <span className="assetHaveAssetsInputText">
+                                    {' '}
+                                    없습니다
+                                </span>
                             </td>
                         </tr>
                         <tr className="modMemberFormTableTbodyTr">

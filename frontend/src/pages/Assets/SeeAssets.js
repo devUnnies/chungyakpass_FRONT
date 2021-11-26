@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Assets.css';
 import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import AssetsTr from './AssetsTr';
-import AddAsset from './AddAsset';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import {
