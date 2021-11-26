@@ -1,38 +1,43 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './AddHouseHolder.css';
-import { NavLink, useHistory } from 'react-router-dom';
+import './House.css';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import MainButton from '../../components/Button/MainButton';
 import PopupDom from './PopupDom';
 import PopupPostCode from './PopupPostCode';
 import NextButton from '../../components/Button/NextButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addHouse } from '../../store/actions/commonInfoAction';
-import storage from '../../services/store';
+import { modHouse } from '../../store/actions/commonInfoAction';
 
-const AddHouseHolder = (props) => {
+const ModHouse = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const commonInfoStore = useSelector((state) => state.commonInfo);
+    const location = useLocation();
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [fullAddress, setFullAddress] = useState(
+        location.state.selectedData.addressLevel1 +
+            ' ' +
+            location.state.selectedData.addressLevel2 +
+            ' ' +
+            location.state.selectedData.addressDetail
+    );
+    const [postcode, setPostcode] = useState(
+        location.state.selectedData.zipcode
+    );
+
+    const [address, setAddress] = useState(location.state.selectedData);
+
+    // 본인 세대인지 배우자 분리 세대인지 전달받은 값을 저장 (history.push에서 전달받음)
+    const houseState = location.state.houseState;
 
     const openPostCode = () => {
-        setIsPopupOpen(true);
+        setIsPopupOpen(!isPopupOpen);
     };
 
     const closePostCode = () => {
         setIsPopupOpen(false);
     };
-
-    const [fullAddress, setFullAddress] = useState();
-    const [postcode, setPostcode] = useState('');
-
-    const [address, setAddress] = useState({
-        sido: '',
-        sigungu: '',
-        detail: '',
-        postcode: '',
-    });
 
     const onPostChange = (e) => {
         setPostcode(e.target.value);
@@ -44,32 +49,32 @@ const AddHouseHolder = (props) => {
 
     useEffect(() => {
         // 세대 등록 성공시
-        if (commonInfoStore.addHouse) {
-            const data = commonInfoStore.addHouse.data;
-            if (data) {
-                history.push({
-                    pathname: '/addHouseHolder/see',
-                    search: '',
-                });
+        const data = commonInfoStore.modHouse.data;
+        if (data) {
+            // 세대가 이미 있다면 얼럿 띄우기
+            if (data.status === 409) {
+                alert(data.message);
+            } else {
+                history.push('/members', { houseState: houseState });
             }
         }
-    }, [commonInfoStore.addHouse]);
+    }, [commonInfoStore.modHouse]);
 
-    // 세대 등록하는 api 연결 예정
-    const handleSubmit = (event) => {
-        // console.log('누르기 !!');
-        // event.preventDafault();
-
+    // 세대 등록하는 api 연결
+    const handleSubmit = () => {
         const userForm = {
-            spouseHouseYn: 'n',
-            addressLevel1: address?.sido.slice(0, 2),
-            addressLevel2: address?.sigungu,
-            addressDetail: address?.detail,
-            zipcode: address?.postcode,
+            id: address.id,
+            addressArr: {
+                spouseHouseYn: houseState === 'my' ? 'n' : 'y',
+                addressLevel1: address?.sido.slice(0, 2),
+                addressLevel2: address?.sigungu,
+                addressDetail: address?.detail,
+                zipcode: address?.postcode,
+            },
         };
 
         // console.log(JSON.stringify(userForm));
-        dispatch(addHouse(userForm));
+        dispatch(modHouse(userForm));
 
         return false;
     };
@@ -113,10 +118,10 @@ const AddHouseHolder = (props) => {
     }, [postcode]);
 
     return (
-        <div className="addHouseHolderView">
-            <div className="addHouseHolderHeaderContainer">
+        <div className="addHouseView">
+            <div className="addHouseHeaderContainer">
                 <div className="heightBar"></div>
-                <span className="addAddressTitle">세대등록</span>
+                <span className="addAddressTitle">세대 수정</span>
             </div>
 
             <br />
@@ -125,7 +130,7 @@ const AddHouseHolder = (props) => {
                     width={80}
                     height={30}
                     paddingLeft={10}
-                    onClick={openPostCode}
+                    onClick={() => openPostCode()}
                 >
                     주소 찾기
                 </MainButton>
@@ -143,16 +148,7 @@ const AddHouseHolder = (props) => {
                     </PopupDom>
                 )}
             </div>
-            <div
-                name="addHouseHolderAddress"
-                className="addHouseHolderContainer"
-            >
-                {/* <form
-                    name="addHouseHolderAddress"
-                    target="addHouseHolderAddress"
-                    className="addressFormContainer"
-                    onSubmit={handleSubmit}
-                > */}
+            <div name="addHouseAddress" className="addHouseContainer">
                 <div className="addressFormContainer">
                     <table className="addressFormTable">
                         <tbody>
@@ -191,16 +187,27 @@ const AddHouseHolder = (props) => {
                             </tr>
                         </tbody>
                     </table>
-                    {/* 구성원 목록으로 가는 버튼 추가 */}
-                    <div className="submitButtonWrapper">
-                        <NextButton
-                            width={50}
-                            height={50}
-                            type="addAddress"
-                            fontSize={150}
-                            onClick={() => handleSubmit()}
-                        />
-                    </div>
+                </div>
+
+                {/* 구성원 목록으로 가는 버튼 추가 */}
+                <div className="submitButtonWrapper">
+                    <NextButton
+                        width={50}
+                        height={50}
+                        className="addAddressButton"
+                        type="addAddress"
+                        fontSize={150}
+                        onClick={() => handleSubmit()}
+                    />
+
+                    {/* <MainButton
+                        type="submit"
+                        width="60"
+                        height="30"
+                        onClick={handleSubmit}
+                    >
+                        등록
+                    </MainButton> */}
                 </div>
                 {/* </form> */}
             </div>
@@ -208,4 +215,4 @@ const AddHouseHolder = (props) => {
     );
 };
 
-export default AddHouseHolder;
+export default ModHouse;
