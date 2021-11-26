@@ -65,6 +65,17 @@ import {
     ModBankbook,
     SeeHouse,
     ModHouse,
+    RecordMain,
+    RecordDetailGeneralKoomin,
+    RecordDetailGeneralMinyeong,
+    RecordDetailSpecialFirstLifeKookmin,
+    RecordDetailSpecialFirstLifeMinyeong,
+    RecordDetailSpecialNewlyMarriedKookmin,
+    RecordDetailSpecialNewlyMarriedMinyeong,
+    RecordDetailSpecialMultiChildKookmin,
+    RecordDetailSpecialMultiChildMinyeong,
+    RecordDetailSpecialOldParentsKookmin,
+    RecordDetailSpecialOldParentsMinyeong,
 } from '../pages';
 import Header from './header/header';
 import Footer from './footer/footer';
@@ -269,6 +280,49 @@ class App extends Component {
                         exact
                         path="/point/oldParent"
                         component={OldParentPoint}
+                    />
+
+                    {/* 기록 확인 페이지 */}
+                    <Route exact path="/records" component={RecordMain} />
+                    <Route
+                        path="/recordsGeneralKookmin"
+                        component={RecordDetailGeneralKoomin}
+                    />
+                    <Route
+                        path="/recordsGeneralMinyeong"
+                        component={RecordDetailGeneralMinyeong}
+                    />
+                    <Route
+                        path="/recordsSpecialKookminPublicFirstLife"
+                        component={RecordDetailSpecialFirstLifeKookmin}
+                    />
+                    <Route
+                        path="/recordsSpecialMinyeongFirstLife"
+                        component={RecordDetailSpecialFirstLifeMinyeong}
+                    />
+                    <Route
+                        path="/recordsSpecialKookminPublicNewlyMarried"
+                        component={RecordDetailSpecialNewlyMarriedKookmin}
+                    />
+                    <Route
+                        path="/recordsSpecialMinyeongNewlyMarried"
+                        component={RecordDetailSpecialNewlyMarriedMinyeong}
+                    />
+                    <Route
+                        path="/recordsSpecialKookminPublicMultiChild"
+                        component={RecordDetailSpecialMultiChildKookmin}
+                    />
+                    <Route
+                        path="/recordsSpecialMinyeongMultiChild"
+                        component={RecordDetailSpecialMultiChildMinyeong}
+                    />
+                    <Route
+                        path="/recordsSpecialKookminPublicOldParents"
+                        component={RecordDetailSpecialOldParentsKookmin}
+                    />
+                    <Route
+                        path="/recordsSpecialMinyeongOldParents"
+                        component={RecordDetailSpecialOldParentsMinyeong}
                     />
                 </Switch>
                 <Footer />
