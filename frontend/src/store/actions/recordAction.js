@@ -6,7 +6,16 @@ export const ALL_RECORDS_GET = 'ALL_RECORDS_GET';
 export const ALL_RECORDS_GET_SUCCESS = 'ALL_RECORDS_GET_SUCCESS';
 export const ALL_RECORDS_GET_ERROR = 'ALL_RECORDS_GET_ERROR';
 
+export const POINT_ALL_RECORDS_GET = 'POINT_ALL_RECORDS_GET';
+export const POINT_ALL_RECORDS_GET_SUCCESS = 'POINT_ALL_RECORDS_GET_SUCCESS';
+export const POINT_ALL_RECORDS_GET_ERROR = 'POINT_ALL_RECORDS_GET_ERROR';
+
 export const getAllRecords = createPromiseThunk(
     ALL_RECORDS_GET,
     recordApi.allRecord
+);
+
+export const getPointAllRecords = createPromiseThunk(
+    POINT_ALL_RECORDS_GET,
+    recordApi.allPointRecord
 );

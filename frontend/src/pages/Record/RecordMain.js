@@ -14,7 +14,7 @@ const RecordMain = () => {
     let result = [];
     const [data, setData] = useState();
     const [page, setPage] = useState({ pointer: 1, item: null });
-    const [pages, setPages] = useState();
+    const [pages, setPages] = useState([]);
     const [sliceNum, setSliceNum] = useState(5);
     const [pageLastNumber, setPageLastNumber] = useState();
     const recordsStore = useSelector((state) => state.records);
@@ -402,9 +402,9 @@ const RecordMain = () => {
         if (pageLastNumber > 2) {
             for (let i = 1; i < pageLastNumber; i++) {
                 if (pages) {
-                    setPages({ ...pages, i });
+                    setPages([...pages, i]);
                 } else {
-                    setPages({ i });
+                    setPages([i]);
                 }
             }
         }
@@ -520,8 +520,7 @@ const RecordMain = () => {
 
             {/* 페이지네이션 */}
             <div className="recordsInfoPaginationContainer">
-                {console.log('페이지 !!! ' + JSON.stringify(pages))}
-                {pages ? (
+                {Object.keys(pages).length > 0 ? (
                     pages.map((num, i) => (
                         <div className="recordsInfoPaginationDiv">
                             {num === page.pointer ? (
