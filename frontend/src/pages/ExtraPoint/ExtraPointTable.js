@@ -20,7 +20,7 @@ function ExtraPointTable() {
                         <CheckOutlined /> {''}
                     </span>
                     <span>
-                        신청자 님의 가점 결과 확인 전 가점표를 확인해주시기
+                        가점계산 결과를 확인하시기 전에 가점표를 확인해주시기
                         바랍니다.
                     </span>
                 </div>
