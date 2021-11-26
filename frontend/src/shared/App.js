@@ -76,6 +76,13 @@ import {
     RecordDetailSpecialMultiChildMinyeong,
     RecordDetailSpecialOldParentsKookmin,
     RecordDetailSpecialOldParentsMinyeong,
+    RecordPointMain,
+    RecordPointDetailGeneralMinyeong,
+    RecordPointDetailSpecialNewlyMarried,
+    RecordPointDetailSpecialSingleParents,
+    RecordPointDetailSpecialOldParentsMinyeong,
+    RecordPointDetailSpecialOldParents,
+    RecordPointDetailSpecialMultiChild,
 } from '../pages';
 import Header from './header/header';
 import Footer from './footer/footer';
@@ -323,6 +330,37 @@ class App extends Component {
                     <Route
                         path="/recordsSpecialMinyeongOldParents"
                         component={RecordDetailSpecialOldParentsMinyeong}
+                    />
+
+                    {/* 가배점 확인 페이지 */}
+                    <Route
+                        exact
+                        path="/pointRecords"
+                        component={RecordPointMain}
+                    />
+                    <Route
+                        path="/recordsPointGeneralMinyeong"
+                        component={RecordPointDetailGeneralMinyeong}
+                    />
+
+                    <Route
+                        path="/recordsPointSpecialNewlyMarried"
+                        component={RecordPointDetailSpecialNewlyMarried}
+                    />
+
+                    <Route
+                        path="/recordsPointSpecialSingleParents"
+                        component={RecordPointDetailSpecialSingleParents}
+                    />
+
+                    <Route
+                        path="/recordsPointSpecialOldParents"
+                        component={RecordPointDetailSpecialOldParents}
+                    />
+
+                    <Route
+                        path="/recordsPointSpecialMultiChild"
+                        component={RecordPointDetailSpecialMultiChild}
                     />
                 </Switch>
                 <Footer />
