@@ -42,7 +42,19 @@ const MyPage = () => {
                         history.push('/records');
                     }}
                 >
-                    자격판단이력 확인
+                    자격판단이력 조회
+                </MainButton>
+
+                <MainButton
+                    width="200"
+                    height="50"
+                    fontSize="17"
+                    type="readPointRecords"
+                    onClick={() => {
+                        history.push('/pointRecords');
+                    }}
+                >
+                    가배점계산이력 조회
                 </MainButton>
             </div>
         </div>

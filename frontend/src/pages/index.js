@@ -83,3 +83,10 @@ export { default as RecordDetailSpecialMultiChildKookmin } from './Record/Specia
 export { default as RecordDetailSpecialMultiChildMinyeong } from './Record/Special/MultiChild/Minyeong';
 export { default as RecordDetailSpecialOldParentsKookmin } from './Record/Special/OldParents/Kookmin';
 export { default as RecordDetailSpecialOldParentsMinyeong } from './Record/Special/OldParents/Minyeong';
+// 가배점 조회 페이지
+export { default as RecordPointMain } from './PointRecord/RecordMain';
+export { default as RecordPointDetailGeneralMinyeong } from './PointRecord/General/GeneralMinyeong';
+export { default as RecordPointDetailSpecialNewlyMarried } from './PointRecord/Special/NewlyMarried';
+export { default as RecordPointDetailSpecialSingleParents } from './PointRecord/Special/SingleParents';
+export { default as RecordPointDetailSpecialOldParents } from './PointRecord/Special/OldParents';
+export { default as RecordPointDetailSpecialMultiChild } from './PointRecord/Special/MultiChild';
