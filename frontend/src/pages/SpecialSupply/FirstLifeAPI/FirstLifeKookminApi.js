@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postFirstInLifeKookminAptNum } from '../../../store/actions/firstInLifeKookminAction';
-import { patchFirstLifeKookminRank } from '../../../store/actions/firstInLifeKookminRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postFirstInLifeKookminAptNum,
+    patchFirstLifeKookminRank,
+    getFirstLifeKookminRank,
+} from '../../../store/actions/firstInLifeKookminAction';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -25,23 +27,25 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     const firstLifeKookminStore = useSelector(
         (state) => state.firstInLifeKookmin
     );
-    const firstLifeKookminRankStore = useSelector(
-        (state) => state.firstLifeKookminRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        firstLifeKookminRes: '',
+    });
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 생애최초 국민 순위 patch
     const [firstLifeKookminType, setFirstLifeKookminType] = useState(
         location?.state?.firstLifeKookminType
     );
-
-    const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 생애최초 국민 로직 접근 변수
+    const [firstRankHistoryYn, setFirstRankHistoryYn] = useState(
+        location?.state?.firstRankHistoryYn
+    );
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [firstLifeKookminRank, setFirstLifeKookminRank] = useState('');
+    const [taxOver5yearsYn, setTaxOver5yearsYn, handleChangeTaxOver5yearsYn] =
+        useInputState(null);
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
@@ -53,6 +57,16 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data) {
+            const data =
+                firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [firstLifeKookminStore?.postFirstInLifeKookminAptNum]);
+
+    const data = firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data; // 생애최초 국민 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -67,10 +81,6 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        firstLifeKookminRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -79,17 +89,20 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (firstLifeKookminStore?.postFirstInLifeKookminAptNum?.data) {
-            const data =
-                firstLifeKookminStore.postFirstInLifeKookminAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [firstLifeKookminStore?.postFirstInLifeKookminAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.firstLifeKookminRes === '1순위') {
+        if (form?.firstLifeKookminRes === '일순위') {
+            dispatch(
+                patchFirstLifeKookminRank({
+                    verificationRecordSpecialKookminFirstLifeId: data.id,
+                    firstLifeKookminRank: form.firstLifeKookminRes,
+                    firstRankHistoryYn,
+                    firstLifeKookminType,
+                    supportYn,
+                    taxOver5yearsYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -102,18 +115,48 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.firstLifeKookminRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+
+            dispatch(
+                patchFirstLifeKookminRank({
+                    verificationRecordSpecialKookminFirstLifeId: data.id,
+                    firstLifeKookminRank: form.firstLifeKookminRes,
+                    firstRankHistoryYn,
+                    firstLifeKookminType,
+                    supportYn,
+                    taxOver5yearsYn,
+                })
+            );
         }
     };
 
-    // 생애최초 국민 순위 patch
-    const [firstRankHistoryYn, setFirstRankHistoryYn] = useState(
-        location?.state?.firstRankHistoryYn
-    );
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [firstLifeKookminRank, setFirstLifeKookminRank] = useState('');
-    const [taxOver5yearsYn, setTaxOver5yearsYn, handleChangeTaxOver5yearsYn] =
-        useInputState(null);
+    // 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        data?.meetRecipientTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        ((firstLifeKookminType === '공공주택특별법적용' &&
+            data?.meetPropertyTf === true) ||
+            firstLifeKookminType !== '공공주택특별법적용') &&
+        ((data?.restrictedAreaTf === true &&
+            data?.householderTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        taxOver5yearsYn === true &&
+        data?.meetNumberOfPaymentsTf === true
+    ) {
+        form.firstLifeKookminRes = '1순위';
+    } else {
+        form.firstLifeKookminRes = '탈락';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -126,36 +169,18 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchFirstLifeKookminRank({
+                verificationRecordSpecialKookminFirstLifeId: data.id,
+                firstLifeKookminRank: form.firstLifeKookminRes,
                 firstRankHistoryYn,
                 firstLifeKookminType,
-                firstLifeKookminRank,
                 supportYn,
                 taxOver5yearsYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchFirstLifeKookminRank({
-                firstRankHistoryYn,
-                firstLifeKookminType,
-                firstLifeKookminRank,
-                supportYn,
-                taxOver5yearsYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setFirstLifeKookminRank(
-            form?.firstLifeKookminRes !== '' ? form?.firstLifeKookminRes : null
-        );
-    }, [firstLifeKookminRankStore.patchFirstLifeKookminRank]);
 
     console.log(firstRankHistoryYn);
     console.log(firstLifeKookminType);
-    console.log(firstLifeKookminRank);
     console.log(supportYn);
     console.log(taxOver5yearsYn);
 
@@ -950,7 +975,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                             {/* 자산 기준 충족 여부*/}
                                                                             {/* 공공주택특별법 적용인 경우에만 적용 */}
                                                                             {firstLifeKookminType ===
-                                                                            '공공주택특별법 적용' ? (
+                                                                            '공공주택특별법적용' ? (
                                                                                 <>
                                                                                     <tr className="special_phase">
                                                                                         <td className="qualification">
@@ -1036,9 +1061,9 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                                                                 data?.meetMonthlyAverageIncomeGeneralTf ===
                                                                                     true) &&
                                                                             (firstLifeKookminType !==
-                                                                                '공공주택특별법 적용' ||
+                                                                                '공공주택특별법적용' ||
                                                                                 (firstLifeKookminType ===
-                                                                                    '공공주택특별법 적용' &&
+                                                                                    '공공주택특별법적용' &&
                                                                                     data?.meetPropertyTf ===
                                                                                         true)) ? (
                                                                                 <>
@@ -1551,50 +1576,12 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetRecipientTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    ((firstLifeKookminType ===
-                                        '공공주택특별법 적용' &&
-                                        data?.meetPropertyTf === true) ||
-                                        firstLifeKookminType !==
-                                            '공공주택특별법 적용') &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.householderTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    taxOver5yearsYn === true &&
-                                    data?.meetNumberOfPaymentsTf === true
-                                        ? (form.firstLifeKookminRes = '1순위')
-                                        : (form.firstLifeKookminRes = '탈락')}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1순위 */}
-                                {form.firstLifeKookminRes === '1순위' ? (
+                                {form.firstLifeKookminRes === '일순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1610,10 +1597,7 @@ const FirstLifeKookminApi = ({ onSaveData }) => {
                                 {form.firstLifeKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"
