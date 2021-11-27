@@ -71,3 +71,22 @@ export { default as OldParentPointPost } from './ExtraPoint/OldParent/OldParentP
 export { default as OldParentPoint } from './ExtraPoint/OldParent/OldParentPoint';
 export { default as OneParentPointAptNum } from './ExtraPoint/OneParent/OneParentPointAptNum';
 export { default as OneParentPoint } from './ExtraPoint/OneParent/OneParentPoint';
+// 기록 조회 페이지
+export { default as RecordMain } from './Record/RecordMain';
+export { default as RecordDetailGeneralKoomin } from './Record/General/GeneralKookmin';
+export { default as RecordDetailGeneralMinyeong } from './Record/General/GeneralMinyeong';
+export { default as RecordDetailSpecialFirstLifeKookmin } from './Record/Special/FirstLife/Kookmin';
+export { default as RecordDetailSpecialFirstLifeMinyeong } from './Record/Special/FirstLife/Minyeong';
+export { default as RecordDetailSpecialNewlyMarriedKookmin } from './Record/Special/NewlyMarried/Kookmin';
+export { default as RecordDetailSpecialNewlyMarriedMinyeong } from './Record/Special/NewlyMarried/Minyeong';
+export { default as RecordDetailSpecialMultiChildKookmin } from './Record/Special/MultiChild/Kookmin';
+export { default as RecordDetailSpecialMultiChildMinyeong } from './Record/Special/MultiChild/Minyeong';
+export { default as RecordDetailSpecialOldParentsKookmin } from './Record/Special/OldParents/Kookmin';
+export { default as RecordDetailSpecialOldParentsMinyeong } from './Record/Special/OldParents/Minyeong';
+// 가배점 조회 페이지
+export { default as RecordPointMain } from './PointRecord/RecordMain';
+export { default as RecordPointDetailGeneralMinyeong } from './PointRecord/General/GeneralMinyeong';
+export { default as RecordPointDetailSpecialNewlyMarried } from './PointRecord/Special/NewlyMarried';
+export { default as RecordPointDetailSpecialSingleParents } from './PointRecord/Special/SingleParents';
+export { default as RecordPointDetailSpecialOldParents } from './PointRecord/Special/OldParents';
+export { default as RecordPointDetailSpecialMultiChild } from './PointRecord/Special/MultiChild';
