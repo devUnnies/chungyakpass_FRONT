@@ -319,14 +319,14 @@ input.aptInfoSelect {
 /*부적격 중지 및 부적격 툴팁*/
 .pause_tooltip {
     position: absolute;
-    display: inline-block;
     color: #fa1c33;
+    margin-left: 0%;
 }
 /*2순위 툴팁*/
 .secondRankTootip {
     position: absolute;
-    display: inline-block;
     color: rgb(233, 199, 50);
+    margin-left: 0%;
 }
 .pause-tooltip-text,
 .tooltip-text {
@@ -353,10 +353,7 @@ input.aptInfoSelect {
 /* rank 버튼 위치 조정 */
 .specialRankButton {
     float: right;
-    margin-right: 22.5%;
+    margin-right: 23%;
 
     font-size: 10pt;
-}
-.rankRes {
-    color: white;
 }

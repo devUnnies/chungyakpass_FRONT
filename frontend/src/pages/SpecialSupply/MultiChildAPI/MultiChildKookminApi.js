@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postMultiChildKookminAptNum } from '../../../store/actions/multiChildKookminAction';
-import { patchMultiChildKookminRank } from '../../../store/actions/multiChildKookminRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postMultiChildKookminAptNum,
+    patchMultiChildKookminRank,
+    getMultiChildKookminRank,
+} from '../../../store/actions/multiChildKookminAction';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -26,24 +28,24 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     const multiChildKookminStore = useSelector(
         (state) => state.multiChildKookmin
     );
-    const multiChildKookminRankStore = useSelector(
-        (state) => state.multiChildKookminRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        multiChildKookminRes: '',
+    });
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
+    // 다자녀 국민 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [multiChildKookminRank, setMultiChildKookminRank] = useState('');
+    const [multiChildKookminType, setMultiChildKookminType] = useState(
+        location?.state?.multiChildKookminType
     );
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
-
-    const data = multiChildKookminStore.postMultiChildKookminAptNum.data; // 다자녀 국민 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -51,6 +53,16 @@ const MultiChildKookminApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (multiChildKookminStore?.postMultiChildKookminAptNum?.data) {
+            const data =
+                multiChildKookminStore.postMultiChildKookminAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
+
+    const data = multiChildKookminStore.postMultiChildKookminAptNum.data; // 다자녀 국민 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -65,10 +77,6 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        multiChildKookminRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -77,20 +85,21 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (multiChildKookminStore?.postMultiChildKookminAptNum?.data) {
-            const data =
-                multiChildKookminStore.postMultiChildKookminAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [multiChildKookminStore?.postMultiChildKookminAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.multiChildKookminRes === '1순위' ||
-            form?.multiChildKookminRes === '2순위'
+            form?.multiChildKookminRes === '일순위' ||
+            form?.multiChildKookminRes === '이순위'
         ) {
+            dispatch(
+                patchMultiChildKookminRank({
+                    verificationRecordSpecialKookminMultiChildId: data.id,
+                    multiChildKookminRank: form.multiChildKookminRes,
+                    multiChildKookminType,
+                    supportYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -103,16 +112,77 @@ const MultiChildKookminApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.multiChildKookminRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+
+            dispatch(
+                patchMultiChildKookminRank({
+                    verificationRecordSpecialKookminMultiChildId: data.id,
+                    multiChildKookminRank: form.multiChildKookminRes,
+                    multiChildKookminType,
+                    supportYn,
+                })
+            );
         }
     };
 
-    // 다자녀 국민 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [multiChildKookminRank, setMultiChildKookminRank] = useState('');
-    const [multiChildKookminType, setMultiChildKookminType] = useState(
-        location?.state?.multiChildKookminType
-    );
+    // 다자녀 국민 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.calcMinorChildren >= 3 &&
+        (multiChildKookminType === '그외국민주택' ||
+            (multiChildKookminType === '공공주택특별법적용' &&
+                data?.meetMonthlyAverageIncomeTf === true &&
+                data?.meetPropertyTf === true) ||
+            (multiChildKookminType === '공공주택특별법미적용' &&
+                data?.meetMonthlyAverageIncomeTf === true)) &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetNumberOfPaymentsTf === true
+    ) {
+        form.multiChildKookminRes = '일순위';
+    } else if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.calcMinorChildren >= 3 &&
+        (multiChildKookminType === '그외국민주택' ||
+            (multiChildKookminType === '공공주택특별법적용' &&
+                data?.meetMonthlyAverageIncomeTf === true &&
+                data?.meetPropertyTf === true) ||
+            (multiChildKookminType === '공공주택특별법미적용' &&
+                data?.meetMonthlyAverageIncomeTf === true)) &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        (data?.meetBankJbookoinPeriodTf === false ||
+            data?.meetNumberOfPaymentsTf === false)
+    ) {
+        form.multiChildKookminRes = '이순위';
+    } else if (
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        data?.meetHomelessHouseholdMembersTf === false ||
+        data?.calcMinorChildren < 3 ||
+        (data?.americanAge < 20 &&
+            (supportYn !== 'y' || data?.householderTf === false)) ||
+        (multiChildKookminType === '공공주택특별법적용' &&
+            (data?.meetMonthlyAverageIncomeTf === false ||
+                data?.meetPropertyTf === false)) ||
+        (multiChildKookminType === '공공주택특별법미적용' &&
+            data?.meetMonthlyAverageIncomeTf === false) ||
+        data?.meetAllHouseMemberRewinningRestrictionTf === false
+    ) {
+        form.multiChildKookminRes = '탈락';
+    } else {
+        form.multiChildKookminRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -125,30 +195,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchMultiChildKookminRank({
+                verificationRecordSpecialKookminMultiChildId: data.id,
+                multiChildKookminRank: form.multiChildKookminRes,
                 multiChildKookminType,
-                multiChildKookminRank,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchMultiChildKookminRank({
-                multiChildKookminType,
-                multiChildKookminRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setMultiChildKookminRank(
-            form?.multiChildKookminRes !== ''
-                ? form?.multiChildKookminRes
-                : null
-        );
-    }, [multiChildKookminRankStore.patchMultiChildKookminRank]);
 
     console.log(multiChildKookminType);
     console.log(multiChildKookminRank);
@@ -589,7 +642,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                             3 ? (
                                                                 <>
                                                                     {multiChildKookminType !==
-                                                                    '그외 국민주택' ? (
+                                                                    '그외국민주택' ? (
                                                                         <>
                                                                             <tr className="special_phase">
                                                                                 <td className="qualification">
@@ -738,7 +791,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                                     {/* 자산 기준 충족 여부*/}
                                                                                     {/* 공공주택특별법 적용인 경우에만 적용 */}
                                                                                     {multiChildKookminType ===
-                                                                                    '공공주택특별법 적용' ? (
+                                                                                    '공공주택특별법적용' ? (
                                                                                         <tr className="special_phase">
                                                                                             <td className="qualification">
                                                                                                 <span className="qualificationBox">
@@ -821,17 +874,17 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                                                     ) : null}
 
                                                                     {(multiChildKookminType ===
-                                                                        '공공주택특별법 적용' &&
+                                                                        '공공주택특별법적용' &&
                                                                         data?.meetPropertyTf >=
                                                                             true &&
                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                             true) ||
                                                                     (multiChildKookminType ===
-                                                                        '공공주택특별법 미적용' &&
+                                                                        '공공주택특별법미적용' &&
                                                                         data?.meetMonthlyAverageIncome ===
                                                                             true) ||
                                                                     multiChildKookminType ===
-                                                                        '그외 국민주택' ? (
+                                                                        '그외국민주택' ? (
                                                                         <>
                                                                             {/* 만 나이 로직 결과 출력*/}
                                                                             <tr className="special_phase">
@@ -1247,99 +1300,13 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.calcMinorChildren >= 3 &&
-                                    (multiChildKookminType ===
-                                        '그외 국민주택' ||
-                                        (multiChildKookminType ===
-                                            '공공주택특별법 적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true &&
-                                            data?.meetPropertyTf === true) ||
-                                        (multiChildKookminType ===
-                                            '공공주택특별법 미적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true)) &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetNumberOfPaymentsTf === true
-                                        ? (form.multiChildKookminRes = '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.calcMinorChildren >= 3 &&
-                                    (multiChildKookminType ===
-                                        '그외 국민주택' ||
-                                        (multiChildKookminType ===
-                                            '공공주택특별법 적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true &&
-                                            data?.meetPropertyTf === true) ||
-                                        (multiChildKookminType ===
-                                            '공공주택특별법 미적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true)) &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    (data?.meetBankJbookoinPeriodTf === false ||
-                                        data?.meetNumberOfPaymentsTf === false)
-                                        ? (form.multiChildKookminRes = '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        false ||
-                                    data?.calcMinorChildren < 3 ||
-                                    (data?.americanAge < 20 &&
-                                        (supportYn !== 'y' ||
-                                            data?.householderTf === false)) ||
-                                    (multiChildKookminType ===
-                                        '공공주택특별법 적용' &&
-                                        (data?.meetMonthlyAverageIncomeTf ===
-                                            false ||
-                                            data?.meetPropertyTf === false)) ||
-                                    (multiChildKookminType ===
-                                        '공공주택특별법 미적용' &&
-                                        data?.meetMonthlyAverageIncomeTf ===
-                                            false) ||
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        false
-                                        ? (form.multiChildKookminRes = '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
-                                {form.multiChildKookminRes === '1순위' ||
-                                form.multiChildKookminRes === '2순위' ? (
+                                {form.multiChildKookminRes === '일순위' ||
+                                form.multiChildKookminRes === '이순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1355,10 +1322,7 @@ const MultiChildKookminApi = ({ onSaveData }) => {
                                 {form.multiChildKookminRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

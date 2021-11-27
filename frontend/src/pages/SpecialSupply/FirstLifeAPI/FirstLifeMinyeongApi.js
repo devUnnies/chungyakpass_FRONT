@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postFirstInLifeMinyeongAptNum } from '../../../store/actions/firstInLifeMinyeongAction';
-import { patchFirstLifeMinyeongRank } from '../../../store/actions/firstInLifeMinyeongRankAction';
+import {
+    postFirstInLifeMinyeongAptNum,
+    patchFirstLifeMinyeongRank,
+    getFirstLifeMinyeongRank,
+} from '../../../store/actions/firstInLifeMinyeongAction';
 import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
@@ -18,7 +21,6 @@ import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
-import { faFile } from '@fortawesome/free-regular-svg-icons';
 
 const FirstLifeMinyeongApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -27,25 +29,26 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
     const firstLifeMinyeongStore = useSelector(
         (state) => state.firstInLifeMinyeong
     );
-    const firstLifeMinyeongRankStore = useSelector(
-        (state) => state.firstLifeMinyeongRank
-    ); // 순위 patch
-    const [loading, setLoading] = useState(true); // info_tooltip animation 추가
-    const [mount, setMount] = useState(false);
-    const [effect, setEffect] = useState('mount2');
+    const [form, setForm] = useState({
+        name: '',
+        firstLifeMinyeongRes: '',
+    });
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
     const history = useHistory();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 생애최초 민영 순위 patch
+    const [firstLifeMinyeongRank, setFirstLifeMinyeongRank] = useState('');
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [taxOver5yearsYn, setTaxOver5yearsYn, handleChangeTaxOver5yearsYn] =
+        useInputState(null);
     const [firstRankHistoryYn, setFirstRankHistoryYn] = useState(
-        location?.state?.firstRankHistoryYn
+        location.state.firstRankHistoryYn
     );
 
-    const data = firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum?.data; // 생애최초 민영 로직 접근 변수
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -53,6 +56,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum?.data) {
+            const data =
+                firstLifeMinyeongStore.postFirstInLifeMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum]);
+
+    const data = firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum?.data; // 생애최초 민영 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -67,10 +80,6 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        firstLifeMinyeongRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -79,17 +88,19 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum?.data) {
-            const data =
-                firstLifeMinyeongStore.postFirstInLifeMinyeongAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [firstLifeMinyeongStore?.postFirstInLifeMinyeongAptNum]);
-
     // 결과가 1순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.firstLifeMinyeongRes === '1순위') {
+        if (form?.firstLifeMinyeongRes === '일순위') {
+            dispatch(
+                patchFirstLifeMinyeongRank({
+                    verificationRecordSpecialMinyeongFirstLifeId: data.id,
+                    firstLifeMinyeongRank: form.firstLifeMinyeongRes,
+                    firstRankHistoryYn,
+                    supportYn,
+                    taxOver5yearsYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -104,15 +115,44 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
             alert(
                 '자격 조건을 만족하지 못하는 항목이 있습니다. \n 탈락입니다.'
             );
+
+            dispatch(
+                patchFirstLifeMinyeongRank({
+                    verificationRecordSpecialMinyeongFirstLifeId: data.id,
+                    firstLifeMinyeongRank: form.firstLifeMinyeongRes,
+                    firstRankHistoryYn,
+                    supportYn,
+                    taxOver5yearsYn,
+                })
+            );
         }
     };
 
-    // 생애최초 민영 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [firstLifeMinyeongRank, setFirstLifeMinyeongRank] = useState('');
-    const [taxOver5yearsYn, setTaxOver5yearsYn, handleChangeTaxOver5yearsYn] =
-        useInputState(null);
+    // 생애최초 민영 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        data?.meetRecipientTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.householderTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        taxOver5yearsYn === true &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true
+    ) {
+        form.firstLifeMinyeongRes = '일순위';
+    } else {
+        form.firstLifeMinyeongRes = '탈락';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -125,35 +165,16 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchFirstLifeMinyeongRank({
+                verificationRecordSpecialMinyeongFirstLifeId: data.id,
+                firstLifeMinyeongRank: form.firstLifeMinyeongRes,
                 firstRankHistoryYn,
-                firstLifeMinyeongRank,
                 supportYn,
                 taxOver5yearsYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchFirstLifeMinyeongRank({
-                firstRankHistoryYn,
-                firstLifeMinyeongRank,
-                supportYn,
-                taxOver5yearsYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setFirstLifeMinyeongRank(
-            form?.firstLifeMinyeongRes !== ''
-                ? form?.firstLifeMinyeongRes
-                : null
-        );
-    }, [firstLifeMinyeongRankStore.patchFirstLifeMinyeongRank]);
 
     console.log(firstRankHistoryYn);
-    console.log(firstLifeMinyeongRank);
     console.log(supportYn);
     console.log(taxOver5yearsYn);
 
@@ -1421,45 +1442,12 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetRecipientTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.householderTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    taxOver5yearsYn === true &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true
-                                        ? (form.firstLifeMinyeongRes = '1순위')
-                                        : (form.firstLifeMinyeongRes = '탈락')}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1순위 */}
-                                {form.firstLifeMinyeongRes === '1순위' ? (
+                                {form.firstLifeMinyeongRes === '일순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1475,10 +1463,7 @@ const FirstLifeMinyeongApi = ({ onSaveData }) => {
                                 {form.firstLifeMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

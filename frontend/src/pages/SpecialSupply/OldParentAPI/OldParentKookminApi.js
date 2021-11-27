@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postOldParentKookminAptNum } from '../../../store/actions/oldParentKookminAction'; // oldParentApi 만든 후 변경하기.
-import { patchOldParentKookminRank } from '../../../store/actions/oldParentKookminRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postOldParentKookminAptNum,
+    patchOldParentKookminRank,
+    getOldParentKookminRank,
+} from '../../../store/actions/oldParentKookminAction'; // oldParentApi 만든 후 변경하기.
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -26,27 +28,24 @@ const OldParentKookminApi = ({ onSaveData }) => {
     const oldParentKookminStore = useSelector(
         (state) => state.oldParentKookmin
     );
-    const oldParentKookminRankStore = useSelector(
-        (state) => state.oldParentKookminRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        oldParentKookminRes: '',
+    });
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 노부모 국민 순위 patch
     const [oldParentKookminType, setOldParentKookminType] = useState(
-        location?.state?.oldParentKookminType
+        location.state.oldParentKookminType
     );
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [oldParentKookminRank, setOldParentKookminRank] = useState('');
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
-
-    const data = oldParentKookminStore?.postOldParentKookminAptNum?.data; // 노부모 국민 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -54,6 +53,15 @@ const OldParentKookminApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (oldParentKookminStore.postOldParentKookminAptNum.data) {
+            const data = oldParentKookminStore.postOldParentKookminAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [oldParentKookminStore.postOldParentKookminAptNum]);
+
+    const data = oldParentKookminStore?.postOldParentKookminAptNum?.data; // 노부모 국민 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -68,11 +76,6 @@ const OldParentKookminApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        supportYn: '',
-        oldParentKookminRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -81,16 +84,16 @@ const OldParentKookminApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (oldParentKookminStore.postOldParentKookminAptNum.data) {
-            const data = oldParentKookminStore.postOldParentKookminAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [oldParentKookminStore.postOldParentKookminAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.oldParentKookminRes === '1순위') {
+        if (form?.oldParentKookminRes === '일순위') {
+            patchOldParentKookminRank({
+                verificationRecordSpecialKookminOldParentId: data.id,
+                oldParentKookminType: form.oldParentKookminRes,
+                oldParentKookminRank,
+                supportYn,
+            });
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -101,17 +104,47 @@ const OldParentKookminApi = ({ onSaveData }) => {
     };
 
     const fail = async () => {
-        if (form?.oldParentKookminRes !== '1순위') {
+        if (form?.oldParentKookminRes !== '일순위') {
             alert(
                 '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
             );
+
+            patchOldParentKookminRank({
+                verificationRecordSpecialKookminOldParentId: data.id,
+                oldParentKookminType: form.oldParentKookminRes,
+                oldParentKookminRank,
+                supportYn,
+            });
         }
     };
 
-    // 노부모 국민 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [oldParentKookminRank, setOldParentKookminRank] = useState('');
+    // 노부모 국민 순위 로직
+    if (
+        oldParentKookminType !== '' &&
+        data?.accountTf === true &&
+        data?.householderTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 && supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.meetOldParentSupportMore3yearsTf === true &&
+        (oldParentKookminType === '그외국민주택' ||
+            (oldParentKookminType === '공공주택특별법적용' &&
+                data?.meetMonthlyAverageIncomeTf === true &&
+                data?.meetPropertyTf === true) ||
+            (oldParentKookminType === '공공주택특별법미적용' &&
+                data?.meetMonthlyAverageIncomeTf === true)) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        data?.meetBankJoinPeriodTf === true &&
+        data?.meetNumberOfPaymentsTf === true
+    ) {
+        form.oldParentKookminRes = '일순위';
+    } else {
+        form.oldParentKookminRes = '탈락';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -124,28 +157,13 @@ const OldParentKookminApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchOldParentKookminRank({
-                oldParentKookminType,
+                verificationRecordSpecialKookminOldParentId: data.id,
+                oldParentKookminType: form.oldParentKookminRes,
                 oldParentKookminRank,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchOldParentKookminRank({
-                oldParentKookminType,
-                oldParentKookminRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setOldParentKookminRank(
-            form?.oldParentKookminRes !== '' ? form?.oldParentKookminRes : null
-        );
-    }, [oldParentKookminRankStore.patchOldParentKookminRank]);
 
     console.log(oldParentKookminType);
     console.log(oldParentKookminRank);
@@ -981,7 +999,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                             {/* 자산 기준 충족 여부*/}
                                                                                             {/* 공공주택특별법 적용인 경우에만 적용 */}
                                                                                             {oldParentKookminType ===
-                                                                                            '공공주택특별법 적용' ? (
+                                                                                            '공공주택특별법적용' ? (
                                                                                                 <tr className="special_phase">
                                                                                                     <td className="qualification">
                                                                                                         <span className="qualificationBox">
@@ -1069,13 +1087,13 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                                                                     {/* 규제 지역인 경우에만 보이도록 */}
                                                                                     {/* 세대원 청약 당첨 이력 */}
                                                                                     {oldParentKookminType ===
-                                                                                        '그외 국민주택' ||
+                                                                                        '그외국민주택' ||
                                                                                     (oldParentKookminType ===
-                                                                                        '공공주택특별법 미적용' &&
+                                                                                        '공공주택특별법미적용' &&
                                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                                             true) ||
                                                                                     (oldParentKookminType ===
-                                                                                        '공공주택특별법 적용' &&
+                                                                                        '공공주택특별법적용' &&
                                                                                         data?.meetMonthlyAverageIncomeTf ===
                                                                                             true &&
                                                                                         data?.meetPropertyTf ===
@@ -1435,50 +1453,11 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {oldParentKookminType !== '' &&
-                                    data?.accountTf === true &&
-                                    data?.householderTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.meetOldParentSupportMore3yearsTf ===
-                                        true &&
-                                    (oldParentKookminType === '그외 국민주택' ||
-                                        (oldParentKookminType ===
-                                            '공공주택특별법 적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true &&
-                                            data?.meetPropertyTf === true) ||
-                                        (oldParentKookminType ===
-                                            '공공주택특별법 미적용' &&
-                                            data?.meetMonthlyAverageIncomeTf ===
-                                                true)) &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    data?.meetBankJoinPeriodTf === true &&
-                                    data?.meetNumberOfPaymentsTf === true
-                                        ? (form.oldParentKookminRes = '1순위')
-                                        : (form.oldParentKookminRes = '탈락')}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
-                                {form.oldParentKookminRes === '1순위' ? (
+                                {form.oldParentKookminRes === '일순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1491,10 +1470,7 @@ const OldParentKookminApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"
