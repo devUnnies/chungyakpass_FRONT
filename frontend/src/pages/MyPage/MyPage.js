@@ -37,13 +37,24 @@ const MyPage = () => {
                     width="200"
                     height="50"
                     fontSize="17"
-                    type="readJudgeHistory"
+                    type="readRecords"
                     onClick={() => {
-                        // history.push('/judgeHistory');
-                        alert('서비스를 개발 중입니다!');
+                        history.push('/records');
                     }}
                 >
-                    자격판단이력 확인
+                    자격판단이력 조회
+                </MainButton>
+
+                <MainButton
+                    width="200"
+                    height="50"
+                    fontSize="17"
+                    type="readPointRecords"
+                    onClick={() => {
+                        history.push('/pointRecords');
+                    }}
+                >
+                    가배점계산이력 조회
                 </MainButton>
             </div>
         </div>
