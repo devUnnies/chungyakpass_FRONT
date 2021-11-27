@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postNewlyMarriedMinyeongAptNum } from '../../../store/actions/newlyMarriedMinyeongAction';
-import { patchNewlyMarriedMinyeongRank } from '../../../store/actions/newlyMarriedMinyeongRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postNewlyMarriedMinyeongAptNum,
+    patchNewlyMarriedMinyeongRank,
+    getNewlyMarriedMinyeongRank,
+} from '../../../store/actions/newlyMarriedMinyeongAction';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -26,9 +28,10 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     const newlyMarriedMinyeongStore = useSelector(
         (state) => state.newlyMarriedMinyeong
     );
-    const newlyMarriedMinyeongRankStore = useSelector(
-        (state) => state.newlyMarriedMinyeongRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        newlyMarriedMinyeongRes: '',
+    });
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
@@ -36,14 +39,11 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
-
-    const data = newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data; // 신혼부부 민영 로직 접근 변수
+    // 신혼부부 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [newlyMarriedMinyeongRank, setNewlyMarriedMinyeongRank] =
+        useState('');
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -51,6 +51,16 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum?.data) {
+            const data =
+                newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum]);
+
+    const data = newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data; // 신혼부부 민영 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -65,10 +75,6 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        newlyMarriedMinyeongRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -77,20 +83,20 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum?.data) {
-            const data =
-                newlyMarriedMinyeongStore.postNewlyMarriedMinyeongAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [newlyMarriedMinyeongStore?.postNewlyMarriedMinyeongAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.newlyMarriedMinyeongRes === '1순위' ||
-            form?.newlyMarriedMinyeongRes === '2순위'
+            form?.newlyMarriedMinyeongRes === '일순위' ||
+            form?.newlyMarriedMinyeongRes === '이순위'
         ) {
+            dispatch(
+                patchNewlyMarriedMinyeongRank({
+                    verificationRecordSpecialMinyeongNewlyMarriedId: data.id,
+                    newlyMarriedMinyeongRank: form.newlyMarriedMinyeongRes,
+                    supportYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -103,14 +109,81 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.newlyMarriedMinyeongRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+
+            dispatch(
+                patchNewlyMarriedMinyeongRank({
+                    verificationRecordSpecialMinyeongNewlyMarriedId: data.id,
+                    newlyMarriedMinyeongRank: form.newlyMarriedMinyeongRes,
+                    supportYn,
+                })
+            );
         }
     };
 
-    // 신혼부부 민영 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [newlyMarriedMinyeongRank, setNewlyMarriedMinyeongRank] =
-        useState('');
+    // 신혼부부 민영 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            data?.householderTf === true &&
+            supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetMarriagePeriodIn7yearsTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true) ||
+            // 규제지역이 아닐 경우
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true &&
+        data?.secondChungyak === false &&
+        data?.hasMinorChildren === true
+    ) {
+        form.newlyMarriedMinyeongRes = '일순위';
+    } else if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            data?.householderTf === true &&
+            supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetMarriagePeriodIn7yearsTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true) ||
+            // 규제지역이 아닐 경우
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true &&
+        data?.secondChungyak === true &&
+        data?.hasMinorChildren === false
+    ) {
+        form.newlyMarriedMinyeongRes = '이순위';
+    } else if (
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        (data?.americanAge < 20 &&
+            (data?.householderTf === false || supportYn !== 'y')) ||
+        data?.americanAge >= 20 ||
+        (data?.meetMarriagePeriodIn7yearsTf === false &&
+            data?.meetHomelessHouseholdMembersTf === false &&
+            data?.meetMonthlyAverageIncomePriorityTf === false &&
+            data?.meetMonthlyAverageIncomeGeneralTf === false &&
+            ((data?.restrictedAreaTf === true &&
+                data?.meetAllHouseMemberRewinningRestrictionTf === false) ||
+                // 규제지역이 아닐 경우
+                data?.restrictedAreaTf === false)) ||
+        data?.meetBankbookJoinPeriodTf === false ||
+        data?.meetDepositTf === false
+    ) {
+        form.newlyMarriedMinyeongRes = '탈락';
+    } else {
+        form.newlyMarriedMinyeongRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -123,28 +196,12 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchNewlyMarriedMinyeongRank({
-                newlyMarriedMinyeongRank,
+                verificationRecordSpecialMinyeongNewlyMarriedId: data.id,
+                newlyMarriedMinyeongRank: form.newlyMarriedMinyeongRes,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchNewlyMarriedMinyeongRank({
-                newlyMarriedMinyeongRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setNewlyMarriedMinyeongRank(
-            form?.newlyMarriedMinyeongRes !== ''
-                ? form?.newlyMarriedMinyeongRes
-                : null
-        );
-    }, [newlyMarriedMinyeongRankStore.patchNewlyMarriedMinyeongRank]);
 
     console.log(newlyMarriedMinyeongRank);
     console.log(supportYn);
@@ -1311,103 +1368,13 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        data?.householderTf === true &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetMarriagePeriodIn7yearsTf ===
-                                        true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true) ||
-                                        // 규제지역이 아닐 경우
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true &&
-                                    data?.secondChungyak === false &&
-                                    data?.hasMinorChildren === true
-                                        ? (form.newlyMarriedMinyeongRes =
-                                              '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        data?.householderTf === true &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetMarriagePeriodIn7yearsTf ===
-                                        true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true) ||
-                                        // 규제지역이 아닐 경우
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true &&
-                                    data?.secondChungyak === true &&
-                                    data?.hasMinorChildren === false
-                                        ? (form.newlyMarriedMinyeongRes =
-                                              '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    (data?.americanAge < 20 &&
-                                        (data?.householderTf === false ||
-                                            supportYn !== 'y')) ||
-                                    data?.americanAge >= 20 ||
-                                    (data?.meetMarriagePeriodIn7yearsTf ===
-                                        false &&
-                                        data?.meetHomelessHouseholdMembersTf ===
-                                            false &&
-                                        data?.meetMonthlyAverageIncomePriorityTf ===
-                                            false &&
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            false &&
-                                        ((data?.restrictedAreaTf === true &&
-                                            data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                                false) ||
-                                            // 규제지역이 아닐 경우
-                                            data?.restrictedAreaTf ===
-                                                false)) ||
-                                    data?.meetBankbookJoinPeriodTf === false ||
-                                    data?.meetDepositTf === false
-                                        ? (form.newlyMarriedMinyeongRes =
-                                              '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
-                                {form.newlyMarriedMinyeongRes === '1순위' ||
-                                form.newlyMarriedMinyeongRes === '2순위' ? (
+                                {form.newlyMarriedMinyeongRes === '일순위' ||
+                                form.newlyMarriedMinyeongRes === '이순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1423,10 +1390,7 @@ const NewlyMarriedMinyeongApi = ({ onSaveData }) => {
                                 {form.newlyMarriedMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postOldParentMinyeongAptNum } from '../../../store/actions/oldParentMinyeongAction';
-import { patchOldParentMinyeongRank } from '../../../store/actions/oldParentMinyeongRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postOldParentMinyeongAptNum,
+    patchOldParentMinyeongRank,
+    getOldParentMinyeongRank,
+} from '../../../store/actions/oldParentMinyeongAction';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -26,24 +28,21 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     const oldParentMinyeongStore = useSelector(
         (state) => state.oldParentMinyeong
     );
-    const oldParentMinyeongRankStore = useSelector(
-        (state) => state.oldParentMinyeongRank
-    ); // 순위 patch
-    // info_tooltip animation 추가
-    const [mount, setMount] = useState(false);
-    const [effect, setEffect] = useState('mount2');
-
+    const [form, setForm] = useState({
+        name: '',
+        oldParentMinyeongRes: '',
+    });
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 노부모 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [oldParentMinyeongRank, setOldParentMinyeongRank] = useState('');
 
-    const data = oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data; // 노부모 민영 로직 접근 변수
+    // info_tooltip animation 추가
+    const [mount, setMount] = useState(false);
+    const [effect, setEffect] = useState('mount2');
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -51,6 +50,16 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data) {
+            const data =
+                oldParentMinyeongStore.postOldParentMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [oldParentMinyeongStore?.postOldParentMinyeongAptNum]);
+
+    const data = oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data; // 노부모 민영 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -65,10 +74,6 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        oldParentMinyeongRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -77,17 +82,15 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (oldParentMinyeongStore?.postOldParentMinyeongAptNum?.data) {
-            const data =
-                oldParentMinyeongStore.postOldParentMinyeongAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [oldParentMinyeongStore?.postOldParentMinyeongAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
-        if (form?.oldParentMinyeongRes === '1순위') {
+        if (form?.oldParentMinyeongRes === '일순위') {
+            patchOldParentMinyeongRank({
+                verificationRecordSpecialMinyeongOldParentId: data.id,
+                oldParentMinyeongRank: form.oldParentMinyeongRes,
+                supportYn,
+            });
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -98,17 +101,39 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     };
 
     const fail = async () => {
-        if (form?.oldParentMinyeongRes !== '1순위') {
+        if (form?.oldParentMinyeongRes !== '일순위') {
             alert(
                 '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
             );
+
+            patchOldParentMinyeongRank({
+                verificationRecordSpecialMinyeongOldParentId: data.id,
+                oldParentMinyeongRank: form.oldParentMinyeongRes,
+                supportYn,
+            });
         }
     };
 
-    // 노부모 민영 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [oldParentMinyeongRank, setOldParentMinyeongRank] = useState('');
+    // 노부모 민영 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.householderTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 && supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.meetOldParentSupportMore3yearsTf === true &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberNotWinningIn5yearsTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true
+    ) {
+        form.oldParentMinyeongRes = '일순위';
+    } else {
+        form.oldParentMinyeongRes = '탈락';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -121,28 +146,12 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchOldParentMinyeongRank({
-                oldParentMinyeongRank,
+                verificationRecordSpecialMinyeongOldParentId: data.id,
+                oldParentMinyeongRank: form.oldParentMinyeongRes,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchOldParentMinyeongRank({
-                oldParentMinyeongRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setOldParentMinyeongRank(
-            form?.oldParentMinyeongRes !== ''
-                ? form?.oldParentMinyeongRes
-                : null
-        );
-    }, [oldParentMinyeongRankStore.patchOldParentMinyeongRank]);
 
     console.log(oldParentMinyeongRank);
     console.log(supportYn);
@@ -1262,38 +1271,11 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {data?.accountTf === true &&
-                                    data?.householderTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.meetOldParentSupportMore3yearsTf ===
-                                        true &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberNotWinningIn5yearsTf ===
-                                            true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true
-                                        ? (form.oldParentMinyeongRes = '1순위')
-                                        : (form.oldParentMinyeongRes = '탈락')}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
-                                {form.oldParentMinyeongRes === '1순위' ? (
+                                {form.oldParentMinyeongRes === '일순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1306,10 +1288,7 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                                 ) : (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

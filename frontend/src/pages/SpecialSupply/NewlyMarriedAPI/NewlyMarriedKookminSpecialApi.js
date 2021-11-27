@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postNewlyMarriedKookminSpecialAptNum } from '../../../store/actions/newlyMarriedKookminSpecialAction';
-import { patchNewlyMarriedKookminSpecialRank } from '../../../store/actions/newlyMarriedKookminSpecialRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postNewlyMarriedKookminSpecialAptNum,
+    patchNewlyMarriedKookminSpecialRank,
+} from '../../../store/actions/newlyMarriedKookminSpecialAction';
 import {
     CaretRightOutlined,
     CheckOutlined,
@@ -18,7 +19,6 @@ import useInputState from '../../../components/Input/useInputState';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading/loading';
-import { library } from '@fortawesome/fontawesome-svg-core';
 
 const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const [getList, setGetList] = useState();
@@ -27,9 +27,10 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const newlyMarriedKookminSpecialStore = useSelector(
         (state) => state.newlyMarriedKookminSpecial
     );
-    const newlyMarriedKookminSpecialRankStore = useSelector(
-        (state) => state.newlyMarriedKookminSpecialRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        newlyMarriedKookminSpecialRes: '',
+    });
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
@@ -37,15 +38,16 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 신혼부부 공특법 적용 국민 순위 patch
     const [preNewlyMarriedYn, setPreNewlyMarriedYn] = useState(
-        location?.state?.preNewlyMarriedYn
+        location.state.preNewlyMarriedYn
     );
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [newlyMarriedKookminSpecialRank, setNewlyMarriedKookminSpecialRank] =
+        useState('');
+    const [newlyMarriedKookminSpecialType, setNewlyMarriedKookminSpecialType] =
+        useState('공공주택특별법적용');
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -53,6 +55,18 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (
+            newlyMarriedKookminSpecialStore
+                ?.postNewlyMarriedKookminSpecialAptNum?.data
+        ) {
+            const data =
+                newlyMarriedKookminSpecialStore
+                    .postNewlyMarriedKookminSpecialAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [newlyMarriedKookminSpecialStore?.postNewlyMarriedKookminSpecialAptNum]);
 
     const data =
         newlyMarriedKookminSpecialStore.postNewlyMarriedKookminSpecialAptNum
@@ -71,10 +85,6 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        newlyMarriedKookminSpecialRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -83,24 +93,23 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (
-            newlyMarriedKookminSpecialStore
-                ?.postNewlyMarriedKookminSpecialAptNum?.data
-        ) {
-            const data =
-                newlyMarriedKookminSpecialStore
-                    .postNewlyMarriedKookminSpecialAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [newlyMarriedKookminSpecialStore?.postNewlyMarriedKookminSpecialAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.newlyMarriedKookminSpecialRes === '1순위' ||
-            form?.newlyMarriedKookminSpecialRes === '2순위'
+            form?.newlyMarriedKookminSpecialRes === '일순위' ||
+            form?.newlyMarriedKookminSpecialRes === '이순위'
         ) {
+            dispatch(
+                patchNewlyMarriedKookminSpecialRank({
+                    verificationRecordSpecialKookminNewlyMarriedId: data.id,
+                    newlyMarriedKookminSpecialRank:
+                        form.newlyMarriedKookminSpecialRes,
+                    newlyMarriedKookminSpecialType,
+                    preNewlyMarriedYn,
+                    supportYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -113,16 +122,81 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.newlyMarriedKookminSpecialRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+
+            dispatch(
+                patchNewlyMarriedKookminSpecialRank({
+                    verificationRecordSpecialKookminNewlyMarriedId: data.id,
+                    newlyMarriedKookminSpecialRank:
+                        form.newlyMarriedKookminSpecialRes,
+                    newlyMarriedKookminSpecialType,
+                    preNewlyMarriedYn,
+                    supportYn,
+                })
+            );
         }
     };
 
-    // 신혼부부 공특법 적용 국민 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [newlyMarriedKookminSpecialRank, setNewlyMarriedKookminSpecialRank] =
-        useState('');
-    const [newlyMarriedKookminSpecialType, setNewlyMarriedKookminSpecialType] =
-        useState('공공주택특별법적용');
+    // 신혼부부 공특법 국민 순위 로직
+    if (
+        preNewlyMarriedYn === 'n' &&
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            data?.householderTf === true &&
+            supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetRecipientTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        data?.meetPropertyTf === true &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetNumberOfPaymentsTf === true &&
+        data?.secondChungyak === false &&
+        data?.hasMinorChildren === true &&
+        preNewlyMarriedYn === 'n'
+    ) {
+        form.newlyMarriedKookminSpecialRes = '일순위';
+    } else if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        ((data?.americanAge < 20 &&
+            data?.householderTf === true &&
+            supportYn === 'y') ||
+            data?.americanAge >= 20) &&
+        data?.meetRecipientTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        (data?.meetMonthlyAverageIncomePriorityTf === true ||
+            data?.meetMonthlyAverageIncomeGeneralTf === true) &&
+        data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+        data?.meetPropertyTf === true &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetNumberOfPaymentsTf === true &&
+        ((preNewlyMarriedYn === 'n' &&
+            (data?.secondChungyak === true ||
+                data?.hasMinorChildren === false)) ||
+            preNewlyMarriedYn === 'y')
+    ) {
+        form.newlyMarriedKookminSpecialRes = '이순위';
+    } else if (
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        (data?.americanAge < 20 &&
+            (data?.householderTf === false || supportYn !== 'y')) ||
+        data?.meetRecipientTf === false ||
+        data?.meetHomelessHouseholdMembersTf === false ||
+        (data?.meetMonthlyAverageIncomePriorityTf === false &&
+            data?.meetMonthlyAverageIncomeGeneralTf === false) ||
+        data?.meetAllHouseMemberRewinningRestrictionTf === false ||
+        data?.meetPropertyTf === false ||
+        data?.meetBankbookJoinPeriodTf === false ||
+        data?.meetNumberOfPaymentsTf === false
+    ) {
+        form.newlyMarriedKookminSpecialRes = '탈락';
+    } else {
+        form.newlyMarriedKookminSpecialRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -135,34 +209,15 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchNewlyMarriedKookminSpecialRank({
-                newlyMarriedKookminSpecialRank,
+                verificationRecordSpecialKookminNewlyMarriedId: data.id,
+                newlyMarriedKookminSpecialRank:
+                    form.newlyMarriedKookminSpecialRes,
                 newlyMarriedKookminSpecialType,
                 preNewlyMarriedYn,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchNewlyMarriedKookminSpecialRank({
-                newlyMarriedKookminSpecialRank,
-                newlyMarriedKookminSpecialType,
-                preNewlyMarriedYn,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setNewlyMarriedKookminSpecialRank(
-            form?.newlyMarriedKookminSpecialRes !== ''
-                ? form?.newlyMarriedKookminSpecialRes
-                : null
-        );
-    }, [
-        newlyMarriedKookminSpecialRankStore.patchNewlyMarriedKookminSpecialRank,
-    ]);
 
     console.log(newlyMarriedKookminSpecialRank);
     console.log(newlyMarriedKookminSpecialType);
@@ -1470,99 +1525,15 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {preNewlyMarriedYn === 'n' &&
-                                    data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        data?.householderTf === true &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetRecipientTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    data?.meetPropertyTf === true &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetNumberOfPaymentsTf === true &&
-                                    data?.secondChungyak === false &&
-                                    data?.hasMinorChildren === true &&
-                                    preNewlyMarriedYn === 'n'
-                                        ? (form.newlyMarriedKookminSpecialRes =
-                                              '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    ((data?.americanAge < 20 &&
-                                        data?.householderTf === true &&
-                                        supportYn === 'y') ||
-                                        data?.americanAge >= 20) &&
-                                    data?.meetRecipientTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        true ||
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            true) &&
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        true &&
-                                    data?.meetPropertyTf === true &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetNumberOfPaymentsTf === true &&
-                                    ((preNewlyMarriedYn === 'n' &&
-                                        (data?.secondChungyak === true ||
-                                            data?.hasMinorChildren ===
-                                                false)) ||
-                                        preNewlyMarriedYn === 'y')
-                                        ? (form.newlyMarriedKookminSpecialRes =
-                                              '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    (data?.americanAge < 20 &&
-                                        (data?.householderTf === false ||
-                                            supportYn !== 'y')) ||
-                                    data?.meetRecipientTf === false ||
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        false ||
-                                    (data?.meetMonthlyAverageIncomePriorityTf ===
-                                        false &&
-                                        data?.meetMonthlyAverageIncomeGeneralTf ===
-                                            false) ||
-                                    data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                        false ||
-                                    data?.meetPropertyTf === false ||
-                                    data?.meetBankbookJoinPeriodTf === false ||
-                                    data?.meetNumberOfPaymentsTf === false
-                                        ? (form.newlyMarriedKookminSpecialRes =
-                                              '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
                                 {form.newlyMarriedKookminSpecialRes ===
-                                    '1순위' ||
+                                    '일순위' ||
                                 form.newlyMarriedKookminSpecialRes ===
-                                    '2순위' ? (
+                                    '이순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="submit"
                                             width="100"
                                             height="30"
@@ -1579,10 +1550,7 @@ const NewlyMarriedKookminSpecialApi = ({ onSaveData }) => {
                                 '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

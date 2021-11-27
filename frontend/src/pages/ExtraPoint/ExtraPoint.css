@@ -1,6 +1,6 @@
 /* 아파트 공고번호 페이지 */
 .numberInfoHeaderContainer {
-    margin-left: 38%;
+    margin-left: 40%;
 }
 .apt_titleIcon {
     font-size: 20pt;
@@ -50,7 +50,7 @@
 /* 이전, 다음 버튼 디자인 및 위치 조정 */
 .buttonContainer {
     width: 300px;
-    margin-left: 40%;
+    margin-left: 42%;
 }
 .buttonPosition {
     margin-left: 5px;
@@ -120,7 +120,7 @@ table.pointTable {
     font-size: 15pt;
 }
 .point_subPlusTitle {
-    margin-top: 1%;
+    margin-top: 1.5%;
     text-align: left;
     font-size: 12pt;
     color: black;
@@ -242,4 +242,36 @@ hr.sum_hr {
     font-weight: 600;
     font-size: 40pt;
     color: #2a4476;
+}
+
+/* 가점표 확인 테이블 */
+.pointTableContainer {
+    margin-top: 2%;
+    margin-left: 30%;
+}
+.point-table-icon {
+    color: red;
+}
+.pointCheck {
+    margin-bottom: 10px;
+}
+.pointTable {
+    width: 100%;
+    margin-bottom: 3%;
+    border-collapse: collapse;
+    border: 1px solid gainsboro;
+}
+.point-table-header {
+    padding: 8px;
+    background-color: var(--button-bg-color, #2a4476);
+    color: white;
+    font-weight: 500;
+    text-align: center;
+}
+.pointTable tr,
+.pointTable td {
+    padding: 5px;
+}
+td.point-text-align {
+    text-align: center;
 }

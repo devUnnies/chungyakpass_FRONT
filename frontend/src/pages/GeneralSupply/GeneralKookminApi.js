@@ -6,7 +6,6 @@ import {
     patchGeneralKookminRank,
     getGeneralKookminRank,
 } from '../../store/actions/generalKookminAction';
-import { Link } from 'react-router-dom';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -40,10 +39,6 @@ const GeneralKookminApi = ({ onSaveData }) => {
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location.state.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(location.state.housingType);
     // 일반 국민 순위 patch
     const [supportYn, setSupportYn, handleChangeSupportYn] =
         useInputState(null);
