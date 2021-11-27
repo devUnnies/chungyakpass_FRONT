@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { postMultiChildMinyeongAptNum } from '../../../store/actions/multiChildMinyeongAction';
-import { patchMultiChildMinyeongRank } from '../../../store/actions/multiChildMinyeongRankAction';
-import { Link } from 'react-router-dom';
+import {
+    postMultiChildMinyeongAptNum,
+    patchMultiChildMinyeongRank,
+    getMultiChildMinyeongRank,
+} from '../../../store/actions/multiChildMinyeongAction';
 import {
     CheckOutlined,
     CaretRightOutlined,
@@ -26,24 +28,21 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
     const multiChildMinyeongStore = useSelector(
         (state) => state.multiChildMinyeong
     );
-    const multiChildMinyeongRankStore = useSelector(
-        (state) => state.multiChildMinyeongRank
-    ); // 순위 patch
+    const [form, setForm] = useState({
+        name: '',
+        multiChildMinyeongRes: '',
+    });
     const [loading, setLoading] = useState(true);
     const history = useHistory();
     const location = useLocation();
-    const [notificationNumber, setNotificationNumber] = useState(
-        location?.state?.notificationNumber
-    );
-    const [housingType, setHousingType] = useState(
-        location?.state?.housingType
-    );
+    // 다자녀 민영 순위 patch
+    const [supportYn, setSupportYn, handleChangeSupportYn] =
+        useInputState(null);
+    const [multiChildMinyeongRank, setMultiChildMinyeongRank] = useState('');
 
     // info_tooltip animation 추가
     const [mount, setMount] = useState(false);
     const [effect, setEffect] = useState('mount2');
-
-    const data = multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
     // 로딩 상태 적용
     useEffect(() => {
@@ -51,6 +50,16 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
             setLoading(false);
         }, 1200);
     }, []);
+
+    useEffect(() => {
+        if (multiChildMinyeongStore.postMultiChildMinyeongAptNum.data) {
+            const data =
+                multiChildMinyeongStore.postMultiChildMinyeongAptNum.data;
+            console.log(JSON.stringify(data));
+        }
+    }, [multiChildMinyeongStore.postMultiChildMinyeongAptNum]);
+
+    const data = multiChildMinyeongStore?.postMultiChildMinyeongAptNum?.data; // 다자녀 민영 로직 접근 변수
 
     // info tooltip animation
     const onClickBtn = () => {
@@ -65,10 +74,6 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
         }
     };
 
-    const [form, setForm] = useState({
-        name: '',
-        multiChildMinyeongRes: '',
-    });
     const onChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -77,20 +82,20 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
         });
     };
 
-    useEffect(() => {
-        if (multiChildMinyeongStore.postMultiChildMinyeongAptNum.data) {
-            const data =
-                multiChildMinyeongStore.postMultiChildMinyeongAptNum.data;
-            console.log(JSON.stringify(data));
-        }
-    }, [multiChildMinyeongStore.postMultiChildMinyeongAptNum]);
-
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (
-            form?.multiChildMinyeongRes === '1순위' ||
-            form?.multiChildMinyeongRes === '2순위'
+            form?.multiChildMinyeongRes === '일순위' ||
+            form?.multiChildMinyeongRes === '이순위'
         ) {
+            dispatch(
+                patchMultiChildMinyeongRank({
+                    verificationRecordSpecialMinyeongMultiChildId: data.id,
+                    multiChildMinyeongRank: form.multiChildMinyeongRes,
+                    supportYn,
+                })
+            );
+
             history.push({
                 pathname: '/rank',
                 state: {
@@ -103,13 +108,70 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
     const fail = async () => {
         if (form?.multiChildMinyeongRes === '탈락') {
             alert('자격 조건을 만족하지 못하는 항목이 있습니다.');
+
+            dispatch(
+                patchMultiChildMinyeongRank({
+                    verificationRecordSpecialMinyeongMultiChildId: data.id,
+                    multiChildMinyeongRank: form.multiChildMinyeongRes,
+                    supportYn,
+                })
+            );
         }
     };
 
-    // 다자녀 민영 순위 patch
-    const [supportYn, setSupportYn, handleChangeSupportYn] =
-        useInputState(null);
-    const [multiChildMinyeongRank, setMultiChildMinyeongRank] = useState('');
+    // 다자녀 민영 순위 로직
+    if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.calcMinorChildren >= 3 &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        ((data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+            data?.meetHouseHavingLessThan2Apt === true) ||
+            data?.restrictedAreaTf === false) &&
+        data?.meetBankbookJoinPeriodTf === true &&
+        data?.meetDepositTf === true
+    ) {
+        form.multiChildMinyeongRes = '일순위';
+    } else if (
+        data?.accountTf === true &&
+        data?.meetLivingInSurroundAreaTf === true &&
+        data?.meetHomelessHouseholdMembersTf === true &&
+        data?.calcMinorChildren >= 3 &&
+        ((data?.americanAge < 20 &&
+            supportYn === 'y' &&
+            data?.householderTf === true) ||
+            data?.americanAge >= 20) &&
+        (data?.priorityApt === false ||
+            (data?.restrictedAreaTf === true && // 규제지역
+                data?.meetAllHouseMemberRewinningRestrictionTf === true &&
+                (data?.meetHouseHavingLessThan2Apt === false ||
+                    data?.meetBankbookJoinPeriodTf === false ||
+                    data?.meetDepositTf === false)) ||
+            // 비규제지역
+            (data?.restrictedAreaTf === false &&
+                (data?.meetBankbookJoinPeriodTf === false ||
+                    data?.meetDepositTf === false)))
+    ) {
+        form.multiChildMinyeongRes = '이순위';
+    } else if (
+        data?.accountTf === false ||
+        data?.meetLivingInSurroundAreaTf === false ||
+        data?.meetHomelessHouseholdMembersTf === false ||
+        data?.calcMinorChildren < 3 ||
+        (data?.americanAge < 20 &&
+            (supportYn !== 'y' || data?.householderTf === false)) ||
+        (data?.restrictedAreaTf === true &&
+            data?.meetAllHouseMemberRewinningRestrictionTf === false)
+    ) {
+        form.multiChildMinyeongRes = '탈락';
+    } else {
+        form.multiChildMinyeongRes = '';
+    }
 
     const handleSubmit = (e) => {
         // 이전의 값을 가지고 와서 기본값으로 세팅
@@ -122,28 +184,12 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
         // 연결해서 전체 저장소에 제대로 들어가는지 콘솔에서 확인하기
         dispatch(
             patchMultiChildMinyeongRank({
-                multiChildMinyeongRank,
+                verificationRecordSpecialMinyeongMultiChildId: data.id,
+                multiChildMinyeongRank: form.multiChildMinyeongRes,
                 supportYn,
             })
         );
     };
-
-    const onClick = async () => {
-        dispatch(
-            patchMultiChildMinyeongRank({
-                multiChildMinyeongRank,
-                supportYn,
-            })
-        ); // api 연결 요청.
-    };
-
-    useEffect(() => {
-        setMultiChildMinyeongRank(
-            form?.multiChildMinyeongRes !== ''
-                ? form?.multiChildMinyeongRes
-                : null
-        );
-    }, [multiChildMinyeongRankStore.patchMultiChildMinyeongRank]);
 
     console.log(multiChildMinyeongRank);
     console.log(supportYn);
@@ -1267,84 +1313,13 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                     ) : null}
                                 </table>
 
-                                <div className="rankRes">
-                                    {/* 순위 매기기 */}
-                                    {/* 1순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.calcMinorChildren >= 3 &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    ((data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            true &&
-                                        data?.meetHouseHavingLessThan2Apt ===
-                                            true) ||
-                                        data?.restrictedAreaTf === false) &&
-                                    data?.meetBankbookJoinPeriodTf === true &&
-                                    data?.meetDepositTf === true
-                                        ? (form.multiChildMinyeongRes = '1순위')
-                                        : null}
-
-                                    {/* 2순위 */}
-                                    {data?.accountTf === true &&
-                                    data?.meetLivingInSurroundAreaTf === true &&
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        true &&
-                                    data?.calcMinorChildren >= 3 &&
-                                    ((data?.americanAge < 20 &&
-                                        supportYn === 'y' &&
-                                        data?.householderTf === true) ||
-                                        data?.americanAge >= 20) &&
-                                    (data?.priorityApt === false ||
-                                        (data?.restrictedAreaTf === true && // 규제지역
-                                            data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                                true &&
-                                            (data?.meetHouseHavingLessThan2Apt ===
-                                                false ||
-                                                data?.meetBankbookJoinPeriodTf ===
-                                                    false ||
-                                                data?.meetDepositTf ===
-                                                    false)) ||
-                                        // 비규제지역
-                                        (data?.restrictedAreaTf === false &&
-                                            (data?.meetBankbookJoinPeriodTf ===
-                                                false ||
-                                                data?.meetDepositTf === false)))
-                                        ? (form.multiChildMinyeongRes = '2순위')
-                                        : null}
-
-                                    {/* 탈락 */}
-                                    {data?.accountTf === false ||
-                                    data?.meetLivingInSurroundAreaTf ===
-                                        false ||
-                                    data?.meetHomelessHouseholdMembersTf ===
-                                        false ||
-                                    data?.calcMinorChildren < 3 ||
-                                    (data?.americanAge < 20 &&
-                                        (supportYn !== 'y' ||
-                                            data?.householderTf === false)) ||
-                                    (data?.restrictedAreaTf === true &&
-                                        data?.meetAllHouseMemberRewinningRestrictionTf ===
-                                            false)
-                                        ? (form.multiChildMinyeongRes = '탈락')
-                                        : null}
-                                </div>
-
                                 {/* 순위에 따른 페이지 이동 */}
                                 {/* 1, 2순위 */}
-                                {form.multiChildMinyeongRes === '1순위' ||
-                                form.multiChildMinyeongRes === '2순위' ? (
+                                {form.multiChildMinyeongRes === '일순위' ||
+                                form.multiChildMinyeongRes === '이순위' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                rankSuccess();
-                                            }}
+                                            onClick={rankSuccess}
                                             type="button"
                                             width="100"
                                             height="30"
@@ -1360,10 +1335,7 @@ const MultiChildMinyeongApi = ({ onSaveData }) => {
                                 {form.multiChildMinyeongRes === '탈락' ? (
                                     <div className="specialRankButton">
                                         <MainButton
-                                            onClick={() => {
-                                                onClick();
-                                                fail();
-                                            }}
+                                            onClick={fail}
                                             type="button"
                                             width="100"
                                             height="30"

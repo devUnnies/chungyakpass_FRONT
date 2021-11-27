@@ -136,15 +136,13 @@ function OldParentKookminAptNum(props) {
                             onChange={handleChangeOldParentKookminType}
                         >
                             <option value="">---선택---</option>
-                            <option value="공공주택특별법 적용">
+                            <option value="공공주택특별법적용">
                                 공공주택 특별법 적용
                             </option>
-                            <option value="공공주택특별법 미적용">
+                            <option value="공공주택특별법미적용">
                                 공공주택 특별법 미적용
                             </option>
-                            <option value="그외 국민주택">
-                                그 외 국민주택
-                            </option>
+                            <option value="그외국민주택">그 외 국민주택</option>
                         </select>
 
                         <div className="buttonContainer">
