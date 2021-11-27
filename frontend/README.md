@@ -1,70 +1,109 @@
-# Getting Started with Create React App
+# 청약패스 Front-End 팀
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1 담당 기능
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+-   Figma Tool 이용하여 화면 디자인 및 프로토타이핑
+-   Whimsical 이용하여 화면 프로세스 플로우 그래프화
+-   React Hook의 useState, useEffect 기능을 통해 함수형 컴포넌트 상태 관리
+-   Redux로 RESTful API 이용
+    -   청약 자격 확인 로직 결과 조회 후 순위 결과 로직 구현
+    -   가배점 로직 결과 조회 후 가배점 결과를 계산하는 로직 구현
+-   기초정보 입력 시 회원 CRUD 기능 구현
+-   로직에 따른 입력값 표시 여부 결정
+-   자격 이력 조회와 가배점 이력 조회
+    -   공급별, 주택별 결과 필터링 구현
+    -   페이지네이션 구현
+-   회원일 때만 메뉴 선택할 수 있게 구현
 
-### `yarn start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 2 오픈소스/라이브러리
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   [React](https://github.com/facebook/react)
+-   [Ant Design](https://github.com/ant-design/ant-design)
+-   [redux](https://github.com/reduxjs/redux)
+-   [react-router](https://github.com/remix-run/react-router)
+-   [react-confetti](https://github.com/alampros/react-confetti) : 순위 확인 시 사용
+-   [Axios](https://github.com/axios/axios)
+-   [halogenium](https://github.com/kirillDanshin/halogenium) : 로딩 아이콘에 사용
+-   [styled-components](https://github.com/styled-components/styled-components) : 컴포넌트 만들 때 사용
+-   [react-daum-postcode](https://github.com/bernard-kms/react-daum-postcode) : 주소 검색
+-   [prettier](https://github.com/prettier/prettier)
+-   [eslint](https://github.com/eslint/eslint)
 
-### `yarn build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 3 개발 일정
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `yarn eject`
+### `5월`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+-   화면 디자인
+-   화면 플로우 설계 그래프화
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `6월`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+-   메인화면 구현 완료
+-   로그인, 회원가입 화면 구현 및 API 연결 완료
+-   부적격사례, 자주묻는질문 화면 구현 완료
+-   개인정보처리방침, 이메일무단수집거부, 사이트맵 화면 구현 완료
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `7월~8월`
 
-## Learn More
+-   기초정보 입력 화면 구현 완료
+-   자격확인 화면 구현 완료
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `9월~10월`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   기초정보 입력 API 연결 완료
+-   자격화면 API 연결 완료
+-   가배점 화면 구현 및 API 연결 완료
+-   Firebase Hosting 이용하여 배포 준비 완료
 
-### Code Splitting
+### `11월`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-   로그인, 회원가입 에러 처리 완료
+-   기초정보 입력 에러 처리 완료
+-   마이페이지
+    -   기초정보 조회 화면 구현 및 API 연결 완료
+    -   자격이력 조회 화면 구현 및 API 연결 완료
+    -   가배점 계산 이력 조회 화면 구현 및 API 연결 완료
+-   자격확인 에러 처리 완료
+-   가배점 에러 처리 완료
+-   배포
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 4 팀원
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-   [한지혜](https://github.com/jejecrunch)
+    -   로그인 페이지 구현
+    -   회원가입 페이지 구현
+    -   마이페이지 구현
+    -   메인페이지 구현
+    -   기초정보 CRUD 페이지 구현
+    -   자격이력 조회 페이지 구현
+    -   가배점계산 이력 조회 페이지 구현
+-   [신수연](https://github.com/orgs/devUnnies/people/suyeonii99)
+    -   청약자격점검 페이지 구현
+    -   가배점계산 페이지 구현
+    -   부적격사례 페이지 구현
+    -   자주묻는질문 페이지 구현
+    -   개인정보처리방침 페이지 구현
+    -   이메일무단수집거부 페이지 구현
+    -   사이트맵 페이지 구현
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
