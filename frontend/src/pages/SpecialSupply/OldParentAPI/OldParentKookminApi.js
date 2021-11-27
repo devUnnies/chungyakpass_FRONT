@@ -87,12 +87,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (form?.oldParentKookminRes === '일순위') {
-            patchOldParentKookminRank({
-                verificationRecordSpecialKookminOldParentId: data.id,
-                oldParentKookminType: form.oldParentKookminRes,
-                oldParentKookminRank,
-                supportYn,
-            });
+            dispatch(
+                patchOldParentKookminRank({
+                    verificationRecordSpecialKookminOldParentId: data.id,
+                    oldParentKookminRank: form.oldParentKookminRes,
+                    oldParentKookminType,
+                    supportYn,
+                })
+            );
 
             history.push({
                 pathname: '/rank',
@@ -109,12 +111,14 @@ const OldParentKookminApi = ({ onSaveData }) => {
                 '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
             );
 
-            patchOldParentKookminRank({
-                verificationRecordSpecialKookminOldParentId: data.id,
-                oldParentKookminType: form.oldParentKookminRes,
-                oldParentKookminRank,
-                supportYn,
-            });
+            dispatch(
+                patchOldParentKookminRank({
+                    verificationRecordSpecialKookminOldParentId: data.id,
+                    oldParentKookminRank: form.oldParentKookminRes,
+                    oldParentKookminType,
+                    supportYn,
+                })
+            );
         }
     };
 
@@ -158,8 +162,8 @@ const OldParentKookminApi = ({ onSaveData }) => {
         dispatch(
             patchOldParentKookminRank({
                 verificationRecordSpecialKookminOldParentId: data.id,
-                oldParentKookminType: form.oldParentKookminRes,
-                oldParentKookminRank,
+                oldParentKookminRank: form.oldParentKookminRes,
+                oldParentKookminType,
                 supportYn,
             })
         );

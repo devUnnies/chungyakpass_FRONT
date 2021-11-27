@@ -85,11 +85,13 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
     // 결과가 1, 2순위일 경우 순위확인 페이지로 연결
     const rankSuccess = async () => {
         if (form?.oldParentMinyeongRes === '일순위') {
-            patchOldParentMinyeongRank({
-                verificationRecordSpecialMinyeongOldParentId: data.id,
-                oldParentMinyeongRank: form.oldParentMinyeongRes,
-                supportYn,
-            });
+            dispatch(
+                patchOldParentMinyeongRank({
+                    verificationRecordSpecialMinyeongOldParentId: data.id,
+                    oldParentMinyeongRank: form.oldParentMinyeongRes,
+                    supportYn,
+                })
+            );
 
             history.push({
                 pathname: '/rank',
@@ -106,11 +108,13 @@ const OldParentMinyeongApi = ({ onSaveData }) => {
                 '입력값이 비어있거나 자격 조건을 만족하지 못하는 항목이 있습니다.'
             );
 
-            patchOldParentMinyeongRank({
-                verificationRecordSpecialMinyeongOldParentId: data.id,
-                oldParentMinyeongRank: form.oldParentMinyeongRes,
-                supportYn,
-            });
+            dispatch(
+                patchOldParentMinyeongRank({
+                    verificationRecordSpecialMinyeongOldParentId: data.id,
+                    oldParentMinyeongRank: form.oldParentMinyeongRes,
+                    supportYn,
+                })
+            );
         }
     };
 
